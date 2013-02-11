@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration>
+<classes>
+
+	<class name="Country" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="City" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="country" type="Country" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="Company" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="phone" type="String" size="16" required="true" />
+			<property name="fax" type="String" size="16" required="false" />
+			<property name="address" type="String" size="256" required="true" />
+			<property name="city" type="City" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="employees" type="Person" relation="OneToMany" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Role" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="User" type="abstract">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="64" required="true" />
+			<property name="surname" type="String" size="64" required="false" />
+			<property name="email" type="String" size="128" required="true" />
+			<property name="password" type="String" size="40" required="false" />
+			<property name="phone" type="String" size="64" required="false" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="activated" type="Timestamp" required="false" />
+			<property name="code" type="String" size="32" required="false" />
+			<property name="autoLogin" type="String" size="32" required="false" />
+			<property name="role" type="Role" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="company" type="Company" relation="OneToOne" required="false" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Person" type="final" extends="User">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="city" type="City" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+
+	<class name="Unit" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="32" required="true" />
+			<property name="value" type="String" size="32" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="FeatureType" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="32" required="true" />
+			<property name="weight" type="Integer" required="true" default="1" />
+			<property name="group" type="Integer" required="false" default="0" />
+			<property name="cast" type="Integer" required="true" />
+			<property name="unit" type="Unit" relation="OneToOne" required="false" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="Feature" type="final">
+		<properties>
+			<identifier name="id" />
+			<!-- current feature instance description -->
+			<property name="content" type="String" size="128" required="false" />
+			<property name="value" type="Integer" required="false" />
+			<property name="type" type="FeatureType" relation="OneToOne" required="true" fetch="lazy"/>
+			<property name="property" type="Property" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+
+	<class name="OfferType" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="PropertyType" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="ImageType">
+		<properties>
+			<identifier name="id" />
+		</properties>
+		<pattern name="SpookedEnumeration" />
+	</class>
+
+	<class name="Picture" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="type" type="ImageType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="main" type="Boolean" required="true" default="false" />
+			<property name="width" type="Integer" required="true" />
+			<property name="height" type="Integer" required="true" />
+			<property name="comment" type="String" size="64" required="false" />
+			<property name="property" type="Property" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="City" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="true" />
+			<property name="latitude" type="Numeric" size="10,6" required="false" />
+			<property name="longitude" type="Numeric" size="10,6" required="false" />
+			<property name="parent" type="City" relation="OneToOne" required="false" fetch="lazy" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="Property" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="true" />
+			<property name="description" type="String" size="512" required="false" />
+			<property name="user" type="User" relation="OneToOne" required="true" fetch="lazy" />
+			<!--property name="price" type="Numeric" size="10,2" required="false" /-->
+			<property name="propertyType" type="PropertyType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="offerType" type="OfferType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="features" type="Feature" relation="OneToMany" required="false" />
+			<property name="image" type="Picture" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="pictures" type="Picture" relation="OneToMany" required="false" />
+			<property name="location" type="City" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="published" type="Timestamp" required="false" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="MailQueue" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="user" type="User" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="email" type="String" size="256" required="true" />
+			<property name="subject" type="String" size="256" required="true" />
+			<property name="body" type="String" size="4096" required="true" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="sent" type="Timestamp" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Language" type="final">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="code" type="String" size="2" required="true" />
+			<property name="native" type="String" size="16" required="true" />
+			<property name="active" type="Boolean" required="true" default="false" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="Object" type="abstract">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="lang" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="AbstractClass" />
+	</class>
+
+	<class name="Property" extends="Object">
+		<properties>
+			<identifier name="id" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+</classes>
+</metaconfiguration>
