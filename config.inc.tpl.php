@@ -29,7 +29,7 @@
 	define('PATH_SOURCE', PATH_BASE.'src'.DS.PATH_SOURCE_DIR);
 	define('TEMP_PATH', PATH_BASE.'..'.DS.'tmp'.DS);
 	define('PATH_UPLOAD', TEMP_PATH.'uploads'.DS);
-	define('LOGS_PATH', TEMP_PATH.'logs'.DS);
+	define('LOGS_PATH', PATH_BASE.'..'.DS.'logs'.DS);
 	define('PATH_ROOT', PATH_SOURCE.'webroot'.DS);
 	define('PATH_IMG', PATH_ROOT.'i'.DS);
 	define('PATH_PIX', PATH_ROOT.'pix'.DS);
