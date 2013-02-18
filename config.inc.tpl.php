@@ -33,7 +33,7 @@
 	define('PATH_ROOT', PATH_SOURCE.'webroot'.DS);
 	define('PATH_IMG', PATH_ROOT.'i'.DS);
 	define('PATH_PIX', PATH_ROOT.'pix'.DS);
-
+        
 	// web path
 	define('PATH_WEB', 'http://'.DOMAIN.'/');
 	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN.'/');
@@ -46,9 +46,9 @@
 	define('PATH_CLASSES', PATH_BASE.'src'.DS.'classes'.DS);
 	define('PATH_CONTROLLERS', PATH_SOURCE.'controllers'.DS);
 	define('PATH_TEMPLATES', PATH_SOURCE.'views'.DS);
-
+        
 	// onPHP init
-	define('ONPHP_TEMP_PATH', PATH_BASE.'..'.DS.'tmp'.DS);
+	define('ONPHP_TEMP_PATH', TEMP_PATH.'onphp'.DS);
 	require PATH_BASE.'../onphp/global.inc.php.tpl';
 
 	// everything else
@@ -56,7 +56,7 @@
 	mb_internal_encoding(DEFAULT_ENCODING);
 	mb_regex_encoding(DEFAULT_ENCODING);
 	ini_set('upload_tmp_dir', PATH_UPLOAD);
-
+	ini_set('session.save_path', TEMP_PATH.'sessions'.DS);
 
 	define('DEFAULT_AREA', 'main');
 	define('DEFAULT_EMAIL', 'meincyp+test@gmail.com');
@@ -67,23 +67,23 @@
 		DB::spawn('PgSQL', 'htonus', '', 'localhost', 're_com_cy')->
 		setEncoding(DEFAULT_ENCODING)
 	);
+	
+	AutoloaderPool::get('onPHP')->
+		addPaths(array(
+			PATH_CLASSES,
+			PATH_CONTROLLERS,
+			PATH_CLASSES.'DAOs',
+			PATH_CLASSES.'Flow',
+			PATH_CLASSES.'Business',
+			PATH_CLASSES.'Proto',
+			PATH_CLASSES.'Helpers',
+			PATH_CLASSES.'Filters',
 
-	ini_set(
-		'include_path', get_include_path().PS
-		.PATH_CLASSES.PS
-		.PATH_CONTROLLERS.PS
-		.PATH_CLASSES.'DAOs'.PS
-		.PATH_CLASSES.'Flow'.PS
-		.PATH_CLASSES.'Business'.PS
-		.PATH_CLASSES.'Proto'.PS
-		.PATH_CLASSES.'Helpers'.PS
-		.PATH_CLASSES.'Filters'.PS
-
-		.PATH_CLASSES.'Auto'.DS.'Business'.PS
-		.PATH_CLASSES.'Auto'.DS.'Proto'.PS
-		.PATH_CLASSES.'Auto'.DS.'DAOs'.PS
-	);
-
+			PATH_CLASSES.'Auto'.DS.'Business',
+			PATH_CLASSES.'Auto'.DS.'Proto',
+			PATH_CLASSES.'Auto'.DS.'DAOs',
+		));
+	
 	// magic_quotes_gpc must be off
 
 	define('__LOCAL_DEBUG__', true);

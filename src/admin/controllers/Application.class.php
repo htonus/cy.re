@@ -12,6 +12,8 @@
  */
 final class Application
 {
+	private $request = null;
+	
 	private $allowedAreas = array(
 		'main',
 		'user',
@@ -21,26 +23,19 @@ final class Application
 		'property',
 		'language',
 	);
-	
-	public static function create()
+		
+	public function __construct(HttpRequest $request) {
+		$this->request = $request;
+	}
+
+	public static function create(HttpRequest $request)
 	{
-		return new self;
+		return new self($request);
 	}
 	
 	public function run()
 	{
-		if (!Session::isStarted())
-			Session::start ();
-		
-		$request = HttpRequest::create()->
-			setGet($_GET)->
-			setPost($_POST)->
-			setCookie($_COOKIE)->
-			setFiles($_FILES)->
-			setServer($_SERVER)->
-			setSession($_SESSION);
-		
-		$area = $this->getArea($request);
+		$area = $this->getArea();
 		$controller = 'controller'.ucfirst($area);
 		
 		switch ($area) {
@@ -49,14 +44,14 @@ final class Application
 				break;
 		}
 		
-		$this->attachResolver($request);
+		$this->attachResolver();
 		
-		$mav = $chain->handleRequest($request);
+		$mav = $chain->handleRequest($this->request);
 		
-		$this->render($mav, $request);
+		$this->render($mav);
 	}
 	
-	private function getArea(HttpRequest $request)
+	private function getArea()
 	{
 		$area = Form::create()->
 			add(
@@ -64,19 +59,19 @@ final class Application
 				addImportFilter(Filter::trim())->
 				setDefault(DEFAULT_AREA)
 			)->
-			import($request->getGet())->
-			importMore($request->getPost())->
+			import($this->request->getGet())->
+			importMore($this->request->getPost())->
 			getActualValue('area');
 		
 		if (!in_array($area, $this->allowedAreas))
 			throw new SecurityException('error:404');
 		
-		$request->setAttachedVar('area', $area);
+		$this->request->setAttachedVar('area', $area);
 		
 		return $area;
 	}
 	
-	private function render(ModelAndView $mav, HttpRequest $request)
+	private function render(ModelAndView $mav)
 	{
 		$model = $mav->getModel();
 		$view = $mav->getView();
@@ -85,9 +80,9 @@ final class Application
 			return $view->render($model);
 		}
 		
-		$layout = $request->hasAttachedVar('layout')
-			? $request->getAttachedVar('layout')
-			: $request->getAttachedVar('area');
+		$layout = $this->request->hasAttachedVar('layout')
+			? $this->request->getAttachedVar('layout')
+			: $this->request->getAttachedVar('area');
 		
 		$model->set('layout', $layout);
 
@@ -96,13 +91,13 @@ final class Application
 		}
 
 		if (is_string($view)) {
-			$view = $request->getAttachedVar('resolver')->
+			$view = $this->request->getAttachedVar('resolver')->
 				resolveViewName($view);
 		}
 		
 		if ($view instanceof View) {
-			$model->set('area', $request->getAttachedVar('area'));
-			$model->set('urlMapper', $request->getAttachedVar('urlMapper'));
+			$model->set('area', $this->request->getAttachedVar('area'));
+			$model->set('urlMapper', $this->request->getAttachedVar('urlMapper'));
 			
 //			$model->set('action', $request->getAttachedVar('action'));
 		} else {
@@ -112,15 +107,15 @@ final class Application
 		$view->render($model);
 	}
 	
-	private function attachResolver(HttpRequest $request)
+	private function attachResolver()
 	{
 		$resolver = MultiPrefixPhpViewResolver::create()->
 			setViewClassName('SimplePhpView')->
 			setPostfix(EXT_TPL)->
 			addPrefix(PATH_TEMPLATES);
 		
-		$request->setAttachedVar('resolver', $resolver);
-		$request->setAttachedVar('urlMapper', UrlMapper::me()->setLanguage('en'));
+		$this->request->setAttachedVar('resolver', $resolver);
+		$this->request->setAttachedVar('urlMapper', UrlMapper::me()->setLanguage('en'));
 		
 		return $this;
 	}
