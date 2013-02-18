@@ -30,6 +30,7 @@
 			setUrl(HttpUrl::parse($_SERVER['REQUEST_URI']));
 		
 		Application::create($request)->run();
+		
 	} catch (Exception $e) {
 		$trace = $e->getTraceAsString();
 		$extensionClass = get_class($e);

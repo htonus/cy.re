@@ -26,12 +26,21 @@
 	<link rel="alternate" type="application/rss+xml" title="Website News" href="<?=PATH_WEB?>news.xml" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-	<link rel="StyleSheet" href="<?=PATH_WEB?>html/static/style.css?17" type="text/css">
-	<link rel="stylesheet" type="text/css" href="<?=PATH_WEB?>html/static/brand-panzar.css"/>
 <?php
-	$partViewer->view('_parts/js', Model::create()->set('name', 'jquery-1.7.2.min'));
+	$html->css('bootstrap.min');
+	$html->css('bootstrap-responsive.min');
+	$html->css('custom');
+	$html->js('jquery-1.7.2.min');
+	$html->js('bootstrap.min');
+	
+	$html->jsRaw('
+		jq = jQuery.noConflict();
+	');
 ?>
 </head>
 
 <body>
+<?php
+	$partViewer->view("$area/$action");
+?>
 	<div id="main">

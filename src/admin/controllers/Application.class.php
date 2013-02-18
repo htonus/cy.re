@@ -96,8 +96,10 @@ final class Application
 		}
 		
 		if ($view instanceof View) {
-			$model->set('area', $this->request->getAttachedVar('area'));
-			$model->set('urlMapper', $this->request->getAttachedVar('urlMapper'));
+			$model->
+				set('area', $this->request->getAttachedVar('area'))->
+				set('urlMapper', $this->request->getAttachedVar('urlMapper'))->
+				set('html', HtmlHelper::create());
 			
 //			$model->set('action', $request->getAttachedVar('action'));
 		} else {
@@ -111,7 +113,7 @@ final class Application
 	{
 		$resolver = MultiPrefixPhpViewResolver::create()->
 			setViewClassName('SimplePhpView')->
-			setPostfix(EXT_TPL)->
+			setPostfix(EXT_TMPL)->
 			addPrefix(PATH_TEMPLATES);
 		
 		$this->request->setAttachedVar('resolver', $resolver);

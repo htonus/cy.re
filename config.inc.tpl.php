@@ -30,15 +30,17 @@
 	define('TEMP_PATH', PATH_BASE.'..'.DS.'tmp'.DS);
 	define('PATH_UPLOAD', TEMP_PATH.'uploads'.DS);
 	define('LOGS_PATH', PATH_BASE.'..'.DS.'logs'.DS);
-	define('PATH_ROOT', PATH_SOURCE.'webroot'.DS);
-	define('PATH_IMG', PATH_ROOT.'i'.DS);
-	define('PATH_PIX', PATH_ROOT.'pix'.DS);
+	define('PATH_WEBROOT', PATH_SOURCE.'webroot'.DS);
+	define('PATH_IMG', PATH_WEBROOT.'img'.DS);
+	define('PATH_JS', PATH_WEBROOT.'js'.DS);
+	define('PATH_CSS', PATH_WEBROOT.'css'.DS);
+	define('PATH_PIX', PATH_WEBROOT.'pix'.DS);
         
 	// web path
 	define('PATH_WEB', 'http://'.DOMAIN.'/');
 	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN.'/');
 	define('PATH_WEB_PIX', '/pix/'); // dynamic stuff
-	define('PATH_WEB_IMG', '/i/'); // static stuff
+	define('PATH_WEB_IMG', '/img/'); // static stuff
 	define('PATH_WEB_JS', '/js/'); // static stuff
 	define('PATH_WEB_CSS', '/css/'); // static stuff
 
@@ -88,7 +90,11 @@
 
 	define('__LOCAL_DEBUG__', true);
 	define('BUGLOVERS', 'some.box@host.domain');
-
+	
+	
+	// Extra consts
+	define('EXT_TMPL', '.tpl.php');
+	
 //	Cache::setPeer(
 //		Memcached::create()
 //	);
