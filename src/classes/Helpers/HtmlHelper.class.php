@@ -27,7 +27,7 @@
 					continue;
 				}
 				
-				$out .= $this->niceRow('<script type="text/javascript" src="'.$name.'?'.$time.'"></script>');
+				$out .= $this->niceRow('<script type="text/javascript" src="'.PATH_WEB_JS.$name.'?'.$time.'"></script>');
 			}
 			
 			if ($echo) {
@@ -52,7 +52,7 @@
 					continue;
 				}
 				
-				$out .= $this->niceRow('<link rel="stylesheet" type="text/css" href="'.$name.'?'.$time.'" />');
+				$out .= $this->niceRow('<link rel="stylesheet" type="text/css" href="'.PATH_WEB_CSS.$name.'?'.$time.'" />');
 			}
 			
 			if ($echo) {
