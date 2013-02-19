@@ -7,6 +7,16 @@
 
 	final class LanguageDAO extends AutoLanguageDAO
 	{
-		// last chance for customization
+		public function getByCode($code = 'en')
+		{
+			try {
+				return $this->getByLogic(Expression::eq('code', $code));
+			} catch (DatabaseException $e) {
+				if ($code == 'en')
+					throw $e;
+				else
+					return $this->getByCode('en');
+			}
+		}
 	}
 ?>

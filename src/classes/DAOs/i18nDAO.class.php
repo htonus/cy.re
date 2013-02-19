@@ -7,5 +7,34 @@
 
 	abstract class i18nDAO extends Autoi18nDAO
 	{
+		const TABLE = 'i18n';
+		
+		public function getById($id)
+		{
+			$object = parent::getById($id);
+			
+			$db = DBPool::me()->getLink();
+			$langId = GlobalVar::me()->get('language')->getId();
+			
+			$result = $db->queryRaw("
+				SELECT field, value FROM ".self::TABLE."
+				WHERE
+					object = '{$this->getObjectName()}'
+					AND object_id = $id
+					AND language_id = $langId
+			");
+			
+			$propertyList = $object->getProto()->getPropertyList(); // as $name => $property
+			
+			foreach($result as $row) {
+				if (
+					!empty($propertyList[$row['field']])
+					&& $propertyList[$row['field']]->getType() == 'string'
+				)
+					$object->{$propertyList[$row['field']]->getSetter()}($row['value']);
+			}
+			
+			return $this->addObjectToMap($object);
+		}
 	}
 ?>

@@ -24,7 +24,8 @@ final class Application
 		'language',
 	);
 		
-	public function __construct(HttpRequest $request) {
+	public function __construct(HttpRequest $request)
+	{
 		$this->request = $request;
 	}
 
@@ -35,6 +36,9 @@ final class Application
 	
 	public function run()
 	{
+		$lang = Language::dao()->getByCode('en');
+		GlobalVar::me()->set('language', $lang);
+		
 		$area = $this->getArea();
 		$controller = 'controller'.ucfirst($area);
 		
