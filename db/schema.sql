@@ -9,6 +9,32 @@ CREATE TABLE "language" (
 );
 
 
+CREATE SEQUENCE "i18n_id";
+CREATE TABLE "i18n" (
+    "id" BIGINT NOT NULL default nextval('unit_id'),
+    "lang_id" BIGINT NOT NULL,
+    "object" CHARACTER VARYING(16) NOT NULL,
+    "object_id" BIGINT NOT NULL,
+    "filed" CHARACTER VARYING(16) NOT NULL,
+    "value" CHARACTER VARYING(4063) NOT NULL,
+    PRIMARY KEY("id")
+);
+CREATE INDEX i18n_lang_id_idx ON i18n(lang_id);
+CREATE INDEX i18n_object_idx ON i18n("object");
+CREATE INDEX i18n_object_id_idx ON i18n("object_id");
+
+
+CREATE SEQUENCE "unit_i18n_id";
+CREATE TABLE "unit_i18n" (
+    "id" BIGINT NOT NULL default nextval('unit_i18n_id'),
+    "unit_id" BIGINT NOT NULL REFERENCES "unit"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "language_id" BIGINT NOT NULL REFERENCES "language"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "name" CHARACTER VARYING(16) NOT NULL,
+    PRIMARY KEY("id")
+);
+CREATE INDEX unit_i18n_unit_id_idx ON unit_i18n(unit_id);
+CREATE INDEX unit_i18n_language_id_idx ON unit_i18n(language_id);
+
 CREATE SEQUENCE "property_type_id";
 CREATE TABLE "property_type" (
     "id" BIGINT NOT NULL default nextval('property_type_id'),
