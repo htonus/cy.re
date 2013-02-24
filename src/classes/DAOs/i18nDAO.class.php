@@ -11,18 +11,18 @@
 		
 		public function makeSelectHead()
 		{
-//			return parent::makeSelectHead();
-			
 			static $selectHead = array();
 			
 			if (!isset($selectHead[$className = $this->getObjectName()])) {
 				$i18nFields = call_user_func(array($this->getObjectName().self::I18N, 'proto'))->
 					getMapping();
 				
-				$languageField = $i18nFields['language'];
+				$languageField	= $i18nFields['language'];
+				$objectField	= $i18nFields['object'];
 				
 				unset($i18nFields['id']);
 				unset($i18nFields['language']);
+				unset($i18nFields['object']);
 				
 				$table = $this->getTable();
 				$i18nTable = $table.self::I18N;
@@ -48,7 +48,7 @@
 									$table
 								),
 								DBField::create(
-									'object_id',
+									$objectField,
 									$i18nTable
 								)
 							),
