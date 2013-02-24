@@ -37,10 +37,6 @@ Every i18n object should be inherited from i18n object and has extra table for l
 
 And i18nDAO should override makeSelectHead methof in the following way:
 
-	abstract class i18nDAO extends Autoi18nDAO
-	{
-		const I18N = '_i18n';
-		
 		public function makeSelectHead()
 		{
 			static $selectHead = array();
@@ -49,10 +45,12 @@ And i18nDAO should override makeSelectHead methof in the following way:
 				$i18nFields = call_user_func(array($this->getObjectName().self::I18N, 'proto'))->
 					getMapping();
 				
-				$languageField = $i18nFields['language'];
+				$languageField	= $i18nFields['language'];
+				$objectField	= $i18nFields['object'];
 				
 				unset($i18nFields['id']);
 				unset($i18nFields['language']);
+				unset($i18nFields['object']);
 				
 				$table = $this->getTable();
 				$i18nTable = $table.self::I18N;
@@ -78,7 +76,7 @@ And i18nDAO should override makeSelectHead methof in the following way:
 									$table
 								),
 								DBField::create(
-									'object_id',
+									$objectField,
 									$i18nTable
 								)
 							),
