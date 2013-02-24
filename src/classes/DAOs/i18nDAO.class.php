@@ -30,17 +30,8 @@
 				$object =
 					OSQL::select()->
 					from($table)->
-					from($i18nTable);
-				
-				foreach ($this->getFields() as $field) {
-					if (isset($i18nFields[$field]))
-						$object->get(new DBField($field, $i18nTable));
-					else
-						$object->get(new DBField($field, $table));
-				}
-				
-				$object->
-					andWhere(
+					join(
+						$i18nTable,
 						Expression::andBlock(
 							Expression::eq(
 								DBField::create(
@@ -61,6 +52,13 @@
 							)
 						)
 					);
+				
+				foreach ($this->getFields() as $field) {
+					if (isset($i18nFields[$field]))
+						$object->get(new DBField($field, $i18nTable));
+					else
+						$object->get(new DBField($field, $table));
+				}
 				
 				$selectHead[$className] = $object;
 			}

@@ -52,17 +52,8 @@ And i18nDAO should override makeSelectHead methof in the following way:
 				$object =
 					OSQL::select()->
 					from($table)->
-					from($i18nTable);
-				
-				foreach ($this->getFields() as $field) {
-					if (isset($i18nFields[$field]))
-						$object->get(new DBField($field, $i18nTable));
-					else
-						$object->get(new DBField($field, $table));
-				}
-				
-				$object->
-					andWhere(
+					join(
+						$i18nTable,
 						Expression::andBlock(
 							Expression::eq(
 								DBField::create(
@@ -83,6 +74,13 @@ And i18nDAO should override makeSelectHead methof in the following way:
 							)
 						)
 					);
+				
+				foreach ($this->getFields() as $field) {
+					if (isset($i18nFields[$field]))
+						$object->get(new DBField($field, $i18nTable));
+					else
+						$object->get(new DBField($field, $table));
+				}
 				
 				$selectHead[$className] = $object;
 			}
