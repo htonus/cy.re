@@ -5,23 +5,30 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	class i18n extends Autoi18n implements Prototyped
+	class Unit_i18n extends AutoUnit_i18n implements Prototyped, DAOConnected
 	{
 		/**
-		 * @return i18n
+		 * @return Unit_i18n
 		**/
 		public static function create()
 		{
 			return new self;
 		}
 		
+		/**
+		 * @return Unit_i18nDAO
+		**/
+		public static function dao()
+		{
+			return Singleton::getInstance('Unit_i18nDAO');
+		}
 		
 		/**
-		 * @return Protoi18n
+		 * @return ProtoUnit_i18n
 		**/
 		public static function proto()
 		{
-			return Singleton::getInstance('Protoi18n');
+			return Singleton::getInstance('ProtoUnit_i18n');
 		}
 		
 		// your brilliant stuff goes here

@@ -9,7 +9,7 @@
 	{
 		private $vars = array();
 		
-		public function me()
+		public static function me()
 		{
 			return parent::getInstance(__CLASS__);
 		}

@@ -29,7 +29,12 @@
 			setCookie($_COOKIE)->
 			setUrl(HttpUrl::parse($_SERVER['REQUEST_URI']));
 		
-		Application::create($request)->run();
+		GlobalVar::me()->set('language', Language::dao()->getByCode('ru'));
+//		$unit = Unit::dao()->getById(1);
+		$unit = Criteria::create(Unit::dao())->getList();
+		print_r($unit);
+		
+//		Application::create($request)->run();
 		
 	} catch (Exception $e) {
 		$trace = $e->getTraceAsString();
