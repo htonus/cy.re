@@ -16,131 +16,28 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
-	
-	<!--Object, Id, Field, Lang -->
-	<class name="Dictionary">
-		<properties>
-			<identifier name="id" />
-			<property name="token" type="String" size="16" required="true" /><!-- Object_Id -->
-			<property name="name" type="String" size="16" required="true" /><!-- field -->
-			<property name="value" type="String" size="16" required="true" /><!-- translation -->
-			<property name="lang" type="Language" relation="OneToOne" required="true" fetch="lazy" />
-		</properties>
-		<pattern name="AbstractClass" />
-	</class>
 
 	<class name="i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="lang" type="Language" relation="OneToOne" required="true" fetch="lazy" />
 		</properties>
 		<pattern name="AbstractClass" />
 	</class>
-
-	<class name="PropertyType" extends="i18n">
-		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="16" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="OfferType" extends="i18n">
-		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="16" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Object" extends="i18n">
-		<properties>
-			<identifier name="id" />
-			<property name="created" type="Timestamp" required="true" />
-			<property name="published" type="Timestamp" required="false" />
-			<property name="type" type="PropertyType" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="offer" type="OfferType" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="agent" type="Agent" relation="OneToOne" required="false" fetch="lazy" />
-			<property name="owner" type="Owner" relation="OneToOne" required="false" fetch="lazy" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
+	
 	<class name="Unit" extends="i18n">
 		<properties>
-			<identifier name="id" />
 			<property name="name" type="String" size="16" required="true" />
 			<property name="sign" type="String" size="16" required="true" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
 
-	<class name="FeatureType" extends="Object">
+	<class name="Unit_i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="unit" type="Unit" relation="OneToOne" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Feature" extends="Object">
-		<properties>
-			<identifier name="id" />
-			<property name="type" type="FeatureType" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="value" type="String" size="16" required="true" />
-			<property name="weight" type="Integer" required="false" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Property" extends="i18n">
-		<properties>
-			<identifier name="id" />
-			<property name="object" type="Object" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="lang" type="Language" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="name" type="String" size="128" required="true" />
-			<property name="content" type="String" size="4096" required="false" />
-			<property name="features" type="Feature" relation="ManyToMany" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Person" extends="i18n">
-		<properties>
-			<identifier name="id" />
+			<property name="object" type="Unit" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="name" type="String" size="16" required="true" />
-			<property name="phone" type="String" size="16" required="true" />
-			<property name="email" type="String" size="32" required="false" />
-			<property name="created" type="Timestamp" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Company" extends="i18n">
-		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="16" required="true" />
-			<property name="phone" type="String" size="16" required="true" />
-			<property name="email" type="String" size="32" required="false" />
-			<property name="created" type="Timestamp" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Agent" extends="Person">
-		<properties>
-			<identifier name="id" />
-			<property name="active" type="Boolean" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="Owner" extends="Person">
-		<properties>
-			<identifier name="id" />
-			<property name="proved" type="Boolean" required="true" /><!-- email -->
-			<property name="code" type="String" size="32" required="false" /><!-- verification -->
-			<property name="autoLogin" type="String" size="32" required="false" /><!-- autoLogin cookie support -->
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
