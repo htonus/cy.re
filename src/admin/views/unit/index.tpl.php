@@ -1,0 +1,30 @@
+<?php
+/*
+ * $Id$
+ */
+?>
+
+		<h2>Edit Feature Units</h2>
+		<a href="<?=$urlMapper->getObjectUrl($subject, 'edit')?>">Add new</a><br />
+	
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Value</th>
+				<th></th>
+			</tr>
+<?php
+	foreach ($list as $item) {
+?>
+			<tr>
+				<td><?=$item->getName()?></td>
+				<td><?=$item->getValue()?></td>
+				<td>
+					<a href="<?=$urlMapper->getObjectUrl($item, 'edit')?>">edit</a> |
+					<a href="<?=$urlMapper->getObjectUrl($item, 'drop')?>">drop</a>
+				</td>
+			</tr>
+<?php
+	}
+?>
+		</table>

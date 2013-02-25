@@ -29,7 +29,7 @@
 <?php
 	$html->css('bootstrap.min');
 	$html->css('bootstrap-responsive.min');
-	$html->css('custom');
+	$html->css('docs');
 	$html->js('jquery-1.7.2.min');
 	$html->js('bootstrap.min');
 	
@@ -40,7 +40,5 @@
 </head>
 
 <body>
-<?php
-	$partViewer->view("$area/$action");
-?>
-	<div id="main">
+
+<!-- Bootstrap docs layout. Will not be visible in public access -->
