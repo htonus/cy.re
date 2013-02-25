@@ -47,7 +47,7 @@
 
 			$page		= $form->getActualValue('page');
 			$perPage	= $form->getActualValue('perPage');
-
+			
 			$criteria = $this->request->getAttachedVar('criteria');
 			$countCriteria = clone $criteria;
 
@@ -60,7 +60,7 @@
 			$pages = ceil($total / $perPage);
 
 			$list = $criteria->
-				setOffset($page)->
+				setOffset(($page - 1) * $perPage)->
 				setLimit($perPage)->
 				getList();
 
