@@ -9,29 +9,26 @@
 	{
 		const I18N = '_i18n';
 		
+		protected $i18nProtoMapping	= array();
+		protected $languageField	= null;
+		protected $objectField		= null;
+		protected $i18nTable		= null;
+
 		public function makeSelectHead()
 		{
 			static $selectHead = array();
 			
 			if (!isset($selectHead[$className = $this->getObjectName()])) {
-				$i18nFields = call_user_func(array($this->getObjectName().self::I18N, 'proto'))->
-					getMapping();
 				
-				$languageField	= $i18nFields['language'];
-				$objectField	= $i18nFields['object'];
-				
-				unset($i18nFields['id']);
-				unset($i18nFields['language']);
-				unset($i18nFields['object']);
+				$this->i18nSetup();
 				
 				$table = $this->getTable();
-				$i18nTable = $table.self::I18N;
 				
 				$object =
 					OSQL::select()->
 					from($table)->
 					join(
-						$i18nTable,
+						$this->i18nTable,
 						Expression::andBlock(
 							Expression::eq(
 								DBField::create(
@@ -39,14 +36,14 @@
 									$table
 								),
 								DBField::create(
-									$objectField,
-									$i18nTable
+									$this->objectField,
+									$this->i18nTable
 								)
 							),
 							Expression::eqId(
 								DBField::create(
-									$languageField,
-									$i18nTable
+									$this->languageField,
+									$this->i18nTable
 								),
 								GlobalVar::me()->get('language')
 							)
@@ -54,8 +51,8 @@
 					);
 				
 				foreach ($this->getFields() as $field) {
-					if (isset($i18nFields[$field]))
-						$object->get(new DBField($field, $i18nTable));
+					if (isset($this->i18nProtoMapping[$field]))
+						$object->get(new DBField($field, $this->i18nTable));
 					else
 						$object->get(new DBField($field, $table));
 				}
@@ -64,5 +61,53 @@
 			}
 			
 			return clone $selectHead[$className];
+		}
+		
+		public function guessAtom(
+			$atom,
+			JoinCapableQuery $query,
+			$table = null,
+			$parentRequired = true,
+			$prefix = null
+		)
+		{
+			$this->i18nSetup();
+			
+			if (
+				is_string($atom)
+				&& array_key_exists(
+					$atom,
+					$this->i18nProtoMapping
+				)
+			) {
+				return new DBField(
+					$this->i18nProtoMapping[$atom],
+					$this->i18nTable
+				);
+			}
+			
+			return parent::guessAtom($atom, $query, $table, $parentRequired, $prefix);
+		}
+		
+		private function i18nSetup()
+		{
+			if (empty($this->i18nProtoMapping)) {
+
+				$this->i18nProtoMapping =
+					call_user_func(
+						array($this->getObjectName().self::I18N, 'proto')
+					)->
+					getMapping();
+				
+				$this->languageField	= $this->i18nProtoMapping['language'];
+				$this->objectField		= $this->i18nProtoMapping['object'];
+				$this->i18nTable		= $this->getTable().self::I18N;
+				
+				unset($this->i18nProtoMapping['id']);
+				unset($this->i18nProtoMapping['language']);
+				unset($this->i18nProtoMapping['object']);
+			}
+			
+			return $this;
 		}
 	}
