@@ -27,7 +27,7 @@
 				$object =
 					OSQL::select()->
 					from($table)->
-					join(
+					leftJoin(
 						$this->i18nTable,
 						Expression::andBlock(
 							Expression::eq(

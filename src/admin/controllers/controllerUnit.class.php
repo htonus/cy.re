@@ -22,16 +22,18 @@ final class controllerUnit extends CommonEditor
 	{
 		$mav = parent::doEdit($request);
 		$model = $mav->getModel();
-		
-		$list = Criteria::create(Unit_i18n::dao())->
-			add(
-				Expression::eqId('object', $this->getForm()->getValue('id'))
-			)->
-			getList();
-		
 		$i18nList = array();
-		foreach ($list as $item) {
-			$i18nList[$item->getLanguageId()] = $item;
+		
+		if ($this->getForm()->getValue('id')) {
+			$list = Criteria::create(Unit_i18n::dao())->
+				add(
+					Expression::eqId('object', $this->getForm()->getValue('id'))
+				)->
+				getList();
+
+			foreach ($list as $item) {
+				$i18nList[$item->getLanguageId()] = $item;
+			}
 		}
 		
 		$i18n = Unit_i18n::proto()->getMapping();
@@ -39,6 +41,31 @@ final class controllerUnit extends CommonEditor
 		$model->
 			set('i18n',$i18n)->
 			set('i18nList', $i18nList);
+		
+		return $mav;
+	}
+	
+	public function doAdd(HttpRequest $request)
+	{
+		$form = Form::create()->
+			add(
+				Primitive::set('i18n_id')
+			)->
+			add(
+				Primitive::set('i18n_field')
+			)->
+			import($request->getPost());
+		
+		$ids = $form->getValue('i18n_id');
+		$fields = $form->getValue('i18n_field');
+		
+		foreach ($fields['en'] as $name => $value) {
+			$request->setPostVar($name, $value);
+		}
+		
+		$mav = parent::doAdd($request);
+		
+		$this->saveI18n($mav->getModel()->get('subject'), $ids, $fields);
 		
 		return $mav;
 	}
@@ -63,19 +90,19 @@ final class controllerUnit extends CommonEditor
 		
 		$mav = parent::doSave($request);
 		
-		$this->saveI18n($ids, $fields);
+		$this->saveI18n($mav->getModel()->get('subject'), $ids, $fields);
 		
 		return $mav;
 	}
 	
-	private function saveI18n($ids, $fields)
+	private function saveI18n(Unit $subject, $ids, $fields)
 	{
 		$languageList = Language::dao()->getList();
 		
 		foreach($ids as $code => $id) {
 			if (empty($id)) {
 				$i18n = Unit_i18n::create()->
-					setObject($this->getForm()->getValue('id'))->
+					setObject($subject)->
 					setLanguage($languageList[$code]);
 			} else {
 				$i18n = Unit_i18n::dao()->getById($id);

@@ -26,7 +26,7 @@
 	
 	<class name="Unit" extends="i18n">
 		<properties>
-			<property name="name" type="String" size="16" required="true" />
+			<property name="name" type="String" size="16" required="false" />
 			<property name="sign" type="String" size="16" required="true" />
 		</properties>
 		<pattern name="StraightMapping" />

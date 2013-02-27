@@ -1,6 +1,7 @@
 Overview
 =====
 
+TO BUILD META COMMENT makeSelectHead AND guessAtom IN i18nDAO (unfortunately)
 
 Every i18n object should be inherited from i18n object and has extra table for localized field values:
 
@@ -52,8 +53,8 @@ And i18nDAO should override makeSelectHead methof in the following way:
 				$object =
 					OSQL::select()->
 					from($table)->
-					join(
-						$i18nTable,
+					leftJoin(
+						$this->i18nTable,
 						Expression::andBlock(
 							Expression::eq(
 								DBField::create(
@@ -61,14 +62,14 @@ And i18nDAO should override makeSelectHead methof in the following way:
 									$table
 								),
 								DBField::create(
-									$objectField,
-									$i18nTable
+									$this->objectField,
+									$this->i18nTable
 								)
 							),
 							Expression::eqId(
 								DBField::create(
-									$languageField,
-									$i18nTable
+									$this->languageField,
+									$this->i18nTable
 								),
 								GlobalVar::me()->get('language')
 							)
