@@ -17,7 +17,6 @@
 
 		<div class="span9">
 			<section>
-				<h1>Items of type: <?=ucfirst($area)?></h1>
 <?php
 	$partViewer->view("$area/$action")
 ?>

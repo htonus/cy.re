@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h2><?=$id ? "Update $class $id" : "Add new $class"?></h2>
+<h1><?=$id ? 'Update Language: '.$form->getValue('id')->getName() : 'Add new Language'?></h1>
 
 <?php
 	if ($errors = $form->getErrors()) {
@@ -18,44 +18,46 @@
 	}
 ?>
 
-<table>
-<form name="editForm" action="/index.php" method="post">
+<br/>
+
+<form name="editForm" action="/index.php" method="post" class="form-horizontal">
 <input type="hidden" name="area" value="<?=$area?>" />
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
-<?php
 
-	foreach ($form->getPrimitiveList() as $name => $primitive) {
-		 if ($name == 'id')
-			 continue;
-		 
-		 if (($name == 'password') && $id)
-			 continue;
 
-		 if ($primitive instanceof PrimitiveBoolean) {
-			 $checked = $form->getValue($name) == true;
-?>
-	<tr>
-		<td align="right"><?=$primitive->isRequired() ? '*' : ''?> <b><?=$name?></b> </td>
-		<td><input type="checkbox" name="<?=$name?>" value="<?= $form->getValue($name)?>" <?= $checked ? ' checked="checked"' : null?>></td>
-	</tr>
-<?php
-		 } else {
-?>
-	<tr>
-		<td align="right"><?=$primitive->isRequired() ? '*' : ''?> <b><?=$name?></b> </td>
-		<td><input type="text" name="<?=$name?>" value="<?= $form->getValue($name)?>"></td>
-	</tr>
-<?php
-		 }
-		
-	}
-?>
+<div class="control-group">
+	<label class="control-label" for="input_name">Name</label>
+	<div class="controls">
+		<input type="text" id="input_name" placeholder="Language name" name="name" value="<?=$form->getValue('name')?>" />
+    </div>
+</div>
 
-	<tr>
-		<td></td>
-		<td><input type="submit"></td>
-	</tr>
-	
+<div class="control-group">
+	<label class="control-label" for="input_native">Native name</label>
+	<div class="controls">
+		<input type="text" id="input_name" placeholder="Language native" name="native" value="<?=$form->getValue('native')?>" />
+    </div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="input_name">Code</label>
+	<div class="controls">
+		<input type="text" id="input_code" placeholder="Language code" name="code" value="<?=$form->getValue('code')?>" />
+    </div>
+</div>
+
+<div class="control-group">
+	<div class="controls">
+		<label class="checkbox" for="input_active">
+			<input type="checkbox" id="input_active" placeholder="Is active" name="active" value="1" <?=$form->getValue('active') ? 'checked="checked"' : ''?> /> Is Active
+		</label>
+		<button class="btn btn-primary" type="submit">Submit</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+    </div>
+</div>
+
+
+
+
 </form>
-</table>

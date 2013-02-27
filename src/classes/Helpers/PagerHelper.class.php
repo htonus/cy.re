@@ -52,6 +52,7 @@
 			$countCriteria = clone $criteria;
 
 			$total = $countCriteria->
+				dropOrder()->
 				setProjection(
 					Projection::count('id')
 				)->

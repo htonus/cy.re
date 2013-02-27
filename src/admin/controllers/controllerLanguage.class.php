@@ -21,8 +21,15 @@ final class controllerLanguage extends CommonEditor
 			drop('active')->
 			add(
 				Primitive::ternary('active')->
-				required()->
+				optional()->
 				setDefault(false)
 			);
+	}
+	
+	protected function getListCriteria(HttpRequest $request, Model $model)
+	{
+		$criteria = parent::getListCriteria($request, $model);
+
+		return $criteria->addOrder('name');
 	}
 }

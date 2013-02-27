@@ -3,8 +3,8 @@
  * $Id$
  */
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<title>Generic </title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
