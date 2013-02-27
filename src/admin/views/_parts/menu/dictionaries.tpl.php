@@ -1,5 +1,19 @@
+<?php
+	$list = array(
+		'language'	=> 'Languages',
+		'unit'		=> 'Measurement Units',
+		'featureType' => 'Property Feature Types'
+	);
+
+?>
+
 <ul class="nav nav-list bs-docs-sidenav affix-top">
-	<li class="active"><a href="/edit/language"><i class="icon-chevron-right"></i> Languages</a></li>
-	<li><a href="/edit/unit"><i class="icon-chevron-right"></i> Measurement Units</a></li>
-	<li><a href="/edit/unit"><i class="icon-chevron-right"></i> Property Feature Types</a></li>
+<?php
+	foreach ($list as $key => $value) {
+
+?>
+	<li class="<?= $key==$area ? 'active' : ''?>"><a href="/index.php?area=<?=$key?>"><i class="icon-chevron-right"></i> <?=$value?></a></li>
+<?php
+	}
+?>
 </ul>

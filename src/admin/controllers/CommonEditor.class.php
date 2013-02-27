@@ -86,6 +86,9 @@ class CommonEditor extends PrototypedEditor
 
 	protected function attachCollections(Model $model)
 	{
+		$model->set('languageList', Language::dao()->getList());
+		
+		/*
 		$fieldList = $this->subject->proto()->
 			getExpandedPropertyList();
 
@@ -140,7 +143,7 @@ class CommonEditor extends PrototypedEditor
 				}
 			}
 		}
-
+	*/
 		return $this;
 	}
 

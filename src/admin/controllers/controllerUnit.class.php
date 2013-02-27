@@ -17,4 +17,75 @@ final class controllerUnit extends CommonEditor
 	{
 		parent::__construct(Unit::create());
 	}
+	
+	public function doEdit(HttpRequest $request)
+	{
+		$mav = parent::doEdit($request);
+		$model = $mav->getModel();
+		
+		$list = Criteria::create(Unit_i18n::dao())->
+			add(
+				Expression::eqId('object', $this->getForm()->getValue('id'))
+			)->
+			getList();
+		
+		$i18nList = array();
+		foreach ($list as $item) {
+			$i18nList[$item->getLanguageId()] = $item;
+		}
+		
+		$i18n = Unit_i18n::proto()->getMapping();
+		
+		$model->
+			set('i18n',$i18n)->
+			set('i18nList', $i18nList);
+		
+		return $mav;
+	}
+	
+	public function doSave(HttpRequest $request)
+	{
+		$form = Form::create()->
+			add(
+				Primitive::set('i18n_id')
+			)->
+			add(
+				Primitive::set('i18n_field')
+			)->
+			import($request->getPost());
+		
+		$ids = $form->getValue('i18n_id');
+		$fields = $form->getValue('i18n_field');
+		
+		foreach ($fields['en'] as $name => $value) {
+			$request->setPostVar($name, $value);
+		}
+		
+		$mav = parent::doSave($request);
+		
+		$this->saveI18n($ids, $fields);
+		
+		return $mav;
+	}
+	
+	private function saveI18n($ids, $fields)
+	{
+		$languageList = Language::dao()->getList();
+		
+		foreach($ids as $code => $id) {
+			if (empty($id)) {
+				$i18n = Unit_i18n::create()->
+					setObject($this->getForm()->getValue('id'))->
+					setLanguage($languageList[$code]);
+			} else {
+				$i18n = Unit_i18n::dao()->getById($id);
+			}
+			
+			foreach ($fields[$code] as $name => $value) {
+				$i18n->{'set'.ucfirst($name)}($value);
+			}
+			
+			$i18n->dao()->take($i18n);
+		}
+	}
 }

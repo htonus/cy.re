@@ -7,6 +7,8 @@
 
 	class LanguageDAO extends AutoLanguageDAO
 	{
+		private $list = array();
+		
 		public function getByCode($code = 'en')
 		{
 			try {
@@ -17,5 +19,19 @@
 				else
 					return $this->getByCode('en');
 			}
+		}
+		
+		public function getList()
+		{
+			if (empty($this->list)) {
+				$list = $this->getPlainList();
+
+				$this->list = array();
+
+				foreach($list as $lang)
+					$this->list[$lang->getCode()] = $lang;
+			}
+			
+			return $this->list;
 		}
 	}
