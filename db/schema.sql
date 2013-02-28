@@ -33,14 +33,16 @@ CREATE TABLE "feature_type_group" (
     "name" CHARACTER VARYING(16) NULL,
     PRIMARY KEY("id")
 );
+insert into feature_type_group (id, name) values (1, 'indoor options');
+insert into feature_type_group (id, name) values (2, 'outdoor options');
 
 CREATE SEQUENCE "feature_type_id";
 CREATE TABLE "feature_type" (
     "id" BIGINT NOT NULL default nextval('feature_type_id'),
     "name" CHARACTER VARYING(16) NULL,
     "unit_id" BIGINT NOT NULL REFERENCES "unit"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+	"group_id" INTEGER NOT NULL REFERENCES "feature_type_group"("id") ON UPDATE CASCADE ON DELETE SET NULL,
 	"weight" INTEGER NOT NULL DEFAULT '1',
-	"group" INTEGER NOT NULL REFERENCES "feature_type_group"("id") ON UPDATE CASCADE ON DELETE SET NULL,
     PRIMARY KEY("id")
 );
 
