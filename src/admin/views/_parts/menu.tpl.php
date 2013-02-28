@@ -8,6 +8,8 @@
 			'title'	=> 'Dictionaries',
 			'items'	=> array(
 				'language'	=> 'Languages',
+				'unit'		=> 'Measurement units',
+				'featureType'	=> 'Property Feature Types',
 			)
 		),
 //		'unit'	=> 'Units',

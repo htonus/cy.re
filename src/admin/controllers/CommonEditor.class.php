@@ -79,7 +79,8 @@ class CommonEditor extends PrototypedEditor
 	 */
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
-		$criteria = Criteria::create($this->subject->dao());
+		$criteria = Criteria::create($this->subject->dao())->
+			addOrder('name');
 
 		return $criteria;
 	}
