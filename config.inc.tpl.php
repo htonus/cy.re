@@ -91,6 +91,8 @@
 	define('__LOCAL_DEBUG__', true);
 	define('BUGLOVERS', 'some.box@host.domain');
 	
+	// Default language 
+	GlobalVar::me()->set('language', Language::dao()->getByCode());
 	
 	// Extra consts
 	define('EXT_TMPL', '.tpl.php');

@@ -1,8 +1,6 @@
 Overview
 =====
 
-TO BUILD META: COMMENT makeSelectHead AND guessAtom IN i18nDAO (unfortunately)
-
 Every i18n object should be inherited from i18n object and has extra table for localized field values:
 
 	<class name="i18n">
