@@ -5,8 +5,5 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	final class FeatureDAO extends AutoFeatureDAO
-	{
-		// last chance for customization
-	}
+	class ProtoPicture extends AutoProtoPicture {/*_*/}
 ?>

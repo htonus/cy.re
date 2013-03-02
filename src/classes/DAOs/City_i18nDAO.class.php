@@ -5,8 +5,8 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	final class FeatureDAO extends AutoFeatureDAO
+	class City_i18nDAO extends AutoCity_i18nDAO
 	{
-		// last chance for customization
+		// your brilliant stuff goes here
 	}
 ?>

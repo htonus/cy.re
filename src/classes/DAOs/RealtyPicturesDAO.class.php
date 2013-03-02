@@ -5,32 +5,28 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	final class Feature extends AutoFeature implements Prototyped, DAOConnected
+	final class RealtyPicturesDAO extends OneToManyLinked
 	{
-		/**
-		 * @return Feature
-		**/
-		public static function create()
+		public function __construct(Realty $realty, $lazy = false)
 		{
-			return new self;
+			parent::__construct(
+				$realty,
+				Picture::dao(),
+				$lazy
+			);
 		}
 		
 		/**
-		 * @return FeatureDAO
+		 * @return RealtyPicturesDAO
 		**/
-		public static function dao()
+		public static function create(Realty $realty, $lazy = false)
 		{
-			return Singleton::getInstance('FeatureDAO');
+			return new self($realty, $lazy);
 		}
 		
-		/**
-		 * @return ProtoFeature
-		**/
-		public static function proto()
+		public function getParentIdField()
 		{
-			return Singleton::getInstance('ProtoFeature');
+			return 'realty_id';
 		}
-		
-		// your brilliant stuff goes here
 	}
 ?>

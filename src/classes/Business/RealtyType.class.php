@@ -5,10 +5,10 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	final class Feature extends AutoFeature implements Prototyped, DAOConnected
+	class RealtyType extends AutoRealtyType implements Prototyped, DAOConnected
 	{
 		/**
-		 * @return Feature
+		 * @return RealtyType
 		**/
 		public static function create()
 		{
@@ -16,19 +16,19 @@
 		}
 		
 		/**
-		 * @return FeatureDAO
+		 * @return RealtyTypeDAO
 		**/
 		public static function dao()
 		{
-			return Singleton::getInstance('FeatureDAO');
+			return Singleton::getInstance('RealtyTypeDAO');
 		}
 		
 		/**
-		 * @return ProtoFeature
+		 * @return ProtoRealtyType
 		**/
 		public static function proto()
 		{
-			return Singleton::getInstance('ProtoFeature');
+			return Singleton::getInstance('ProtoRealtyType');
 		}
 		
 		// your brilliant stuff goes here
