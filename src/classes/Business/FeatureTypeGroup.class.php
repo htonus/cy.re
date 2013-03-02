@@ -48,7 +48,9 @@
 				? GlobalVar::me()->get('language')->getCode()
 				: 'en';
 				
-			return $this->native[$lang];
+			return isset($this->native[$lang])
+				? $this->native[$lang]
+				: $this->native['en'];
 		}
 	}
 ?>
