@@ -20,6 +20,7 @@ final class Application
 		'unit',
 		'city',
 		'featureType',
+		'realtyType',
 		'property',
 		'language',
 	);

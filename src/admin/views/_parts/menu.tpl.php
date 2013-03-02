@@ -10,6 +10,7 @@
 				'language'	=> 'Languages',
 				'unit'		=> 'Measurement units',
 				'featureType'	=> 'Property Feature Types',
+				'realtyType'	=> 'Type of the realty',
 			)
 		),
 //		'unit'	=> 'Units',

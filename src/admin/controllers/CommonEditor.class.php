@@ -152,7 +152,7 @@ class CommonEditor extends PrototypedEditor
 	{
 		return ModelAndView::create()->setView(
 			new RedirectView(
-				'/index.php?area='.strtolower(get_class($this->subject))
+				'/index.php?area='.lcfirst(get_class($this->subject))
 			)
 		);
 	}

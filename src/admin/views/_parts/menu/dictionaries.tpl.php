@@ -2,7 +2,8 @@
 	$list = array(
 		'language'	=> 'Languages',
 		'unit'		=> 'Measurement Units',
-		'featureType' => 'Property Feature Types'
+		'featureType'	=> 'Property Feature Types',
+		'realtyType'	=> 'Types of the realty',
 	);
 
 ?>
