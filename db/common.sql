@@ -7,6 +7,8 @@ CREATE TABLE "language" (
     "active" BOOLEAN NOT NULL,
     PRIMARY KEY("id")
 );
+insert into "language" (name) values ('English', 'en', 'English', true);
+insert into "language" (name) values ('Russian', 'ru', 'Русский', true);
 
 
 CREATE SEQUENCE "unit_id";
