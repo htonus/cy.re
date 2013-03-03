@@ -26,47 +26,9 @@
 <input type="hidden" name="id" value="<?=$id?>" />
 
 
-<!--Tabs -->
-<ul class="nav nav-tabs">
 <?php
-	foreach ($languageList as $lang) {
+	$partViewer->view('_parts/form/i18n');
 ?>
-	<li class="<?= $lang->getCode() == 'en' ? 'active' : ''?>"><a href="#lang_<?=$lang->getCode()?>" data-toggle="tab"><?=$lang->getName()?></a></li>
-<?php
-	}
-?>
-</ul>
-
-
-<!--Form Language parts-->
-<div class="tab-content">
-<?php
-	foreach ($languageList as $lang) {
-?>
-	<div class="tab-pane<?= $lang->getCode() == 'en' ? ' active' : ''?>" id="lang_<?=$lang->getCode()?>">
-		
-		<input type="hidden" name="i18n_id[<?=$lang->getCode()?>]" value="<?= empty($i18nList[$lang->getId()]) ? '' : $i18nList[$lang->getId()]->getId() ?>" />
-		
-<?php
-		foreach ($i18n as $name => $field) {
-			if (in_array($name, array('id', 'language', 'object')))
-				continue;
-?>
-<div class="control-group">
-	<label class="control-label" for="input_<?=$name?>_<?=$lang->getCode()?>"><?=ucfirst($name)?></label>
-	<div class="controls">
-		<input type="text" id="input_<?=$name?>_<?=$lang->getCode()?>" placeholder="Enter <?=$name?> (<?=$lang->getCode()?>)" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" value="<?=empty($i18nList[$lang->getId()]) ? '' : $i18nList[$lang->getId()]->{'get'.ucfirst($name)}()?>" />
-    </div>
-</div>
-<?php
-		}
-?>
-		
-	</div>
-<?php
-	}
-?>
-</div>
 
 
 <div style="border-top: 1px #ddd solid; margin-bottom: 20px;"></div>

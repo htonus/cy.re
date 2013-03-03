@@ -41,7 +41,7 @@ class CommonEditor extends PrototypedEditor
 			$model->set('action', 'edit');
 		}
 		
-		$this->attachCollections($model);
+		$this->attachCollections($request, $model);
 
 		return $mav;
 	}
@@ -64,7 +64,6 @@ class CommonEditor extends PrototypedEditor
 		}
 		
 		$model->
-//			set('list', $list)-> // pager does
 			set('subject', $this->subject);
 
 		return ModelAndView::create()->
@@ -84,67 +83,11 @@ class CommonEditor extends PrototypedEditor
 
 		return $criteria;
 	}
-
-	protected function attachCollections(Model $model)
+	
+	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		$model->set('languageList', Language::dao()->getList());
 		
-		/*
-		$fieldList = $this->subject->proto()->
-			getExpandedPropertyList();
-
-		foreach ($fieldList as $name => $field) {
-			if (
-				in_array(
-					$field->getRelationId(),
-					array(MetaRelation::ONE_TO_ONE, MetaRelation::ONE_TO_MANY)
-				)
-			) {
-				try {
-					switch($field->getType()) {
-						case 'identifier':
-						case 'integerIdentifier':
-							$dao = call_user_func(array($field->getClassName(), 'dao'));
-							$total = $dao->getTotalCount();
-							$model->set($name.'Total', $total);
-
-							if ($total < 50)
-								$model->set($name.'List', $dao->getPlainList());
-							else
-								$model->set($name.'Lookup', $field->getClassName());
-
-							break;
-						case 'identifierList':
-							if ($this->getForm()->getValue('id')) {
-								$dao = $this->getForm()->getValue('id')->
-									{$field->getGetter()}();
-
-								$model->set($name.'List', $dao->getList());
-								$model->set($name.'Total', $dao->getCount());
-							} else {
-								$model->set($name.'List', array());
-								$model->set($name.'Total', 0);
-							}
-
-							break;
-
-						case 'enumeration':
-							$className = $field->getClassName();
-							$class = new $className(
-								call_user_func(array($className, 'getAnyId'))
-							);
-							$model->set($name.'List', $class->getObjectList());
-							$model->set($name.'Total', count($model->get($name.'List')));
-
-
-							break;
-					}
-				} catch (ObjectNotFoundException $e) {
-					$model->set($name.'List', array());
-				}
-			}
-		}
-	*/
 		return $this;
 	}
 

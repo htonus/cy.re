@@ -9,26 +9,20 @@
 	{
 		const I18N = '_i18n';
 		
-		protected $i18nProtoMapping	= array();
-		protected $languageField	= null;
-		protected $objectField		= null;
-		protected $i18nTable		= null;
-
 		public function makeSelectHead()
 		{
 			static $selectHead = array();
 			
 			if (!isset($selectHead[$className = $this->getObjectName()])) {
 				
-				$this->i18nSetup();
-				
-				$table = $this->getTable();
+				$table		= $this->getTable();
+				$i18nTable	= $this->getTable().self::I18N;
 				
 				$object =
 					OSQL::select()->
 					from($table)->
 					leftJoin(
-						$this->i18nTable,
+						$i18nTable,
 						Expression::andBlock(
 							Expression::eq(
 								DBField::create(
@@ -36,23 +30,25 @@
 									$table
 								),
 								DBField::create(
-									$this->objectField,
-									$this->i18nTable
+									'object_id',
+									$i18nTable
 								)
 							),
 							Expression::eqId(
 								DBField::create(
-									$this->languageField,
-									$this->i18nTable
+									'language_id',
+									$i18nTable
 								),
 								GlobalVar::me()->get('language')
 							)
 						)
 					);
 				
+				$mapping = $this->i18nMapping();
+				
 				foreach ($this->getFields() as $field) {
-					if (isset($this->i18nProtoMapping[$field]))
-						$object->get(new DBField($field, $this->i18nTable));
+					if (isset($mapping[$field]))
+						$object->get(new DBField($field, $i18nTable));
 					else
 						$object->get(new DBField($field, $table));
 				}
@@ -71,43 +67,69 @@
 			$prefix = null
 		)
 		{
-			$this->i18nSetup();
+			$mapping = $this->i18nMapping();
 			
 			if (
 				is_string($atom)
 				&& array_key_exists(
 					$atom,
-					$this->i18nProtoMapping
+					$mapping
 				)
 			) {
 				return new DBField(
-					$this->i18nProtoMapping[$atom],
-					$this->i18nTable
+					$mapping[$atom],
+					$this->getTable().self::I18N
 				);
 			}
 			
 			return parent::guessAtom($atom, $query, $table, $parentRequired, $prefix);
 		}
 		
-		private function i18nSetup()
+		private function i18nMapping()
 		{
-			if (empty($this->i18nProtoMapping)) {
-
-				$this->i18nProtoMapping =
-					call_user_func(
-						array($this->getObjectName().self::I18N, 'proto')
-					)->
+			static $mapping = array();
+			
+			if (!isset($mapping[$className = $this->getObjectName()])) {
+				$map = call_user_func(array($className.self::I18N, 'proto'))->
 					getMapping();
 				
-				$this->languageField	= $this->i18nProtoMapping['language'];
-				$this->objectField		= $this->i18nProtoMapping['object'];
-				$this->i18nTable		= $this->getTable().self::I18N;
+				unset($map['id']);
+				unset($map['language']);
+				unset($map['object']);
 				
-				unset($this->i18nProtoMapping['id']);
-				unset($this->i18nProtoMapping['language']);
-				unset($this->i18nProtoMapping['object']);
+				$mapping[$className] = $map;
 			}
 			
-			return $this;
+			return $mapping[$className];
+		}
+		
+		public function dropById($id)
+		{
+			$db = DBPool::me()->getByDao($this)->begin();
+			$result = 0;
+			
+			try {
+				$dao = call_user_func(array($this->getObjectName().self::I18N, 'dao'));
+				
+				$set = Criteria::create($dao)->
+					setProjection(
+						Projection::property('id')
+					)->
+					add(
+						Expression::eq('object', $id)
+					)->
+					getCustomList();
+				
+				if (!empty($set)) {
+					$dao->dropByIds(ArrayUtils::columnFromSet('id', $set));
+				}
+				
+				$result = parent::dropById($id);
+				$db->commit();
+			} catch (Exception $e) {
+				$db->rollback();
+			}
+			
+			return $result;
 		}
 	}

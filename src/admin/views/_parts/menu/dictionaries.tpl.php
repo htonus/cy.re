@@ -1,9 +1,10 @@
 <?php
 	$list = array(
-		'language'	=> 'Languages',
-		'unit'		=> 'Measurement Units',
-		'featureType'	=> 'Property Feature Types',
-		'realtyType'	=> 'Types of the realty',
+		'language'	=> 'Language',
+		'unit'		=> 'Measurement Unit',
+		'featureType'	=> 'Property Feature Type',
+		'realtyType'	=> 'Type of the Realty',
+		'city'		=> 'Citiy'
 	);
 
 ?>

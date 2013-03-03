@@ -16,12 +16,11 @@ final class Application
 	
 	private $allowedAreas = array(
 		'main',
-		'user',
 		'unit',
 		'city',
 		'featureType',
 		'realtyType',
-		'property',
+		'realty',
 		'language',
 	);
 		

@@ -11,10 +11,17 @@
  *
  * @author htonus
  */
-final class controllerUnit extends i18nEditor
+final class controllerCity extends i18nEditor
 {
 	public function __construct()
 	{
-		parent::__construct(Unit::create());
+		parent::__construct(City::create());
+	}
+	
+	protected function attachCollections(HttpRequest $request, Model $model)
+	{
+		$model->set('cityList', Criteria::create(City::dao())->getList());
+		
+		return parent::attachCollections($request, $model);
 	}
 }

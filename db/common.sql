@@ -28,7 +28,7 @@ CREATE TABLE "unit_i18n" (
 );
 CREATE INDEX unit_i18n_object_id_idx ON unit_i18n(object_id);
 CREATE INDEX unit_i18n_language_id_idx ON unit_i18n(language_id);
-
+CREATE UNIQUE INDEX unit_i18n_object_id_language_id_uidx ON "unit_i18n"("object_id", "language_id");
 
 
 CREATE SEQUENCE "city_id";
@@ -50,3 +50,4 @@ CREATE TABLE "city_i18n" (
 );
 CREATE INDEX city_i18n_object_id_idx ON city_i18n(object_id);
 CREATE INDEX city_i18n_language_id_idx ON city_i18n(language_id);
+CREATE UNIQUE INDEX city_i18n_object_id_language_id_uidx ON "city_i18n"("object_id", "language_id");

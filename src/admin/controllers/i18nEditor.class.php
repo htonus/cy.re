@@ -1,0 +1,179 @@
+<?php
+/******************************************************************************
+ *   Copyright (C) 2012 by Mikhail Cherviakov                                 *
+ *   email: htonus@gmail.com                                                  *
+ ******************************************************************************/
+/* $Id$ */
+
+
+/**
+ * User management controller
+ *
+ * @author htonus
+ */
+class i18nEditor extends CommonEditor
+{
+	const PER_PAGE = 20;
+	
+	protected $i18nSubject = null;
+
+	public function __construct($subject)
+	{
+		parent::__construct($subject);
+		
+		$this->i18nSubject = 
+			call_user_func(array(get_class($subject).'_i18n', 'create'));
+	}
+	
+	private function i18nSetRequest(HttpRequest $request)
+	{
+		$form = Form::create()->
+			add(
+				Primitive::set('i18n_id')
+			)->
+			add(
+				Primitive::set('i18n_field')
+			)->
+			import($request->getPost());
+		
+		$ids = $form->getValue('i18n_id');
+		$fields = $form->getValue('i18n_field');
+		
+		$request->setAttachedVar('i18n_ids', $ids);
+		$request->setAttachedVar('i18n_fields', $fields);
+		
+		foreach ($fields['en'] as $name => $value) {
+			$request->setPostVar($name, $value);
+		}
+		
+		return $this;
+	}
+	
+	public function doAdd(HttpRequest $request)
+	{
+		$this->i18nSetRequest($request);
+		return parent::doAdd($request);
+	}
+	
+	protected function addObject(
+		HttpRequest $request, Form $form, Identifiable $object
+	) {
+		$db = DBPool::me()->getLink();
+		$db->begin();
+		
+		try {
+			$object = parent::addObject($request, $form, $object);
+			$this->saveI18n($object, $request);
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollback();
+			$form->markWrong('id');
+		}
+		
+		return $object;
+	}	
+
+	public function doSave(HttpRequest $request)
+	{
+		$this->i18nSetRequest($request);
+		return parent::doSave($request);
+	}
+	
+	protected function saveObject(
+		HttpRequest $request, Form $form, Identifiable $object
+	) {
+		$db = DBPool::me()->getLink();
+		$db->begin();
+		
+		try {
+			$object = parent::saveObject($request, $form, $object);
+			$this->saveI18n($object, $request);
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollback();
+			$form->markWrong('id');
+		}
+		
+		return $object;
+	}
+	
+//	public function dropObject(
+//		HttpRequest $request, Form $form, Identifiable $object
+//	) {
+//		$db = DBPool::me()->getLink();
+//		$db->begin();
+//		
+//		try {
+//			$this->i18nSubject->dao()->dropBySubject($object);
+//			parent::dropObject($request, $form, $object);
+//			$db->commit();
+//		} catch (Exception $e) {
+//			$db->rollback();
+//			$form->markWrong('id');
+//		}
+//		
+//		return $object;
+//	}
+	
+
+	private function saveI18n(Identifiable $subject, HttpRequest $request)
+	{
+		$languageList = Language::dao()->getList();
+		$ids = $request->getAttachedVar('i18n_ids');
+		$fields = $request->getAttachedVar('i18n_fields');
+		
+		foreach($ids as $code => $id) {
+			if (empty($id)) {
+				$i18n = clone $this->i18nSubject;
+				$i18n->
+					setObject($subject)->
+					setLanguage($languageList[$code]);
+			} else {
+				$i18n = $this->i18nSubject->dao()->getById($id);
+			}
+			
+			foreach ($fields[$code] as $name => $value) {
+				$i18n->{'set'.ucfirst($name)}($value);
+			}
+			
+			$i18n->dao()->take($i18n);
+		}
+	}
+	
+	protected function attachCollections(HttpRequest $request, Model $model)
+	{
+		parent::attachCollections($request, $model);
+		
+		$i18n = array_diff_key(
+			$this->i18nSubject->proto()->getMapping(),
+			array_flip(array('language', 'object'))
+		);
+//		print_r($request->getAttached());
+		$i18nList = array();
+		
+		if (
+			$model->has('editorResult')
+			&& $model->get('editorResult') == PrototypedEditor::COMMAND_FAILED
+		) {
+			$i18nList = $request->getAttachedVar('i18n_fields');
+		} elseif ($this->getForm()->getValue('id')) {
+			$list = Criteria::create($this->i18nSubject->dao())->
+				add(
+					Expression::eqId('object', $this->getForm()->getValue('id'))
+				)->
+				getList();
+			
+			foreach ($list as $item) {
+				foreach ($i18n as $name => $field)
+					$i18nList[$item->getLanguage()->getCode()][$name] =
+						$item->{'get'.ucfirst($name)}();
+			}
+		}
+		
+		$model->
+			set('i18n',$i18n)->
+			set('i18nList', $i18nList);
+
+		return $this;
+	}
+}
