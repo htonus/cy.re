@@ -29,6 +29,10 @@ final class Application
 		$this->request = $request;
 	}
 
+	/**
+	 * @param HttpRequest $request
+	 * @return Application
+	 */
 	public static function create(HttpRequest $request)
 	{
 		return new self($request);
@@ -36,6 +40,7 @@ final class Application
 	
 	public function run()
 	{
+		// FIXME do real language set
 		$lang = Language::dao()->getByCode('en');
 		GlobalVar::me()->set('language', $lang);
 		

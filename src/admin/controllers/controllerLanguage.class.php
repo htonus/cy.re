@@ -16,7 +16,7 @@ final class controllerLanguage extends CommonEditor
 	public function __construct()
 	{
 		parent::__construct(Language::create());
-
+		
 		$this->getForm()->
 			drop('active')->
 			add(
@@ -24,12 +24,5 @@ final class controllerLanguage extends CommonEditor
 				optional()->
 				setDefault(false)
 			);
-	}
-	
-	protected function getListCriteria(HttpRequest $request, Model $model)
-	{
-		$criteria = parent::getListCriteria($request, $model);
-
-		return $criteria->addOrder('name');
 	}
 }

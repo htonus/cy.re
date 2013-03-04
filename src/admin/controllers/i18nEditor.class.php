@@ -41,8 +41,9 @@ class i18nEditor extends CommonEditor
 		
 		$request->setAttachedVar('i18n_ids', $ids);
 		$request->setAttachedVar('i18n_fields', $fields);
-		
-		foreach ($fields['en'] as $name => $value) {
+
+		// Setup main object with default language
+		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
 			$request->setPostVar($name, $value);
 		}
 		
@@ -97,25 +98,6 @@ class i18nEditor extends CommonEditor
 		return $object;
 	}
 	
-//	public function dropObject(
-//		HttpRequest $request, Form $form, Identifiable $object
-//	) {
-//		$db = DBPool::me()->getLink();
-//		$db->begin();
-//		
-//		try {
-//			$this->i18nSubject->dao()->dropBySubject($object);
-//			parent::dropObject($request, $form, $object);
-//			$db->commit();
-//		} catch (Exception $e) {
-//			$db->rollback();
-//			$form->markWrong('id');
-//		}
-//		
-//		return $object;
-//	}
-	
-
 	private function saveI18n(Identifiable $subject, HttpRequest $request)
 	{
 		$languageList = Language::dao()->getList();
@@ -148,7 +130,7 @@ class i18nEditor extends CommonEditor
 			$this->i18nSubject->proto()->getMapping(),
 			array_flip(array('language', 'object'))
 		);
-//		print_r($request->getAttached());
+		
 		$i18nList = array();
 		
 		if (
