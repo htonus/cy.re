@@ -89,7 +89,9 @@
 		{
 			static $mapping = array();
 			
-			if (!isset($mapping[$className = $this->getObjectName()])) {
+			if (!isset($mapping)) {
+				$className = $this->getObjectName();
+				
 				$map = call_user_func(array($className.self::I18N, 'proto'))->
 					getMapping();
 				
@@ -97,10 +99,10 @@
 				unset($map['language']);
 				unset($map['object']);
 				
-				$mapping[$className] = $map;
+				$mapping = $map;
 			}
 			
-			return $mapping[$className];
+			return $mapping;
 		}
 		
 		public function dropById($id)
