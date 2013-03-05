@@ -2,10 +2,12 @@
 /*
  * $Id$
  */
-?>
-
-<?php
-	$partViewer->view('_parts/site_title');
+	$partViewer->view(
+		'_parts/site_title',
+		Model::create()->
+			set('title', 'Welcome')->
+			set('hint', 'Cyprus-Realty.com back-office!')
+	);
 ?>
 
 <div class="row">
