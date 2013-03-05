@@ -38,6 +38,9 @@
 		const TOYLETS	= 4;
 		const PARKING_LOTS	= 5;
 		const PRICE_MONTHLY	= 6;	// for rent (future)
+		const FLOOR		= 7;
+		const FLOORS	= 8;
+		
 
 	}
 ?>

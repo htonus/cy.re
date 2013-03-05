@@ -27,7 +27,9 @@ final class controllerRealty extends i18nEditor
 		
 		$model->set(
 			'featureTypeList',
-			Criteria::create(FeatureType::dao())->getList()
+			ArrayUtils::convertObjectList(
+				Criteria::create(FeatureType::dao())->getList()
+			)
 		);
 
 		$model->set(

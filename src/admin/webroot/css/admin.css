@@ -3,7 +3,8 @@
 }
 
 #i18nBlock .tab-content {
-	border-left: 1px solid #ddd;
-	border-right: 1px solid #ddd;
+	border: 1px solid #ddd;
+	border-top: none;
 	padding-top: 20px;
+	margin-bottom: 20px;
 }

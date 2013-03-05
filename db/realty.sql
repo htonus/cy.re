@@ -3,9 +3,6 @@ CREATE TABLE "feature_type_group" (
     "name" CHARACTER VARYING(16) NULL,
     PRIMARY KEY("id")
 );
-insert into feature_type_group (id, name) values (1, 'indoor options');
-insert into feature_type_group (id, name) values (2, 'outdoor options');
-insert into feature_type_group (id, name) values (3, 'general options');
 
 
 CREATE TABLE "offer_type" (
@@ -13,13 +10,10 @@ CREATE TABLE "offer_type" (
     "name" CHARACTER VARYING(16) NOT NULL,
     PRIMARY KEY("id")
 );
-insert into offer_type (id, name) values (1, 'sale');
-insert into offer_type (id, name) values (2, 'rent');
 
 
 
-
-CREATE SEQUENCE "feature_type_id" START WITH 10;
+CREATE SEQUENCE "feature_type_id";
 CREATE TABLE "feature_type" (
     "id" INTEGER NOT NULL default nextval('feature_type_id'),
     "name" CHARACTER VARYING(16) NULL,
@@ -40,18 +34,9 @@ CREATE INDEX feature_type_i18n_object_id_idx ON feature_type_i18n(object_id);
 CREATE INDEX feature_type_i18n_language_id_idx ON feature_type_i18n(language_id);
 CREATE UNIQUE INDEX feature_type_i18n_object_id_language_id_uidx ON "feature_type_i18n"("object_id", "language_id");
 
--- The rest languages fillin with back-office editor
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'price', 1, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (2, 'area', 2, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (3, 'bedrooms', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (4, 'toylets', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (5, 'parking lots', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (6, 'monthly price', 3, 3, 10);
-insert into "feature_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "feature_type";
 
 
-
-CREATE SEQUENCE "realty_type_id" START WITH 10;
+CREATE SEQUENCE "realty_type_id";
 CREATE TABLE "realty_type" (
     "id" INTEGER NOT NULL,
     "name" CHARACTER VARYING(16) NOT NULL,
@@ -69,10 +54,6 @@ CREATE TABLE "realty_type_i18n" (
 CREATE INDEX realty_type_i18n_object_id_idx ON realty_type_i18n(object_id);
 CREATE INDEX realty_type_i18n_language_id_idx ON realty_type_i18n(language_id);
 CREATE UNIQUE INDEX realty_type_i18n_object_id_language_id_uidx ON "realty_type_i18n"("object_id", "language_id");
-
-insert into "realty_type" ("id", "name") values (1, 'house');
-insert into "realty_type" ("id", "name") values (2, 'appartments');
-insert into "realty_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "realty_type";
 
 
 

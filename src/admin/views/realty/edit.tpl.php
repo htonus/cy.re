@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h1><?=$id ? 'Update Unit: '.$form->getValue('id')->getName() : 'Add new Unit'?></h1>
+<h1><?=$id ? 'Update Realty site: '.$form->getValue('id')->getName() : 'Add new Realty site'?></h1>
 
 <?php
 	if ($errors = $form->getErrors()) {
@@ -25,28 +25,43 @@
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
 
+<div class="navbar">
+	<div class="navbar-inner">
+		<a class="brand" href="#">Sections</a>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tab_description" data-toggle="tab">Description</a></li>
+			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
+			<li><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
+		</ul>
+		<div class="controls pull-right">
+			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+			<button class="btn btn-primary" type="submit">Submit</button>
+		</div>
+	</div>
+</div>
 
+
+<div class="tab-content">
+	
+	<div class="tab-pane active" id="tab_description">
 <?php
 	$partViewer->view('_parts/form/i18n');
 ?>
+	</div>
 
-
-<div style="border-top: 1px #ddd solid; margin-bottom: 20px;"></div>
-
-<div class="control-group">
-	<label class="control-label" for="input_native">Price</label>
-	<div class="controls">
-		<input type="text" id="input_name" placeholder="Price" name="sign" value="<?=$form->getValue('id')?>" />
-    </div>
+	
+	<div class="tab-pane" id="tab_features">
+<?php
+	$partViewer->view('realty/parts/features');
+?>
+	</div>
+	
+	<div class="tab-pane" id="tab_pictures">
+		&nbsp;
+	</div>
+	
 </div>
-
-
-<div class="control-group">
-	<div class="controls">
-		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
-    </div>
-</div>
-
 
 </form>
+
+</div>
