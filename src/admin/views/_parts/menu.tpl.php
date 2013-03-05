@@ -13,6 +13,14 @@
 				'realtyType'	=> 'Type of the realty',
 			)
 		),
+		array(
+			'title'	=> 'Objects',
+			'items'	=> array(
+				'realty'	=> 'Realty Sites',
+				'article'	=> 'Articles',
+				'news'		=> 'News',
+			)
+		),
 //		'unit'	=> 'Units',
 //		'city'	=> 'Cities',
 //		'featureType'	=> 'Feature Types',

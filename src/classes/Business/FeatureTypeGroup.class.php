@@ -30,7 +30,10 @@
 		{
 			return new self(parent::getAnyId());
 		}
-		
+
+		/**
+		 * @return FeatureTypeGroup
+		 */
 		public static function getAnyObject()
 		{
 			return new self(self::getAnyId());

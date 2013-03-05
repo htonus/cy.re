@@ -26,6 +26,7 @@
 	
 	<class name="Unit" extends="i18n">
 		<properties>
+			<identifier name="id" />
 			<property name="name" type="String" size="16" required="false" />
 			<property name="sign" type="String" size="16" required="false" />
 			<!-- property name="cast" type="Integer" required="true" / >  <!- - representation (not sure) -->
@@ -63,6 +64,7 @@
 
 	<class name="FeatureType" extends="i18n">
 		<properties>
+			<identifier name="id" />
 			<property name="name" type="String" size="16" required="false" />
 			<property name="unit" type="Unit" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="group" type="FeatureTypeGroup" relation="OneToOne" required="false" fetch="lazy" />
@@ -83,6 +85,7 @@
 
 	<class name="RealtyType" extends="i18n">
 		<properties>
+			<identifier name="id" />
 			<property name="name" type="String" size="16" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
