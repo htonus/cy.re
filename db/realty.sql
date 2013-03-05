@@ -5,6 +5,7 @@ CREATE TABLE "feature_type_group" (
 );
 insert into feature_type_group (id, name) values (1, 'indoor options');
 insert into feature_type_group (id, name) values (2, 'outdoor options');
+insert into feature_type_group (id, name) values (3, 'general options');
 
 
 CREATE TABLE "offer_type" (
@@ -39,7 +40,13 @@ CREATE INDEX feature_type_i18n_object_id_idx ON feature_type_i18n(object_id);
 CREATE INDEX feature_type_i18n_language_id_idx ON feature_type_i18n(language_id);
 CREATE UNIQUE INDEX feature_type_i18n_object_id_language_id_uidx ON "feature_type_i18n"("object_id", "language_id");
 
-
+-- The rest languages fillin with back-office editor
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'price');
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'area');
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'bedrooms');
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'toylets');
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'parking lots');
+insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'monthly price');
 
 CREATE SEQUENCE "realty_type_id";
 CREATE TABLE "realty_type" (

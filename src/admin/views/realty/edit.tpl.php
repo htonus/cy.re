@@ -34,9 +34,9 @@
 <div style="border-top: 1px #ddd solid; margin-bottom: 20px;"></div>
 
 <div class="control-group">
-	<label class="control-label" for="input_native">Sign</label>
+	<label class="control-label" for="input_native">Price</label>
 	<div class="controls">
-		<input type="text" id="input_name" placeholder="Language native" name="sign" value="<?=$form->getValue('sign')?>" />
+		<input type="text" id="input_name" placeholder="Price" name="sign" value="<?=$form->getValue('id')?>" />
     </div>
 </div>
 

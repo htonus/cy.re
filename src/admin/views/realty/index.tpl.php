@@ -3,7 +3,7 @@
  * $Id$
  */
 
-	$url = '/index.php?area=unit&action=';
+	$url = '/index.php?area='.$area.'&action=';
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 

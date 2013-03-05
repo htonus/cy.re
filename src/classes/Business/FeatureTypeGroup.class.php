@@ -7,22 +7,27 @@
 
 	class FeatureTypeGroup extends Enumeration
 	{
-		const INDOOR	= 1;
+		const INDOOR		= 1;
 		const OUTDOOR	= 2;
-			
+		const GENERAL	= 3;
+
+		// FIXME: better to use tokens for Enumerations
 		protected $names = array(
-			self::INDOOR	=> 'Indoor options',
+			self::INDOOR		=> 'Indoor options',
 			self::OUTDOOR	=> 'Outdoor options',
+			self::GENERAL	=> 'General options',
 		);
 		
 		protected $native = array(
 			'ru'	=> array(
-				self::INDOOR	=> 'Внутридомовые опции',
+				self::INDOOR		=> 'Внутридомовые опции',
 				self::OUTDOOR	=> 'Наружные опции',
+				self::GENERAL	=> 'Основные опции',
 			),
 			'el'	=> array(
-				self::INDOOR	=> 'Indoor',
+				self::INDOOR		=> 'Indoor',
 				self::OUTDOOR	=> 'Outdoor',
+				self::GENERAL	=> 'General',
 			),
 		);
 		

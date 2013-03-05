@@ -15,7 +15,7 @@ final class controllerRealty extends i18nEditor
 {
 	public function __construct()
 	{
-		parent::__construct(Unit::create());
+		parent::__construct(Realty::create());
 	}
 
 	protected function attachCollections(HttpRequest $request, Model $model)
@@ -27,9 +27,16 @@ final class controllerRealty extends i18nEditor
 		
 		$model->set(
 			'featureTypeList',
-			FeatureType::dao()->getPlainList()
+			Criteria::create(FeatureType::dao())->getList()
 		);
-		
+
+		$model->set(
+			'featureList',
+			$this->getForm()->getValue('id')
+				? $this->getForm()->getValue('id')->getFeatureList()
+				: array()
+		);
+
 		return parent::attachCollections($request, $model);
 	}
 }

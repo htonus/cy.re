@@ -30,7 +30,21 @@
 		{
 			return Singleton::getInstance('ProtoRealty');
 		}
-		
-		// your brilliant stuff goes here
+
+		/**
+		 * Feature list indexed by FeatureType ids
+		 * @return type
+		 */
+		public function getFeatureList()
+		{
+			$list = parent::getFeatures(false);
+			
+			$out = array();
+			foreach ($list as $item) {
+				$out[$item->getType()->getId()] = $item;
+			}
+			
+			return $out;
+		}
 	}
 ?>

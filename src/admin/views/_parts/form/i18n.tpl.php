@@ -7,7 +7,9 @@
  */
 ?>
 
+<div id="i18nBlock">
 
+	
 <!--Tabs -->
 <ul class="nav nav-tabs">
 <?php
@@ -52,4 +54,7 @@
 <?php
 	}
 ?>
+</div>
+
+
 </div>
