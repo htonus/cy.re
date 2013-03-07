@@ -85,13 +85,11 @@
 			return parent::guessAtom($atom, $query, $table, $parentRequired, $prefix);
 		}
 		
-		private function i18nMapping()
+		public function i18nMapping()
 		{
 			static $mapping = array();
 			
-			if (!isset($mapping)) {
-				$className = $this->getObjectName();
-				
+			if (!isset($mapping[$className = $this->getObjectName()])) {
 				$map = call_user_func(array($className.self::I18N, 'proto'))->
 					getMapping();
 				
@@ -99,10 +97,10 @@
 				unset($map['language']);
 				unset($map['object']);
 				
-				$mapping = $map;
+				$mapping[$className] = $map;
 			}
 			
-			return $mapping;
+			return $mapping[$className];
 		}
 		
 		public function dropById($id)

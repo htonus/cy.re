@@ -43,7 +43,7 @@ final class Application
 		// FIXME do real language set
 		$lang = Language::dao()->getByCode('en');
 		GlobalVar::me()->set('language', $lang);
-		
+	RealtyType::dao()->getPlainList();	
 		$area = $this->getArea();
 		$controller = 'controller'.ucfirst($area);
 		
@@ -115,7 +115,7 @@ final class Application
 			$view = RedirectView::create(PATH_WEB_ADMIN.'error/404');
 		}
 		
-		$view->render($model);
+		echo i18nHelper::detokenize($view->toString($model));
 	}
 	
 	private function attachResolver()

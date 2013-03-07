@@ -11,7 +11,28 @@
 		const RENT	= 2;
 		
 		protected $names = array(
-			self::SALE	=> 'sale',
-			self::RENT	=> 'rent',
+			self::SALE	=> '_S__SALE___',
+			self::RENT	=> '_S__RENT___',
 		);
+		
+		public static function create()
+		{
+			return new self(parent::getAnyId());
+		}
+
+		/**
+		 * @return FeatureTypeGroup
+		 */
+		public static function sale()
+		{
+			return new self(self::SALE);
+		}
+		
+		/**
+		 * @return FeatureTypeGroup
+		 */
+		public static function rent()
+		{
+			return new self(self::RENT);
+		}
 	}

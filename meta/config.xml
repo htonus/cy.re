@@ -16,14 +16,33 @@
 		</properties>
 		<pattern name="DictionaryClass" />
 	</class>
-
-	<class name="i18n">
+	
+	<class name="i18n" type="abstract">
 		<properties>
-			<identifier name="id" />
+			<identifier/>
 		</properties>
 		<pattern name="AbstractClass" />
 	</class>
 	
+	<class name="Token" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="value" type="String" size="128" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Token_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="Token" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="value" type="String" size="128" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
 	<class name="Unit" extends="i18n">
 		<properties>
 			<identifier name="id" />

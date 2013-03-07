@@ -20,6 +20,8 @@ final class controllerFeatureType extends i18nEditor
 	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
+		parent::attachCollections($request, $model);
+		
 		$model->set(
 			'unitList',
 			Unit::dao()->getPlainList()
@@ -30,6 +32,6 @@ final class controllerFeatureType extends i18nEditor
 			FeatureTypeGroup::getAnyObject()->getObjectList()
 		);
 		
-		return parent::attachCollections($request, $model);
+		return $this;
 	}
 }

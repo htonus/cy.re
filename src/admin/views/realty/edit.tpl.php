@@ -46,6 +46,7 @@
 	<div class="tab-pane active" id="tab_description">
 <?php
 	$partViewer->view('_parts/form/i18n');
+	$partViewer->view('realty/parts/main');
 ?>
 	</div>
 

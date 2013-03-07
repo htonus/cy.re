@@ -56,8 +56,14 @@ insert into "realty_type" ("id", "name") values (1, 'house');
 insert into "realty_type" ("id", "name") values (2, 'appartments');
 insert into "realty_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "realty_type";
 
+insert into "token" ("name", "value") values ('SALE', 'sale');
+insert into "token" ("name", "value") values ('RENT', 'rent');
+insert into "token_i18n" ("object_id", "language_id", "value") select "id", 1, "value" from "token";
+
+
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;
 alter sequence "city_id" restart  with 10;
 alter sequence "feature_type_id" restart with 10;
 alter sequence "realty_type_id" restart  with 10;
+

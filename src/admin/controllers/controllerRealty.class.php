@@ -33,6 +33,18 @@ final class controllerRealty extends i18nEditor
 		);
 
 		$model->set(
+			'realtyTypeList',
+			ArrayUtils::convertObjectList(
+				Criteria::create(RealtyType::dao())->getList()
+			)
+		);
+		
+		$model->set(
+			'offerTypeList',
+			OfferType::sale()->getObjectList()
+		);
+
+		$model->set(
 			'featureList',
 			$this->getForm()->getValue('id')
 				? $this->getForm()->getValue('id')->getFeatureList()
