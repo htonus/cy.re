@@ -17,10 +17,8 @@
 		<pattern name="DictionaryClass" />
 	</class>
 	
-	<class name="i18n" type="abstract">
-		<properties>
-			<identifier/>
-		</properties>
+	<class name="i18n" type="abstract" extends="IdentifiableObject">
+		<properties/>
 		<pattern name="AbstractClass" />
 	</class>
 	
