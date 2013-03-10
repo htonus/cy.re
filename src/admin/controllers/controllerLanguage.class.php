@@ -18,11 +18,30 @@ final class controllerLanguage extends CommonEditor
 		parent::__construct(Language::create());
 		
 		$this->getForm()->
-			drop('active')->
-			add(
-				Primitive::ternary('active')->
-				optional()->
-				setDefault(false)
+			get('active')->
+				setDefault(false);
+		
+		$this->setMethodMapping('toggle', 'doToggle');
+	}
+	
+	protected function doToggle(HttpRequest $request)
+	{
+		$form = $this->getForm()->
+			importOne('id', $request->getGet());
+		
+		if ($language = $form->getValue('id')) {
+			$language->setActive(!$language->getActive());
+			
+			$this->subject->dao()->
+				save($language);
+		}
+		
+		return ModelAndView::create()->
+			setModel(
+				Model::create()->
+					set('subject', $language ? $language : $this->subject)->
+					set('editorResult', PrototypedEditor::COMMAND_SUCCEEDED)->
+					set('form', $form)
 			);
 	}
 }

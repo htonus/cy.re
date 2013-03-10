@@ -27,7 +27,7 @@
 			<td><?=$item->getName()?></td>
 			<td><?=$item->getNative()?></td>
 			<td><?=$item->getCode()?></td>
-			<td><span class="badge badge-<?=$item->isActive() ? 'success' : 'important'?>">&nbsp;</span></td>
+			<td><a href="/index.php?area=language&action=toggle&id=<?=$item->getId()?>" class="badge badge-<?=$item->isActive() ? 'success' : 'important'?>">&nbsp;</a></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>
