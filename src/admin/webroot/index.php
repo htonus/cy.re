@@ -2,20 +2,14 @@
 
 	define('MODE', 'admin');
 
-	$appPath =
-		realpath(
-			dirname(__FILE__).DIRECTORY_SEPARATOR
-			.'..'.DIRECTORY_SEPARATOR
-			.'..'.DIRECTORY_SEPARATOR
-			.'..'.DIRECTORY_SEPARATOR
-		)
+	$appPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))))
 		.DIRECTORY_SEPARATOR;
 
 	if (file_exists($appPath.'config.inc.php'))
 		require_once ($appPath.'config.inc.php');
 	else
 		require_once ($appPath.'config.inc.tpl.php');
-
+	
 	try {
 		if (!Session::isStarted())
 			Session::start();

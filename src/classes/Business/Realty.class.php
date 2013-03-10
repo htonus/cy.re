@@ -37,7 +37,7 @@
 		 */
 		public function getFeatureList()
 		{
-			$list = parent::getFeatures(false);
+			$list = $this->getFeatures();
 			
 			$out = array();
 			foreach ($list as $item) {

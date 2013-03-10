@@ -23,7 +23,7 @@
 		define('DOMAIN', 'real-estate.com.cy');
 
 	define('COOKIE_DOMAIN', '.'.DOMAIN);
-
+	
 	// paths
 	define('PATH_BASE', dirname(__FILE__).DS);
 	define('PATH_SOURCE', PATH_BASE.'src'.DS.PATH_SOURCE_DIR);
@@ -58,7 +58,7 @@
 	mb_internal_encoding(DEFAULT_ENCODING);
 	mb_regex_encoding(DEFAULT_ENCODING);
 	ini_set('upload_tmp_dir', PATH_UPLOAD);
-	ini_set('session.save_path', TEMP_PATH.'sessions'.DS);
+	ini_set('session.save_path', TEMP_PATH.'sessions');
 
 	define('DEFAULT_AREA', 'main');
 	define('DEFAULT_EMAIL', 'meincyp+test@gmail.com');

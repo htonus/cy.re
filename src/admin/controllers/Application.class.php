@@ -43,7 +43,7 @@ final class Application
 		// FIXME do real language set
 		$lang = Language::dao()->getByCode('en');
 		GlobalVar::me()->set('language', $lang);
-	RealtyType::dao()->getPlainList();	
+		
 		$area = $this->getArea();
 		$controller = 'controller'.ucfirst($area);
 		
