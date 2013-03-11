@@ -9,7 +9,18 @@
 	{
 		public function getByGroup(FeatureTypeGroup $group)
 		{
+			$out = array();
 			
+			try {
+				$list = $this->getPlainList();
+
+				foreach ($list as $feature) {
+					if ($feature->getGroup()->getId() == $group->getId())
+						$out[$feature->getId()] = $feature;
+				}
+			} catch (Exception $e) {/*_*/}
+			
+			return $out;
 		}
 	}
 ?>

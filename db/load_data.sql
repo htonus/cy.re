@@ -58,6 +58,10 @@ insert into "realty_type_i18n" ("object_id", "language_id", "name") select "id",
 
 insert into "token" ("name", "value") values ('SALE', 'sale');
 insert into "token" ("name", "value") values ('RENT', 'rent');
+insert into "token" ("name", "value") values ('INDOOR', 'indoor options');
+insert into "token" ("name", "value") values ('OUTDOOR', 'outdoor features');
+insert into "token" ("name", "value") values ('GENERAL', 'general features');
+
 insert into "token_i18n" ("object_id", "language_id", "value") select "id", 1, "value" from "token";
 
 

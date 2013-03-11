@@ -7,8 +7,6 @@
 		<div class="control-group">
 			<label class="control-label" for="input_offerType">Offer Type</label>
 			<div class="controls">
-				<select name="offerType" id="input_offerType">
-					<option value="">Please select...</option>
 <?php
 	$default = $form->getValue('offerType')
 		? $form->getValue('offerType')->getId()
@@ -16,11 +14,13 @@
 		
 	foreach ($offerTypeList as $item) {
 ?>
-					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?=$item->getName()?></option>
+				<label class="radio inline">
+					<input type="radio" name="offerType" id="offerType<?=$item->getId()?>" value="<?=$item->getId()?>">
+					<?=$item->getName()?>
+				</label>
 <?php
 	}
 ?>
-				</select>
 			</div>
 		</div>
 

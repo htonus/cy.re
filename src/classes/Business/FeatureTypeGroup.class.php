@@ -11,31 +11,17 @@
 		const OUTDOOR	= 2;
 		const GENERAL	= 3;
 
-		// FIXME: better to use tokens for Enumerations
 		protected $names = array(
-			self::INDOOR		=> 'Indoor options',
-			self::OUTDOOR	=> 'Outdoor options',
-			self::GENERAL	=> 'General options',
-		);
-		
-		protected $native = array(
-			'ru'	=> array(
-				self::INDOOR		=> 'Внутридомовые опции',
-				self::OUTDOOR	=> 'Наружные опции',
-				self::GENERAL	=> 'Основные опции',
-			),
-			'el'	=> array(
-				self::INDOOR		=> 'Indoor',
-				self::OUTDOOR	=> 'Outdoor',
-				self::GENERAL	=> 'General',
-			),
+			self::INDOOR	=> '_S__INDOOR___',
+			self::OUTDOOR	=> '_S__OUTDOOR___',
+			self::GENERAL	=> '_S__GENEREAL___',
 		);
 		
 		public static function create()
 		{
 			return new self(parent::getAnyId());
 		}
-
+		
 		/**
 		 * @return FeatureTypeGroup
 		 */
@@ -44,21 +30,19 @@
 			return new self(self::getAnyId());
 		}
 		
-		public function setId($id)
+		public static function indoor()
 		{
-			$this->native['en'] = $this->names;
-			return parent::setId($id);
+			return new self(FeatureTypeGroup::INDOOR);
 		}
-
-		public function getNameList()
+		
+		public static function outdoor()
 		{
-			$lang = GlobalVar::me()->has('language')
-				? GlobalVar::me()->get('language')->getCode()
-				: 'en';
-				
-			return isset($this->native[$lang])
-				? $this->native[$lang]
-				: $this->native['en'];
+			return new self(FeatureTypeGroup::OUTDOOR);
+		}
+		
+		public static function general()
+		{
+			return new self(FeatureTypeGroup::GENERAL);
 		}
 	}
 ?>

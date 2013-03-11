@@ -56,7 +56,6 @@
 <div class="control-group">
 	<label class="control-label" for="input_native">Options Group</label>
 	<div class="controls">
-		<select name="group">
 <?php
 	if ($id && !$form->getErrors())
 		$value = $form->getValue('group') ? $form->getValue('group')->getId() : null;
@@ -65,11 +64,13 @@
 	
 	foreach ($groupList as $item) {
 ?>
-	<option value="<?= $item->getId()?>"<?= $item->getId() == $value ? ' selected="selected"' : ''?>><?=$item->getName()?></option>
+		<label class="radio">
+			<input type="radio" name="group" id="input_group_<?=$item->getId()?>" value="<?=$item->getId()?>">
+			<?=$item->getName()?>
+		</label>
 <?php
 	}
 ?>
-		</select>
     </div>
 </div>
 

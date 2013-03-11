@@ -20,7 +20,9 @@
 			if (preg_match_all('/_(U|L|S|T)?__([^_]+)___/im', $content, $m)) {
 				
 				$cases	= $m[1];
-				$tokens	= $m[2];
+				$keys	= $m[2];
+				
+				$tokens = array_combine($keys, $cases);
 				
 //				GlobalVar::me()->set('language', Language::dao()->getByCode('ru'));
 				$set = Criteria::create(Token::dao())->
@@ -31,17 +33,15 @@
 						Projection::property('value')
 					)->
 					add(
-						Expression::in('name', $tokens)
+						Expression::in('name', $keys)
 					)->
 					getCustomList();
-				
-				$tokens = array_flip($tokens);
 				
 				foreach ($set as $row) {
 					$case = '';
 					
-					if (isset($cases[$tokens[$row['name']]])) {
-						$case = $cases[$tokens[$row['name']]];
+					if (!empty($tokens[$row['name']])) {
+						$case = $tokens[$row['name']];
 					}
 					
 					$content = mb_ereg_replace(
@@ -54,10 +54,12 @@
 				}
 				
 				if (!empty($tokens)) {
-					print_r($tokens);
-					
-					foreach ($tokens as $token => $i) {
-						$content = mb_ereg_replace('___'.$token.'___', $token, $content);
+					foreach ($tokens as $token => $case) {
+						$content = mb_ereg_replace(
+							'_[A-Z]?__'.$token.'___',
+							self::changeCase($token, i18nHelper::$cases[$case]),
+							$content
+						);
 					}
 				}
 			}
@@ -73,7 +75,7 @@
 				case self::LC:
 					return mb_convert_case($string, MB_CASE_LOWER);
 				case self::SC:
-					return ucfirst($string);
+					return ucfirst(self::changeCase($string, self::LC));
 				case self::TC:
 					return mb_convert_case($string, MB_CASE_TITLE);
 			}

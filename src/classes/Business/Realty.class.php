@@ -7,6 +7,8 @@
 
 	class Realty extends AutoRealty implements Prototyped, DAOConnected
 	{
+		private $featureList = array();
+		
 		/**
 		 * @return Realty
 		**/
@@ -37,14 +39,24 @@
 		 */
 		public function getFeatureList()
 		{
-			$list = $this->getFeatures();
-			
-			$out = array();
-			foreach ($list as $item) {
-				$out[$item->getType()->getId()] = $item;
+			if (empty($this->featureList)) {
+				$list = $this->getFeatures();
+
+				$this->featureList = array();
+				foreach ($list as $item) {
+					$this->featureList[$item->getType()->getId()] = $item;
+				}
 			}
 			
-			return $out;
+			return $this->featureList;
+		}
+		
+		public function getFeaturesByGroup(FeatureTypeGroup $group)
+		{
+			$list = $this->getFeatureList();
+			$types = FeatureType::dao()->getByGroup($group);
+			
+			return array_intersect_key($list, $types);
 		}
 	}
 ?>

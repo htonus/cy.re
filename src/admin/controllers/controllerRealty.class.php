@@ -20,18 +20,18 @@ final class controllerRealty extends i18nEditor
 
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
-		$model->set(
-			'featureGroupList',
-			FeatureTypeGroup::getAnyObject()->getObjectList()
-		);
+//		$model->set(
+//			'featureGroupList',
+//			FeatureTypeGroup::getAnyObject()->getObjectList()
+//		);
 		
-		$model->set(
-			'featureTypeList',
-			ArrayUtils::convertObjectList(
-				Criteria::create(FeatureType::dao())->getList()
-			)
-		);
-
+//		$model->set(
+//			'featureTypeList',
+//			ArrayUtils::convertObjectList(
+//				Criteria::create(FeatureType::dao())->getList()
+//			)
+//		);
+		
 		$model->set(
 			'realtyTypeList',
 			ArrayUtils::convertObjectList(
@@ -43,13 +43,17 @@ final class controllerRealty extends i18nEditor
 			'offerTypeList',
 			OfferType::sale()->getObjectList()
 		);
-
-		$model->set(
-			'featureList',
-			$this->getForm()->getValue('id')
-				? $this->getForm()->getValue('id')->getFeatureList()
-				: array()
-		);
+		
+		$list = $this->getForm()->getValue('id')
+			? $this->getForm()->getValue('id')->getFeatureList()
+			: array();
+		
+		$featureList = array();
+		foreach ($list as $id => $item) {
+			$featureList[$id] = $item->getValue();
+		}
+		
+		$model->set('featureList', $featureList);
 
 		return parent::attachCollections($request, $model);
 	}
