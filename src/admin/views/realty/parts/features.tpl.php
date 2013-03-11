@@ -12,7 +12,9 @@
 	);
 	
 	foreach ($features as $featureId) {
-		$featureName = ucfirst($featureTypeList[$featureId]->getName());
+		$featureName = empty($featureTypeList[$featureId])
+			? ''
+			: ucfirst($featureTypeList[$featureId]->getName())
 ?>
 
 		<div class="control-group">

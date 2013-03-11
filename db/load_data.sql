@@ -22,8 +22,8 @@ alter sequence "realty_id" restart;
 alter sequence "realty_i18n_id" restart;
 
 
-insert into "language" ("id", "name", "code", "native") values (1, 'English', 'en', 'English', true);
-insert into "language" ("id", "name", "code", "native") values (2, 'Russian', 'ru', 'Русский', true);
+insert into "language" ("id", "name", "code", "native", "active") values (1, 'English', 'en', 'English', true);
+insert into "language" ("id", "name", "code", "native", "active") values (2, 'Russian', 'ru', 'Русский', true);
 
 insert into "unit" ("id", "name", "sign") values (1, 'money', '&euro;');
 insert into "unit" ("id", "name", "sign") values (2, 'area', 'm<sup>2</sup>');

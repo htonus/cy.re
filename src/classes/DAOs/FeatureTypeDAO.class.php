@@ -7,6 +7,9 @@
 
 	class FeatureTypeDAO extends AutoFeatureTypeDAO
 	{
-		// your brilliant stuff goes here
+		public function getByGroup(FeatureTypeGroup $group)
+		{
+			
+		}
 	}
 ?>
