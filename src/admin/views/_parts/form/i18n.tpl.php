@@ -29,7 +29,7 @@
 ?>
 	<div class="tab-pane<?= $lang->getCode() == 'en' ? ' active' : ''?>" id="lang_<?=$lang->getCode()?>">
 		
-		<input type="hidden" name="i18n_id[<?=$lang->getCode()?>]" value="<?= empty($i18nList[$lang->getCode()]) ? '' : $i18nList[$lang->getCode()]['id'] ?>" />
+		<input type="hidden" name="i18n_id[<?=$lang->getCode()?>]" value="<?= empty($i18nList[$lang->getCode()]['id']) ? '' : $i18nList[$lang->getCode()]['id'] ?>" />
 		
 <?php
 		foreach ($i18n as $name => $field) {
