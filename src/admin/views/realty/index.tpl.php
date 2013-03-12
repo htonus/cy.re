@@ -13,17 +13,26 @@
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th>Sign</th>
+			<th>City</th>
+			<th>Type</th>
+			<th>Price</th>
+			<th>Created</th>
+			<th>Published</th>
 			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
 <?php
 	foreach ($list as $item) {
+		$featureList = $item->getFeaturesByGroup(FeatureTypeGroup::general());
 ?>
 		<tr>
 			<td><?=$item->getName()?></td>
-			<td><?=$item->getSign()?></td>
+			<td><?=$item->getCity()->getName()?></td>
+			<td><?=$item->getRealtyType()->getName()?></td>
+			<td><?=empty($featureList[FeatureType::PRICE]) ? '---' : number_format($featureList[FeatureType::PRICE]->getValue()) ?></td>
+			<td><?=$item->getCreated()->toString()?></td>
+			<td><?=$item->getPublished() ? $item->getPublished()->toString() : '---'?></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>

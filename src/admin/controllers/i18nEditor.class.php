@@ -64,9 +64,13 @@ class i18nEditor extends CommonEditor
 		
 		try {
 			$object = parent::addObject($request, $form, $object);
-			$this->saveI18n($object, $request);
-			$db->commit();
+			
+			if (!$form->getErrors()) {
+				$this->saveI18n($object, $request);
+				$db->commit();
+			}
 		} catch (Exception $e) {
+						print_r($e);
 			$db->rollback();
 			$form->markWrong('id');
 		}
@@ -88,8 +92,11 @@ class i18nEditor extends CommonEditor
 		
 		try {
 			$object = parent::saveObject($request, $form, $object);
-			$this->saveI18n($object, $request);
-			$db->commit();
+			
+			if (!$form->getErrors()) {
+				$this->saveI18n($object, $request);
+				$db->commit();
+			}
 		} catch (Exception $e) {
 			$db->rollback();
 			$form->markWrong('id');

@@ -2,15 +2,14 @@
 /*
  * $Id$
  */
-?>
 
-<?php
-	$partViewer->view(
-		'_parts/site_title',
-		Model::create()->
-			set('title', 'Realty sites')->
-			set('hint', 'Does not go to live unless are published by Moderator')
-	);
+	if ($action != 'edit')
+		$partViewer->view(
+			'_parts/site_title',
+			Model::create()->
+				set('title', 'Realty sites')->
+				set('hint', 'Does not go to live unless are published by Moderator')
+		);
 ?>
 <div class="container">
 	<div class="row">

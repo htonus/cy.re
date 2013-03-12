@@ -65,7 +65,7 @@
 	foreach ($groupList as $item) {
 ?>
 		<label class="radio">
-			<input type="radio" name="group" id="input_group_<?=$item->getId()?>" value="<?=$item->getId()?>">
+			<input type="radio" name="group" id="input_group_<?=$item->getId()?>" value="<?=$item->getId()?>" <?=$value == $item->getId() ? ' checked="checked"' : null?>>
 			<?=$item->getName()?>
 		</label>
 <?php
