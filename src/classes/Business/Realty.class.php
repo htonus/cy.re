@@ -40,8 +40,8 @@
 		public function getFeatureList()
 		{
 			if (empty($this->featureList)) {
-				$list = $this->getFeatures();
-
+				$list = $this->getFeatures()->getList();
+				
 				$this->featureList = array();
 				foreach ($list as $item) {
 					$this->featureList[$item->getType()->getId()] = $item;
