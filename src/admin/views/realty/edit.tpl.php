@@ -27,7 +27,7 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<a class="brand" href="#">Sections</a>
+		<b class="brand">Sections</b>
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab_description" data-toggle="tab">Description</a></li>
 			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
