@@ -46,7 +46,9 @@
 					
 					$content = mb_ereg_replace(
 						'_'.$case.'__'.$row['name'].'___',
-						i18nHelper::changeCase($row['value'], i18nHelper::$cases[$case]),
+						isset(i18nHelper::$cases[$case])
+							? i18nHelper::changeCase($row['value'], i18nHelper::$cases[$case])
+							: $row['value'],
 						$content
 					);
 					
