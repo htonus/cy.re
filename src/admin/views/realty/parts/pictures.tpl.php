@@ -20,6 +20,8 @@
 #fileContainer {
 	border: 1px solid #DDD;
 	min-height: 300px;
+	overflow-y: scroll;
+	overflow-wrap: normal;
 }
 #fileContainer > DIV {
 	float: left;
@@ -27,11 +29,17 @@
 	border: 5px solid #FFF;
 	padding: 5px;
 }
+#fileContainer > DIV:nth-child(odd) {
+	clear: both;
+}
 .file .preview {
 	text-align: center;
 }
 .highlite {
 	border: 1px solid #090 !important;
+}
+.file .control-group {
+	margin-bottom: 0px;
 }
 </style>
 
