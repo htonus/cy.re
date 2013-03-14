@@ -20,7 +20,7 @@
 
 <br/>
 
-<form name="editForm" action="/index.php" method="post" class="form-horizontal">
+<form name="editForm" action="/index.php" method="post" class="form-horizontal" id="fileUpload">
 <input type="hidden" name="area" value="<?=$area?>" />
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
@@ -29,9 +29,9 @@
 	<div class="navbar-inner">
 		<b class="brand">Sections</b>
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab_description" data-toggle="tab">Description</a></li>
+			<li><a href="#tab_description" data-toggle="tab">Description</a></li>
 			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
-			<li><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
+			<li class="active"><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
 		</ul>
 		<div class="controls pull-right">
 			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
@@ -43,7 +43,7 @@
 
 <div class="tab-content">
 	
-	<div class="tab-pane active" id="tab_description">
+	<div class="tab-pane" id="tab_description">
 <?php
 	$partViewer->view('_parts/form/i18n');
 	$partViewer->view('realty/parts/main');
@@ -57,8 +57,10 @@
 ?>
 	</div>
 	
-	<div class="tab-pane" id="tab_pictures">
-		&nbsp;
+	<div class="tab-pane active" id="tab_pictures">
+<?php
+	$partViewer->view('realty/parts/pictures');
+?>
 	</div>
 	
 </div>
