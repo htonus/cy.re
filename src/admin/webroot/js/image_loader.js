@@ -2,7 +2,7 @@ var ImageLoader = {
 	trigger:	'#fileTrigger',
 	button:		'#fileButton',
 	container:	'#fileContainer',
-	form:		'#fileupload',
+	form:		'#fileUpload',
 	
 	previewWidth:	180,
 	previewHeight:	120,

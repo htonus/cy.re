@@ -44,7 +44,7 @@
 </style>
 
 <input type="file" name="file[]" id="fileButton" multiple style="display: none;"/>
-<label for="images">Property Images (drag & drop in the field below or <span id="fileTrigger">press here</span> to add)</label>
+<label for="images">Realty Images (drag & drop in the field below or <span id="fileTrigger" class="badge">press here to add</span>)</label>
 <div id="fileContainer"></div>
 
 <script type="text/x-tmpl" id="tmplUpload">
