@@ -4,6 +4,7 @@
 <!-- $Id$ -->
 
 <metaconfiguration>
+
 <include file="user.xml" generate="true" />
 
 <classes>
@@ -17,25 +18,6 @@
 			<property name="active" type="Boolean" required="true" />
 		</properties>
 		<pattern name="DictionaryClass" />
-	</class>
-
-	<class name="Role">
-		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="16" required="true" />
-		</properties>
-		<pattern name="StraightMapping" />
-	</class>
-
-	<class name="User">
-		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="16" required="true" />
-			<property name="username" type="String" size="16" required="true" />
-			<property name="password" type="String" size="40" required="true" />
-			<property name="Role" type="Role" relation="OneToOne" required="true" fetch="lazy" />
-		</properties>
-		<pattern name="StraightMapping" />
 	</class>
 
 	<class name="i18n" type="abstract" extends="IdentifiableObject">

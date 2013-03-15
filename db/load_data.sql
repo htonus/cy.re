@@ -5,6 +5,9 @@ truncate "feature_type" cascade;
 truncate "feature_type_group" cascade;
 truncate "offer_type" cascade;
 truncate "realty_type" cascade;
+truncate "resource_type" cascade;
+truncate "access_type" cascade;
+truncate "person_status" cascade;
 
 
 alter sequence "language_id" restart;
@@ -64,6 +67,20 @@ insert into "token" ("name", "value") values ('GENERAL', 'general features');
 
 insert into "token_i18n" ("object_id", "language_id", "value") select "id", 1, "value" from "token";
 
+insert into resource_type ("id", "name") values (1, 'object');
+
+insert into access_type ("id", "name") values (1, 'Add');
+insert into access_type ("id", "name") values (2, 'Edit');
+insert into access_type ("id", "name") values (3, 'Save');
+insert into access_type ("id", "name") values (4, 'Drop');
+insert into access_type ("id", "name") values (5, 'Index');
+insert into access_type ("id", "name") values (6, 'Publish');
+
+insert into person_status ("id", "name") values (1, 'No access');
+insert into person_status ("id", "name") values (2, 'Readonly');
+insert into person_status ("id", "name") values (3, 'Normal');
+insert into person_status ("id", "name") values (4, 'Admin');
+insert into person_status ("id", "name") values (5, 'Full access');
 
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;

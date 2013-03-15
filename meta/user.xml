@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration>
+<classes>
+
+	<class name="ResourceType"><!-- Object, Folder(path)? -->
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="Resource">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="type" type="ResourceType" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="AccessType">
+	<!-- add, edit, update, delete, index(list), publish ? -->
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="false" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="Group">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="rules" type="GroupAccess" relation="OneToMany" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="GroupAccess">
+		<properties>
+			<identifier name="id" />
+			<property name="group" type="Group" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="resource" type="ResourceType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="access" type="AccessType" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="PersonStatus">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="false" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+	
+	<class name="Person">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="surname" type="String" size="16" required="false" />
+			<property name="email" type="String" size="32" required="true" />
+			<property name="status" type="PersonStatus" relation="OneToOne" required="true" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="username" type="String" size="16" required="true" />
+			<property name="password" type="String" size="40" required="true" />
+			<property name="groups" type="Group" relation="ManyToMany" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+</classes>
+</metaconfiguration>
