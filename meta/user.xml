@@ -36,6 +36,7 @@
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="16" required="true" />
+			<property name="text" type="String" size="256" required="false" />
 			<property name="rules" type="GroupAccess" relation="OneToMany" />
 		</properties>
 		<pattern name="StraightMapping" />

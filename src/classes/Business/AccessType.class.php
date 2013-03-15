@@ -23,6 +23,9 @@
 			self::PUBLISH	=> 'Publish',
 		);
 
+		/**
+		 * @return AccessType
+		 */
 		public static function add()
 		{
 			return new self(self::ADD);

@@ -14,6 +14,14 @@
 			)
 		),
 		array(
+			'title'	=> 'User management',
+			'items'	=> array(
+				'resource'	=> 'Resources',
+				'group'		=> 'Groups',
+				'person'	=> 'Users',
+			)
+		),
+		array(
 			'title'	=> 'Objects',
 			'items'	=> array(
 				'realty'	=> 'Realty Sites',

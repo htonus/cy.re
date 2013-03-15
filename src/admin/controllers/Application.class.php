@@ -13,7 +13,8 @@
 final class Application
 {
 	private $request = null;
-	
+
+//	use ACL instead
 	private $allowedAreas = array(
 		'main',
 		'unit',
@@ -22,6 +23,9 @@ final class Application
 		'realtyType',
 		'realty',
 		'language',
+		'resource',
+		'group',
+		'person'
 	);
 		
 	public function __construct(HttpRequest $request)

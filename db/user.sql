@@ -23,6 +23,7 @@ CREATE SEQUENCE "group_id";
 CREATE TABLE "group" (
     "id" INTEGER NOT NULL default nextval('group_id'),
     "name" CHARACTER VARYING(16) NOT NULL,
+	"text" CHARACTER VARYING(256) NULL,
     PRIMARY KEY("id")
 );
 

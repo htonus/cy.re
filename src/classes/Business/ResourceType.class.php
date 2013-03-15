@@ -13,6 +13,9 @@
 			self::OBJECT	=> 'object'
 		);
 
+		/**
+		 * @return ResourceType
+		 */
 		public static function object()
 		{
 			return new self(self::OBJECT);
