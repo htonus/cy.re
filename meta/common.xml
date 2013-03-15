@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration>
+<classes>
+
+	<class name="Language">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="code" type="String" size="2" required="true" />
+			<property name="native" type="String" size="16" required="true" />
+			<property name="active" type="Boolean" required="true" />
+		</properties>
+		<pattern name="DictionaryClass" />
+	</class>
+
+	<class name="i18n" type="abstract" extends="IdentifiableObject">
+		<properties/>
+		<pattern name="AbstractClass" />
+	</class>
+	
+	<class name="Token" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+			<property name="value" type="String" size="128" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Token_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="Token" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="value" type="String" size="128" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="City" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="latitude" type="Numeric" size="10,6" required="false" />
+			<property name="longitude" type="Numeric" size="10,6" required="false" />
+			<property name="region" type="City" relation="OneToOne" required="false" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	<class name="City_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="City" relation="OneToOne" required="true" fetch="lazy" column="object_id" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="16" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="ImageType">
+		<properties>
+			<identifier name="id" />
+		</properties>
+		<pattern name="SpookedEnumeration" />
+	</class>
+
+</classes>
+</metaconfiguration>
