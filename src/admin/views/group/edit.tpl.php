@@ -45,9 +45,9 @@
 	<tr>
 		<th>Resource \ Access</th>
 <?php
-	foreach ($accessTypeList as $item) {
+	foreach ($accessPlainList as $id => $name) {
 ?>
-		<th><?=$item->getName()?></th>
+		<th><?=$name?></th>
 <?php
 	}
 ?>
@@ -56,19 +56,24 @@
 
 <tbody>
 <?php
+	$rules = $form->getValue('id')
+		? $form->getValue('id')->getRuleList()
+		: array();
+	
 	foreach ($resourceList as $resource) {
 ?>
 	<tr>
 		<td><?=$resource->getName()?></td>
 <?php
-	foreach ($accessTypeList as $access) {
-		$checked = isset($rulePlainList[$resource->getId()][$access->getId()])
-			? 'checked="checked"'
-			: null;
+		foreach ($accessPlainList as $accessId => $accessName) {
+			$checked = isset($rules[$resource->getId()])
+				&& $rules[$resource->getId()]->getAccess() & $accessId
+				? 'checked="checked"'
+				: null;
 ?>
-		<td><input type="checkbox" name="rule[<?=$resource->getId()?>][<?=$access->getId()?>]" value="1" <?=$checked?> /></td>
+		<td><input type="checkbox" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
 <?php
-	}
+		}
 ?>
 	</tr>
 <?php
@@ -80,7 +85,7 @@
 <div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=resource'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=group'">Cancel</button>
     </div>
 </div>
 

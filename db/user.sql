@@ -12,11 +12,11 @@ CREATE TABLE "resource" (
     PRIMARY KEY("id")
 );
 
-CREATE TABLE "access_type" (
-    "id" INTEGER NOT NULL,
-    "name" CHARACTER VARYING(16) NULL,
-    PRIMARY KEY("id")
-);
+-- CREATE TABLE "access_type" (
+--     "id" INTEGER NOT NULL,
+--     "name" CHARACTER VARYING(16) NULL,
+--     PRIMARY KEY("id")
+-- );
 
 
 CREATE SEQUENCE "group_id";

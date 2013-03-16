@@ -17,11 +17,14 @@
 			self::DELETED	=> 'No access',	// no access
 			self::GUEST		=> 'Readonly',	// Read-only access to objects allowed by groups
 			self::NORMAL		=> 'Normal',	// According to the Groups
-			self::ADMIN		=> 'Normal',	// Full access to objects allowed by groups
+			self::ADMIN		=> 'Admin',	// Full access to objects allowed by groups
 			self::ROOT		=> 'Full access',	// Full access to evrything
 		);
 		
-		protected static function normal()
+		/**
+		 * @return PersonStatus
+		 */
+		public static function normal()
 		{
 			return new self(self::NORMAL);
 		}

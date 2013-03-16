@@ -31,6 +31,17 @@
 			return Singleton::getInstance('ProtoGroup');
 		}
 		
-		// your brilliant stuff goes here
+		public function getRuleList()
+		{
+			$list = $this->getRules()->getList();
+			
+			$out = array();
+			
+			foreach ($list as $item) {
+				$out[$item->getResourceId()] = $item;
+			}
+			
+			return $out;
+		}
 	}
 ?>

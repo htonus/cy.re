@@ -23,14 +23,14 @@
 		<pattern name="StraightMapping" />
 	</class>
 
-	<class name="AccessType">
-	<!-- add, edit, update, delete, index(list), publish ? -->
+<!--	<class name="AccessType">
+	 add, edit, update, delete, index(list), publish ? 
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="16" required="false" />
 		</properties>
 		<pattern name="EnumerationClass" />
-	</class>
+	</class>-->
 
 	<class name="Group">
 		<properties>
@@ -47,7 +47,7 @@
 			<identifier name="id" />
 			<property name="group" type="Group" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="resource" type="ResourceType" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="access" type="AccessType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="access" type="Integer" required="true" default="0" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
