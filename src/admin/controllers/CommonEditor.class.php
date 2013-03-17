@@ -41,7 +41,8 @@ class CommonEditor extends PrototypedEditor
 			$model->set('action', 'edit');
 		}
 		
-		$this->attachCollections($request, $model);
+		if (!$mav->viewIsRedirect())
+			$this->attachCollections($request, $model);
 
 		return $mav;
 	}

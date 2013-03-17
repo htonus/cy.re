@@ -72,9 +72,13 @@
 		<select name="status" id="input_status">
 			<option value="">- Choose status -</option>
 <?php
+	$default = $form->getValue('status')
+		? $form->getValue('status')->getId()
+		: null;
+	
 	foreach ($statusList as $item) {
 ?>
-			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
+			<option value="<?=$item->getId()?>" <?=$default == $item->getId() ? 'selected="selected"' : null ?>><?=$item->getName()?></option>
 <?php
 	}
 ?>
@@ -82,22 +86,6 @@
     </div>
 </div>
 
-
-<div class="control-group">
-	<label class="control-label" for="input_group">Groups</label>
-	<div class="controls">
-		<select name="group[]" id="input_group" multiselect>
-			<option value="">- Choose group -</option>
-<?php
-	foreach ($groupList as $item) {
-?>
-			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
-<?php
-	}
-?>
-		</select>
-    </div>
-</div>
 
 <div class="control-group">
 	<div class="controls">

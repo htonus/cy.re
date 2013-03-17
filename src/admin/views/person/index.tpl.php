@@ -32,6 +32,7 @@
 			<td><?=$groups?></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
+				<a href="<?=$url?>access&id=<?=$item->getId()?>">access</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>
 			</td>
 		</tr>
