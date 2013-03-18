@@ -7,8 +7,8 @@
 
 	final class Acl
 	{
-		private $user = null;
-		private $accessList = array();
+		private $status		= null;
+		private $accessList	= array();
 		private $resourceMap = array();
 		
 		public function __construct(Person $user)
@@ -18,16 +18,16 @@
 		
 		public function setUser(Person $user)
 		{
-			$this->user = $user;
-			return $this->setup();
+			return $this->setup($user);
 		}
 		
-		private function setup()
+		private function setup(Person $user)
 		{
 			$this->accessList = array();
 			$this->resourceMap = array();
 			
-			$groupIds = $this->user->getGroups(true)->getList();
+			$this->status = $user->getStatus()->getId();
+			$groupIds = $user->getGroups(true)->getList();
 			
 			if (empty($groupIds))
 				return $this;
@@ -65,8 +65,34 @@
 		
 		public function checkId($resourceId, $accessId)
 		{
-			return isset($this->accessList[$resourceId])
-				&& $this->accessList[$resourceId] & $accessId;
+			$hasAccess = false;
+			
+			switch ($this->status) {
+				case PersonStatus::DELETED:
+				case PersonStatus::ROOT:
+					$hasAccess = PersonStatus::ROOT == $this->status;
+					break;
+				
+				case PersonStatus::GUEST:
+				case PersonStatus::ADMIN:
+					if (
+						isset($this->accessList[$resourceId])
+						&& (
+							$accessId == Access::READ
+							|| $accessId == Access::LISTS
+						)
+					)
+						$hasAccess = PersonStatus::ADMIN == $this->status;
+					
+					break;
+					
+				case PersonStatus::NORMAL:
+					$hasAccess = isset($this->accessList[$resourceId])
+						&& $this->accessList[$resourceId] & $accessId;
+					break;
+			}
+			
+			return $hasAccess;
 		}
 		
 		public function canAdd($resource)
