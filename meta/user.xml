@@ -46,7 +46,7 @@
 		<properties>
 			<identifier name="id" />
 			<property name="group" type="Group" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="resource" type="ResourceType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="resource" type="Resource" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="access" type="Integer" required="true" default="0" />
 		</properties>
 		<pattern name="StraightMapping" />

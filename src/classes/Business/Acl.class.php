@@ -37,7 +37,7 @@
 					Expression::in('group', $groupIds)
 				)->
 				getList();
-			print_r($rules);
+			
 			foreach ($rules as $rule) {
 				$this->resourceMap[$rule->getResource()->getName()] =
 					$rule->getResource();

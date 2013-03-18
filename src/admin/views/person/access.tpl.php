@@ -37,7 +37,7 @@ var accessList = {
 
 function update_access()
 {
-	jq('#accessGrid CHECKBOX').removeAttr('checked');
+	jq('#accessGrid :checkbox').removeAttr('checked');
 	
 	jq('#input_group OPTION').each(function(i, groupId){
 		jq.each(accessList[jq(groupId).val()], function(resourceId, access){
@@ -60,6 +60,15 @@ jq(document).ready(function(){
 		group.remove();
 		update_access();
 	});
+	
+	jq('#delGroup').click(function(){
+		jq('#input_group :selected').each(function(){
+			jq(this).clone().appendTo(jq('#input_allowed_groups'));
+			jq(this).remove();
+		});
+		update_access();
+	});
+	
 	update_access();
 });
 </script>
@@ -69,7 +78,11 @@ jq(document).ready(function(){
 	<div class="controls">
 		<select name="groups" id="input_allowed_groups" multiselect>
 <?php
+	$userGroupIds = $user->getGroups(true)->getList();
+	
 	foreach ($groupList as $item) {
+		if (in_array($item->getId(), $userGroupIds))
+			continue;
 ?>
 			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
 <?php
@@ -84,7 +97,7 @@ jq(document).ready(function(){
 <div class="control-group input-append">
 	<label class="control-label" for="input_group">Participate Groups</label>
 	<div class="controls">
-		<select name="group[]" id="input_group" multiselect size="3">
+		<select name="group[]" id="input_group" multiple size="3">
 <?php
 	foreach ($user->getGroups()->getList() as $item) {
 ?>
@@ -93,7 +106,7 @@ jq(document).ready(function(){
 	}
 ?>
 		</select>
-		<button class="btn" type="button" name="submit" id="addGroup">Remove selected</button>
+		<button class="btn" type="button" name="submit" id="delGroup">Remove selected</button>
 	</div>
 </div>
 
