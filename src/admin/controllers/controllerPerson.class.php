@@ -73,7 +73,7 @@ final class controllerPerson extends CommonEditor
 		return parent::addObject($request, $form, $object);
 	}
 
-		protected function attachCollections(HttpRequest $request, Model $model)
+	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		$model->set(
 			'groupList',

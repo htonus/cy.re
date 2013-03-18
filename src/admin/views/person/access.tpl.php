@@ -6,32 +6,68 @@
 	$class = get_class($user);
 ?>
 
-<h1>Setup Access for User</h1>
+<h1>Setup Access for <?=$user->getUsername()?></h1>
 
 <br/>
 
-<form name="editForm" action="/index.php" method="post" class="form-horizontal">
+<form name="editForm" id="editForm" action="/index.php" method="post" class="form-horizontal">
 <input type="hidden" name="area" value="person" />
 <input type="hidden" name="action" value="access" />
 <input type="hidden" name="id" value="<?=$user->getId()?>" />
 
 
+<script type="text/javascript">
+var accessTypeList = [<?=implode(', ', array_keys($accessPlainList))?>];
+var accessList = {
+<?php
+	foreach ($groupList as $group) {
+		echo "\t".(empty($first) ? null : ',')."'{$group->getId()}': {\n";
+		$first = 1;
+		$comma = false;
+		
+		foreach ($group->getRules()->getList() as $rule) {
+			echo "\t".($comma ? ",\t" : "\t")."'{$rule->getResourceId()}': {$rule->getAccess()}\n";
+			$comma = true;
+		}
+		
+		echo "\t}\n";
+	}
+?>
+};
 
-<div class="control-group">
-	<label class="control-label" for="input_group">User</label>
+function update_access()
+{
+	jq('#accessGrid CHECKBOX').removeAttr('checked');
+	
+	jq('#input_group OPTION').each(function(i, groupId){
+		jq.each(accessList[jq(groupId).val()], function(resourceId, access){
+			jq.each(accessTypeList, function(i, accessType){
+				if (access & accessType)
+					jq('#rule_' + resourceId + '_' + accessType).attr('checked', 'checked');
+			});
+		});
+	});
+}
+
+jq(document).ready(function(){
+	jq('#editForm').submit(function(){
+		jq('#input_group OPTION').attr('selected', "selected");
+	});
+	
+	jq('#addGroup').click(function(){
+		var group = jq('#input_allowed_groups :selected');
+		jq(group.clone()).appendTo(jq('#input_group'));
+		group.remove();
+		update_access();
+	});
+	update_access();
+});
+</script>
+
+<div class="control-group input-append">
+	<label class="control-label" for="input_allowed_groups">Allowed Groups</label>
 	<div class="controls">
-		<?=$user->getName()?> <?=$user->getSurname()?>
-		(<?=$user->getUsername()?>)
-		<?=$user->getEmail()?>
-	</div>
-</div>
-
-
-<div class="control-group">
-	<label class="control-label" for="input_group">Groups</label>
-	<div class="controls">
-		<select name="group[]" id="input_group" multiselect>
-			<option value="">- Choose group -</option>
+		<select name="groups" id="input_allowed_groups" multiselect>
 <?php
 	foreach ($groupList as $item) {
 ?>
@@ -40,8 +76,27 @@
 	}
 ?>
 		</select>
+		<button class="btn" type="button" id="addGroup">Assign to user</button>
     </div>
 </div>
+
+
+<div class="control-group input-append">
+	<label class="control-label" for="input_group">Participate Groups</label>
+	<div class="controls">
+		<select name="group[]" id="input_group" multiselect size="3">
+<?php
+	foreach ($user->getGroups()->getList() as $item) {
+?>
+			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
+<?php
+	}
+?>
+		</select>
+		<button class="btn" type="button" name="submit" id="addGroup">Remove selected</button>
+	</div>
+</div>
+
 
 
 <table class="table table-striped">
@@ -58,11 +113,9 @@
 	</tr>
 </thead>
 
-<tbody>
+<tbody id="accessGrid">
 <?php
-	$rules = $form->getValue('id')
-		? $form->getValue('id')->getRuleList()
-		: array();
+	$acl = $user->getAcl();
 	
 	foreach ($resourceList as $resource) {
 ?>
@@ -70,12 +123,11 @@
 		<td><?=$resource->getName()?></td>
 <?php
 		foreach ($accessPlainList as $accessId => $accessName) {
-			$checked = isset($rules[$resource->getId()])
-				&& $rules[$resource->getId()]->getAccess() & $accessId
+			$checked = $acl->check($resource, $accessId)
 				? 'checked="checked"'
 				: null;
 ?>
-		<td><input type="checkbox" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
+		<td><input type="checkbox" id="rule_<?=$resource->getId()?>_<?=$accessId?>" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
 <?php
 		}
 ?>
@@ -89,7 +141,7 @@
 <div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=group'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=person'">Cancel</button>
     </div>
 </div>
 

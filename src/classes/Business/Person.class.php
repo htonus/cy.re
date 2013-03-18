@@ -31,6 +31,15 @@
 			return Singleton::getInstance('ProtoPerson');
 		}
 		
-		// your brilliant stuff goes here
+		private $acl = null;
+		
+		public function getAcl()
+		{
+			if (empty($this->acl)) {
+				$this->acl = new Acl($this);
+			}
+			
+			return $this->acl;
+		}
 	}
 ?>

@@ -5,45 +5,98 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	class Acl extends Singleton
+	final class Acl
 	{
 		private $user = null;
-		private $groups = array();
-		private $rules = array();
-
-		public static function me()
+		private $accessList = array();
+		private $resourceMap = array();
+		
+		public function __construct(Person $user)
 		{
-			parent::getInstance(__CLASS__);
+			$this->setUser($user);
 		}
-
+		
 		public function setUser(Person $user)
 		{
 			$this->user = $user;
+			return $this->setup();
 		}
-
-		public function getAccessListByUser(Person $user)
+		
+		private function setup()
 		{
-			$list = Criteria::create(Person::dao())->
-				setProjection(
-					Projection::chain()->
-					add(
-						Projection::property('groups.rules.resource')
-					)->
-					add(
-						Projection::property('groups.rules.access')
-					)
-				)->
-				add(
-					Expression::eqId('id', $user)
-				);
-
-			$list->toString();
-
-//				getCustomList();
+			$this->accessList = array();
+			$this->resourceMap = array();
 			
-//			foreach ($user->getGroups()->getList() as $group) {
-//				$group->getRules()->getList();
-//			}
+			$groupIds = $this->user->getGroups(true)->getList();
+			
+			if (empty($groupIds))
+				return $this;
+			
+			$rules = Criteria::create(GroupAccess::dao())->
+				add(
+					Expression::in('group', $groupIds)
+				)->
+				getList();
+			print_r($rules);
+			foreach ($rules as $rule) {
+				$this->resourceMap[$rule->getResource()->getName()] =
+					$rule->getResource();
+				
+				$this->accessList[$rule->getResourceId()] = $rule->getAccess()
+					| empty($this->accessList[$rule->getResourceId()])
+						? 0
+						: $this->accessList[$rule->getResourceId()];
+			}
+			
+			return $this;
+		}
+		
+		public function check($resource, $accessId)
+		{
+			if ($resource instanceof Resource)
+				$resourceId = $resource->getId();
+			elseif ($resource instanceof Identifiable)
+				$resourceId = $this->resourceMap[get_class($resource)];
+			else
+				$resourceId = $resource;
+			
+			return $this->checkId($resourceId, $accessId);
+		}
+		
+		public function checkId($resourceId, $accessId)
+		{
+			return isset($this->accessList[$resourceId])
+				&& $this->accessList[$resourceId] & $accessId;
+		}
+		
+		public function canAdd($resource)
+		{
+			return $this->check($resource, Access::ADD);
+		}
+		
+		public function canRead($resource)
+		{
+			return $this->check($resource, Access::READ);
+		}
+		
+		public function canUpdate($resource)
+		{
+			return $this->check($resource, Access::UPDATE);
+		}
+		
+		public function canDrop($resource)
+		{
+			return $this->check($resource, Access::DROP);
+		}
+		
+		public function canList($resource)
+		{
+			return $this->check($resource, Access::LISTS);
+		}
+		
+		public function canPublish($resource)
+		{
+			return $this->check($resource, Access::PUBLISH);
 		}
 	}
 ?>
