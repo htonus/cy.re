@@ -120,6 +120,7 @@ final class Application
 		}
 		
 		echo i18nHelper::detokenize($view->toString($model));
+//		$view->render($model);
 	}
 	
 	private function attachResolver()

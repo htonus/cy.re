@@ -21,7 +21,7 @@
 			setFiles($_FILES)->
 			setSession($_SESSION)->
 			setCookie($_COOKIE)->
-			setUrl(HttpUrl::parse($_SERVER['REQUEST_URI']));
+			setUrl(HttpUrl::create()->parse($_SERVER['REQUEST_URI']));
 		
 		Application::create($request)->run();
 		

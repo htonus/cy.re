@@ -70,21 +70,41 @@
 		setEncoding(DEFAULT_ENCODING)
 	);
 	
-	AutoloaderPool::get('onPHP')->
-		addPaths(array(
-			PATH_CLASSES,
-			PATH_CONTROLLERS,
-			PATH_CLASSES.'DAOs',
-			PATH_CLASSES.'Flow',
-			PATH_CLASSES.'Business',
-			PATH_CLASSES.'Proto',
-			PATH_CLASSES.'Helpers',
-			PATH_CLASSES.'Filters',
+	try {
+		Assert::classExists('AutoloaderPool');
 
-			PATH_CLASSES.'Auto'.DS.'Business',
-			PATH_CLASSES.'Auto'.DS.'Proto',
-			PATH_CLASSES.'Auto'.DS.'DAOs',
-		));
+		AutoloaderPool::get('onPHP')->
+			addPaths(array(
+				PATH_CLASSES,
+				PATH_CONTROLLERS,
+				PATH_CLASSES.'DAOs',
+				PATH_CLASSES.'Flow',
+				PATH_CLASSES.'Business',
+				PATH_CLASSES.'Proto',
+				PATH_CLASSES.'Helpers',
+				PATH_CLASSES.'Filters',
+
+				PATH_CLASSES.'Auto'.DS.'Business',
+				PATH_CLASSES.'Auto'.DS.'Proto',
+				PATH_CLASSES.'Auto'.DS.'DAOs',
+			));
+	} catch (Exception $e) {
+		set_include_path(
+			get_include_path().PS
+			.PATH_CLASSES.PS
+			.PATH_CONTROLLERS.PS
+			.PATH_CLASSES.'DAOs'.PS
+			.PATH_CLASSES.'Flow'.PS
+			.PATH_CLASSES.'Business'.PS
+			.PATH_CLASSES.'Proto'.PS
+			.PATH_CLASSES.'Helpers'.PS
+			.PATH_CLASSES.'Filters'.PS
+
+			.PATH_CLASSES.'Auto'.DS.'Business'.PS
+			.PATH_CLASSES.'Auto'.DS.'Proto'.PS
+			.PATH_CLASSES.'Auto'.DS.'DAOs'
+		);
+	}
 	
 	// magic_quotes_gpc must be off
 
