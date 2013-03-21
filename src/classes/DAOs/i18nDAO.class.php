@@ -11,16 +11,17 @@
 		
 		public function makeSelectHead()
 		{
-			static $selectHead = array();
+			static $selectHead_i18n = array();
 			
-			if (!isset($selectHead[$className = $this->getObjectName()])) {
+			$object = parent::makeSelectHead();
+			
+			if (!isset($selectHead_i18n[$className = $this->getObjectName()])) {
 				
 				$table		= $this->getTable();
 				$i18nTable	= $this->getTable().self::I18N;
 				
-				$object =
-					OSQL::select()->
-					from($table)->
+				$object->
+					dropFields()->
 					leftJoin(
 						$i18nTable,
 						Expression::andBlock(
@@ -53,10 +54,10 @@
 						$object->get(new DBField($field, $table));
 				}
 				
-				$selectHead[$className] = $object;
+				$selectHead_i18n[$className] = $object;
 			}
 			
-			return clone $selectHead[$className];
+			return clone $selectHead_i18n[$className];
 		}
 		
 		public function guessAtom(
