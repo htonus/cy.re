@@ -18,6 +18,7 @@ final class controllerMain extends MethodMappedController
 			setMethodMappingList(
 				array(
 					'index'	=> 'actionIndex',
+					'error'	=> 'actionError',
 				)
 			)->
 			setDefaultAction('index');
@@ -40,5 +41,19 @@ final class controllerMain extends MethodMappedController
 			setModel($model);
 		
 		return $mav;
+	}
+
+	public function actionError(HttpRequest $request)
+	{
+		if ($request->hasSessionVar('flash.message')) {
+			$error = $request->getSessionVar('flash.message');
+		} else {
+			$error = 'Unknown error occured. Contact support.';
+		}
+
+		return ModelAndView::create()->
+			setModel(
+				Model::create()->set('error', $error)
+			);
 	}
 }

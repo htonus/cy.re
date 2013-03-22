@@ -56,7 +56,9 @@ final class Application
 				$chain = new $controller;
 				break;
 		}
-		
+
+		$chain = new AuthFilter($controller);
+
 		$this->attachResolver();
 		
 		$mav = $chain->handleRequest($this->request);

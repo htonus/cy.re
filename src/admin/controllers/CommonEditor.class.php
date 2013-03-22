@@ -15,6 +15,16 @@ class CommonEditor extends PrototypedEditor
 {
 	const PER_PAGE = 20;
 
+	private $accessMapping = array(
+		'drop'		=> Access::DROP,
+		'take'		=> Access::UPDATE,
+		'save'		=> Access::UPDATE,
+		'edit'		=> Access::READ,
+		'add'		=> Access::ADD,
+		'index'		=> Access::LISTS,
+		'publish'	=> Access::PUBLISH,
+	);
+
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
@@ -27,22 +37,33 @@ class CommonEditor extends PrototypedEditor
 
 	public function handleRequest(HttpRequest $request)
 	{
-		$mav = parent::handleRequest($request);
-		$model = $mav->getModel();
-		$request->setAttachedVar('layout', 'default');
-		
-		if (
-			$model->has('editorResult')
-			&& $model->get('action') != 'edit'
-		) {
-			if ($model->get('editorResult') == self::COMMAND_SUCCEEDED)
-				return $this->getRedirectMav($request);
+		if (!$this->checkAccess($request)) {
+			Session::assign(
+				'flash.message',
+				'You do not have access to the requested object and action. If you consider this an error, please contact support'
+			);
 			
-			$model->set('action', 'edit');
-		}
+			$mav = ModelAndView::create()->setView(
+				RedirectView::create('/?area=main&action=error')
+			);
+		} else {
+			$mav = parent::handleRequest($request);
+			$model = $mav->getModel();
+			$request->setAttachedVar('layout', 'default');
 		
-		if (!$mav->viewIsRedirect())
-			$this->attachCollections($request, $model);
+			if (
+				$model->has('editorResult')
+				&& $model->get('action') != 'edit'
+			) {
+				if ($model->get('editorResult') == self::COMMAND_SUCCEEDED)
+					return $this->getRedirectMav($request);
+
+				$model->set('action', 'edit');
+			}
+
+			if (!$mav->viewIsRedirect())
+				$this->attachCollections($request, $model);
+		}
 
 		return $mav;
 	}
@@ -99,5 +120,26 @@ class CommonEditor extends PrototypedEditor
 				'/index.php?area='.lcfirst(get_class($this->subject))
 			)
 		);
+	}
+
+	/**
+	 * Ckecks if the user has access to the resource
+	 * @param HttpRequest $request
+	 * @return boolean
+	 */
+	private function checkAccess(HttpRequest $request)
+	{
+		if (
+			$request->hasServerVar('user')
+			&& ($action = $this->chooseAction($request))
+			&& isset($this->accessMapping[$action])
+		) {
+			$user = $request->getServerVar('user');
+
+			return $user->getAcl()->
+				check($this->subject, $this->accessMapping[$action]);
+		}
+
+		return false;
 	}
 }

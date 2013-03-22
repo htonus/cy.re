@@ -32,7 +32,11 @@
 		}
 		
 		private $acl = null;
-		
+
+		/**
+		 * Get Acl object to check access to the resources
+		 * @return Acl $object
+		 */
 		public function getAcl()
 		{
 			if (empty($this->acl)) {
