@@ -15,9 +15,7 @@ final class filterUserSession extends RequestFilter
 	const COOKIE_NAME	= 'autoLogin';
 	const COOKIE_EXPIRE	= '1 year';
 	
-	private $inner = null;
-
-	protected function preFilter(HttpRequest $request)
+	public function handleRequest(HttpRequest $request)
 	{
 		if (
 			($user = Session::get('user'))
@@ -27,20 +25,17 @@ final class filterUserSession extends RequestFilter
 			$request->setAttachedVar('user', $user);
 		}
 
-		if ($user && $request->hasGetVar('signout')) {
+		if ($request->hasGetVar('signout')) {
 			$this->doLogout($request);
-			$user = null;
+			
+			return ModelAndView::create()->setView(
+				RedirectView::create('/?area=main&action=login')
+			);
 		}
 		
 		$request->setAttachedVar('user', $user);
-		
-		if ($request->hasAttachedVar('redirect')) {
-			$mav = ModelAndView::create()->
-				setView(
-					RedirectView::create($request->getAttachedVar('redirect'))
-				);
-		} else
-			$mav = $this->inner->handleRequest($request);
+
+		$mav = $this->controller->handleRequest($request);
 		
 		if (!$mav->viewIsRedirect())
 			$mav->getModel()->
@@ -53,7 +48,7 @@ final class filterUserSession extends RequestFilter
 	{
 		$form = Form::create()->
 			add(
-				Primitive::string('email')->
+				Primitive::string('username')->
 					addImportFilter(Filter::trim())
 			)->
 			add(
@@ -71,7 +66,7 @@ final class filterUserSession extends RequestFilter
 		$user = null;
 		
 		if ($hash = $form->getValue('password')) {
-			$user = User::dao()->login($form->getValue('email'), $hash);
+			$user = Person::dao()->login($form->getValue('username'), $hash);
 			
 			if ($user) {
 				Session::assign('user', $user);
@@ -81,9 +76,11 @@ final class filterUserSession extends RequestFilter
 					$user = $user->dao()->save($user->setAutoLogin($cookie));
 					$this->setAutoLoginCookie($cookie);
 				}
-				
-				$backUrl = $request->getAttachedVar('query');
-				
+
+				$url = $request->hasAttachedVar('query')
+					? $request->getAttachedVar('query')
+					: '/?area=main';
+
 				if (Session::get('backUrl')) {
 					$backUrl = Session::get('backUrl');
 					Session::drop('backUrl');
@@ -120,7 +117,6 @@ final class filterUserSession extends RequestFilter
 	{
 		Session::drop('user');
 		$this->setAutoLoginCookie(null, Timestamp::makeNow()->spawn('-1 hour'));
-		$request->setAttachedVar('redirect', PATH_WEB.$request->getAttachedVar('query'));
 		
 		return $this;
 	}
