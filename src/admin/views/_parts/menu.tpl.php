@@ -39,16 +39,19 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<a class="brand" href="#">Cyprus-Realty.com</a>
+<?php
+	if (!empty($user)) {
+?>
 			<ul class="nav">
 				<li><a href="/">Home</a></li>
 <?php
 
-	foreach ($menu as $item) {
-		if (empty($item['items'])) {
+		foreach ($menu as $item) {
+			if (empty($item['items'])) {
 ?>
 				<li><a href="/index.php?area=<?=$_area?>"><?=$item['title']?></a></li>
 <?php
-		} else {
+			} else {
 ?>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -57,20 +60,27 @@
 					</a>
 					<ul class="dropdown-menu">
 <?php		
-			foreach ($item['items'] as $_area => $_title) {
+				foreach ($item['items'] as $_area => $_title) {
 ?>
 						<li><a href="/index.php?area=<?=$_area?>"><?=$_title?></a></li>
 <?php
-			}
+				}
 ?>
 					</ul>
 				</li>
 <?php
 
+			}
 		}
-	}
 ?>
 			</ul>
+			<ul class="pull-right nav">
+				<li><a href="#">Hi, <?=$user->getName()?></a></li>
+				<li><a href="/?area=main&action=logout">Sign out?</a></li>
+			</ul>
+<?php
+	}
+?>
 		</div>
 	</div>
 </div>

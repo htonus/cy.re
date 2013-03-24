@@ -70,6 +70,7 @@
 			<property name="created" type="Timestamp" required="true" />
 			<property name="username" type="String" size="16" required="true" />
 			<property name="password" type="String" size="40" required="true" />
+			<property name="autologin" type="String" size="40" required="false" />
 			<property name="groups" type="Group" relation="ManyToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />

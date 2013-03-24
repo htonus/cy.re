@@ -14,20 +14,6 @@ final class Application
 {
 	private $request = null;
 
-//	use ACL instead
-	private $allowedAreas = array(
-		'main',
-		'unit',
-		'city',
-		'featureType',
-		'realtyType',
-		'realty',
-		'language',
-		'resource',
-		'group',
-		'person'
-	);
-		
 	public function __construct(HttpRequest $request)
 	{
 		$this->request = $request;
@@ -48,7 +34,7 @@ final class Application
 		$lang = Language::dao()->getByCode('en');
 		GlobalVar::me()->set('language', $lang);
 		
-		$area = $this->getArea();
+		$area = $this->getAreaAndAction();
 		$controller = 'controller'.ucfirst($area);
 		
 		switch ($area) {
@@ -57,7 +43,7 @@ final class Application
 				break;
 		}
 
-		$chain = new AuthFilter($controller);
+		$chain = new AuthFilter($chain);
 
 		$this->attachResolver();
 		
@@ -66,24 +52,27 @@ final class Application
 		$this->render($mav);
 	}
 	
-	private function getArea()
+	private function getAreaAndAction()
 	{
-		$area = Form::create()->
+		$form = Form::create()->
 			add(
 				Primitive::string('area')->
 				addImportFilter(Filter::trim())->
 				setDefault(DEFAULT_AREA)
 			)->
+			add(
+				Primitive::string('action')->
+				addImportFilter(Filter::trim())->
+				setDefault('index')
+			)->
 			import($this->request->getGet())->
-			importMore($this->request->getPost())->
-			getActualValue('area');
+			importMore($this->request->getPost());
 		
-		if (!in_array($area, $this->allowedAreas))
-			throw new SecurityException('error:404');
+		$this->request->
+			setAttachedVar('area', $form->getActualValue('area'))->
+			setAttachedVar('action', $form->getActualValue('action'));
 		
-		$this->request->setAttachedVar('area', $area);
-		
-		return $area;
+		return $form->getActualValue('area');
 	}
 	
 	private function render(ModelAndView $mav)

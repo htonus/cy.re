@@ -7,6 +7,8 @@
 
 	class Person extends AutoPerson implements Prototyped, DAOConnected
 	{
+		const COOKIE_NAME = 'autoLogin';
+		
 		/**
 		 * @return Person
 		**/

@@ -55,6 +55,7 @@ CREATE TABLE "person" (
     "email" CHARACTER VARYING(32) NOT NULL,
     "username" CHARACTER VARYING(16) NOT NULL,
     "password" CHARACTER VARYING(40) NOT NULL,
+    "autologin" CHARACTER VARYING(40) NULL,
     PRIMARY KEY("id")
 );
 

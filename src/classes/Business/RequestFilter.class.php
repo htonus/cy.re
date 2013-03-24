@@ -4,40 +4,21 @@
  *
  * Does preFilter and post filter actinos
  */
-	class Requestfilter implements Controller
+	abstract class RequestFilter implements Controller
 	{
-		private $filterChain = null;
+		protected $controller = null;
 
-		public function __construct(Controller $chain)
+		public function __construct(Controller $controller)
 		{
-			$this->filterChain = $chain;
+			$this->controller = $controller;
 		}
 		
 		/**
-		 * 
 		 * @param HttpRequest $request
 		 * @return Requestfilter $object
 		 */
-		public static function create(Controller $chain)
+		public static function create(Controller $controller)
 		{
-			return new self($chain);
-		}
-
-		public function handleRequest(\HttpRequest $request)
-		{
-			if ($this->preFilter($request))
-				$mav = $this->filterChain->handleRequest($request);
-
-			return $this->postFilter($request, $mav);
-		}
-
-		protected function /* boolean */ preFilter(HttpRequest $request)
-		{
-			return true;
-		}
-
-		protected function /* ModelAndView */ postFilter(HttpRequest $request, ModelAndView $mav)
-		{
-			return $mav;
+			return new self($controller);
 		}
 	}

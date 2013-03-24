@@ -7,6 +7,5 @@
 
 	class PersonDAO extends AutoPersonDAO
 	{
-		// your brilliant stuff goes here
 	}
 ?>
