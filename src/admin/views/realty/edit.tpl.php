@@ -20,7 +20,14 @@
 
 <br/>
 
-<form name="editForm" action="/index.php" method="post" class="form-horizontal">
+<!-- form name="editForm" action="/index.php" method="post" class="form-horizontal" -->
+<form
+	id="fileupload"
+	action="/index.php"
+	method="POST"
+	enctype="multipart/form-data"
+	class="form-horizontal"
+>
 
 <input type="hidden" name="area" value="<?=$area?>" />
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />

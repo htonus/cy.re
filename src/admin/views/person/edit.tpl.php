@@ -77,6 +77,11 @@
 		: null;
 	
 	foreach ($statusList as $item) {
+		if (
+			$item->getId() == PersonStatus::ROOT
+			&& !$user->isSuper()
+		)
+			continue;
 ?>
 			<option value="<?=$item->getId()?>" <?=$default == $item->getId() ? 'selected="selected"' : null ?>><?=$item->getName()?></option>
 <?php

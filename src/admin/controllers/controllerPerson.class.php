@@ -20,6 +20,7 @@ final class controllerPerson extends CommonEditor
 		$this->getForm()->drop('created');
 		
 		$this->setMethodMapping('access', 'doAccess');
+		$this->setAccessMapping('access', Access::UPDATE);
 	}
 	
 	protected function doAccess(HttpRequest $request)
@@ -33,16 +34,21 @@ final class controllerPerson extends CommonEditor
 				Primitive::identifierlist('group')->
 				of('Group')
 			)->
+			add(
+				Primitive::boolean('submit')->
+				required()->
+				setDefault(false)
+			)->
 			import($request->getGet())->
 			importMore($request->getPost());
 		
 		$object = $form->getValue('id');
 		$mav = ModelAndView::create();
 		
-		if ($groups = $form->getValue('group')) {
+		if ($form->getActualValue('submit')) {
 			$object->getGroups()->
 				fetch()->
-				setList($groups)->
+				setList($form->getValue('group'))->
 				save();
 			
 			$mav->setView(
@@ -50,7 +56,7 @@ final class controllerPerson extends CommonEditor
 			);
 		} else {
 			$mav->getModel()->
-				set('user', $object)->
+				set('subject', $object)->
 //				set('groupList', Criteria::create(Group::dao())->getList())->
 				set('resourceList', Criteria::create(Resource::dao())->getList())->
 				set('accessPlainList', Access::getNames());

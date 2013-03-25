@@ -31,7 +31,7 @@
 	$html->css('bootstrap-responsive.min');
 	$html->css('docs');
 	$html->css('admin');
-	$html->js('jquery-1.7.2.min');
+	$html->js('jquery-1.9.1.min');
 	$html->js('bootstrap.min');
 	
 	$html->jsRaw('

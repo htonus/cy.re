@@ -3,17 +3,17 @@
  * $Id$
  */
 	
-	$class = get_class($user);
+	$class = get_class($subject);
 ?>
 
-<h1>Setup Access for <?=$user->getUsername()?></h1>
+<h1>Setup Access for <?=$subject->getUsername()?></h1>
 
 <br/>
 
 <form name="editForm" id="editForm" action="/index.php" method="post" class="form-horizontal">
 <input type="hidden" name="area" value="person" />
 <input type="hidden" name="action" value="access" />
-<input type="hidden" name="id" value="<?=$user->getId()?>" />
+<input type="hidden" name="id" value="<?=$subject->getId()?>" />
 
 
 <script type="text/javascript">
@@ -78,7 +78,7 @@ jq(document).ready(function(){
 	<div class="controls">
 		<select name="groups" id="input_allowed_groups" multiselect>
 <?php
-	$userGroupIds = $user->getGroups(true)->getList();
+	$userGroupIds = $subject->getGroups(true)->getList();
 	
 	foreach ($groupList as $item) {
 		if (in_array($item->getId(), $userGroupIds))
@@ -99,7 +99,7 @@ jq(document).ready(function(){
 	<div class="controls">
 		<select name="group[]" id="input_group" multiple size="3">
 <?php
-	foreach ($user->getGroups()->getList() as $item) {
+	foreach ($subject->getGroups()->getList() as $item) {
 ?>
 			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
 <?php
@@ -128,7 +128,7 @@ jq(document).ready(function(){
 
 <tbody id="accessGrid">
 <?php
-	$acl = $user->getAcl();
+	$acl = $subject->getAcl();
 	
 	foreach ($resourceList as $resource) {
 ?>
@@ -140,7 +140,7 @@ jq(document).ready(function(){
 				? 'checked="checked"'
 				: null;
 ?>
-		<td><input type="checkbox" id="rule_<?=$resource->getId()?>_<?=$accessId?>" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
+		<td><input type="checkbox" disabled id="rule_<?=$resource->getId()?>_<?=$accessId?>" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
 <?php
 		}
 ?>
@@ -153,7 +153,7 @@ jq(document).ready(function(){
 
 <div class="control-group">
 	<div class="controls">
-		<button class="btn btn-primary" type="submit">Submit</button>
+		<button class="btn btn-primary" name="submit" type="submit">Submit</button>
 		<button class="btn" type="button" onclick="document.location.href='/index.php?area=person'">Cancel</button>
     </div>
 </div>

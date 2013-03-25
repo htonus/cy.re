@@ -3,11 +3,17 @@
  * $Id$
  */
 
-	$file = PATH_SOURCE.'webroot/css/'.$name.'.css';
-	
-	if (file_exists($file)) {
-		$time = filemtime($file);
+	if (!is_array($name)) {
+		$name = array($name);
+	}
+
+	foreach ($name as $css) {
+		$file = PATH_SOURCE.'webroot/css/'.$css.'.css';
+
+		if (file_exists($file)) {
+			$time = filemtime($file);
 ?>
-	<link rel="stylesheet" type="text/css" href="<?=PATH_WEB_CSS.$name?>.css?<?=$time?>" />
+	<link rel="stylesheet" type="text/css" href=<?=PATH_WEB_CSS.$css?>.css?<?=$time?>" />
 <?php
+		}
 	}

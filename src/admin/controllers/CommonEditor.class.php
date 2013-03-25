@@ -15,16 +15,8 @@ class CommonEditor extends PrototypedEditor
 {
 	const PER_PAGE = 20;
 
-	private $accessMapping = array(
-		'drop'		=> Access::DROP,
-		'take'		=> Access::UPDATE,
-		'save'		=> Access::UPDATE,
-		'edit'		=> Access::READ,
-		'add'		=> Access::ADD,
-		'index'		=> Access::LISTS,
-		'publish'	=> Access::PUBLISH,
-	);
-
+	private $accessMapping = array();
+	
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
@@ -33,8 +25,20 @@ class CommonEditor extends PrototypedEditor
 
 		$this->setMethodMapping('index', 'doIndex')->
 			setDefaultAction('index');
+		
+		$this->setAccessMapping(
+			array(
+				'drop'		=> Access::DROP,
+				'take'		=> Access::UPDATE,
+				'save'		=> Access::UPDATE,
+				'edit'		=> Access::READ,
+				'add'		=> Access::ADD,
+				'index'		=> Access::LISTS,
+				'publish'	=> Access::PUBLISH,
+			)
+		);
 	}
-
+	
 	public function handleRequest(HttpRequest $request)
 	{
 		if (!$this->checkAccess($request)) {
@@ -49,8 +53,10 @@ class CommonEditor extends PrototypedEditor
 		} else {
 			$mav = parent::handleRequest($request);
 			$model = $mav->getModel();
-			$request->setAttachedVar('layout', 'default');
-		
+			
+			if (!$request->hasAttachedVar('layout'))
+				$request->setAttachedVar('layout', 'default');
+			
 			if (
 				$model->has('editorResult')
 				&& $model->get('action') != 'edit'
@@ -130,16 +136,30 @@ class CommonEditor extends PrototypedEditor
 	private function checkAccess(HttpRequest $request)
 	{
 		if (
-			$request->hasServerVar('user')
+			$request->hasAttachedVar('user')
 			&& ($action = $this->chooseAction($request))
 			&& isset($this->accessMapping[$action])
 		) {
-			$user = $request->getServerVar('user');
+			$user = $request->getAttachedVar('user');
 
 			return $user->getAcl()->
 				check($this->subject, $this->accessMapping[$action]);
 		}
 
 		return false;
+	}
+	
+	protected function setAccessMapping($first, $second = null)
+	{
+		if (!is_array($first))
+			$first = array($first => $second);
+		
+		foreach ($first as $key => $value) {
+			$this->accessMapping[$key] = empty($second)
+				? $value
+				: $second;
+		}
+		
+		return $this;
 	}
 }

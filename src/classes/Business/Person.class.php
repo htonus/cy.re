@@ -47,5 +47,10 @@
 			
 			return $this->acl;
 		}
+		
+		public function isSuper()
+		{
+			return $this->getStatus()->getId() == PersonStatus::ROOT;
+		}
 	}
 ?>

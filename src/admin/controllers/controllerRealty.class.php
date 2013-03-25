@@ -25,8 +25,55 @@ final class controllerRealty extends i18nEditor
 			add(
 				Primitive::set('feature')
 			);
+		
+		$this->setMethodMapping('picture', 'doPicture');
+		
+		$this->setAccessMapping('picture', Access::UPDATE);
 	}
-
+	
+	protected function doPicture(HttpRequest $request)
+	{
+		$request->setAttachedVar('layout', 'json');
+		
+		$form = Form::create()->
+			add(
+				Primitive::integerIdentifier('id')->
+				of('Realty')
+			)->
+			add(
+				Primitive::set('files')
+			)->
+			add(
+				Primitive::integer('list')
+			)->
+			import($request->getGet())->
+			importMore($request->getPost())->
+			importMore($request->getFiles());
+		
+		$mav = ModelAndView::create();
+		
+		if ($form->getValue('list')) {
+			$out = array();
+			
+			foreach ($form->getValue('id')->getPictures()->getList() as $img) {
+				$out[] = array(
+					'delete_type'	=> 'DELETE',
+					'delete_url'	=> '/?area=realty&action=drop_picture&id='.$img->getId(),
+					'name'			=> $img->getName(),
+					'size'			=> $img->getSize(),
+					'thumbnail_url'	=> $item->getThumbnailUrl(),
+					'type'			=> $item->getType()->getMimeType(),
+					'url'			=> $item->getUrl(),
+				);
+			}
+			
+			return $mav->
+				setModel(
+					Model::create()->set('data', array('files', $out))
+				);
+		}
+	}
+	
 	protected function addObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {

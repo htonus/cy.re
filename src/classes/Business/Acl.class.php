@@ -53,9 +53,14 @@
 		
 		public function check($resource, $accessId)
 		{
+			$resourceId = null;
+			
 			if ($resource instanceof Resource)
 				$resourceId = $resource->getId();
-			elseif ($resource instanceof Identifiable)
+			elseif (
+				$resource instanceof Identifiable
+				&& isset($this->resourceMap[get_class($resource)])
+			)
 				$resourceId = $this->resourceMap[get_class($resource)];
 			else
 				$resourceId = $resource;
