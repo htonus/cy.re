@@ -26,12 +26,18 @@ final class controllerRealty extends i18nEditor
 				Primitive::set('feature')
 			);
 		
-		$this->setMethodMapping('picture', 'doPicture');
+		$list = array(
+			'get_pictures'	=> 'doGetPictures',
+			'add_pictures'	=> 'doAddPictures',
+			'drop_picture'	=> 'doDropPicture',
+		);
 		
-		$this->setAccessMapping('picture', Access::UPDATE);
+		$this->setMethodMappingList($list);
+		
+		$this->setAccessMapping($list, Access::UPDATE);
 	}
 	
-	protected function doPicture(HttpRequest $request)
+	protected function doAddPictures(HttpRequest $request)
 	{
 		$request->setAttachedVar('layout', 'json');
 		
@@ -43,35 +49,47 @@ final class controllerRealty extends i18nEditor
 			add(
 				Primitive::set('files')
 			)->
-			add(
-				Primitive::integer('list')
-			)->
 			import($request->getGet())->
 			importMore($request->getPost())->
 			importMore($request->getFiles());
 		
 		$mav = ModelAndView::create();
 		
-		if ($form->getValue('list')) {
-			$out = array();
+		if ($files = $form->getValue('files')) {
 			
-			foreach ($form->getValue('id')->getPictures()->getList() as $img) {
-				$out[] = array(
-					'delete_type'	=> 'DELETE',
-					'delete_url'	=> '/?area=realty&action=drop_picture&id='.$img->getId(),
-					'name'			=> $img->getName(),
-					'size'			=> $img->getSize(),
-					'thumbnail_url'	=> $item->getThumbnailUrl(),
-					'type'			=> $item->getType()->getMimeType(),
-					'url'			=> $item->getUrl(),
-				);
-			}
-			
-			return $mav->
-				setModel(
-					Model::create()->set('data', array('files', $out))
-				);
 		}
+	}
+	
+	protected function doGetPictures(HttpRequest $request)
+	{
+		$request->setAttachedVar('layout', 'json');
+		
+		$form = Form::create()->
+			add(
+				Primitive::integerIdentifier('id')->
+				of('Realty')
+			)->
+			import($request->getGet())->
+			importMore($request->getPost());
+		
+		$mav = ModelAndView::create();
+		$out = array();
+		
+		foreach ($form->getValue('id')->getPictures()->getList() as $picture) {
+			$out[] = array(
+				'delete_type'	=> 'DELETE',
+				'delete_url'	=> '/?area=realty&action=drop_picture&id='.$picture->getId(),
+				'name'			=> $picture->getName(),
+				'size'			=> $picture->getSize(),
+				'thumbnail_url'	=> $picture->getThumbnailUrl(),
+				'type'			=> $picture->getType()->getMimeType(),
+				'url'			=> $picture->getUrl(),
+			);
+		}
+		
+		return $mav->setModel(
+			Model::create()->set('data', array('files', $out))
+		);
 	}
 	
 	protected function addObject(

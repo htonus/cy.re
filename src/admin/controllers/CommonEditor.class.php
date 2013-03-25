@@ -70,7 +70,7 @@ class CommonEditor extends PrototypedEditor
 			if (!$mav->viewIsRedirect())
 				$this->attachCollections($request, $model);
 		}
-
+		
 		return $mav;
 	}
 

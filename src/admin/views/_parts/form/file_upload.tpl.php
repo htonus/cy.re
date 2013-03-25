@@ -39,7 +39,8 @@ jq(document).ready(function () {
     jq('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: '/?area=realty&action=picture&id=<?=$form->getValue('id')->getId()?>'
+        url: '/?area=realty&action=add_pictures&id=<?=$form->getValue('id')->getId()?>',
+        list_url: '/?area=realty&action=get_pictures&id=<?=$form->getValue('id')->getId()?>'
     });
 
     // Enable iframe cross-domain access via redirect option:
@@ -56,7 +57,7 @@ jq(document).ready(function () {
 	jq.ajax({
 		// Uncomment the following to send cross-domain cookies:
 		//xhrFields: {withCredentials: true},
-		url: jq('#fileupload').fileupload('option', 'url') + '&list=1',
+		url: jq('#fileupload').fileupload('option', 'list_url'),
 		dataType: 'json',
 		context: jq('#fileupload')[0]
 	}).done(function (result) {
