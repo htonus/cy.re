@@ -7,6 +7,85 @@
 
 	class PictureDAO extends AutoPictureDAO
 	{
-		// your brilliant stuff goes here
+		public function add(Identifiable $object)
+		{
+			if ($tmpName = $object->getUploadName()) {
+				$info = getimagesize($tmpName);
+				
+				$object->
+					setWidth($info[0])->
+					setHeight($info[1]);
+				
+				$db = DBPool::me()->getByDao($this)->begin();
+				
+				try {
+					$object = parent::add($object);
+					$object->getId();
+					$path = PATH_PIX.implode(DS, str_split($name, 2));
+					if (file_exists(PATH_PIX));
+					if (is_writable()) {
+
+					}
+
+					$type = ImageType::createByFileName($object->getName());
+
+					if ($type->getMimeType() != $object->getTypeId())
+						throw new WrongArgumentException();
+				} catch(WrongArgumentException $e) {
+					$type = $this->getImageTypeByMimeType($file['type']);
+				}
+
+				$object->setType($type);
+
+				if ($info = getimagesize($tmpName)) {
+					$object->
+						setWidth($info[0])->
+						setHeight($info[1]);
+				} else {
+					throw new DatabaseException();
+				}
+			} else {
+				throw new WrongArgumentException('No upload file name');
+			}
+			
+			try {
+				if ($object->isMain()) {
+					$this->dropMain($object->getProperty());
+				}
+				
+				$db = DBPool::me()->getLink($this->getLinkName())->begin();
+				
+				if ($object = parent::add($object)) {
+			 		$path = PATH_PIX.$object->getId().'.'.$type->getExtension();
+					
+					if (!move_uploaded_file($tmpName, $path))
+						throw new DatabaseException();
+					
+					$db->commit();
+				} else
+					throw new DatabaseException();
+			} catch (DatabaseException $e) {
+				$db->rollback();
+			}
+		
+			return $object;
+		}
+		
+		public function dropMain(Property $property)
+		{
+			try {
+				$picture = $this->getByLogic(
+					Expression::andBlock(
+						Expression::eqId('property', $property),
+						Expression::isTrue('main')
+					)
+				);
+				
+				if ($picture->getId()) {
+					$this->save($picture->setMain(false));
+				}
+			} catch (DatabaseException $e) {/*_*/}
+			
+			return $this;
+		}
 	}
-?>
