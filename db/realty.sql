@@ -112,6 +112,7 @@ CREATE TABLE "picture" (
     "type_id" INTEGER NOT NULL,
     "name" CHARACTER VARYING(128) NOT NULL,
     "main" BOOLEAN NULL DEFAULT false,
+	"size" BIGINT NULL defualt 0,
 	"width" INT NOT NULL,
 	"height" INT NOT NULL,
 

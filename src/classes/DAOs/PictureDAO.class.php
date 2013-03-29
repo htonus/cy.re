@@ -10,82 +10,47 @@
 		public function add(Identifiable $object)
 		{
 			if ($tmpName = $object->getUploadName()) {
-				$info = getimagesize($tmpName);
-				
-				$object->
-					setWidth($info[0])->
-					setHeight($info[1]);
+				$path = $dirName = null;
 				
 				$db = DBPool::me()->getByDao($this)->begin();
-				
+
 				try {
-					$object = parent::add($object);
-					$object->getId();
-					$path = PATH_PIX.implode(DS, str_split($name, 2));
-					if (file_exists(PATH_PIX));
-					if (is_writable()) {
-
-					}
-
-					$type = ImageType::createByFileName($object->getName());
-
-					if ($type->getMimeType() != $object->getTypeId())
-						throw new WrongArgumentException();
-				} catch(WrongArgumentException $e) {
-					$type = $this->getImageTypeByMimeType($file['type']);
-				}
-
-				$object->setType($type);
-
-				if ($info = getimagesize($tmpName)) {
+					$info = getimagesize($tmpName);
+					
 					$object->
 						setWidth($info[0])->
-						setHeight($info[1]);
-				} else {
-					throw new DatabaseException();
-				}
-			} else {
-				throw new WrongArgumentException('No upload file name');
-			}
-			
-			try {
-				if ($object->isMain()) {
-					$this->dropMain($object->getProperty());
-				}
-				
-				$db = DBPool::me()->getLink($this->getLinkName())->begin();
-				
-				if ($object = parent::add($object)) {
-			 		$path = PATH_PIX.$object->getId().'.'.$type->getExtension();
+						setHeight($info[1])->
+						setSize(filesize($tmpName));
 					
-					if (!move_uploaded_file($tmpName, $path))
-						throw new DatabaseException();
-					
-					$db->commit();
-				} else
-					throw new DatabaseException();
-			} catch (DatabaseException $e) {
-				$db->rollback();
-			}
-		
-			return $object;
-		}
-		
-		public function dropMain(Property $property)
-		{
-			try {
-				$picture = $this->getByLogic(
-					Expression::andBlock(
-						Expression::eqId('property', $property),
-						Expression::isTrue('main')
+					$object = parent::add($object);
+
+					$path = $object->getPath();
+					$dirName = dirname($path);
+
+					if (!file_exists($dirName)) {
+						umask(0700);
+
+						if (!mkdir($dirName, 0700, true))
+							throw new Exception('Can not create destination directory');
+					}
+
+					if (
+						is_writable($dirName)
+						&& move_uploaded_file($tmpName, $object->getPath())
+						&& file_exists($object->getPath())
 					)
-				);
-				
-				if ($picture->getId()) {
-					$this->save($picture->setMain(false));
+						$db->commit();
+					else
+						throw new Exception('Can not store file: '.$path);
+
+				} catch(Exception $e) {
+					if (!empty($path) && is_file($path))
+						unlink ($path);
+
+					$db->rollback();
 				}
-			} catch (DatabaseException $e) {/*_*/}
+			}
 			
-			return $this;
+			return $object;
 		}
 	}

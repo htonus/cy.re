@@ -86,7 +86,7 @@
 			<!-- current feature instance description ? -->
 			<!-- property name="content" type="String" size="128" required="false" / -->
 			<property name="type" type="FeatureType" relation="OneToOne" required="true" fetch="lazy"/>
-			<property name="value" type="Integer" required="false" />
+			<property name="value" type="BigInteger" required="false" />
 			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
 		</properties>
 		<pattern name="StraightMapping" />
@@ -98,6 +98,7 @@
 			<property name="name" type="String" size="128" required="true" /> <!-- in file system -->
 			<property name="type" type="ImageType" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="main" type="Boolean" required="false" default="false" />
+			<property name="size" type="BigInteger" required="false" default="0" />
 			<property name="width" type="Integer" required="true" />
 			<property name="height" type="Integer" required="true" />
 			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />

@@ -50,7 +50,15 @@
 
 		public function getUrl()
 		{
-			return PATH_WEB_PIX.$this->id.'.'.$this->getType()->getExtension();
+			return PATH_WEB_PIX
+				.$this->getId().'.'.$this->getType()->getExtension();
+		}
+
+		public function getPath()
+		{
+			return PATH_PIX
+				.implode(DS, str_split(sprintf('%08d.', $this->getId()), 2)).DS
+				.$this->getId().'.'.$this->getType()->getExtension();
 		}
 	}
 ?>

@@ -62,14 +62,6 @@ final class controllerRealty extends i18nEditor
 			$files = $form->getValue('files');
 			$pictures = array();
 
-//	delete_type: "DELETE"
-//	delete_url: "http://jquery-file-upload.appspot.com/AMIfv96UqSSglYXiUPWEEd6csIlTDAKciQpVMNOwWA1Rm2frsflhqYuWFrUYM3Lnsua2Kpcuzw0QPXXuFa0UmaVvEnKZdm_7AeKyxvvdcwnJQwLT0_snDOEz34FTDDGLZaLFmZN8VCEMmd6gstiQW9SjghBG8evpYiQs5BrpIDxNht28EBJHKE0/bitch_1.jpg?delete=true"
-//	name: "bitch_1.jpg"
-//	size: 39986
-//	thumbnail_url: "http://lh3.ggpht.com/4sjZsEECd_N7lY0th4qfpg9Y-btNKhXHlNB_STXPxoicyWT1HFqE2T9Ut8NWYlK4TnfpKpd4j1_GR6FVHxufKTFKtIuy3Nwx=s80"
-//	type: "image/jpeg"
-//	url: "http://jquery-file-upload.appspot.com/AMIfv96UqSSglYXiUPWEEd6csIlTDAKciQpVMNOwWA1Rm2frsflhqYuWFrUYM3Lnsua2Kpcuzw0QPXXuFa0UmaVvEnKZdm_7AeKyxvvdcwnJQwLT0_snDOEz34FTDDGLZaLFmZN8VCEMmd6gstiQW9SjghBG8evpYiQs5BrpIDxNht28EBJHKE0/bitch_1.jpg"
-			
 			if (is_array($files['name'])) {
 				foreach($files['name'] as $key => $name) {
 					$pictures[] = Picture::create()->
@@ -92,13 +84,23 @@ final class controllerRealty extends i18nEditor
 
 			foreach ($pictures as $picture) {
 				if ($picture = Picture::dao()->add($picture)) {
-					if ($picture->isMain())
-						$realty->dao()->save(
-							$realty->setImage($picture)
-						);
+					$response[] = array(
+						'delete_type'	=> 'GET', // 'DELETE'
+						'delete_url'	=> '/?area=realty&action=drop_picture&id='.$picture->getId(),
+						'name'			=> $picture->getName(),
+						'size'			=> $picture->getSize(),
+						'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
+						'type'			=> $picture->getType()->getMimeType(),
+						'url'			=> $picture->getUrl(),
+					);
 				}
 			}
+
+			$mav->getModel()->
+				set('data', array('files' => $response));
 		}
+
+		return $mav;
 	}
 	
 	protected function doGetPictures(HttpRequest $request)
