@@ -43,9 +43,9 @@ jq(document).ready(function () {
         list_url: '/?area=realty&action=get_pictures&id=<?=$form->getValue('id')->getId()?>',
 		previewMaxWidth: <?=  PictureSize::thumbnail()->getWidth()?>,
 		previewMaxHeight: <?=  PictureSize::thumbnail()->getHeight()?>,
-		prependFiles: true
+		prependFiles: true,
     });
-
+	
     // Enable iframe cross-domain access via redirect option:
     jq('#fileupload').fileupload(
         'option',

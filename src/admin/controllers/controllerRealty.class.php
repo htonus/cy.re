@@ -136,6 +136,8 @@ final class controllerRealty extends i18nEditor
 	protected function doDropPicture(HttpRequest $request)
 	{
 		$request->setAttachedVar('layout', 'json');
+		$mav = ModelAndView::create();
+		$data = array('success' => false, 'error' => null);
 		
 		$form = Form::create()->
 			add(
@@ -145,30 +147,20 @@ final class controllerRealty extends i18nEditor
 			)->
 			import($request->getGet());
 		
-		$response = asrray();
-		
 		if (!$form->getErrors()) {
 			$picture = $form->getValue('id');
-			$result = 0;
-			$error = '';
 			
 			try {
 				$realty = $picture->getRealty();
 				$picture->dao()->dropById($picture->getId());
 				$realty->getPictures()->fetch();
-				$result = 1;
+				$data['result'] = true;
 			} catch (Exception $e) {
-				$error = $e->getMessage();
+				$data['error'] = $e->getMessage();
 			}
-			
-			$response[] = array(
-				'id'		=> $picture->getId(),
-				'result'	=> $result,
-				'error'		=> $error,
-			);
 		}
 		
-		$mav->getModel()->set('data', array('files' => $response));
+		$mav->getModel()->set('data', array('success' => $result));
 		
 		return $mav;
 	}

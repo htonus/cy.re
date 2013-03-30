@@ -56,7 +56,7 @@
 			return $object;
 		}
 		
-		public function dropById(array $ids)
+		public function dropById($id)
 		{
 			$result = null;
 			$db = DBPool::getByDao($this)->begin();
@@ -65,10 +65,10 @@
 				$picture = $this->getById($id);
 				$path = $picture->getPath();
 				
-				$result = parent::dropById($ids);
+				$result = parent::dropById($id);
 				
 				if (file_exists($path))
-					if (unlink ($path))
+					if (!unlink ($path))
 						throw new Exception('Can not remove picture from the path: '.$path);
 				
 				$db->commit();
