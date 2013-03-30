@@ -28,62 +28,10 @@ Every i18n object should be inherited from i18n object and has extra table for l
 		<pattern name="StraightMapping" />
 	</class>
 
-And i18nDAO should override makeSelectHead methof in the following way:
+And take a look to i18nDAO
 
-		public function makeSelectHead()
-		{
-			static $selectHead = array();
-			
-			if (!isset($selectHead[$className = $this->getObjectName()])) {
-				$i18nFields = call_user_func(array($this->getObjectName().self::I18N, 'proto'))->
-					getMapping();
-				
-				$languageField	= $i18nFields['language'];
-				$objectField	= $i18nFields['object'];
-				
-				unset($i18nFields['id']);
-				unset($i18nFields['language']);
-				unset($i18nFields['object']);
-				
-				$table = $this->getTable();
-				$i18nTable = $table.self::I18N;
-				
-				$object =
-					OSQL::select()->
-					from($table)->
-					leftJoin(
-						$this->i18nTable,
-						Expression::andBlock(
-							Expression::eq(
-								DBField::create(
-									$this->getIdName(),
-									$table
-								),
-								DBField::create(
-									$this->objectField,
-									$this->i18nTable
-								)
-							),
-							Expression::eqId(
-								DBField::create(
-									$this->languageField,
-									$this->i18nTable
-								),
-								GlobalVar::me()->get('language')
-							)
-						)
-					);
-				
-				foreach ($this->getFields() as $field) {
-					if (isset($i18nFields[$field]))
-						$object->get(new DBField($field, $i18nTable));
-					else
-						$object->get(new DBField($field, $table));
-				}
-				
-				$selectHead[$className] = $object;
-			}
-			
-			return clone $selectHead[$className];
-		}
-	}
+Setup
+====
+
+1. Install nginx, php5, php-fpm, postgres
+2. in php-fpm config setup user and group: nginx:nginx

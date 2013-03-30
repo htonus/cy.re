@@ -19,12 +19,18 @@
 			self::NORMAL		=> 768,
 			self::THUMBNAIL	=> 100,
 		);
-
+		
+		/**
+		 * @return PictureSize
+		 */
 		public static function normal()
 		{
 			return new self(self::NORMAL);
 		}
 
+		/**
+		 * @return PictureSize
+		 */
 		public static function thumbnail()
 		{
 			return new self(self::THUMBNAIL);
@@ -42,8 +48,13 @@
 
 		public function getUrl(Picture $picture)
 		{
-			return $picture->getUrl()
-				.'?w='.$this->getWidth().'&h='.$this->getHeight();
+			return PATH_WEB.'p/'
+				.(
+					self::NORMAL != $this->id
+						? $this->getWidth().'/'.$this->getHeight().'/'
+						: null
+				)
+				.$picture->getFileName();
 		}
 	}
 ?>

@@ -18,7 +18,7 @@
 	defined('PATH_SOURCE_DIR') || define('PATH_SOURCE_DIR', MODE.DS);
 
 	if (isset($_SERVER['HTTP_HOST']))
-		define('DOMAIN', $_SERVER['HTTP_HOST']);
+		define('DOMAIN', preg_replace('/admin\./i', '', $_SERVER['HTTP_HOST']));
 	else
 		define('DOMAIN', 'real-estate.com.cy');
 
@@ -34,12 +34,12 @@
 	define('PATH_IMG', PATH_WEBROOT.'img'.DS);
 	define('PATH_JS', PATH_WEBROOT.'js'.DS);
 	define('PATH_CSS', PATH_WEBROOT.'css'.DS);
-	define('PATH_PIX', PATH_WEBROOT.'pix'.DS);
+	define('PATH_PIX', PATH_BASE.'src'.DS.'user'.DS.'webroot'.DS.'pix'.DS);
         
 	// web path
-	define('PATH_WEB', 'http://'.DOMAIN.'/');
+	define('PATH_WEB', 'http://www.'.DOMAIN.'/');
 	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN.'/');
-	define('PATH_WEB_PIX', '/pix/'); // dynamic stuff
+	define('PATH_WEB_PIX', PATH_WEB.'pix/'); // dynamic stuff
 	define('PATH_WEB_IMG', '/img/'); // static stuff
 	define('PATH_WEB_JS', '/js/'); // static stuff
 	define('PATH_WEB_CSS', '/css/'); // static stuff

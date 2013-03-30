@@ -22,6 +22,7 @@ final class controllerLanguage extends CommonEditor
 				setDefault(false);
 		
 		$this->setMethodMapping('toggle', 'doToggle');
+		$this->setAccessMapping('toggle', Access::PUBLISH);
 	}
 	
 	protected function doToggle(HttpRequest $request)

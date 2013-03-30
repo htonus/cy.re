@@ -47,17 +47,21 @@
 		{
 			return $this->uploadName;
 		}
-
+		
+		public function getFileName()
+		{
+			return $this->getId().'.'.$this->getType()->getExtension();
+		}
+		
 		public function getUrl()
 		{
-			return PATH_WEB_PIX
-				.$this->getId().'.'.$this->getType()->getExtension();
+			return PATH_WEB_PIX.$this->getFileName();
 		}
 
 		public function getPath()
 		{
 			return PATH_PIX
-				.implode(DS, str_split(sprintf('%08d.', $this->getId()), 2)).DS
+				.implode(DS, str_split(substr(sprintf('%08d', $this->getId()), 0, -2), 2)).DS
 				.$this->getId().'.'.$this->getType()->getExtension();
 		}
 	}

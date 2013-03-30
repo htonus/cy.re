@@ -18,6 +18,7 @@
 					$info = getimagesize($tmpName);
 					
 					$object->
+						setTypeId($info[2])->
 						setWidth($info[0])->
 						setHeight($info[1])->
 						setSize(filesize($tmpName));
@@ -28,9 +29,7 @@
 					$dirName = dirname($path);
 
 					if (!file_exists($dirName)) {
-						umask(0700);
-
-						if (!mkdir($dirName, 0700, true))
+						if (!mkdir($dirName, 0775, true))
 							throw new Exception('Can not create destination directory');
 					}
 
@@ -38,10 +37,13 @@
 						is_writable($dirName)
 						&& move_uploaded_file($tmpName, $object->getPath())
 						&& file_exists($object->getPath())
-					)
+					) {
+						chmod($object->getPath(), 0664);
+						
 						$db->commit();
-					else
+					} else {
 						throw new Exception('Can not store file: '.$path);
+					}
 
 				} catch(Exception $e) {
 					if (!empty($path) && is_file($path))
@@ -52,5 +54,29 @@
 			}
 			
 			return $object;
+		}
+		
+		public function dropById(array $ids)
+		{
+			$result = null;
+			$db = DBPool::getByDao($this)->begin();
+			
+			try {
+				$picture = $this->getById($id);
+				$path = $picture->getPath();
+				
+				$result = parent::dropById($ids);
+				
+				if (file_exists($path))
+					if (unlink ($path))
+						throw new Exception('Can not remove picture from the path: '.$path);
+				
+				$db->commit();
+			} catch (Exception $e) {
+				$db->rollback();
+				throw $e;
+			}
+			
+			return $result;
 		}
 	}

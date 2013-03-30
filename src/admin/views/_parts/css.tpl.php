@@ -8,7 +8,7 @@
 	}
 
 	foreach ($name as $css) {
-		$file = PATH_SOURCE.'webroot/css/'.$css.'.css';
+		$file = PATH_WEBROOT.'css'.DS.$css.'.css';
 
 		if (file_exists($file)) {
 			$time = filemtime($file);

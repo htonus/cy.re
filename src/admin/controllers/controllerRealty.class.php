@@ -66,7 +66,6 @@ final class controllerRealty extends i18nEditor
 				foreach($files['name'] as $key => $name) {
 					$pictures[] = Picture::create()->
 						setRealty($realty)->
-						setTypeId($files['type'][$key])->
 //						setComment($comments[$name])->
 						setName($name)->
 //						setMain($main == $name)->
@@ -75,7 +74,6 @@ final class controllerRealty extends i18nEditor
 			} else {
 				$pictures[] = Picture::create()->
 					setRealty($realty)->
-					setTypeId($files['type'])->
 //					setComment($comments[$files['name']])->
 					setName($files['name'])->
 //					setMain($main == $files['name'])->
@@ -95,7 +93,7 @@ final class controllerRealty extends i18nEditor
 					);
 				}
 			}
-
+			
 			$mav->getModel()->
 				set('data', array('files' => $response));
 		}
@@ -116,25 +114,65 @@ final class controllerRealty extends i18nEditor
 			importMore($request->getPost());
 		
 		$mav = ModelAndView::create();
-		$out = array();
+		$response = array();
 		
 		foreach ($form->getValue('id')->getPictures()->getList() as $picture) {
-			$out[] = array(
-				'delete_type'	=> 'DELETE',
+			$response[] = array(
+				'delete_type'	=> 'GET', // 'DELETE'
 				'delete_url'	=> '/?area=realty&action=drop_picture&id='.$picture->getId(),
 				'name'			=> $picture->getName(),
 				'size'			=> $picture->getSize(),
-				'thumbnail_url'	=> $picture->getThumbnailUrl(),
+				'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 				'type'			=> $picture->getType()->getMimeType(),
 				'url'			=> $picture->getUrl(),
 			);
 		}
 		
-		return $mav->setModel(
-			Model::create()->set('data', array('files', $out))
-		);
+		$mav->getModel()->set('data', array('files' => $response));
+		
+		return $mav;
 	}
 	
+	protected function doDropPicture(HttpRequest $request)
+	{
+		$request->setAttachedVar('layout', 'json');
+		
+		$form = Form::create()->
+			add(
+				Primitive::integerIdentifier('id')->
+				of('Picture')->
+				required()
+			)->
+			import($request->getGet());
+		
+		$response = asrray();
+		
+		if (!$form->getErrors()) {
+			$picture = $form->getValue('id');
+			$result = 0;
+			$error = '';
+			
+			try {
+				$realty = $picture->getRealty();
+				$picture->dao()->dropById($picture->getId());
+				$realty->getPictures()->fetch();
+				$result = 1;
+			} catch (Exception $e) {
+				$error = $e->getMessage();
+			}
+			
+			$response[] = array(
+				'id'		=> $picture->getId(),
+				'result'	=> $result,
+				'error'		=> $error,
+			);
+		}
+		
+		$mav->getModel()->set('data', array('files' => $response));
+		
+		return $mav;
+	}
+
 	protected function addObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {

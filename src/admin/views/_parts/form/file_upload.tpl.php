@@ -40,7 +40,10 @@ jq(document).ready(function () {
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
         url: '/?area=realty&action=add_pictures&id=<?=$form->getValue('id')->getId()?>',
-        list_url: '/?area=realty&action=get_pictures&id=<?=$form->getValue('id')->getId()?>'
+        list_url: '/?area=realty&action=get_pictures&id=<?=$form->getValue('id')->getId()?>',
+		previewMaxWidth: <?=  PictureSize::thumbnail()->getWidth()?>,
+		previewMaxHeight: <?=  PictureSize::thumbnail()->getHeight()?>,
+		prependFiles: true
     });
 
     // Enable iframe cross-domain access via redirect option:
@@ -144,13 +147,11 @@ jq(document).ready(function () {
         <td>
 			<div class="name">{%=file.name%}</div>
 			<div class="size">{%=o.formatFileSize(file.size)%}</div>
+			<div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
 		</td>
         {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            <td class="error"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
-            <td>
-                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-            </td>
             <td>{% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary start">
                     <i class="icon-upload icon-white"></i>
@@ -158,7 +159,7 @@ jq(document).ready(function () {
                 </button>
             {% } %}</td>
         {% } else { %}
-            <td colspan="2"></td>
+            <td></td>
         {% } %}
         <td>{% if (!i) { %}
             <button class="btn btn-warning cancel">
@@ -174,19 +175,20 @@ jq(document).ready(function () {
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         {% if (file.error) { %}
-            <td></td>
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+			<td>
+				<div class="name"><span>{%=file.name%}</span></div>
+				<div class="size"><span>{%=o.formatFileSize(file.size)%}</span></div>
+			</td>
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
             {% } %}</td>
-            <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
-            </td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td colspan="2"></td>
+			<td>
+				<div class="name"><a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a></div>
+				<div class="size"><span>{%=o.formatFileSize(file.size)%}</span></div>
+			</td>
+            <td></td>
         {% } %}
         <td>
             <button class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
