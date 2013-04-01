@@ -32,8 +32,8 @@ CREATE SEQUENCE "group_access_id";
 CREATE TABLE "group_access" (
     "id" INTEGER NOT NULL default nextval('group_access_id'),
     "group_id" INTEGER NOT NULL REFERENCES "group"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
-    "access_id" INTEGER NOT NULL REFERENCES "access_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "resource_id" INTEGER NOT NULL REFERENCES "resource"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+    "access" INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY("id")
 );
 
