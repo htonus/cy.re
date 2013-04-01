@@ -69,12 +69,12 @@ insert into "token_i18n" ("object_id", "language_id", "value") select "id", 1, "
 
 insert into resource_type ("id", "name") values (1, 'object');
 
-insert into access_type ("id", "name") values (1, 'Add');
-insert into access_type ("id", "name") values (2, 'Edit');
-insert into access_type ("id", "name") values (3, 'Save');
-insert into access_type ("id", "name") values (4, 'Drop');
-insert into access_type ("id", "name") values (5, 'Index');
-insert into access_type ("id", "name") values (6, 'Publish');
+-- insert into access_type ("id", "name") values (1, 'Add');
+-- insert into access_type ("id", "name") values (2, 'Edit');
+-- insert into access_type ("id", "name") values (3, 'Save');
+-- insert into access_type ("id", "name") values (4, 'Drop');
+-- insert into access_type ("id", "name") values (5, 'Index');
+-- insert into access_type ("id", "name") values (6, 'Publish');
 
 insert into person_status ("id", "name") values (1, 'No access');
 insert into person_status ("id", "name") values (2, 'Readonly');
