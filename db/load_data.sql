@@ -82,6 +82,8 @@ insert into person_status ("id", "name") values (3, 'Normal');
 insert into person_status ("id", "name") values (4, 'Admin');
 insert into person_status ("id", "name") values (5, 'Full access');
 
+insert into person ("name", "surname", "created", "status_id", "email", "username", "password") values ('Mikhail', 'Cherviakov', now(), 5, 'htonus@cyprus-realty.com', 'htonus', '28f9e86b0d5f5739612a7fda378ade96f0c30ac9[crcom@bravo746');
+
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;
 alter sequence "city_id" restart  with 10;
