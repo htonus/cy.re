@@ -1,1 +1,1 @@
-/home/fxpro/www/html/cy.re/htdocs/config.inc.tpl.php
+/home/www/vhosts/re.com.cy/htdocs/config.inc.tpl.php
