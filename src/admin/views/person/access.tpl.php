@@ -37,13 +37,13 @@ var accessList = {
 
 function update_access()
 {
-	jq('#accessGrid :checkbox').removeAttr('checked');
+	jq('#accessGrid span').removeClass('badge-success');
 	
 	jq('#input_group OPTION').each(function(i, groupId){
 		jq.each(accessList[jq(groupId).val()], function(resourceId, access){
 			jq.each(accessTypeList, function(i, accessType){
 				if (access & accessType)
-					jq('#rule_' + resourceId + '_' + accessType).attr('checked', 'checked');
+					jq('#rule_' + resourceId + '_' + accessType).addClass('badge-success');
 			});
 		});
 	});
@@ -136,11 +136,8 @@ jq(document).ready(function(){
 		<td><?=$resource->getName()?></td>
 <?php
 		foreach ($accessPlainList as $accessId => $accessName) {
-			$checked = $acl->check($resource, $accessId)
-				? 'checked="checked"'
-				: null;
 ?>
-		<td><input type="checkbox" disabled id="rule_<?=$resource->getId()?>_<?=$accessId?>" name="rule[<?=$resource->getId()?>][]" value="<?=$accessId?>" <?=$checked?> /></td>
+		<td><span id="rule_<?=$resource->getId()?>_<?=$accessId?>" class="badge">&nbsp</span></td>
 <?php
 		}
 ?>
