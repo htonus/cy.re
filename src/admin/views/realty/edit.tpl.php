@@ -37,9 +37,9 @@
 	<div class="navbar-inner">
 		<b class="brand">Sections</b>
 		<ul class="nav nav-tabs">
-			<li><a href="#tab_description" data-toggle="tab">Description</a></li>
+			<li<?= $id ? null : ' class="active"'?>><a href="#tab_description" data-toggle="tab">Description</a></li>
 			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
-			<li class="active"><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
+			<li<?= $id ? ' class="active"' : null?>><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
 		</ul>
 		<div class="controls pull-right">
 			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
