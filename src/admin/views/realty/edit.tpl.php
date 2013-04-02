@@ -51,7 +51,7 @@
 
 <div class="tab-content">
 	
-	<div class="tab-pane<?= $id ? null : 'active'?>" id="tab_description">
+	<div class="tab-pane<?= $id ? null : ' active'?>" id="tab_description">
 <?php
 	$partViewer->view('_parts/form/i18n');
 	$partViewer->view('realty/parts/main');
@@ -65,7 +65,7 @@
 ?>
 	</div>
 	
-	<div class="tab-pane<?= $id ? 'active' : null?>" id="tab_pictures">
+	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
 <?php
 	$partViewer->view('realty/parts/pictures');
 ?>
