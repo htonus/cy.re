@@ -67,9 +67,9 @@ jq(document).ready(function(){
 			<div class="controls">
 
 <?
-			if ($field == $editorFor) {
+			if ($name == $editorFor) {
 ?>
-				<textarea id="<?=$id?>" placeholder="Enter text ..." rows="15" class="span7" style="height: 300px"></textarea>
+				<textarea id="<?=$id?>" placeholder="Enter text ..." rows="15" class="span7" style="height: 300px"><?=$value?></textarea>
 <?php
 			} else {
 ?>
