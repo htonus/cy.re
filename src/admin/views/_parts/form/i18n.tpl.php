@@ -5,6 +5,25 @@
  * $i18n
  * $i18nList
  */
+
+	if (empty($editorFor))
+		$editorFor = null;
+	
+	if (!empty($editorFor)) {
+		$partViewer->view('_parts/form/wysywig');
+?>
+<script type="text/javascript">
+jq(document).ready(function(){
+	jq('#i18nBlock a[data-toggle=tab]').click(function (e) {
+		var lang = jq(e.target).attr('id').replace(/lang_tab_/, '');
+		attachEditor('input_<?=$editorFor?>_' + lang);
+	});
+	
+	attachEditor('input_<?=$editorFor?>_en');
+});
+</script>
+<?php
+	}
 ?>
 
 <div id="i18nBlock">
@@ -15,7 +34,7 @@
 <?php
 	foreach ($languageList as $lang) {
 ?>
-	<li class="<?= $lang->getCode() == 'en' ? 'active' : ''?>"><a href="#lang_<?=$lang->getCode()?>" data-toggle="tab"><?=$lang->getName()?></a></li>
+	<li class="<?= $lang->getCode() == 'en' ? 'active' : ''?>"><a href="#lang_<?=$lang->getCode()?>" data-toggle="tab" id="lang_tab_<?=$lang->getCode()?>"><?=$lang->getName()?></a></li>
 <?php
 	}
 ?>
@@ -35,17 +54,31 @@
 		foreach ($i18n as $name => $field) {
 			if ($name == 'id')
 				continue;
-			
+
 			$value = empty($i18nList[$lang->getCode()][$name])
 				? ''
 				: $i18nList[$lang->getCode()][$name];
+
+			$id = 'input_'.$name.'_'.$lang->getCode();
 ?>
-<div class="control-group">
-	<label class="control-label" for="input_<?=$name?>_<?=$lang->getCode()?>"><?=ucfirst($name)?></label>
-	<div class="controls">
-		<input type="text" id="input_<?=$name?>_<?=$lang->getCode()?>" placeholder="Enter <?=$name?> (<?=$lang->getCode()?>)" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" value="<?=$value?>" />
-    </div>
-</div>
+
+		<div class="control-group">
+			<label class="control-label" for="<?=$id?>"><?=ucfirst($name)?></label>
+			<div class="controls">
+
+<?
+			if ($field == $editorFor) {
+?>
+				<textarea id="<?=$id?>" placeholder="Enter text ..." rows="15" class="span7" style="height: 300px"></textarea>
+<?php
+			} else {
+?>
+				<input type="text" id="<?=$id?>" class="span7" placeholder="Enter <?=$name?> (<?=$lang->getCode()?>)" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" value="<?=$value?>" />
+<?php
+			}
+?>
+			</div>
+		</div>
 <?php
 		}
 ?>

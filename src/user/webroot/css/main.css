@@ -1,0 +1,27 @@
+.wysiwyg-color-red {
+	color: #F00;
+}
+.wysiwyg-color-green {
+	color: #0B0;
+}
+.wysiwyg-color-blue {
+	color: #00D;
+}
+.wysiwyg-float-left {
+	float: left;
+}
+.wysiwyg-float-right {
+	float: right;
+}
+.wysiwyg-text-align-left {
+	text-align: left;
+}
+.wysiwyg-text-align-right {
+	text-align: right;
+}
+.wysiwyg-text-align-center {
+	text-align: center;
+}
+.wysiwyg-text-align-justify {
+	text-align: justify;
+}

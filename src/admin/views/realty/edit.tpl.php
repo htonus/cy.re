@@ -53,8 +53,9 @@
 	
 	<div class="tab-pane<?= $id ? null : ' active'?>" id="tab_description">
 <?php
-	$partViewer->view('_parts/form/i18n');
 	$partViewer->view('realty/parts/main');
+	$model->set('editorFor', 'text');
+	$partViewer->view('_parts/form/i18n');
 ?>
 	</div>
 
