@@ -66,7 +66,7 @@ jq(document).ready(function(){
 			<label class="control-label" for="<?=$id?>"><?=ucfirst($name)?></label>
 			<div class="controls">
 
-<?
+<?php
 			if ($name == $editorFor) {
 ?>
 				<textarea id="<?=$id?>" placeholder="Enter text ..." rows="15" class="span7" style="height: 300px"><?=$value?></textarea>
