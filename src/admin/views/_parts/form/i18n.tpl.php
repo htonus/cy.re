@@ -69,7 +69,7 @@ jq(document).ready(function(){
 <?php
 			if ($name == $editorFor) {
 ?>
-				<textarea id="<?=$id?>" placeholder="Enter text ..." rows="15" class="span7" style="height: 300px"><?=$value?></textarea>
+				<textarea id="<?=$id?>" placeholder="Enter <?=$name?> ..." rows="15" class="span7" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" style="height: 300px"><?=$value?></textarea>
 <?php
 			} else {
 ?>
