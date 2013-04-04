@@ -43,7 +43,7 @@
 		</ul>
 		<div class="controls pull-right">
 			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
-			<button class="btn btn-primary" type="button" id="btnSubmit">Submit</button>
+			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
 		</div>
 	</div>
 </div>
