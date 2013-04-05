@@ -14,7 +14,8 @@
 ?>
 <script type="text/javascript">
 jq(document).ready(function(){
-	jq('#i18nBlock a[data-toggle=tab]').click(function (e) {
+//	jq('#i18nBlock a[data-toggle=tab]').click(function (e) {
+	jq('#i18nBlock a[data-toggle=tab]').on('shown', function (e) {
 		var lang = jq(e.target).attr('id').replace(/lang_tab_/, '');
 		attachEditor('input_<?=$editorFor?>_' + lang);
 	});
