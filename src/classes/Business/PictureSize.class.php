@@ -48,7 +48,7 @@
 
 		public function getUrl(Picture $picture)
 		{
-			return PATH_WEB.'p/'
+			return PATH_WEB_PIX
 				.(
 					self::NORMAL != $this->id
 						? $this->getWidth().'/'.$this->getHeight().'/'
