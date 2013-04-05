@@ -143,7 +143,7 @@ jq(document).ready(function () {
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
-        <td class="preview"><span class="fade"></span></td>
+	<td class="preview"><span class="fade"></span></td>
         <td>
 			<div class="name">{%=file.name%}</div>
 			<div class="size">{%=o.formatFileSize(file.size)%}</div>
@@ -152,7 +152,7 @@ jq(document).ready(function () {
         {% if (file.error) { %}
             <td class="error"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
-            <td>{% if (!o.options.autoUpload) { %}
+            <td style="text-align: right;">{% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary start">
                     <i class="icon-upload icon-white"></i>
                     <span>Start</span>
@@ -161,7 +161,7 @@ jq(document).ready(function () {
         {% } else { %}
             <td></td>
         {% } %}
-        <td>{% if (!i) { %}
+        <td style="text-align: right;">{% if (!i) { %}
             <button class="btn btn-warning cancel">
                 <i class="icon-ban-circle icon-white"></i>
                 <span>Cancel</span>
@@ -181,7 +181,7 @@ jq(document).ready(function () {
 			</td>
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else { %}
-            <td class="preview">{% if (file.thumbnail_url) { %}
+            <td class="preview" style="width: <?=  PictureSize::thumbnail()->getWidth()?>px">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
             {% } %}</td>
 			<td>
@@ -190,7 +190,7 @@ jq(document).ready(function () {
 			</td>
             <td></td>
         {% } %}
-        <td>
+        <td style="text-align: right;">
             <button class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                 <i class="icon-trash icon-white"></i>
                 <span>Delete</span>
