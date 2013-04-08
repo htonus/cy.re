@@ -64,7 +64,7 @@ final class controllerRealty extends i18nEditor
 
 			if (is_array($files['name'])) {
 				foreach($files['name'] as $key => $name) {
-					$pictures[] = Picture::create()->
+					$pictures[] = RealtyPicture::create()->
 						setRealty($realty)->
 //						setComment($comments[$name])->
 						setName($name)->
@@ -72,7 +72,7 @@ final class controllerRealty extends i18nEditor
 						setUploadName($files['tmp_name'][$key]);
 				}
 			} else {
-				$pictures[] = Picture::create()->
+				$pictures[] = RealtyPicture::create()->
 					setRealty($realty)->
 //					setComment($comments[$files['name']])->
 					setName($files['name'])->
@@ -81,7 +81,7 @@ final class controllerRealty extends i18nEditor
 			}
 
 			foreach ($pictures as $picture) {
-				if ($picture = Picture::dao()->add($picture)) {
+				if ($picture = RealtyPicture::dao()->add($picture)) {
 					$response[] = array(
 						'delete_type'	=> 'GET', // 'DELETE'
 						'delete_url'	=> '/?area=realty&action=drop_picture&id='.$picture->getId(),
@@ -142,7 +142,7 @@ final class controllerRealty extends i18nEditor
 		$form = Form::create()->
 			add(
 				Primitive::integerIdentifier('id')->
-				of('Picture')->
+				of('RealtyPicture')->
 				required()
 			)->
 			import($request->getGet());

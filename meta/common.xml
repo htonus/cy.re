@@ -68,5 +68,18 @@
 		<pattern name="SpookedEnumeration" />
 	</class>
 
+	<class name="Picture" type="abstract">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="true" /> <!-- in file system -->
+			<property name="type" type="ImageType" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="main" type="Boolean" required="false" default="false" />
+			<property name="size" type="BigInteger" required="false" default="0" />
+			<property name="width" type="Integer" required="true" />
+			<property name="height" type="Integer" required="true" />
+		</properties>
+		<pattern name="AbstractClass" />
+	</class>
+
 </classes>
 </metaconfiguration>

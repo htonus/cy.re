@@ -11,7 +11,7 @@
 		{
 			parent::__construct(
 				$realty,
-				Picture::dao(),
+				RealtyPicture::dao(),
 				$lazy
 			);
 		}
