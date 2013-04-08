@@ -84,4 +84,9 @@ class AclEditor extends PrototypedEditor
 		
 		return $this;
 	}
+
+	protected function setAccessMapping($first, $second)
+	{
+		return $this->setAccessMappingList($first, $second);
+	}
 }

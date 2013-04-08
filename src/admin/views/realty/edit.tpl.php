@@ -42,7 +42,7 @@
 			<li<?= $id ? ' class="active"' : null?>><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
 		</ul>
 		<div class="controls pull-right">
-			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+			<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area?>'">Cancel</button>
 			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
 		</div>
 	</div>
