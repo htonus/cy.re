@@ -7,6 +7,8 @@
 
 	class ArticlePictureDAO extends AutoArticlePictureDAO
 	{
-		// your brilliant stuff goes here
+		public function getSequence()
+		{
+			return 'picture_id';
+		}
 	}
-?>

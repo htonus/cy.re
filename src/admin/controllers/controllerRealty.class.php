@@ -34,7 +34,7 @@ final class controllerRealty extends i18nEditor
 		
 		$this->setMethodMappingList($list);
 		
-		$this->setAccessMapping($list, Access::UPDATE);
+		$this->setAccessMappingList($list, Access::UPDATE);
 	}
 	
 	protected function doAddPictures(HttpRequest $request)
@@ -170,20 +170,40 @@ final class controllerRealty extends i18nEditor
 	) {
 		$db = DBPool::me()->getLink();
 		$db->begin();
-		
+
 		try {
 			$object = parent::addObject($request, $form, $object);
 
 			if (!$form->getErrors()) {
 				$this->saveFeatures($object, $request);
-				$this->savePictures($object, $request);
 				$db->commit();
 			}
 		} catch (Exception $e) {
 			$db->rollback();
 			$form->markCustom('id', $e->getMessage());
 		}
-		
+
+		return $object;
+	}
+
+	protected function saveObject(
+		HttpRequest $request, Form $form, Identifiable $object
+	) {
+		$db = DBPool::me()->getLink();
+		$db->begin();
+
+		try {
+			$object = parent::saveObject($request, $form, $object);
+
+			if (!$form->getErrors()) {
+				$this->saveFeatures($object, $request);
+				$db->commit();
+			}
+		} catch (Exception $e) {
+			$db->rollback();
+			$form->markCustom('id', $e->getMessage());
+		}
+
 		return $object;
 	}
 
@@ -222,12 +242,7 @@ final class controllerRealty extends i18nEditor
 
 		return $this;
 	}
-
-	private function savePictures(Realty $object, HttpRequest $request)
-	{
-
-	}
-
+	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 //		$model->set(

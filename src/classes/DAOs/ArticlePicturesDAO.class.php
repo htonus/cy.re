@@ -26,7 +26,7 @@
 		
 		public function getParentIdField()
 		{
-			return 'article_id';
+			return 'object_id';
 		}
 	}
 ?>
