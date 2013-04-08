@@ -100,6 +100,7 @@
 	</class>
 	
 	<class name="Realty" extends="i18n">
+		<implement interface="Pictured" />
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="128" required="false" />
