@@ -66,7 +66,7 @@
 	define('PROJECT_NAME', 'real-estate.com.cy');
 
 	DBPool::me()->setDefault(
-		DB::spawn('PgSQL', 'htonus', '', 'localhost', 're_com_cy')->
+		DB::spawn('PgSQL', 'htonus', '', 'localhost', 'cr_com')->
 		setEncoding(DEFAULT_ENCODING)
 	);
 	
