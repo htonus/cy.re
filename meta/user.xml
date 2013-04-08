@@ -61,6 +61,7 @@
 	</class>
 	
 	<class name="Person">
+		<implement interface="Created" />
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="16" required="true" />

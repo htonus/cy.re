@@ -15,11 +15,6 @@ final class controllerArticle extends i18nEditor
 {
 	public function __construct()
 	{
-		parent::__construct(
-			Article::create()->
-				setCreated(Timestamp::makeNow())
-		);
-		
-		$this->getForm()->drop('created');
+		parent::__construct(Article::create());
 	}
 }

@@ -15,13 +15,9 @@ final class controllerRealty extends i18nEditor
 {
 	public function __construct()
 	{
-		parent::__construct(
-			Realty::create()->
-				setCreated(Timestamp::makeNow())
-		);
+		parent::__construct(	Realty::create());
 
 		$this->getForm()->
-			drop('created')->
 			add(
 				Primitive::set('feature')
 			);

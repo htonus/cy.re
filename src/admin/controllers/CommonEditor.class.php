@@ -21,8 +21,14 @@ class CommonEditor extends controllerPictured
 
 		$this->map->addSource('id', RequestType::post());
 
+		if ($this->subject instanceof Created) {
+			$this->subject->setCreated(Timestamp::makeNow());
+			$this->getForm()->drop('created');
+		}
+		
 		$this->setMethodMapping('index', 'doIndex')->
 			setDefaultAction('index');
+
 	}
 	
 	public function handleRequest(HttpRequest $request)

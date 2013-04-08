@@ -15,6 +15,7 @@
 
 	<class name="Article" extends="i18n">
 		<implement interface="Pictured" />
+		<implement interface="Created" />
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="128" required="false" />
