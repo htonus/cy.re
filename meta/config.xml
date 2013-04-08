@@ -8,6 +8,7 @@
 <include file="common.xml" generate="true" />
 <include file="user.xml" generate="true" />
 <include file="realty.xml" generate="true" />
+<include file="article.xml" generate="true" />
 
 <classes/>
 

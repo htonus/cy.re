@@ -65,7 +65,7 @@ final class controllerRealty extends i18nEditor
 			if (is_array($files['name'])) {
 				foreach($files['name'] as $key => $name) {
 					$pictures[] = RealtyPicture::create()->
-						setRealty($realty)->
+						setObject($realty)->
 //						setComment($comments[$name])->
 						setName($name)->
 //						setMain($main == $name)->
@@ -73,7 +73,7 @@ final class controllerRealty extends i18nEditor
 				}
 			} else {
 				$pictures[] = RealtyPicture::create()->
-					setRealty($realty)->
+					setObject($realty)->
 //					setComment($comments[$files['name']])->
 					setName($files['name'])->
 //					setMain($main == $files['name'])->
@@ -151,7 +151,7 @@ final class controllerRealty extends i18nEditor
 			$picture = $form->getValue('id');
 			
 			try {
-				$realty = $picture->getRealty();
+				$realty = $picture->getObject();
 				$picture->dao()->dropById($picture->getId());
 				$realty->getPictures()->fetch();
 				$data['result'] = true;

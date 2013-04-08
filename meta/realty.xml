@@ -94,7 +94,7 @@
 
 	<class name="RealtyPicture" extends="Picture">
 		<properties>
-			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="object" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
