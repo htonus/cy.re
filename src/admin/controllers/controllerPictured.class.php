@@ -25,9 +25,10 @@ class controllerPictured extends AclEditor
 			);
 
 			$list = array(
-				'get_pictures'	=> 'doGetPictures',
-				'add_pictures'	=> 'doAddPictures',
-				'drop_picture'	=> 'doDropPicture',
+				'get_pictures'		=> 'doGetPictures',
+				'add_pictures'		=> 'doAddPictures',
+				'drop_picture'		=> 'doDropPicture',
+				'preview_picture'	=> 'doPreviewPicture'
 			);
 
 			$this->setMethodMappingList($list);
@@ -84,15 +85,26 @@ class controllerPictured extends AclEditor
 
 			foreach ($pictures as $picture) {
 				if ($picture = $this->pictureObject->dao()->add($picture)) {
-					$response[] = array(
+					$actionUrl = '/?area='.strtolower(get_class($this->subject))
+						.'&id='.$picture->getId().'&action=';
+					
+					$item = array(
 						'delete_type'	=> 'GET', // 'DELETE'
-						'delete_url'	=> '/?area=realty&action=drop_picture&id='.$picture->getId(),
+						'delete_url'	=> $actionUrl.'drop_picture',
 						'name'			=> $picture->getName(),
 						'size'			=> $picture->getSize(),
 						'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 						'type'			=> $picture->getType()->getMimeType(),
 						'url'			=> $picture->getUrl(),
 					);
+
+					if (
+						$this->subject instanceof PreviewPictured
+						&& $object->getPreviewId() != $picture->getId()
+					)
+						$item['preview_url'] =  $actionUrl.'preview_picture';
+					
+					$response[] = $item;
 				}
 			}
 			
@@ -119,15 +131,26 @@ class controllerPictured extends AclEditor
 		$response = array();
 		
 		foreach ($form->getValue('id')->getPictures()->getList() as $picture) {
-			$response[] = array(
+			$actionUrl = '/?area='.strtolower(get_class($this->subject))
+				.'&id='.$picture->getId().'&action=';
+
+			$item = array(
 				'delete_type'	=> 'GET', // 'DELETE'
-				'delete_url'	=> '/?area='.strtolower(get_class($this->subject)).'&action=drop_picture&id='.$picture->getId(),
+				'delete_url'	=> $actionUrl.'drop_picture',
 				'name'			=> $picture->getName(),
 				'size'			=> $picture->getSize(),
 				'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 				'type'			=> $picture->getType()->getMimeType(),
 				'url'			=> $picture->getUrl(),
 			);
+
+			if (
+				$this->subject instanceof PreviewPictured
+				&& $form->getValue('id')->getPreviewId() != $picture->getId()
+			)
+				$item['preview_url'] =  $actionUrl.'preview_picture';
+			
+			$response[] = $item;
 		}
 		
 		$mav->getModel()->set('data', array('files' => $response));
@@ -139,8 +162,8 @@ class controllerPictured extends AclEditor
 	{
 		$request->setAttachedVar('layout', 'json');
 		$mav = ModelAndView::create();
-		$data = array('success' => false, 'error' => null);
-		
+		$result = false;
+
 		$form = Form::create()->
 			add(
 				Primitive::integerIdentifier('id')->
@@ -156,7 +179,7 @@ class controllerPictured extends AclEditor
 				$object = $picture->getObject();
 				$picture->dao()->dropById($picture->getId());
 				$object->getPictures()->fetch();
-				$data['result'] = true;
+				$result = true;
 			} catch (Exception $e) {
 				$data['error'] = $e->getMessage();
 			}
@@ -164,6 +187,38 @@ class controllerPictured extends AclEditor
 		
 		$mav->getModel()->set('data', array('success' => $result));
 		
+		return $mav;
+	}
+
+	protected function doPreviewPicture(HttpRequest $request)
+	{
+		$request->setAttachedVar('layout', 'json');
+		$mav = ModelAndView::create();
+		$result = false;
+		
+		$form = Form::create()->
+			add(
+				Primitive::integerIdentifier('id')->
+				of(get_class($this->pictureObject))->
+				required()
+			)->
+			import($request->getGet());
+
+		if (!$form->getErrors()) {
+			try {
+				$picture = $form->getValue('id');
+				$object = $picture->getObject();
+
+				$object->dao()->save(
+					$object->setPreview($picture)
+				);
+				
+				$result = true;
+			} catch (Exception $e) {/*_*/}
+		}
+		
+		$mav->getModel()->set('data', array('success' => $result));
+
 		return $mav;
 	}
 }

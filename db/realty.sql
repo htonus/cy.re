@@ -116,3 +116,5 @@ CREATE TABLE "realty_picture" (
     PRIMARY KEY("id")
 );
 CREATE INDEX realty_picture_object_id_idx ON realty_picture(object_id);
+
+ALTER TABLE "realty" ADD COLUMN "preview_id" BIGINT NULL REFERENCES "realty_picture"("id") ON UPDATE CASCADE ON DELETE CASCADE;

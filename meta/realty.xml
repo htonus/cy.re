@@ -101,6 +101,7 @@
 	
 	<class name="Realty" extends="i18n">
 		<implement interface="Pictured" />
+		<implement interface="PreviewPictured" />
 		<implement interface="Created" />
 		<implement interface="Published" />
 		<properties>
@@ -116,7 +117,7 @@
 			<property name="realtyType" type="RealtyType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
 			<property name="offerType" type="OfferType" relation="OneToOne" required="true" fetch="lazy" column="offer_id" />
 			<property name="city" type="City" relation="OneToOne" required="true" fetch="lazy" />
-			<!-- property name="image" type="Picture" relation="OneToOne" required="false" fetch="lazy" column="image_id" / --> 
+			<property name="preview" type="RealtyPicture" relation="OneToOne" required="false" fetch="lazy" column="preview_id" />
 
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />

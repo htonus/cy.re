@@ -56,5 +56,12 @@
 				)
 				.$picture->getFileName();
 		}
+
+		public function getImgStyle($css = true)
+		{
+			return $css
+				? 'width: '.$this->getWidth().'px; height: '.$this->getHeight().'px;'
+				: 'width="'.$this->getWidth().'" height="'.$this->getHeight().'"';
+		}
 	}
 ?>
