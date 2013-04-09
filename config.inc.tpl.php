@@ -83,6 +83,7 @@
 				PATH_CLASSES.'Proto',
 				PATH_CLASSES.'Helpers',
 				PATH_CLASSES.'Filters',
+				PATH_CLASSES.'Interfaces',
 
 				PATH_CLASSES.'Auto'.DS.'Business',
 				PATH_CLASSES.'Auto'.DS.'Proto',
@@ -99,6 +100,7 @@
 			.PATH_CLASSES.'Proto'.PS
 			.PATH_CLASSES.'Helpers'.PS
 			.PATH_CLASSES.'Filters'.PS
+			.PATH_CLASSES.'Interfaces'.PS
 
 			.PATH_CLASSES.'Auto'.DS.'Business'.PS
 			.PATH_CLASSES.'Auto'.DS.'Proto'.PS

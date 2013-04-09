@@ -18,7 +18,7 @@ class CommonEditor extends controllerPictured
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
-
+		
 		$this->map->addSource('id', RequestType::post());
 
 		if ($this->subject instanceof Created) {
@@ -26,9 +26,12 @@ class CommonEditor extends controllerPictured
 			$this->getForm()->drop('created');
 		}
 		
+		if ($this->subject instanceof Published) {
+			$this->setMethodMapping('publish', 'doPublish');
+		}
+		
 		$this->setMethodMapping('index', 'doIndex')->
 			setDefaultAction('index');
-
 	}
 	
 	public function handleRequest(HttpRequest $request)
@@ -79,6 +82,40 @@ class CommonEditor extends controllerPictured
 			setModel($model);
 	}
 
+	protected function doPublish(HttpRequest $request)
+	{
+		$form = $this->getForm()->
+			add(
+				Primitive::boolean('active')
+			)->
+			importOne('id', $request->getGet())->
+			importOneMore('id', $request->getPost());
+
+		if ($object = $form->getValue('id')) {
+			$object->dao()->save(
+				$object->setPublished(
+					$form->getValue('active')
+						? Timestamp::makeNow()
+						: null
+				)
+			);
+
+			Session::assign(
+				'flash.success',
+				'Successfully '.($form->getValue('active') ? null : 'un').'published'
+			);
+
+			FormUtils::object2form($object, $form);
+		}
+
+		return ModelAndView::create()->
+			setModel(
+				Mosdel::create()->
+					set('subject', $object)->
+					set('form', $form)
+			);
+	}
+	
 	/**
 	 * Returns base list criteria
 	 * @param HttpRequest $request
