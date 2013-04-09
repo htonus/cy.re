@@ -102,6 +102,7 @@
 	<class name="Realty" extends="i18n">
 		<implement interface="Pictured" />
 		<implement interface="Created" />
+		<implement interface="Published" />
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="128" required="false" />

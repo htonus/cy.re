@@ -1,3 +1,3 @@
 <?php
 
-	interface Created {/*_*/};
+	interface Created extends Dated {/*_*/};

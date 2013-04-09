@@ -24,7 +24,9 @@
 			</div>
 		</div>
 
+<div class="row-fluid">
 
+	<div class="span6">
 		<div class="control-group">
 			<label class="control-label" for="input_realtyType">Realty Type</label>
 			<div class="controls">
@@ -43,8 +45,22 @@
 				</select>
 			</div>
 		</div>
+	</div>
 
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="input_longitude">Longitude</label>
+			<div class="controls">
+				<input type="text" id="input_longitude" placeholder="longitude" name="longitude" value="<?= $form->getValue('longitude')?>" />
+			</div>
+		</div>
+	</div>
+	
+</div>
 
+<div class="row-fluid">
+
+	<div class="span6">
 		<div class="control-group">
 			<label class="control-label" for="input_realtyType">City</label>
 			<div class="controls">
@@ -57,10 +73,22 @@
 
 	foreach ($cityList as $item) {
 ?>
-					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?=$item->getName()?></option>
+					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
 <?php
 	}
 ?>
 				</select>
 			</div>
 		</div>
+	</div>
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="input_latitude">Latitude</label>
+			<div class="controls">
+				<input type="text" id="input_latitude" placeholder="latitude" name="latitude" value="<?= $form->getValue('latitude')?>" />
+			</div>
+		</div>
+	</div>
+
+</div>

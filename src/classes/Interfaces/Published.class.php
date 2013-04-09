@@ -1,3 +1,3 @@
 <?php
 
-	interface Published {/*_*/};
+	interface Published extends Dated {/*_*/};

@@ -8,10 +8,6 @@
 		: null;
 	
 	$class = get_class($subject);
-
-	$publish = $form->getValue('published')
-		? 0
-		: 1;
 ?>
 
 <h1><?=$id ? 'Update Article: '.$form->getValue('id')->getName() : 'Add new Article'?></h1>
@@ -39,6 +35,10 @@
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
 
+<?php
+	$partViewer->view('_parts/form/dates');
+?>
+
 <div class="navbar">
 	<div class="navbar-inner">
 		<b class="brand">Sections</b>
@@ -51,6 +51,7 @@
 			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
 <?php
 	if ($id) {
+		$publish = $form->getValue('published') ? 0 : 1;
 ?>
 			<button class="btn btn-danger" type="button" onclick="document.location.href='/index.php?area=<?= $area?>&action=publish&id=<?= $id?>&active=<?= $publish?>'"><?= empty($publish) ? 'Un-publish' : 'Publish'?></button>
 <?php
