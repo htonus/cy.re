@@ -8,11 +8,17 @@
 		: null;
 	
 	$class = get_class($subject);
+
+	$publish = $form->getValue('published')
+		? 0
+		: 1;
 ?>
 
 <h1><?=$id ? 'Update Article: '.$form->getValue('id')->getName() : 'Add new Article'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($errors = $form->getErrors()) {
 		print_r($errors);
 	}
@@ -43,6 +49,13 @@
 		<div class="controls pull-right">
 			<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area?>'">Cancel</button>
 			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
+<?php
+	if ($id) {
+?>
+			<button class="btn btn-danger" type="button" onclick="document.location.href='/index.php?area=<?= $area?>&action=publish&id=<?= $id?>&active=<?= $publish?>'"><?= empty($publish) ? 'Un-publish' : 'Publish'?></button>
+<?php
+	}
+?>
 		</div>
 	</div>
 </div>

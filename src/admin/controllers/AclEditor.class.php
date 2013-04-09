@@ -36,7 +36,7 @@ class AclEditor extends PrototypedEditor
 	{
 		if (!$this->checkAccess($request)) {
 			Session::assign(
-				'flash.message',
+				'flash.error',
 				'You do not have access to the requested object and action. If you consider this an error, please contact support'
 			);
 			

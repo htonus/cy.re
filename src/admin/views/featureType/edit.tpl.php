@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update Feature Type: '.$form->getValue('id')->getName() : 'Add new Feature Type'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($form->getErrors()) {
 		$partViewer->view('_parts/form/errors', Model::create()->set('form', $form));
 	}

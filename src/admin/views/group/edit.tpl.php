@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update Group: '.$form->getValue('id')->getName() : 'Add new Group'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($form->getErrors()) {
 		$partViewer->view('_parts/form/errors', Model::create()->set('form', $form));
 	}

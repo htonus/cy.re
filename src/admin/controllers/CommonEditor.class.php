@@ -41,7 +41,7 @@ class CommonEditor extends controllerPictured
 
 		if (!$request->hasAttachedVar('layout'))
 			$request->setAttachedVar('layout', 'default');
-
+		
 		if (
 			$model->has('editorResult')
 			&& $model->get('action') != 'edit'
@@ -86,10 +86,9 @@ class CommonEditor extends controllerPictured
 	{
 		$form = $this->getForm()->
 			add(
-				Primitive::boolean('active')
+				Primitive::ternary('active')
 			)->
-			importOne('id', $request->getGet())->
-			importOneMore('id', $request->getPost());
+			import($request->getGet());
 
 		if ($object = $form->getValue('id')) {
 			$object->dao()->save(
@@ -99,20 +98,19 @@ class CommonEditor extends controllerPictured
 						: null
 				)
 			);
-
+			
 			Session::assign(
 				'flash.success',
 				'Successfully '.($form->getValue('active') ? null : 'un').'published'
 			);
-
-			FormUtils::object2form($object, $form);
 		}
-
+		
 		return ModelAndView::create()->
-			setModel(
-				Mosdel::create()->
-					set('subject', $object)->
-					set('form', $form)
+			setView(
+				RedirectView::create(
+					'/index.php?area='.$request->getAttachedVar('area')
+					.'&action=edit&id='.$object->getId()
+				)
 			);
 	}
 	
