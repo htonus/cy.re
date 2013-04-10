@@ -79,7 +79,9 @@
 			) {
 				return new DBField(
 					$mapping[$atom],
-					$this->getTable().self::I18N
+					$table === null
+						? $this->getTable().self::I18N
+						: $table
 				);
 			}
 			
