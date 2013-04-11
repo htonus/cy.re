@@ -5,12 +5,13 @@
 
 	$menu = array(
 		array(
-			'title'	=> 'Dictionaries',
+			'title'	=> 'Edit Dictionaries',
 			'items'	=> array(
-				'language'	=> 'Languages',
-				'unit'		=> 'Measurement units',
-				'featureType'	=> 'Property Feature Types',
+				'language'	=> 'Language',
+				'unit'		=> 'Measurement unit',
+				'featureType'	=> 'Property Feature Type',
 				'realtyType'	=> 'Type of the realty',
+				'city'		=> 'City',
 			)
 		),
 		array(
