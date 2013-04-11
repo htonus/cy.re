@@ -64,6 +64,7 @@ class CommonEditor extends controllerPictured
 
 		try {
 			$criteria = $this->getListCriteria($request, $model);
+			
 			$request->setAttachedVar('criteria', $criteria);
 			
 			// paging stuff
@@ -124,14 +125,12 @@ class CommonEditor extends controllerPictured
 	{
 		$criteria = Criteria::create($this->subject->dao())->
 			addOrder('name');
-
+		
 		return $criteria;
 	}
 	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
-		$model->set('languageList', Language::dao()->getList());
-		
 		return $this;
 	}
 

@@ -4,6 +4,18 @@
  */
 
 	$url = '/index.php?area='.$area.'&action=';
+
+	$headers = array(
+		'Preview'	=> null,
+		'City'		=> 'city.name',
+		'Type'		=> 'realtyType',
+		'Price'		=> null,
+		'Created'	=> 'created',
+		'Published'	=> 'published',
+		'Action'	=> null,
+	);
+
+	$urlHelper = UrlHelper::create($model);
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
@@ -12,13 +24,7 @@
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Preview</th>
-			<th>City</th>
-			<th>Type</th>
-			<th>Price</th>
-			<th>Created</th>
-			<th>Published</th>
-			<th>Action</th>
+			<?= $urlHelper->getTableHeader($headers); ?>
 		</tr>
 	</thead>
 	<tbody>
