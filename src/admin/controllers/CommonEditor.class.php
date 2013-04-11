@@ -124,7 +124,7 @@ class CommonEditor extends controllerPictured
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
 		$criteria = Criteria::create($this->subject->dao())->
-			addOrder('name');
+			addOrder('id');
 		
 		return $criteria;
 	}

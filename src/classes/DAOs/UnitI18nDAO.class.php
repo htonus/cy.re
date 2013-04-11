@@ -26,7 +26,7 @@
 		
 		public function getParentIdField()
 		{
-			return 'unit_id';
+			return 'object_id';
 		}
 	}
 ?>

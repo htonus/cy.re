@@ -49,10 +49,10 @@ class i18nEditor extends CommonEditor
 		$request->setAttachedVar('i18n_ids', $ids);
 		$request->setAttachedVar('i18n_fields', $fields);
 		
-		// Setup main object with default language
-		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
-			$request->setPostVar($name, $value);
-		}
+//		// Setup main object with default language
+//		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
+//			$request->setPostVar($name, $value);
+//		}
 		
 		return $this;
 	}

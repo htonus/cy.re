@@ -21,12 +21,12 @@
 		<properties/>
 		<pattern name="AbstractClass" />
 	</class>
-	
+
 	<class name="Token" extends="i18n">
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="16" required="true" />
-			<property name="value" type="String" size="128" required="false" />
+			<property name="i18n" type="Token_i18n" relation="OneToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
@@ -34,7 +34,7 @@
 	<class name="Token_i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="object" type="Token" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="object" type="Token" relation="OneToOne" required="true" fetch="lazy" column="object_id" />
 			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="value" type="String" size="128" required="false" />
 		</properties>
@@ -44,7 +44,7 @@
 	<class name="City" extends="i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="128" required="false" />
+			<property name="i18n" type="City_i18n" relation="OneToMany" required="false" />
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
 			<property name="region" type="City" relation="OneToOne" required="false" fetch="lazy" />

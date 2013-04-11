@@ -9,7 +9,7 @@
 	<class name="Unit" extends="i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="16" required="false" />
+			<property name="i18n" type="Unit_i18n" relation="OneToMany" required="false" />
 			<property name="sign" type="String" size="16" required="false" />
 			<!-- property name="cast" type="Integer" required="true" / >  <!- - representation (not sure) -->
 		</properties>
@@ -44,7 +44,7 @@
 	<class name="FeatureType" extends="i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="16" required="false" />
+			<property name="i18n" type="FeatureType_i18n" relation="OneToMany" required="false" />
 			<property name="unit" type="Unit" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="group" type="FeatureTypeGroup" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="weight" type="Integer" required="true" default="1" /> <!-- for relevant serarch -->
@@ -65,7 +65,7 @@
 	<class name="RealtyType" extends="i18n">
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="16" required="false" />
+			<property name="i18n" type="RealtyType_i18n" relation="OneToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
@@ -106,8 +106,7 @@
 		<implement interface="Published" />
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="128" required="false" />
-			<property name="text" type="String" size="4096" required="false" />
+			<property name="i18n" type="Realty_i18n" relation="OneToMany" required="false" />
 
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
