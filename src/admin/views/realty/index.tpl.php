@@ -7,8 +7,8 @@
 
 	$headers = array(
 		'Preview'	=> null,
-		'City'		=> 'city.name',
-		'Type'		=> 'realtyType',
+		'City'		=> 'city.i18n.name',
+		'Type'		=> 'realtyType.i18n.name',
 		'Price'		=> null,
 		'Created'	=> 'created',
 		'Published'	=> 'published',
