@@ -16,6 +16,9 @@
 		<div class="span3">
 <?php
 	$partViewer->view('_parts/menu/objects');
+
+	if ($action == 'index')
+		$partViewer->view($area.'/parts/filter');
 ?>
 		</div>
 

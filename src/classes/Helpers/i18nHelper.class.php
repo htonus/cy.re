@@ -30,10 +30,13 @@
 						Projection::property('name')
 					)->
 					addProjection(
-						Projection::property('value')
+						Projection::property('i18n.value', 'value')
 					)->
 					add(
 						Expression::in('name', $keys)
+					)->
+					add(
+						Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 					)->
 					getCustomList();
 				

@@ -147,7 +147,7 @@ final class controllerRealty extends i18nEditor
 
 		foreach ($request->getGet() as $name => $value) {
 			if (
-				preg_match('|^filter\.(.*)^|', $name, $m)
+				preg_match('|^filter\:(.*)$|', $name, $m)
 				&& !empty($value)
 			) {
 				$filter[$name] = $value;
@@ -156,10 +156,17 @@ final class controllerRealty extends i18nEditor
 					case 'name':
 						// implement me
 						break;
+					case 'published':
+						$criteria->add(
+							'yes' == $value
+								? Expression::notNull($m[1])
+								: Expression::isNull($m[1])
+						);
+						break;
 					case 'code':
-					case 'city_id':
-					case 'offer_id':
-					case 'type_id':
+					case 'city':
+					case 'offerType':
+					case 'realtyType':
 						$criteria->add(
 							Expression::eq($m[1], $value)
 						);
