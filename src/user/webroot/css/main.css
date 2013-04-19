@@ -206,6 +206,9 @@ FOOTER {
 .main {
 	margin-top: 30px;
 }
+.main .control-label, .main .control-group {
+	margin-bottom: 0px;
+}
 .catchy {
 	background-color: #3E3E3E;
 	padding: 10px;
