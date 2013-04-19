@@ -123,7 +123,8 @@ A:hover { text-decoration: none; }
 .h_2 { height: 2px; }
 .mr10 { margin-right: 10px; }
 .white { color: #FFF; }
-.note { padding: 20px; font-size: 9px; line-height: 16px; background-color: #EDEDED; }
+.note { padding: 20px; line-height: 16px; background-color: #EDEDED; }
+.note P { margin-bottom: 10px; }
 .underline { border-bottom: 2px solid #3A3A3A; }
 P { margin: 0px; padding: 0px; }
 UL.unstyled { margin: 0px; padding: 0px; list-style: none; }
@@ -166,6 +167,7 @@ HEADER .nav > LI.selected > A {
 @media (max-width: 767px) {
 	.logo {	text-align: center;	margin-bottom: 20px; }
 	.container { padding: 0 15px; }
+	.social .row > DIV { padding: 20px 0px 0px 0px !important; }
 }
 
 
@@ -258,6 +260,7 @@ FOOTER {
 	font: 10px 'Open Sans';
 	font-style: oblique;
 	font-weight: 600;
+	line-height: 45px;
 }
 
 .extra #extraCarousel {
@@ -293,7 +296,7 @@ FOOTER {
 .twitter, .copyright, .social, .social .note {
 	background-color: #3A3A3A;
 	color: #aaa;
-	font-size: 10px;
+	font-size: 12px;
 	line-height: 16px;
 	padding: 10px 0px;
 }
@@ -310,7 +313,7 @@ FOOTER {
 .social, .twitter .note {
 	background-color: #303030;
 }
-.social {
+.social .row > DIV {
 	padding: 20px 0px;
 }
 .social H3 {
@@ -332,6 +335,7 @@ FOOTER {
 .social A:hover I.ico-linkdin {	background-position:	-68px	-24px; }
 .social A:hover I.ico-twitter {	background-position:	-102px	-24px; }
 
-.social A { color: #aaa; font-weight: 800; font-family: Open Sans }
+.social A, .copyright A { color: #aaa; font-weight: 800; font-family: Open Sans; text-decoration: underline }
 .social .note { padding: 20px; font: 11px Arial;}
 .copyright { color: #FFF; }
+.social, .copyright { font-size: 11px; }
