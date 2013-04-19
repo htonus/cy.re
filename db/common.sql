@@ -50,3 +50,4 @@ CREATE INDEX token_i18n_language_id_idx ON token_i18n(language_id);
 CREATE UNIQUE INDEX token_i18n_object_id_language_id_uidx ON "token_i18n"("object_id", "language_id");
 
 
+CREATE SEQUENCE "picture_id";
