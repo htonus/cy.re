@@ -46,7 +46,13 @@
 	}
 ?>
 			</td>
-			<td><?=$item->getCity()->getName()?></td>
+			<td>
+				<b><?=$item->getCity()->getName()?></b><br />
+<?php
+		if ($item->getDistrict())
+			echo $item->getDistrict()->getName();
+?>
+			</td>
 			<td><?=$item->getRealtyType()->getName()?></td>
 			<td><?=empty($featureList[FeatureType::PRICE]) ? '---' : number_format($featureList[FeatureType::PRICE]->getValue()) ?></td>
 			<td><?=$item->getCreated()->toString()?></td>
