@@ -116,6 +116,7 @@
 			<property name="realtyType" type="RealtyType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
 			<property name="offerType" type="OfferType" relation="OneToOne" required="true" fetch="lazy" column="offer_id" />
 			<property name="city" type="City" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="district" type="District" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="preview" type="RealtyPicture" relation="OneToOne" required="false" fetch="lazy" column="preview_id" />
 
 			<property name="created" type="Timestamp" required="true" />
