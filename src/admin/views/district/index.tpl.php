@@ -55,13 +55,17 @@
 	<tbody>
 <?php
 	foreach ($list as $item) {
+		$itemUrl = '/index.php?area='.$area
+			.'&city='.$item->getCity()->getId()
+			.'&id='.$item->getId()
+			.'&action=';
 ?>
 		<tr>
 			<td><?=$item->getName()?></td>
 			<td><?=$item->getCity()->getName()?></td>
 			<td>
-				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
-				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>
+				<a href="<?= $itemUrl?>edit">edit</a> |
+				<a href="<?= $itemUrl?>drop">drop</a>
 			</td>
 		</tr>
 <?php

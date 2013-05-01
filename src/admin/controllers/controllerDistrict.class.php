@@ -56,4 +56,18 @@ final class controllerDistrict extends i18nEditor
 		
 		return $this;
 	}
+	
+	protected function getRedirectMav(HttpRequest $request)
+	{
+		return ModelAndView::create()->setView(
+			new RedirectView(
+				'/index.php?area=district&city='
+				.(
+					$request->hasAttachedVar('city')
+						? $request->getAttachedVar('city')->getId()
+						: null
+				)
+			)
+		);
+	}
 }

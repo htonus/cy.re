@@ -40,15 +40,6 @@ class CommonEditor extends controllerPictured
 		
 		$mav = parent::handleRequest($request);
 		
-		$this->afterHandle($request, $mav);
-		
-		return $mav;
-	}
-	
-	protected function beforeHandle(HttpRequest $request) {/*_*/}
-	
-	protected function afterHandle(HttpRequest $request, ModelAndView $mav)
-	{
 		$model = $mav->getModel();
 		
 		if (!$request->hasAttachedVar('layout'))
@@ -64,8 +55,17 @@ class CommonEditor extends controllerPictured
 			$model->set('action', 'edit');
 		}
 		
+		$this->afterHandle($request, $mav);
+		
+		return $mav;
+	}
+	
+	protected function beforeHandle(HttpRequest $request) {/*_*/}
+	
+	protected function afterHandle(HttpRequest $request, ModelAndView $mav)
+	{
 		if (!$mav->viewIsRedirect())
-			$this->attachCollections($request, $model);
+			$this->attachCollections($request, $mav->getModel());
 		
 		return $this;
 	}
