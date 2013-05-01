@@ -24,8 +24,15 @@ class i18nEditor extends CommonEditor
 		$this->i18nSubject = 
 			call_user_func(array(get_class($subject).'_i18n', 'create'));
 	}
-	
-	private function i18nSetRequest(HttpRequest $request)
+
+	public function handleRequest(\HttpRequest $request)
+	{
+		$request->setAttachedVar('languageList', Language::dao()->getList());
+		
+		return parent::handleRequest($request);
+	}
+
+		private function i18nSetRequest(HttpRequest $request)
 	{
 		$form = Form::create()->
 			add(
@@ -42,10 +49,10 @@ class i18nEditor extends CommonEditor
 		$request->setAttachedVar('i18n_ids', $ids);
 		$request->setAttachedVar('i18n_fields', $fields);
 		
-		// Setup main object with default language
-		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
-			$request->setPostVar($name, $value);
-		}
+//		// Setup main object with default language
+//		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
+//			$request->setPostVar($name, $value);
+//		}
 		
 		return $this;
 	}
@@ -107,7 +114,7 @@ class i18nEditor extends CommonEditor
 	
 	private function saveI18n(Identifiable $subject, HttpRequest $request)
 	{
-		$languageList = Language::dao()->getList();
+		$languageList = $request->getAttachedVar('languageList');
 		$ids = $request->getAttachedVar('i18n_ids');
 		$fields = $request->getAttachedVar('i18n_fields');
 		
@@ -133,6 +140,8 @@ class i18nEditor extends CommonEditor
 	{
 		parent::attachCollections($request, $model);
 		
+		$model->set('languageList', $request->getAttachedVar('languageList'));
+
 		$i18n = array_diff_key(
 			$this->i18nSubject->proto()->getMapping(),
 			array_flip(array('language', 'object'))

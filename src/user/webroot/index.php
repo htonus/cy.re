@@ -1,8 +1,19 @@
-<?php
+<!DOCTYPE html>
+<html lang='en'>
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
-<h1>Hello!</h1>
+<head>
+	<title>Esperia</title>
+</head>
+
+<body>
+	<br />
+	<br />
+	<br />
+
+	<div align="center">
+		<h1>Under construction</h1>
+		<p>Meanwhile you could visit our <a href="http://www.esperiaestates.com/">official web-site</a></p>
+		
+	</div>
+</body>
+</html>

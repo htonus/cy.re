@@ -8,6 +8,8 @@ truncate "realty_type" cascade;
 truncate "resource_type" cascade;
 truncate "access_type" cascade;
 truncate "person_status" cascade;
+truncate "token" cascade;
+truncate "token_i18n" cascade;
 
 
 alter sequence "language_id" restart;
@@ -23,16 +25,23 @@ alter sequence "realty_type_id" restart;
 alter sequence "realty_type_i18n_id" restart;
 alter sequence "realty_id" restart;
 alter sequence "realty_i18n_id" restart;
+alter sequence "token_id" restart;
+alter sequence "token_i18n_id" restart;
 
 
 insert into "language" ("id", "name", "code", "native", "active") values (1, 'English', 'en', 'English', true);
 insert into "language" ("id", "name", "code", "native", "active") values (2, 'Russian', 'ru', 'Русский', true);
 
-insert into "unit" ("id", "name", "sign") values (1, 'money', '&euro;');
-insert into "unit" ("id", "name", "sign") values (2, 'area', 'm<sup>2</sup>');
-insert into "unit" ("id", "name", "sign") values (3, 'quantity', '');
-insert into "unit" ("id", "name", "sign") values (4, 'flag', '');	-- all internal options
-insert into "unit_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "unit";
+insert into "unit" ("id", "sign") values (1, '&euro;');
+insert into "unit" ("id", "sign") values (2, 'm<sup>2</sup>');
+insert into "unit" ("id", "sign") values (3, '');
+insert into "unit" ("id", "sign") values (4, '');	-- all internal options
+
+insert into "unit_i18n" ("object_id", "language_id", "name") values (1, 1, 'money');
+insert into "unit_i18n" ("object_id", "language_id", "name") values (2, 1, 'area');
+insert into "unit_i18n" ("object_id", "language_id", "name") values (3, 1, 'quantity');
+insert into "unit_i18n" ("object_id", "language_id", "name") values (4, 1, 'flag');	-- all internal options
+alter sequence "token_id" restart with 5;
 
 insert into "city" ("id", "name", "latitude", "longitude") values (1, 'Nicosia', 35.145214, 33.377237);
 insert into "city" ("id", "name", "latitude", "longitude") values (2, 'Limassol', 0, 0);
@@ -59,13 +68,18 @@ insert into "realty_type" ("id", "name") values (1, 'house');
 insert into "realty_type" ("id", "name") values (2, 'appartments');
 insert into "realty_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "realty_type";
 
-insert into "token" ("name", "value") values ('SALE', 'sale');
-insert into "token" ("name", "value") values ('RENT', 'rent');
-insert into "token" ("name", "value") values ('INDOOR', 'indoor options');
-insert into "token" ("name", "value") values ('OUTDOOR', 'outdoor features');
-insert into "token" ("name", "value") values ('GENERAL', 'general features');
+insert into "token" ("id", "name") values (1, 'SALE');
+insert into "token" ("id", "name") values (2, 'RENT');
+insert into "token" ("id", "name") values (3, 'INDOOR');
+insert into "token" ("id", "name") values (4, 'OUTDOOR');
+insert into "token" ("id", "name") values (5, 'GENERAL');
 
-insert into "token_i18n" ("object_id", "language_id", "value") select "id", 1, "value" from "token";
+insert into "token_i18n" ("object_id", "language_id", "value") values (1, 1, 'sale');
+insert into "token_i18n" ("object_id", "language_id", "value") values (2, 1, 'rent');
+insert into "token_i18n" ("object_id", "language_id", "value") values (3, 1, 'indoor options');
+insert into "token_i18n" ("object_id", "language_id", "value") values (4, 1, 'outdoor features');
+insert into "token_i18n" ("object_id", "language_id", "value") values (5, 1, 'general features');
+alter sequence "token_id" restart with 6;
 
 insert into resource_type ("id", "name") values (1, 'object');
 
@@ -82,7 +96,7 @@ insert into person_status ("id", "name") values (3, 'Normal');
 insert into person_status ("id", "name") values (4, 'Admin');
 insert into person_status ("id", "name") values (5, 'Full access');
 
-insert into person ("name", "surname", "created", "status_id", "email", "username", "password") values ('Mikhail', 'Cherviakov', now(), 5, 'htonus@cyprus-realty.com', 'htonus', '28f9e86b0d5f5739612a7fda378ade96f0c30ac9[crcom@bravo746');
+insert into person ("name", "surname", "created", "status_id", "email", "username", "password") values ('Mikhail', 'Cherviakov', now(), 5, 'htonus@cyprus-realty.com', 'htonus', '28f9e86b0d5f5739612a7fda378ade96f0c30ac9');
 
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;

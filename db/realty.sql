@@ -12,6 +12,25 @@ CREATE TABLE "offer_type" (
 );
 
 
+CREATE SEQUENCE "unit_id";
+CREATE TABLE "unit" (
+    "id" INTEGER NOT NULL default nextval('unit_id'),
+    "sign" CHARACTER VARYING(16) NULL,
+    PRIMARY KEY("id")
+);
+CREATE SEQUENCE "unit_i18n_id";
+CREATE TABLE "unit_i18n" (
+    "id" BIGINT NOT NULL default nextval('unit_i18n_id'),
+    "object_id" INTEGER NOT NULL REFERENCES "unit"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "language_id" INTEGER NOT NULL REFERENCES "language"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "name" CHARACTER VARYING(16) NOT NULL,
+    PRIMARY KEY("id")
+);
+CREATE INDEX unit_i18n_object_id_idx ON unit_i18n(object_id);
+CREATE INDEX unit_i18n_language_id_idx ON unit_i18n(language_id);
+CREATE UNIQUE INDEX unit_i18n_object_id_language_id_uidx ON "unit_i18n"("object_id", "language_id");
+
+
 
 CREATE SEQUENCE "feature_type_id";
 CREATE TABLE "feature_type" (
@@ -71,6 +90,7 @@ CREATE TABLE "realty" (
 
     "type_id" INTEGER NOT NULL REFERENCES "realty_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "offer_id" INTEGER NOT NULL REFERENCES "offer_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+    "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
 	
     PRIMARY KEY("id")

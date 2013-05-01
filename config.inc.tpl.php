@@ -22,8 +22,17 @@
 	else
 		define('DOMAIN', 'real-estate.com.cy');
 
+	// web path
 	define('COOKIE_DOMAIN', '.'.DOMAIN);
-	
+	define('PATH_WEB', 'http://'.(MODE == 'user' ? 'www' : 'admin'));
+	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN);
+	define('PATH_WEB_USER', 'http://www.'.DOMAIN);
+
+	define('PATH_WEB_PIX', PATH_WEB_USER.'pix/'); // static stuff
+	define('PATH_WEB_IMG', '/img/'); // dinamic stuff
+	define('PATH_WEB_JS', '/js/'); // dinamic stuff
+	define('PATH_WEB_CSS', '/css/'); // dinamic stuff
+
 	// paths
 	define('PATH_BASE', dirname(__FILE__).DS);
 	define('PATH_SOURCE', PATH_BASE.'src'.DS.PATH_SOURCE_DIR);
@@ -36,14 +45,6 @@
 	define('PATH_CSS', PATH_WEBROOT.'css'.DS);
 	define('PATH_PIX', PATH_BASE.'src'.DS.'user'.DS.'webroot'.DS.'pix'.DS);
         
-	// web path
-	define('PATH_WEB', 'http://www.'.DOMAIN.'/');
-	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN.'/');
-	define('PATH_WEB_PIX', PATH_WEB.'pix/'); // dynamic stuff
-	define('PATH_WEB_IMG', '/img/'); // static stuff
-	define('PATH_WEB_JS', '/js/'); // static stuff
-	define('PATH_WEB_CSS', '/css/'); // static stuff
-
 	// shared classes
 	define('PATH_CLASSES', PATH_BASE.'src'.DS.'classes'.DS);
 	define('PATH_CONTROLLERS', PATH_SOURCE.'controllers'.DS);
@@ -116,11 +117,11 @@
 	// Default language
 	define ('DEFAULT_LANG_CODE', 'en');
 	
-	GlobalVar::me()->
-		set(
-			'language',
-			Language::dao()->getByCode(constant('DEFAULT_LANG_CODE'))
-		);
+//	GlobalVar::me()->
+//		set(
+//			'language',
+//			Language::dao()->getByCode(constant('DEFAULT_LANG_CODE'))
+//		);
 	
 	// Extra consts
 	define('EXT_TMPL', '.tpl.php');

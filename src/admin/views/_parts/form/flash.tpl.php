@@ -18,7 +18,7 @@ foreach (Session::getAll() as $key => $value) {
 	if (preg_match('|^flash\.(.*)$|i', $key, $m)) {
 ?>
 	<div class="alert alert-<?= $m[1]?>"><?= $value?><button type="button" class="close">×</button></div>
-<?
+<?php
 		Session::drop($key);
 	}
 }

@@ -18,6 +18,7 @@ final class controllerRealty extends i18nEditor
 		parent::__construct(	Realty::create());
 
 		$this->getForm()->
+			drop('preview')->
 			add(
 				Primitive::set('feature')
 			);
@@ -112,30 +113,105 @@ final class controllerRealty extends i18nEditor
 			'cityList',
 			Criteria::create(City::dao())->getList()
 		);
-		
+
 		$model->set(
 			'realtyTypeList',
 			ArrayUtils::convertObjectList(
 				Criteria::create(RealtyType::dao())->getList()
 			)
 		);
-		
+
 		$model->set(
 			'offerTypeList',
 			OfferType::sale()->getObjectList()
 		);
-		
+
 		$list = $this->getForm()->getValue('id')
 			? $this->getForm()->getValue('id')->getFeatureList()
 			: array();
-		
+
 		$featureList = array();
 		foreach ($list as $id => $item) {
 			$featureList[$id] = $item->getValue();
 		}
-		
+
 		$model->set('featureList', $featureList);
 
 		return parent::attachCollections($request, $model);
+	}
+
+	protected function getListCriteria(HttpRequest $request, Model $model)
+	{
+		$criteria = parent::getListCriteria($request, $model);
+		$filter = array();
+
+		foreach ($request->getGet() as $name => $value) {
+			if (
+				preg_match('|^filter\:(.*)$|', $name, $m)
+				&& !empty($value)
+			) {
+				$filter[$name] = $value;
+
+				switch($m[1]) {
+					case 'name':
+						// implement me
+						break;
+					case 'published':
+						$criteria->add(
+							'yes' == $value
+								? Expression::notNull($m[1])
+								: Expression::isNull($m[1])
+						);
+						break;
+					case 'code':
+					case 'city':
+					case 'offerType':
+					case 'realtyType':
+						$criteria->add(
+							Expression::eq($m[1], $value)
+						);
+						break;
+					case 'created_from':
+					case 'published_from':
+						$criteria->add(
+							Expression::gtEq(
+								preg_replace('_from', '', $m[1]),
+								Date::create($value)->toDate('-')
+							)
+						);
+						break;
+					case 'created_to':
+					case 'published_to':
+						$criteria->add(
+							Expression::ltEq(
+								preg_replace('_from', '', $m[1]),
+								Date::create($value)->toDate('-')
+							)
+						);
+						break;
+				}
+			} elseif (
+				$name == 'sort'
+				&& !empty($value)
+			) {
+				list($sort, $way) = explode(':', $value);
+				
+				if ($way != 'asc' && $way != 'desc')
+					$way = 'asc';
+				
+				$criteria->
+					dropOrder()->
+					addOrder(
+						OrderBy::create($sort)->$way()
+					);
+				
+				$model->set('sort', $value);
+			}
+		}
+		
+		if (!empty($filter))
+			$model->set('filter', $filter);
+		
+		return $criteria;
 	}
 }

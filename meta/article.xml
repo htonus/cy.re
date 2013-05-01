@@ -13,14 +13,14 @@
 		<pattern name="StraightMapping" />
 	</class>
 
+
 	<class name="Article" extends="i18n">
 		<implement interface="Pictured" />
 		<implement interface="Created" />
 		<implement interface="Published" />
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="128" required="false" />
-			<property name="text" type="String" size="4096" required="false" />
+			<property name="i18n" type="Article_i18n" relation="OneToMany" required="false" />
 
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />
@@ -29,6 +29,7 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
+	
 	<class name="Article_i18n">
 		<properties>
 			<identifier name="id" />
@@ -39,6 +40,7 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
+
 
 	<class name="NewsPicture" extends="Picture">
 		<properties>
@@ -53,8 +55,7 @@
 		<implement interface="Published" />
 		<properties>
 			<identifier name="id" />
-			<property name="name" type="String" size="128" required="false" />
-			<property name="text" type="String" size="4096" required="false" />
+			<property name="i18n" type="News_i18n" relation="OneToMany" required="false" />
 
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />
