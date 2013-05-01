@@ -19,6 +19,9 @@ final class controllerDistrict extends i18nEditor
 		
 		$this->map->addSource('city', RequestType::get());
 		$this->map->addSource('city', RequestType::post());
+		
+		$this->setMethodMapping('list', 'doList');
+		$this->setAccessMapping('list', Access::UPDATE);
 	}
 	
 	public function beforeHandle(HttpRequest $request)
@@ -69,5 +72,17 @@ final class controllerDistrict extends i18nEditor
 				)
 			)
 		);
+	}
+	
+	protected function doList(HttpRequest $request)
+	{
+		$list = array();
+		
+		if ($request->hasAttachedVar('city')) {
+			$list = District::dao()->
+				getByCity($request->getAttachedVar('city'), true);
+		}
+		
+		return $this->sendJson(array('districtList' => $list));
 	}
 }

@@ -92,3 +92,58 @@
 	</div>
 
 </div>
+
+
+<div class="row-fluid">
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="input_district">District</label>
+			<div class="controls">
+				<select name="district" id="input_district">
+					<option value=""></option>
+<?php
+	$default = $form->getValue('district')
+		? $form->getValue('district')->getId()
+		: null;
+
+	foreach ($districtList as $item) {
+?>
+					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+<?php
+	}
+?>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="span6">
+		<br/>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+jq(document).ready(function(){
+	jq('#input_city').change(function(){
+		jq('#input_district OPTION').remove();
+		
+		jq.getJSON(
+			'/?area=district&action=list&city=' + jq(this).val(),
+			function(data){
+				var districtSelector = jq('#input_district')
+				districtSelector.append('<option value=""></option>');
+				
+				if (typeof data.districtList != undefined) {
+					var list = data.districtList;
+					
+					for (id in list) {
+						districtSelector.append('<option value="' + id + '">' + list[id] + '</option>');
+					}
+				}
+			}
+		)
+	});
+});
+</script>

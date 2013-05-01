@@ -7,6 +7,29 @@
 
 	class DistrictDAO extends AutoDistrictDAO
 	{
-		// your brilliant stuff goes here
+		public function getByCity(City $city = null, $isPlain = false)
+		{
+			$list = array();
+			
+			if ($city) {
+				$list = Criteria::create($this)->
+					add(
+						Expression::eqId('city', $city)
+					)->
+					getList();
+			}
+			
+			if ($isPlain) {
+				$plainList = array();
+				
+				foreach ($list as $item) {
+					$plainList[$item->getId()] = $item->getName();
+				}
+				
+				$list = $plainList;
+			}
+			
+			return $list;
+		}
 	}
 ?>

@@ -113,6 +113,11 @@ final class controllerRealty extends i18nEditor
 			'cityList',
 			Criteria::create(City::dao())->getList()
 		);
+		
+		$model->set(
+			'districtList',
+			District::dao()->getByCity($model->get('subject')->getCity())
+		);
 
 		$model->set(
 			'realtyTypeList',
@@ -139,7 +144,7 @@ final class controllerRealty extends i18nEditor
 
 		return parent::attachCollections($request, $model);
 	}
-
+	
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
 		$criteria = parent::getListCriteria($request, $model);
