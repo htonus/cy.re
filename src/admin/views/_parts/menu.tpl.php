@@ -7,11 +7,12 @@
 		array(
 			'title'	=> 'Edit Dictionaries',
 			'items'	=> array(
-				'language'	=> 'Language',
-				'unit'		=> 'Measurement unit',
+				'language	'	=> 'Language',
+				'unit'			=> 'Measurement unit',
 				'featureType'	=> 'Property Feature Type',
 				'realtyType'	=> 'Type of the realty',
-				'city'		=> 'City',
+				'city'			=> 'City',
+				'district'		=> 'District',
 			)
 		),
 		array(
