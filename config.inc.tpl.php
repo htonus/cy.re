@@ -117,12 +117,6 @@
 	// Default language
 	define ('DEFAULT_LANG_CODE', 'en');
 	
-//	GlobalVar::me()->
-//		set(
-//			'language',
-//			Language::dao()->getByCode(constant('DEFAULT_LANG_CODE'))
-//		);
-	
 	// Extra consts
 	define('EXT_TMPL', '.tpl.php');
 	

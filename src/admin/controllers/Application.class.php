@@ -31,7 +31,7 @@ final class Application
 	public function run()
 	{
 		// FIXME do real language set
-		$lang = Language::dao()->getByCode('en');
+		$lang = Language::dao()->getByCode(DEFAULT_LANG_CODE);
 		GlobalVar::me()->set('language', $lang);
 		
 		$area = $this->getAreaAndAction();
