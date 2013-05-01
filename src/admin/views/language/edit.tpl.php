@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update Language: '.$form->getValue('id')->getName() : 'Add new Language'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($errors = $form->getErrors()) {
 		print_r($errors);
 	}

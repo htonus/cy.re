@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update User: '.$form->getValue('id')->getName() : 'Add new User'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($errors = $form->getErrors()) {
 		print_r($errors);
 	}

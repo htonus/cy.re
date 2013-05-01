@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration>
+<classes>
+	
+	<class name="ArticlePicture" extends="Picture">
+		<properties>
+			<property name="object" type="Article" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Article" extends="i18n">
+		<implement interface="Pictured" />
+		<implement interface="Created" />
+		<implement interface="Published" />
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="text" type="String" size="4096" required="false" />
+
+			<property name="created" type="Timestamp" required="true" />
+			<property name="published" type="Timestamp" required="false" />
+
+			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	<class name="Article_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="Article" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="text" type="String" size="4096" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="NewsPicture" extends="Picture">
+		<properties>
+			<property name="object" type="News" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="News" extends="i18n">
+		<implement interface="Pictured" />
+		<implement interface="Created" />
+		<implement interface="Published" />
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="text" type="String" size="4096" required="false" />
+
+			<property name="created" type="Timestamp" required="true" />
+			<property name="published" type="Timestamp" required="false" />
+
+			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	<class name="News_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="News" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="text" type="String" size="4096" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+</classes>
+</metaconfiguration>

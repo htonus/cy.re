@@ -11,65 +11,49 @@
  *
  * @author htonus
  */
-class CommonEditor extends PrototypedEditor
+class CommonEditor extends controllerPictured
 {
 	const PER_PAGE = 20;
 
-	private $accessMapping = array();
-	
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
-
+		
 		$this->map->addSource('id', RequestType::post());
 
+		if ($this->subject instanceof Created) {
+			$this->subject->setCreated(Timestamp::makeNow());
+			$this->getForm()->drop('created');
+		}
+		
+		if ($this->subject instanceof Published) {
+			$this->setMethodMapping('publish', 'doPublish');
+		}
+		
 		$this->setMethodMapping('index', 'doIndex')->
 			setDefaultAction('index');
-		
-		$this->setAccessMapping(
-			array(
-				'drop'		=> Access::DROP,
-				'take'		=> Access::UPDATE,
-				'save'		=> Access::UPDATE,
-				'edit'		=> Access::READ,
-				'add'		=> Access::ADD,
-				'index'		=> Access::LISTS,
-				'publish'	=> Access::PUBLISH,
-			)
-		);
 	}
 	
 	public function handleRequest(HttpRequest $request)
 	{
-		if (!$this->checkAccess($request)) {
-			Session::assign(
-				'flash.message',
-				'You do not have access to the requested object and action. If you consider this an error, please contact support'
-			);
-			
-			$mav = ModelAndView::create()->setView(
-				RedirectView::create('/?area=main&action=error')
-			);
-		} else {
-			$mav = parent::handleRequest($request);
-			$model = $mav->getModel();
-			
-			if (!$request->hasAttachedVar('layout'))
-				$request->setAttachedVar('layout', 'default');
-			
-			if (
-				$model->has('editorResult')
-				&& $model->get('action') != 'edit'
-			) {
-				if ($model->get('editorResult') == self::COMMAND_SUCCEEDED)
-					return $this->getRedirectMav($request);
+		$mav = parent::handleRequest($request);
+		$model = $mav->getModel();
 
-				$model->set('action', 'edit');
-			}
+		if (!$request->hasAttachedVar('layout'))
+			$request->setAttachedVar('layout', 'default');
+		
+		if (
+			$model->has('editorResult')
+			&& $model->get('action') != 'edit'
+		) {
+			if ($model->get('editorResult') == self::COMMAND_SUCCEEDED)
+				return $this->getRedirectMav($request);
 
-			if (!$mav->viewIsRedirect())
-				$this->attachCollections($request, $model);
+			$model->set('action', 'edit');
 		}
+
+		if (!$mav->viewIsRedirect())
+			$this->attachCollections($request, $model);
 		
 		return $mav;
 	}
@@ -98,6 +82,38 @@ class CommonEditor extends PrototypedEditor
 			setModel($model);
 	}
 
+	protected function doPublish(HttpRequest $request)
+	{
+		$form = $this->getForm()->
+			add(
+				Primitive::ternary('active')
+			)->
+			import($request->getGet());
+
+		if ($object = $form->getValue('id')) {
+			$object->dao()->save(
+				$object->setPublished(
+					$form->getValue('active')
+						? Timestamp::makeNow()
+						: null
+				)
+			);
+			
+			Session::assign(
+				'flash.success',
+				'Successfully '.($form->getValue('active') ? null : 'un').'published'
+			);
+		}
+		
+		return ModelAndView::create()->
+			setView(
+				RedirectView::create(
+					'/index.php?area='.$request->getAttachedVar('area')
+					.'&action=edit&id='.$object->getId()
+				)
+			);
+	}
+	
 	/**
 	 * Returns base list criteria
 	 * @param HttpRequest $request
@@ -126,40 +142,5 @@ class CommonEditor extends PrototypedEditor
 				'/index.php?area='.lcfirst(get_class($this->subject))
 			)
 		);
-	}
-
-	/**
-	 * Ckecks if the user has access to the resource
-	 * @param HttpRequest $request
-	 * @return boolean
-	 */
-	private function checkAccess(HttpRequest $request)
-	{
-		if (
-			$request->hasAttachedVar('user')
-			&& ($action = $this->chooseAction($request))
-			&& isset($this->accessMapping[$action])
-		) {
-			$user = $request->getAttachedVar('user');
-
-			return $user->getAcl()->
-				check($this->subject, $this->accessMapping[$action]);
-		}
-
-		return false;
-	}
-	
-	protected function setAccessMapping($first, $second = null)
-	{
-		if (!is_array($first))
-			$first = array($first => $second);
-		
-		foreach ($first as $key => $value) {
-			$this->accessMapping[$key] = empty($second)
-				? $value
-				: $second;
-		}
-		
-		return $this;
 	}
 }

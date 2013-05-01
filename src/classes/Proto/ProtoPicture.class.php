@@ -5,5 +5,5 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	class ProtoPicture extends AutoProtoPicture {/*_*/}
+	abstract class ProtoPicture extends AutoProtoPicture {/*_*/}
 ?>

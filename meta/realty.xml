@@ -92,21 +92,18 @@
 		<pattern name="StraightMapping" />
 	</class>
 
-	<class name="Picture">
+	<class name="RealtyPicture" extends="Picture">
 		<properties>
-			<identifier name="id" />
-			<property name="name" type="String" size="128" required="true" /> <!-- in file system -->
-			<property name="type" type="ImageType" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="main" type="Boolean" required="false" default="false" />
-			<property name="size" type="BigInteger" required="false" default="0" />
-			<property name="width" type="Integer" required="true" />
-			<property name="height" type="Integer" required="true" />
-			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="object" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
-
+	
 	<class name="Realty" extends="i18n">
+		<implement interface="Pictured" />
+		<implement interface="PreviewPictured" />
+		<implement interface="Created" />
+		<implement interface="Published" />
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="128" required="false" />
@@ -120,12 +117,12 @@
 			<property name="realtyType" type="RealtyType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
 			<property name="offerType" type="OfferType" relation="OneToOne" required="true" fetch="lazy" column="offer_id" />
 			<property name="city" type="City" relation="OneToOne" required="true" fetch="lazy" />
-			<!-- property name="image" type="Picture" relation="OneToOne" required="false" fetch="lazy" column="image_id" / --> 
+			<property name="preview" type="RealtyPicture" relation="OneToOne" required="false" fetch="lazy" column="preview_id" />
 
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />
 
-			<property name="pictures" type="Picture" relation="OneToMany" required="false" />
+			<property name="pictures" type="RealtyPicture" relation="OneToMany" required="false" />
 			<property name="features" type="Feature" relation="OneToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />

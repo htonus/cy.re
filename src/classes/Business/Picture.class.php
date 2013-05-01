@@ -5,32 +5,8 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	class Picture extends AutoPicture implements Prototyped, DAOConnected
+	abstract class Picture extends AutoPicture implements Prototyped, DAOConnected
 	{
-		/**
-		 * @return Picture
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return PictureDAO
-		**/
-		public static function dao()
-		{
-			return Singleton::getInstance('PictureDAO');
-		}
-		
-		/**
-		 * @return ProtoPicture
-		**/
-		public static function proto()
-		{
-			return Singleton::getInstance('ProtoPicture');
-		}
-		
 		private $uploadName = null;
 
 		/**

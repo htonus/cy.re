@@ -15,9 +15,7 @@ final class controllerPerson extends CommonEditor
 {
 	public function __construct()
 	{
-		parent::__construct(Person::create()->setCreated(Timestamp::makeNow()));
-		
-		$this->getForm()->drop('created');
+		parent::__construct(Person::create());
 		
 		$this->setMethodMapping('access', 'doAccess');
 		$this->setAccessMapping('access', Access::UPDATE);

@@ -5,7 +5,7 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	class PictureDAO extends AutoPictureDAO
+	abstract class PictureDAO extends AutoPictureDAO
 	{
 		public function add(Identifiable $object)
 		{
@@ -13,7 +13,7 @@
 				$path = $dirName = null;
 				
 				$db = DBPool::me()->getByDao($this)->begin();
-
+				
 				try {
 					$info = getimagesize($tmpName);
 					
@@ -24,7 +24,7 @@
 						setSize(filesize($tmpName));
 					
 					$object = parent::add($object);
-
+					
 					$path = $object->getPath();
 					$dirName = dirname($path);
 

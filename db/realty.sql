@@ -103,12 +103,9 @@ CREATE TABLE "feature" (
 CREATE INDEX feature_type_id_idx ON feature(type_id);
 CREATE INDEX feature_realty_id_idx ON feature(realty_id);
 
-
-
-CREATE SEQUENCE "picture_id";
-CREATE TABLE "picture" (
+CREATE TABLE "realty_picture" (
     "id" BIGINT NOT NULL default nextval('picture_id'),
-    "realty_id" BIGINT NOT NULL REFERENCES "realty"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "object_id" BIGINT NOT NULL REFERENCES "realty"("id") ON UPDATE CASCADE ON DELETE CASCADE,
     "type_id" INTEGER NOT NULL,
     "name" CHARACTER VARYING(128) NOT NULL,
     "main" BOOLEAN NULL DEFAULT false,
@@ -118,4 +115,6 @@ CREATE TABLE "picture" (
 
     PRIMARY KEY("id")
 );
-CREATE INDEX picture_realty_id_idx ON picture(realty_id);
+CREATE INDEX realty_picture_object_id_idx ON realty_picture(object_id);
+
+ALTER TABLE "realty" ADD COLUMN "preview_id" BIGINT NULL REFERENCES "realty_picture"("id") ON UPDATE CASCADE ON DELETE CASCADE;

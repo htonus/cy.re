@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update Realty site: '.$form->getValue('id')->getName() : 'Add new Realty site'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($errors = $form->getErrors()) {
 		print_r($errors);
 	}
@@ -33,17 +35,29 @@
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
 
+<?php
+	$partViewer->view('_parts/form/dates');
+?>
+
 <div class="navbar">
 	<div class="navbar-inner">
 		<b class="brand">Sections</b>
 		<ul class="nav nav-tabs">
-			<li><a href="#tab_description" data-toggle="tab">Description</a></li>
+			<li<?= $id ? null : ' class="active"'?>><a href="#tab_description" data-toggle="tab">Description</a></li>
 			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
-			<li class="active"><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
+			<li<?= $id ? ' class="active"' : null?>><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
 		</ul>
 		<div class="controls pull-right">
-			<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
-			<button class="btn btn-primary" type="button" id="btnSubmit">Submit</button>
+			<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area?>'">Cancel</button>
+			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
+<?php
+	if ($id) {
+		$publish = $form->getValue('published') ? 0 : 1;
+?>
+			<button class="btn btn-danger" type="button" onclick="document.location.href='/index.php?area=<?= $area?>&action=publish&id=<?= $id?>&active=<?= $publish?>'"><?= empty($publish) ? 'Un-publish' : 'Publish'?></button>
+<?php
+	}
+?>
 		</div>
 	</div>
 </div>
@@ -51,10 +65,11 @@
 
 <div class="tab-content">
 	
-	<div class="tab-pane" id="tab_description">
+	<div class="tab-pane<?= $id ? null : ' active'?>" id="tab_description">
 <?php
-	$partViewer->view('_parts/form/i18n');
 	$partViewer->view('realty/parts/main');
+	$model->set('editorFor', 'text');
+	$partViewer->view('_parts/form/i18n');
 ?>
 	</div>
 
@@ -65,7 +80,7 @@
 ?>
 	</div>
 	
-	<div class="tab-pane active" id="tab_pictures">
+	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
 <?php
 	$partViewer->view('realty/parts/pictures');
 ?>

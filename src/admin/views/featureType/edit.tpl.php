@@ -13,6 +13,8 @@
 <h1><?=$id ? 'Update Feature Type: '.$form->getValue('id')->getName() : 'Add new Feature Type'?></h1>
 
 <?php
+	$partViewer->view('_parts/form/flash');
+
 	if ($form->getErrors()) {
 		$partViewer->view('_parts/form/errors', Model::create()->set('form', $form));
 	}
@@ -85,7 +87,7 @@
 <div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area?>'">Cancel</button>
     </div>
 </div>
 

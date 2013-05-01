@@ -3,26 +3,31 @@
 try {
 	$dir = dirname(__FILE__).'/';
 
-	if (!empty($_GET['p'])) {
-		list($id, $ext) = explode('.', $_GET['p']);
-		$dir .= implode('/', str_split(substr(sprintf('%08d', $id), 0, -2), 2)).'/';
-		$name = "$id.$ext";
+	if (preg_match('|^/pix/([^/]+)/?([^/]+)?/?([^/]+)?|i', $_SERVER['REQUEST_URI'], $m)) {
+		if (empty($m[3])) {
+			$name = $m[1];
+		} else {
+			$name = $m[3];
+			$w1 = intval($m[1]);
+			$h1 = intval($m[2]);
+		}
 	} else {
 		$name = 'dummy.png';
 	}
 
-	$path = $dir.$name;
+	list($id, $ext) = explode('.', $name);
+	$dir .= implode('/', str_split(substr(sprintf('%08d', $id), 0, -2), 2)).'/';
 
+	$path = $dir.$name;
+	
 	if (!file_exists($path)) {
 		exit;
 	}
-
+	
 	$info = getimagesize($path);
 	header('Content-type: '.image_type_to_mime_type($info[2]));
 	
-	if (!empty($_GET['w'])) {
-		$w1 = intval($_GET['w']);
-		$h1 = intval($_GET['h']);
+	if (!empty($w1)) {
 		$k1 = $w1/$h1;
 		
 		$w2 = $info[0];
@@ -34,9 +39,9 @@ try {
 		
 		if ($k1 > $k2) {
 			$w3 = $w2;
-			$h3 = $h2/$k1;
+			$h3 = $w2 / $k1;
 		} else {
-			$w3 = $w2/$k1;
+			$w3 = $h2 * $k1;
 			$h3 = $h2;
 		}
 		

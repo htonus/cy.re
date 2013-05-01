@@ -51,6 +51,28 @@ CREATE INDEX city_i18n_language_id_idx ON city_i18n(language_id);
 CREATE UNIQUE INDEX city_i18n_object_id_language_id_uidx ON "city_i18n"("object_id", "language_id");
 
 
+CREATE SEQUENCE "district_id";
+CREATE TABLE "district" (
+    "id" INTEGER NOT NULL default nextval('district_id'),
+    "name" CHARACTER VARYING(16) NULL,
+    "latitude" numeric(10,6) NULL,
+    "longitude" numeric(10,6) NULL,
+    "city_id" BIGINT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+    PRIMARY KEY("id")
+);
+CREATE SEQUENCE "district_i18n_id";
+CREATE TABLE "district_i18n" (
+    "id" BIGINT NOT NULL default nextval('district_i18n_id'),
+    "object_id" INTEGER NOT NULL REFERENCES "district"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "language_id" INTEGER NOT NULL REFERENCES "language"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "name" CHARACTER VARYING(16) NULL,
+    PRIMARY KEY("id")
+);
+CREATE INDEX district_i18n_object_id_idx ON district_i18n(object_id);
+CREATE INDEX district_i18n_language_id_idx ON district_i18n(language_id);
+CREATE UNIQUE INDEX district_i18n_object_id_language_id_uidx ON "district_i18n"("object_id", "language_id");
+
+
 
 CREATE SEQUENCE "token_id";
 CREATE TABLE "token" (

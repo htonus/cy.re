@@ -11,7 +11,7 @@
 		{
 			parent::__construct(
 				$realty,
-				Picture::dao(),
+				RealtyPicture::dao(),
 				$lazy
 			);
 		}
@@ -26,7 +26,7 @@
 		
 		public function getParentIdField()
 		{
-			return 'realty_id';
+			return 'object_id';
 		}
 	}
 ?>

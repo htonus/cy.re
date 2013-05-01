@@ -66,7 +66,7 @@
 	define('PROJECT_NAME', 'real-estate.com.cy');
 
 	DBPool::me()->setDefault(
-		DB::spawn('PgSQL', 'htonus', '', 'localhost', 're_com_cy')->
+		DB::spawn('PgSQL', 'crcom', 'sohK2uuw', 'localhost', 'cr_com')->
 		setEncoding(DEFAULT_ENCODING)
 	);
 	
@@ -83,6 +83,7 @@
 				PATH_CLASSES.'Proto',
 				PATH_CLASSES.'Helpers',
 				PATH_CLASSES.'Filters',
+				PATH_CLASSES.'Interfaces',
 
 				PATH_CLASSES.'Auto'.DS.'Business',
 				PATH_CLASSES.'Auto'.DS.'Proto',
@@ -99,6 +100,7 @@
 			.PATH_CLASSES.'Proto'.PS
 			.PATH_CLASSES.'Helpers'.PS
 			.PATH_CLASSES.'Filters'.PS
+			.PATH_CLASSES.'Interfaces'.PS
 
 			.PATH_CLASSES.'Auto'.DS.'Business'.PS
 			.PATH_CLASSES.'Auto'.DS.'Proto'.PS

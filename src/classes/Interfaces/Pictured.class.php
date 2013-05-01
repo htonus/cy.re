@@ -1,0 +1,3 @@
+<?php
+
+	interface Pictured {/*_*/};

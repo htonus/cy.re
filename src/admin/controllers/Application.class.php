@@ -42,7 +42,14 @@ final class Application
 				$chain = new $controller;
 				break;
 		}
-
+		
+		$cr = Criteria::create(Realty::dao())->
+			addOrder(
+				OrderBy::create('city.name')->desc()
+			);
+		
+		echo $cr->toString();
+exit;
 		$chain = new AuthFilter($chain);
 
 		$this->attachResolver();

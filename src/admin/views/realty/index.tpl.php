@@ -12,7 +12,7 @@
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Name</th>
+			<th>Preview</th>
 			<th>City</th>
 			<th>Type</th>
 			<th>Price</th>
@@ -27,7 +27,19 @@
 		$featureList = $item->getFeaturesByGroup(FeatureTypeGroup::general());
 ?>
 		<tr>
-			<td><?=$item->getName()?></td>
+			<td>
+<?php
+	if ($preview = $item->getPreview()) {
+?>
+				<img src="<?= PictureSize::thumbnail()->getUrl($preview)?>" alt="<?= $item->getName()?>"/>
+<?php
+	} else {
+?>
+				<img src="<?= PATH_WEB_IMG?>1.gif" alt="<?= $item->getName()?>" style="border: 1px solid red; <?= PictureSize::thumbnail()->getImgStyle()?>" />
+<?php
+	}
+?>
+			</td>
 			<td><?=$item->getCity()->getName()?></td>
 			<td><?=$item->getRealtyType()->getName()?></td>
 			<td><?=empty($featureList[FeatureType::PRICE]) ? '---' : number_format($featureList[FeatureType::PRICE]->getValue()) ?></td>

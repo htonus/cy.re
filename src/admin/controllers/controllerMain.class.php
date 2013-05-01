@@ -49,8 +49,9 @@ final class controllerMain extends MethodMappedController
 
 	public function actionError(HttpRequest $request)
 	{
-		if ($request->hasSessionVar('flash.message')) {
-			$error = $request->getSessionVar('flash.message');
+		if ($request->hasSessionVar('flash.error')) {
+			$error = $request->getSessionVar('flash.error');
+			Session::drop('flash.error');
 		} else {
 			$error = 'Unknown error occured. Contact support.';
 		}

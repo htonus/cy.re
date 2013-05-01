@@ -48,13 +48,20 @@
 
 		public function getUrl(Picture $picture)
 		{
-			return PATH_WEB.'p/'
+			return PATH_WEB_PIX
 				.(
 					self::NORMAL != $this->id
 						? $this->getWidth().'/'.$this->getHeight().'/'
 						: null
 				)
 				.$picture->getFileName();
+		}
+
+		public function getImgStyle($css = true)
+		{
+			return $css
+				? 'width: '.$this->getWidth().'px; height: '.$this->getHeight().'px;'
+				: 'width="'.$this->getWidth().'" height="'.$this->getHeight().'"';
 		}
 	}
 ?>
