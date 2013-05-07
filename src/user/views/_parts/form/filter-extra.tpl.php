@@ -35,7 +35,7 @@
 ?>
 	</div>
 
-	<div class="row-fluid">
+	<div class="row-fluid mt20">
 		<input type="submit" class="btn btn-small btn-black span12" value="Submt">
 	</div>
 
