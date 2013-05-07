@@ -121,10 +121,11 @@ BODY {
 	background: #AEC71E;
 	width: 100%;
 }
-h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400 !important; color:#555; text-transform:none; margin-top:0px;}
+h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400; color:#555; text-transform:none; margin-top:0px;}
 A:hover { text-decoration: none; }
 .h_2 { height: 2px; }
 .mr10 { margin-right: 10px; }
+.mt20 { margin-top: 20px; }
 .white { color: #FFF; }
 .note { padding: 20px; line-height: 16px; background-color: #EDEDED; }
 .note P { margin-bottom: 10px; }
@@ -132,13 +133,34 @@ A:hover { text-decoration: none; }
 P { margin: 0px; padding: 0px; }
 UL.unstyled { margin: 0px; padding: 0px; list-style: none; }
 
-.btn {
-	background-image: none;
+.btn, .btn-black.active {
 	border: none;
-	border-radius: 0px
+	border-radius: 0px;
 }
-
-
+.btn-black {
+	background-color: #444;
+	color: #FFF;
+}
+.btn-black.active, .btn-black:hover {
+	background-color: #AEC71E;
+	color: #FFF;
+}
+.well {
+	border: 1px solid #F1F1F1;
+	border-image: initial;
+	background-color: #F9F9F9;
+	border-radius: 4px;
+}
+.well, .btn, .btn-black.active {
+	background-image: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+.well H5 {
+	text-transform: uppercase;
+	font-weight: 600;
+}
 /*
 	Header
 */
