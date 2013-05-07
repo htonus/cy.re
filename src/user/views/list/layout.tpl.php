@@ -2,9 +2,10 @@
 /*
  * $Id$
  */
+
 ?>
 
-<div class="content">
+<div class="content sub-page">
 
 <?php
 	$partViewer->view('_parts/site_title');

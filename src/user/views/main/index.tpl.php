@@ -173,14 +173,14 @@
 
 			<div class="row">
 
-				<div class="span3">
+				<div class="span3 list-item">
 					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
 					<h5>
 						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
 					</h5>
 					Some details
 				</div>
-				<div class="span3">
+				<div class="span3 list-item">
 					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg">
 					<a href="http://html.orange-idea.com/builder/portfolio-type/cool-ring/" title="Permalink to Cool Ring">
 					<h5>
@@ -189,7 +189,7 @@
 					Some details
 					</a>
 				</div>
-				<div class="span3">
+				<div class="span3 list-item">
 					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
 					<h5>
 						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
@@ -197,7 +197,7 @@
 					Some details
 					</a>
 				</div>
-				<div class="span3">
+				<div class="span3 list-item">
 					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg">
 					<h5>
 						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
