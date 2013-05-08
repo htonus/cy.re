@@ -36,6 +36,9 @@ final class AuthFilter extends RequestFilter
 			
 			$mav = ModelAndView::create()->
 				setView(RedirectView::create('/?area=main&action=login'));
+		} else {
+			// before I decide what to do with unlogged users
+			$mav = $this->controller->handleRequest($request);
 		}
 		
 		return $mav;
