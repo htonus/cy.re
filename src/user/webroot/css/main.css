@@ -99,6 +99,7 @@
 HTML * {
 	text-shadow: none !important;
 	box-shadow: none;
+	color: #333;
 }
 BODY {
 	background: url(/img/d-noise.png) repeat #e2e2e2;
@@ -119,7 +120,6 @@ BODY {
 }
 .hr {
 	background: #AEC71E;
-	width: 100%;
 }
 h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400; color:#555; text-transform:none; margin-top:0px;}
 A:hover { text-decoration: none; }
@@ -389,4 +389,30 @@ H3 SPAN {
 }
 .list {
 	background-color: #FDFDFD;
+}
+H4 {
+	border-bottom: 1px solid #EDEDED;
+	padding-bottom: 5px;
+	font-weight: 600;
+}
+DT, DD, DT A, DD A {
+	font-size: 12px;
+}
+DT, DD {
+	padding-left: 10px;
+	margin-left: 0px;
+	line-height: 16px;
+}
+DT {
+	margin-top: 10px;
+	background: url('/img/li-arr.png') 0px 6px no-repeat;
+}
+DD {
+	font-size: 11px;
+}
+.row .odd, .row .even {
+	padding: 10px 0px;
+}
+.row .odd {
+	background-color: #EDEDED;
 }
