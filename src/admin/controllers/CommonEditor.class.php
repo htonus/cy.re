@@ -104,18 +104,31 @@ class CommonEditor extends controllerPictured
 			import($request->getGet());
 
 		if ($object = $form->getValue('id')) {
-			$object->dao()->save(
-				$object->setPublished(
-					$form->getValue('active')
-						? Timestamp::makeNow()
-						: null
-				)
-			);
+			FormUtils::object2form($object, $form);
+
+			if (
+				$form->getValue('active')
+				&& ($error = $this->hasPublishError($object, $form))
+			) {
+				Session::assign(
+					'flash.error',
+					'Cannot publish '.$error
+				);
+			} else {
 			
-			Session::assign(
-				'flash.success',
-				'Successfully '.($form->getValue('active') ? null : 'un').'published'
-			);
+				$object->dao()->save(
+					$object->setPublished(
+						$form->getValue('active')
+							? Timestamp::makeNow()
+							: null
+					)
+				);
+			
+				Session::assign(
+					'flash.success',
+					'Successfully '.($form->getValue('active') ? null : 'un').'published'
+				);
+			}
 		}
 		
 		return ModelAndView::create()->
@@ -126,7 +139,12 @@ class CommonEditor extends controllerPictured
 				)
 			);
 	}
-	
+
+	protected function hasPublishError(Identifiable $object, Form $form)
+	{
+		return null;
+	}
+
 	/**
 	 * Returns base list criteria
 	 * @param HttpRequest $request

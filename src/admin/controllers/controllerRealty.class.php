@@ -13,6 +13,8 @@
  */
 final class controllerRealty extends i18nEditor
 {
+	const ERROR_NO_CITY = 'set city first';
+
 	public function __construct()
 	{
 		parent::__construct(	Realty::create());
@@ -68,7 +70,7 @@ final class controllerRealty extends i18nEditor
 
 	private function saveFeatures(Realty $object, HttpRequest $request)
 	{
-		$set = $this->getForm()->getValue('feature');
+		$set = (array)$this->getForm()->getValue('feature');
 		$list = $object->getFeatureList();
 
 		// Update or create features
@@ -101,7 +103,18 @@ final class controllerRealty extends i18nEditor
 
 		return $this;
 	}
-	
+
+	protected function hasPublishError(Identifiable $object, Form $form)
+	{
+		$error = parent::hasPublishError($object, $form);
+
+		if (!$object->getCity()) {
+			$error .= ' '.self::ERROR_NO_CITY;
+		}
+		
+		return $error;
+	}
+
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 //		$model->set(

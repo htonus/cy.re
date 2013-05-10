@@ -91,11 +91,12 @@ CREATE TABLE "realty" (
     "type_id" INTEGER NOT NULL REFERENCES "realty_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "offer_id" INTEGER NOT NULL REFERENCES "offer_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
-    "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+    "district_id" INTEGER NOT NULL REFERENCES "district"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
 	
     PRIMARY KEY("id")
 );
 CREATE INDEX realty_type_id_idx ON realty(type_id);
+CREATE INDEX realty_offer_id_idx ON realty(offer_id);
 CREATE INDEX realty_city_id_idx ON realty(city_id);
 
 CREATE SEQUENCE "realty_i18n_id";

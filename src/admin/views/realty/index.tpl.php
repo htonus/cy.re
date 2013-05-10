@@ -47,7 +47,7 @@
 ?>
 			</td>
 			<td>
-				<b><?=$item->getCity()->getName()?></b><br />
+				<b><?= $item->getCity() ? $item->getCity()->getName() : '---'?></b><br />
 <?php
 		if ($item->getDistrict())
 			echo $item->getDistrict()->getName();
