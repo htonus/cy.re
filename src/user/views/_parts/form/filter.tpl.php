@@ -7,6 +7,13 @@
 								<div class="controls">
 									<select type="text" class="input-block-level">
 										<option>Choose ...</option>
+<?php
+	foreach ($realtyTypeList as $item) {
+?>
+										<option value="<?= $item->getId()?>"><?= ucwords($item->getName())?></option>
+<?php
+	}
+?>
 									</select>
 								</div>
 							</div>
@@ -17,6 +24,13 @@
 								<div class="controls">
 									<select type="text" class="input-block-level">
 										<option>Choose ...</option>
+<?php
+	foreach ($cityList as $item) {
+?>
+										<option value="<?= $item->getId()?>"><?= ucwords($item->getName())?></option>
+<?php
+	}
+?>
 									</select>
 								</div>
 							</div>

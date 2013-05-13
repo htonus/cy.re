@@ -10,7 +10,7 @@
  *
  * @author htonus
  */
-final class controllerList extends MethodMappedController
+final class controllerList extends controllerMain
 {
 	const COOKIE_EXPIRE	= '1 year';
 	
@@ -19,11 +19,11 @@ final class controllerList extends MethodMappedController
 		$this->
 			setMethodMappingList(
 				array(
-					'index'		=> 'actionIndex',
-					'error'		=> 'actionError',
+					'buy'		=> 'actionBuy',
+					'rent'		=> 'actionRent',
 				)
 			)->
-			setDefaultAction('index');
+			setDefaultAction('buy');
 	}
 
 	public function handleRequest(HttpRequest $request)
@@ -35,28 +35,31 @@ final class controllerList extends MethodMappedController
 		return $mav;
 	}
 
-	public function actionIndex(HttpRequest $request)
+	public function actionBuy(HttpRequest $request)
 	{
 		$model = Model::create();
-		
+
+		$filters = $this->getFilters($request);
+
 		$mav = ModelAndView::create()->
 			setModel($model);
 		
 		return $mav;
 	}
 
-	public function actionError(HttpRequest $request)
+	/**
+	 * Put filter vars into
+	 * @param HttpRequest $request
+	 * @return type
+	 */
+	private function getFilters(HttpRequest $request)
 	{
-		if ($request->hasSessionVar('flash.error')) {
-			$error = $request->getSessionVar('flash.error');
-			Session::drop('flash.error');
-		} else {
-			$error = 'Unknown error occured. Contact support.';
-		}
-
-		return ModelAndView::create()->
-			setModel(
-				Model::create()->set('error', $error)
-			);
+		$form = Form::create()->
+			add(
+				Primitive::set('f')->
+				setDefault(array())
+			)->import($request->getGet());
+		
+		return $form->getValue('f');
 	}
 }
