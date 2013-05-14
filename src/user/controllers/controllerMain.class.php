@@ -68,11 +68,11 @@ class controllerMain extends MethodMappedController
 		$mav->getModel()->
 			set(
 				'cityList',
-				Criteria::create(City::dao())->addOrder('i18n.name')->getList()
+				CriteriaUtils::getList(City::dao(), 'i18n.name')
 			)->
 			set(
 				'realtyTypeList',
-				Criteria::create(RealtyType::dao())->addOrder('i18n.name')->getList()
+				CriteriaUtils::getList(RealtyType::dao(), 'i18n.name')
 			);
 		
 		return $this;
