@@ -14,7 +14,7 @@
 		protected $names = array(
 			self::INDOOR	=> '_S__INDOOR___',
 			self::OUTDOOR	=> '_S__OUTDOOR___',
-			self::GENERAL	=> '_S__GENEREAL___',
+			self::GENERAL	=> '_S__GENERAL___',
 		);
 		
 		public static function create()

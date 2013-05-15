@@ -32,6 +32,29 @@
 	$partViewer->view('_parts/form/i18n');
 ?>
 
+<div class="control-group">
+	<label class="control-label" for="input_native">Options Group</label>
+	<div class="controls">
+<?php
+	if ($id && !$form->getErrors())
+		$value = $form->getValue('group') ? $form->getValue('group')->getId() : null;
+	else
+		$value = $form->getRawValue('group') ? $form->getRawValue('group') : null;
+
+	foreach ($groupList as $item) {
+		if (!empty($value) && $value != $item->getId())
+			continue;
+?>
+		<label class="radio">
+			<input type="radio" name="group" id="input_group_<?=$item->getId()?>" value="<?=$item->getId()?>" <?=$value == $item->getId() ? ' checked="checked"' : null?>>
+			<?=$item->getName()?>
+		</label>
+<?php
+	}
+?>
+    </div>
+</div>
+
 
 <div style="border-top: 1px #ddd solid; margin-bottom: 20px;"></div>
 
@@ -52,27 +75,6 @@
 	}
 ?>
 		</select>
-    </div>
-</div>
-
-<div class="control-group">
-	<label class="control-label" for="input_native">Options Group</label>
-	<div class="controls">
-<?php
-	if ($id && !$form->getErrors())
-		$value = $form->getValue('group') ? $form->getValue('group')->getId() : null;
-	else
-		$value = $form->getRawValue('group') ? $form->getRawValue('group') : null;
-	
-	foreach ($groupList as $item) {
-?>
-		<label class="radio">
-			<input type="radio" name="group" id="input_group_<?=$item->getId()?>" value="<?=$item->getId()?>" <?=$value == $item->getId() ? ' checked="checked"' : null?>>
-			<?=$item->getName()?>
-		</label>
-<?php
-	}
-?>
     </div>
 </div>
 

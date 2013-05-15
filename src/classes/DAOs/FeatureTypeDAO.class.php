@@ -7,7 +7,7 @@
 
 	class FeatureTypeDAO extends AutoFeatureTypeDAO
 	{
-		public function getByGroup(FeatureTypeGroup $group)
+		public function getByGroup(FeatureTypeGroup $group, $isPlain = false)
 		{
 			$out = array();
 			
@@ -17,6 +17,16 @@
 				foreach ($list as $feature) {
 					if ($feature->getGroup()->getId() == $group->getId())
 						$out[$feature->getId()] = $feature;
+				}
+
+				if ($isPlain) {
+					$plainList = array();
+
+					foreach ($list as $item) {
+						$plainList[$item->getId()] = $item->getName();
+					}
+
+					$out = $plainList;
 				}
 			} catch (Exception $e) {/*_*/}
 			
