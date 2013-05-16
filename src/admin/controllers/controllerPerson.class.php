@@ -85,6 +85,7 @@ final class controllerPerson extends CommonEditor
 			$object->setPassword(sha1($newPassword));
 		} else {
 			$object->setPassword($form->getValue('id')->getPassword());
+			$form->markGood('password');
 		}
 		
 		$form->drop('password');
