@@ -78,7 +78,7 @@ final class controllerPerson extends CommonEditor
 		return $object;
 	}
 
-	protected function doSave(HttpRequest $request)
+	public function doSave(HttpRequest $request)
 	{
 		$password = $this->getForm()->
 			importOne('password', $request->getGet())->
