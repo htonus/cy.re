@@ -78,21 +78,23 @@ final class controllerPerson extends CommonEditor
 		return $object;
 	}
 
-	protected function saveObject(
-		HttpRequest $request, Form $form, Identifiable $object
-	) {
-		if ($newPassword = $form->getValue('password')) {
-			$object->setPassword(sha1($newPassword));
+	protected function doSave(HttpRequest $request)
+	{
+		$password = $this->getForm()->
+			importOne('password', $request->getGet())->
+			getValue('password');
+
+		if ($password) {
+			$this->subject->setPassword(sha1(password));
 		} else {
-			$object->setPassword($form->getValue('id')->getPassword());
-			$form->markGood('password');
+			$this->getForm()->markGood('password');
 		}
 		
-		$form->drop('password');
+		$this->getForm()->drop('password');
 
-		return parent::saveObject($request, $form, $object);
+		return parent::doSave($request);
 	}
-
+	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		$model->set(
