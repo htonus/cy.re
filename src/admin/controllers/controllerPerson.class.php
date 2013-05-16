@@ -62,7 +62,22 @@ final class controllerPerson extends CommonEditor
 		
 		return $mav;
 	}
-	
+
+	protected function addObject(
+		HttpRequest $request, Form $form, Identifiable $object
+	) {
+		if ($password = $form->getValue('password')) {
+			$object->setPassword(sha1($password));
+			$form->drop('password');
+			
+			$object = parent::addObject($request, $form, $object);
+		} else {
+			$form->markMissing('password');
+		}
+		
+		return $object;
+	}
+
 	protected function saveObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {
@@ -73,8 +88,8 @@ final class controllerPerson extends CommonEditor
 		}
 		
 		$form->drop('password');
-		
-		return parent::addObject($request, $form, $object);
+
+		return parent::saveObject($request, $form, $object);
 	}
 
 	protected function attachCollections(HttpRequest $request, Model $model)

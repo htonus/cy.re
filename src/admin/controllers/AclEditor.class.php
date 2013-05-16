@@ -63,7 +63,7 @@ class AclEditor extends PrototypedEditor
 			&& isset($this->accessMapping[$action])
 		) {
 			$user = $request->getAttachedVar('user');
-
+			
 			return $user->getAcl()->
 				check($this->subject, $this->accessMapping[$action]);
 		}

@@ -63,7 +63,7 @@
 <div class="control-group">
 	<label class="control-label" for="input_password">Password</label>
 	<div class="controls">
-		<input type="password" id="input_password" placeholder="Password" name="password" value="<?=$form->getValue('password')?>" />
+		<input type="password" id="input_password" placeholder="Password" name="password" value="" />
     </div>
 </div>
 

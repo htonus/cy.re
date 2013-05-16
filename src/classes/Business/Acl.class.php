@@ -40,12 +40,12 @@
 			
 			foreach ($rules as $rule) {
 				$this->resourceMap[$rule->getResource()->getName()] =
-					$rule->getResource();
+					$rule->getResourceId();
+
+				if (!isset($this->accessList[$rule->getResourceId()]))
+					$this->accessList[$rule->getResourceId()] = 0;
 				
-				$this->accessList[$rule->getResourceId()] = $rule->getAccess()
-					| empty($this->accessList[$rule->getResourceId()])
-						? 0
-						: $this->accessList[$rule->getResourceId()];
+				$this->accessList[$rule->getResourceId()] |= $rule->getAccess();
 			}
 			
 			return $this;
@@ -62,8 +62,10 @@
 				&& isset($this->resourceMap[get_class($resource)])
 			)
 				$resourceId = $this->resourceMap[get_class($resource)];
-			else
+			elseif (is_numeric($resource))
 				$resourceId = $resource;
+			else
+				return false;
 			
 			return $this->checkId($resourceId, $accessId);
 		}
