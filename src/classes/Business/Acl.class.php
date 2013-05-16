@@ -64,8 +64,6 @@
 				$resourceId = $this->resourceMap[get_class($resource)];
 			elseif (is_numeric($resource))
 				$resourceId = $resource;
-			else
-				return false;
 			
 			return $this->checkId($resourceId, $accessId);
 		}
