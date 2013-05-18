@@ -20,7 +20,7 @@ function attachEditor(textarea)
 
 	window.editor = new wysihtml5.Editor(textarea, {
 		toolbar:      "toolbar",
-		stylesheets:  ["<?=PATH_WEB?>css/bootstrap.min.css", "<?=PATH_WEB?>css/bootstrap-responsive.min.css", "<?=PATH_WEB?>css/main.css"],
+		stylesheets:  ["<?=PATH_WEB_CSS?>bootstrap.min.css", "<?=PATH_WEB_CSS?>bootstrap-responsive.min.css", "<?=PATH_WEB_CSS?>main.css"],
 		parserRules:  wysihtml5ParserRules,
 		useLineBreaks: false
 	});
