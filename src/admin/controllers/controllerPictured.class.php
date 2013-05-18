@@ -56,6 +56,7 @@ class controllerPictured extends AclEditor
 			importMore($request->getFiles());
 		
 		$mav = ModelAndView::create();
+		$mav->getModel()->set('subject', $form->getValue('id'));
 		
 		if (!$form->getErrors()) {
 			$object = $form->getValue('id');
