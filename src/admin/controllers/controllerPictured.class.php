@@ -153,7 +153,9 @@ class controllerPictured extends AclEditor
 			$response[] = $item;
 		}
 		
-		$mav->getModel()->set('data', array('files' => $response));
+		$mav->getModel()->
+			set('subject', $form->getValue('id'))->
+			set('data', array('files' => $response));
 		
 		return $mav;
 	}
