@@ -180,6 +180,7 @@ class controllerPictured extends AclEditor
 			
 			try {
 				$object = $picture->getObject();
+				$mav->getModel()->set('subject', $object);
 				$picture->dao()->dropById($picture->getId());
 				$object->getPictures()->fetch();
 				$result = true;
@@ -211,7 +212,8 @@ class controllerPictured extends AclEditor
 			try {
 				$picture = $form->getValue('id');
 				$object = $picture->getObject();
-
+				$mav->getModel()->set('subject', $object);
+				
 				$object->dao()->save(
 					$object->setPreview($picture)
 				);
