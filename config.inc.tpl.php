@@ -24,9 +24,9 @@
 
 	// web path
 	define('COOKIE_DOMAIN', '.'.DOMAIN);
-	define('PATH_WEB', 'http://'.(MODE == 'user' ? 'www' : 'admin'));
-	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN);
-	define('PATH_WEB_USER', 'http://www.'.DOMAIN);
+	define('PATH_WEB', 'http://'.(MODE == 'user' ? 'www' : 'admin').DOMAIN.'/');
+	define('PATH_WEB_ADMIN', 'http://admin.'.DOMAIN.'/');
+	define('PATH_WEB_USER', 'http://www.'.DOMAIN.'/');
 
 	define('PATH_WEB_PIX', PATH_WEB_USER.'pix/'); // static stuff
 	define('PATH_WEB_IMG', '/img/'); // dinamic stuff
