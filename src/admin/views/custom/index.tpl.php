@@ -3,7 +3,7 @@
  * $Id$
  */
 
-	$baseUurl = $url = '/index.php?area='.$area;
+	$baseUrl = $url = '/index.php?area='.$area;
 	
 	if (!empty($customType))
 		$url .= '&type='.$customType->getId();
