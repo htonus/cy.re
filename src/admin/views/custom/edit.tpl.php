@@ -168,6 +168,31 @@
 var itemListTotal = <?= $total?>;
 
 jq(document).ready(function(){
+	
+	jq('.moveup').click(function(){
+		var tr = jq(this).parents('TR');
+		var prevTR = tr.prev();
+		
+		if (prevTR) {
+			var order = tr.find(':hidden').val();
+			prevTR.insertBefore(tr.remove());
+			prevTR.find(':hidden').val(order);
+			tr.find(':hidden').val(order- 1);
+		}
+	});
+	
+	jq('.movedown').click(function(){
+		var tr = jq(this).parents('TR');
+		var nextTr = tr.next();
+		
+		if (nextTR) {
+			var order = tr.find(':hidden').val();
+			nextTR.insertAfter(tr.remove());
+			nextTR.find(':hidden').val(order);
+			tr.find(':hidden').val(order- 1);
+		}
+	});
+	
 	jq('#searchButton').click(function(){
 		var criteria = jq('#id_or_code').val();
 
