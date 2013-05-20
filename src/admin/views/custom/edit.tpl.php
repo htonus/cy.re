@@ -134,8 +134,8 @@
 		<tr>
 			<td width="30px">
 				<div class="btn-group btn-group-vertical">
-					<a href="#" class="btn"><i class="icon-arrow-up"></i></a>
-					<a href="#" class="btn"><i class="icon-arrow-down"></i></a>
+					<a href="#" class="btn moveup"><i class="icon-arrow-up"></i></a>
+					<a href="#" class="btn movedown"><i class="icon-arrow-down"></i></a>
 				</div>
 			</td>
 			<td><img src="<?= PictureSize::thumbnail()->getUrl($realty->getPreview())?>"></td>
@@ -184,8 +184,8 @@ jq(document).ready(function(){
 			<tr>\
 				<td width="30px">\
 					<div class="btn-group btn-group-vertical">\
-						<a href="#" class="btn btn-small"><i class="icon-arrow-up"></i></a>\
-						<a href="#" class="btn btn-small"><i class="icon-arrow-down"></i></a>\
+						<a href="#" class="btn btn-small moveup"><i class="icon-arrow-up"></i></a>\
+						<a href="#" class="btn btn-small movedown"><i class="icon-arrow-down"></i></a>\
 					</div>\
 				</td>\
 				<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="' + data.item.url+ '"></td>\
