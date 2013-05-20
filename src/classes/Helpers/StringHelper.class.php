@@ -22,7 +22,7 @@
 				$id = floor($id  / $len);
 			}
 
-			return str_repeat('0', 4 - strlen($out)).$out;
+			return str_repeat('O', 4 - strlen($out)).$out;
 		}
 		
 		public function getDecode($str)
@@ -33,7 +33,7 @@
 			$out = 0;
 
 			for ($i = 0; $i < strlen($str); $i ++)
-				$out = $out * $cnt + $this->code[$str[$i]];
+				$out = $out * $cnt + $code[$str[$i]];
 
 			return $out;
 		}

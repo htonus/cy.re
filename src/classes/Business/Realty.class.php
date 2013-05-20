@@ -58,5 +58,10 @@
 			
 			return array_intersect_key($list, $types);
 		}
+
+		public function getCode()
+		{
+			return StringHelper::me()->getCode($this->id);
+		}
 	}
 ?>

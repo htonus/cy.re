@@ -57,8 +57,8 @@ final class controllerCustom extends CommonEditor
 			)->
 			import($request->getGet())->
 			getValue('criteria');
-
-		if (is_numeric($idCode)) {
+		
+		if (is_numeric($idCode) && (intval($isCode) == $isCode)) {
 			$item = Criteria::create(Realty::dao())->
 				add(
 					Expression::eq('id', $idCode)
@@ -80,8 +80,9 @@ final class controllerCustom extends CommonEditor
 			$data['error'] = 'Do not know such realty: '.$idCode;
 		} elseif ($preview = $item->getPreview()) {
 			$data['item'] = array(
-				'id'		=> null,
-				'realty_id'	=> $item->getId(),
+				'id'			=> null,
+				'realty_id'		=> $item->getId(),
+				'realty_code'	=> StringHelper::me()->getCode($item->getId()),
 				'name'		=> $item->getName(),
 				'url'		=> PictureSize::thumbnail()->getUrl($preview)
 			);

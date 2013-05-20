@@ -108,6 +108,11 @@
 					<input type="button" id="searchButton" name="input_id_or_code" value="Attach" class="btn">
 				</li>
 			</ul>
+
+			<div class="pull-right">
+				<button class="btn btn-primary" type="submit">Submit</button>
+				<button class="btn" type="button" onclick="document.location.href='/index.php?area=district'">Cancel</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -132,7 +137,9 @@
 				<a href="#" class="btn"><i class="icon-arrow-down"></i></a>
 			</td>
 			<td><img src="<?= PictureSize::thumbnail()->getUrl($realty->getPreview())?>"></td>
-			<td><?= $realty->getName()?></td>
+			<td>
+				<b><?= $realty->getCode()?></b> : <?= $realty->getName()?>
+			</td>
 			<td>
 				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?=$total?>"/>
 				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-info">View</a>
@@ -151,14 +158,6 @@
 ?>
 
 </tbody></table>
-
-
-<div class="control-group">
-	<div class="controls">
-		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=district'">Cancel</button>
-    </div>
-</div>
 
 
 </form>
@@ -188,7 +187,7 @@ jq(document).ready(function(){
 					</div>\
 				</td>\
 				<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="' + data.item.url+ '"></td>\
-				<td>' + data.item.name + '</td>\
+				<td><b>' + data.item.realty_code + '</b> : ' + data.item.name + '</td>\
 				<td style="text-align: right">\
 					<input type="hidden" name="item[' + data.item.realty_id + ']" value="' + itemListTotal + '"/>\
 					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-info">View</a>\
