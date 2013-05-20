@@ -73,8 +73,9 @@
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>City</th>
+			<th>Type</th>
+			<th>Section</th>
+			<th>Items</th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -82,13 +83,15 @@
 <?php
 	foreach ($list as $item) {
 		$itemUrl = '/index.php?area='.$area
-			.'&city='.$item->getCity()->getId()
+			.'&type='.$item->getType()->getId()
+			.'&section='.$item->getSection()->getId()
 			.'&id='.$item->getId()
 			.'&action=';
 ?>
 		<tr>
-			<td><?=$item->getName()?></td>
-			<td><?=$item->getCity()->getName()?></td>
+			<td><?=$item->getType()->getName()?></td>
+			<td><?=$item->getSection()->getName()?></td>
+			<td><?=$item->getItems()->getCount()?></td>
 			<td>
 				<a href="<?= $itemUrl?>edit">edit</a> |
 				<a href="<?= $itemUrl?>drop">drop</a>

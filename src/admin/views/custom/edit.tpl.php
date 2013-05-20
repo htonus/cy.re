@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h1><?=$id ? 'Update District: '.$form->getValue('id')->getName() : 'Add new Custom block'?></h1>
+<h1><?=$id ? 'Update Block [ '.$form->getValue('type')->getName().' | '. $form->getValue('section')->getName().' ]': 'Add new Custom block'?></h1>
 
 <?php
 	$partViewer->view('_parts/form/flash');
@@ -132,18 +132,20 @@
 			$realty = $item->getRealty();
 ?>
 		<tr>
-			<td class="btn-group btn-group-vertical" width="20px">
-				<a href="#" class="btn"><i class="icon-arrow-up"></i></a>
-				<a href="#" class="btn"><i class="icon-arrow-down"></i></a>
+			<td width="30px">
+				<div class="btn-group btn-group-vertical">
+					<a href="#" class="btn"><i class="icon-arrow-up"></i></a>
+					<a href="#" class="btn"><i class="icon-arrow-down"></i></a>
+				</div>
 			</td>
 			<td><img src="<?= PictureSize::thumbnail()->getUrl($realty->getPreview())?>"></td>
 			<td>
 				<b><?= $realty->getCode()?></b> : <?= $realty->getName()?>
 			</td>
-			<td>
-				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?=$total?>"/>
+			<td class="pull-right">
+				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?= $total?>"/>
 				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-info">View</a>
-				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-warning">Remove</a>
+				<button type="button" class="btn btn-warning" onclick="jq(this).parents('TR').remove()">Remove</button>
 			</td>
 		</tr>
 <?
@@ -180,7 +182,7 @@ jq(document).ready(function(){
 					jq('#emptyList').remove();
 					jq('#itemList TBODY').append('\
 			<tr>\
-				<td width="20px">\
+				<td width="30px">\
 					<div class="btn-group btn-group-vertical">\
 						<a href="#" class="btn btn-small"><i class="icon-arrow-up"></i></a>\
 						<a href="#" class="btn btn-small"><i class="icon-arrow-down"></i></a>\
@@ -188,7 +190,7 @@ jq(document).ready(function(){
 				</td>\
 				<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="' + data.item.url+ '"></td>\
 				<td><b>' + data.item.realty_code + '</b> : ' + data.item.name + '</td>\
-				<td style="text-align: right">\
+				<td class="pull-right">\
 					<input type="hidden" name="item[' + data.item.realty_id + ']" value="' + itemListTotal + '"/>\
 					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-info">View</a>\
 					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-warning">Remove</a>\

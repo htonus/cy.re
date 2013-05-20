@@ -58,7 +58,7 @@ final class controllerCustom extends CommonEditor
 			import($request->getGet())->
 			getValue('criteria');
 		
-		if (is_numeric($idCode) && (intval($isCode) == $isCode)) {
+		if (is_numeric($idCode) && (intval($idCode) == $idCode)) {
 			$item = Criteria::create(Realty::dao())->
 				add(
 					Expression::eq('id', $idCode)
@@ -98,11 +98,95 @@ final class controllerCustom extends CommonEditor
 			);
 	}
 
+	protected function addObject(HttpRequest $request, Form $form, Identifiable $object)
+	{
+		$db = DBPool::me()->getLink();
+		$db->begin();
+
+		try {
+			$object = parent::addObject($request, $form, $object);
+
+			if ($object->getId()) {
+				$this->saveItems($request, $form, $object);
+			}
+
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollback();
+			$form->markWrong('id');
+		}
+
+		return $object;
+	}
+
+	protected function saveObject(HttpRequest $request, Form $form, Identifiable $object)
+	{
+		$db = DBPool::me()->getLink();
+		$db->begin();
+
+		try {
+			$object = parent::saveObject($request, $form, $object);
+			
+			if ($object->getId()) {
+				$this->saveItems($request, $form, $object);
+			}
+			
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollback();
+			$form->markWrong('id');
+		}
+
+		return $object;
+	}
+
+	private function saveItems(HttpRequest $request, Form $form, Identifiable $object)
+	{
+		$itemList = $object->getItems()->getList();
+		
+		$list = array();
+		
+		foreach ($itemList as $item) {
+			$list[$item->getRealty()->getId()] = $item;
+		}
+		
+		$listForm = $form->
+			add(
+				Primitive::set('item')
+			)->
+			importOne('item', $request->getPost())->
+			getValue('item');
+		
+		// Create result list to store
+		$finalList = array();
+		foreach ($listForm as $realtyId => $order) {
+			if (!empty($list[$realtyId])) {
+				$finalList[$realtyId] = $list[$realtyId]->setOrder($order);
+				unset($list[$realtyId]);
+			} else {
+				$finalList[$realtyId] = CustomItem::dao()->
+					add(
+						CustomItem::create()->
+							setParent($object)->
+							setRealtyId($realtyId)->
+							setOrder($order)
+					);
+			}
+		}
+
+		foreach ($list as $item)
+			$item->dao()->drop($item);
+		
+		$object->getItems()->fetch();
+		
+		return $object;
+	}
+	
 	protected function getRedirectMav(HttpRequest $request)
 	{
 		return ModelAndView::create()->setView(
 			new RedirectView(
-				'/index.php?area=content'
+				'/index.php?area=custom'
 				.(
 					$request->hasAttachedVar('customType')
 						? '&type='.$request->getAttachedVar('customType')->getId()

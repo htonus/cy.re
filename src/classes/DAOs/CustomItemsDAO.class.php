@@ -26,7 +26,7 @@
 		
 		public function getParentIdField()
 		{
-			return 'custom_id';
+			return 'parent_id';
 		}
 	}
 ?>
