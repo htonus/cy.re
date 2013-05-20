@@ -158,19 +158,17 @@ final class controllerCustom extends CommonEditor
 			getValue('item');
 		
 		// Create result list to store
-		$finalList = array();
 		foreach ($listForm as $realtyId => $order) {
 			if (!empty($list[$realtyId])) {
-				$finalList[$realtyId] = $list[$realtyId];
+				$item = clone $list[$realtyId];
 				unset($list[$realtyId]);
 			} else {
-				$finalList[$realtyId] = CustomItem::create()->
+				$item = CustomItem::create()->
 					setParent($object)->
 					setRealtyId($realtyId);
 			}
 			
-			$finalList[$realtyId]->dao()->
-				take($finalList[$realtyId]->setOrder($order));
+			$item->dao()->take($item->setOrder($order));
 		}
 
 		foreach ($list as $item)
