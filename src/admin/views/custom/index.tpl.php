@@ -3,7 +3,7 @@
  * $Id$
  */
 
-	$url = '/index.php?area='.$area;
+	$baseUurl = $url = '/index.php?area='.$area;
 	
 	if (!empty($customType))
 		$url .= '&type='.$customType->getId();
@@ -64,6 +64,7 @@
 					</li>
 				</ul>
 				
+				<a class="btn btn-info pull-right" href="<?=$baseUrl?>">Reset</a>
 				<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a>
 			</form>
 		</div>
