@@ -68,13 +68,13 @@ insert into "realty_type" ("id", "name") values (1, 'house');
 insert into "realty_type" ("id", "name") values (2, 'appartments');
 insert into "realty_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "realty_type";
 
-insert into "token" ("id", "name") values (1, 'SALE');
+insert into "token" ("id", "name") values (1, 'BUY');
 insert into "token" ("id", "name") values (2, 'RENT');
 insert into "token" ("id", "name") values (3, 'INDOOR');
 insert into "token" ("id", "name") values (4, 'OUTDOOR');
 insert into "token" ("id", "name") values (5, 'GENERAL');
 
-insert into "token_i18n" ("object_id", "language_id", "value") values (1, 1, 'sale');
+insert into "token_i18n" ("object_id", "language_id", "value") values (1, 1, 'buy');
 insert into "token_i18n" ("object_id", "language_id", "value") values (2, 1, 'rent');
 insert into "token_i18n" ("object_id", "language_id", "value") values (3, 1, 'indoor options');
 insert into "token_i18n" ("object_id", "language_id", "value") values (4, 1, 'outdoor features');
@@ -97,6 +97,11 @@ insert into person_status ("id", "name") values (4, 'Admin');
 insert into person_status ("id", "name") values (5, 'Full access');
 
 insert into person ("name", "surname", "created", "status_id", "email", "username", "password") values ('Mikhail', 'Cherviakov', now(), 5, 'htonus@cyprus-realty.com', 'htonus', '28f9e86b0d5f5739612a7fda378ade96f0c30ac9');
+
+insert into custom_type ("id", "name") values (1, 'carousel');
+insert into "section" ("id", "name") values (1, 'buy');
+insert into "section" ("id", "name") values (2, 'rent');
+
 
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;

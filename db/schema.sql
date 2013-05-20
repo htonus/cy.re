@@ -3,4 +3,5 @@
 \i db/realty.sql;
 \i db/user.sql;
 \i db/article.sql;
-\i db/load_data.sql
+\i db/content.sql;
+\i db/load_data.sql;

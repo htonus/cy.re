@@ -8,6 +8,7 @@
 		const TC		= 0x08;	// title case
 		
 		public static $cases = array(
+			''	=>	0,
 			'U'	=>	i18nHelper::UC,
 			'L'	=>	i18nHelper::LC,
 			'S'	=>	i18nHelper::SC,
@@ -58,6 +59,7 @@
 					unset($tokens[$row['name']]);
 				}
 				
+				// Remove missing tokens (substite with the value)
 				if (!empty($tokens)) {
 					foreach ($tokens as $token => $case) {
 						$content = mb_ereg_replace(

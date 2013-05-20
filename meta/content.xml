@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE metaconfiguration SYSTEM "meta.dtd">
+
+<!-- $Id$ -->
+
+<metaconfiguration>
+<classes>
+	
+	<class name="CustomType">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="Section">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="CustomItem">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="256" required="false" />
+			<property name="order" type="Integer" required="false" />
+			<property name="parent" type="Custom" relation="OneToOne" required="true" fetch="lazy" column="parent_id" />
+			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="Custom">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="256" required="false" />
+			<property name="type" type="CustomType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
+			<property name="section" type="Section" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="items" type="CustomItem" relation="OneToMany" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
+</classes>
+</metaconfiguration>

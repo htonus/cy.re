@@ -31,6 +31,13 @@
 				'news'		=> 'News',
 			)
 		),
+		array(
+			'title'	=> 'Contents',
+			'items'	=> array(
+				'custom'	=> 'Custom blocks',
+				'static'	=> 'Static pages',
+			)
+		),
 //		'unit'	=> 'Units',
 //		'city'	=> 'Cities',
 //		'featureType'	=> 'Feature Types',

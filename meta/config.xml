@@ -5,10 +5,11 @@
 
 <metaconfiguration>
 
-<include file="common.xml" generate="true" />
-<include file="user.xml" generate="true" />
-<include file="realty.xml" generate="true" />
-<include file="article.xml" generate="true" />
+<include file="common.xml" generate="false" />
+<include file="user.xml" generate="false" />
+<include file="realty.xml" generate="false" />
+<include file="article.xml" generate="false" />
+<include file="content.xml" generate="true" />
 
 <classes/>
 
