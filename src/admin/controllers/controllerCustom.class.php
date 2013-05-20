@@ -204,7 +204,7 @@ final class controllerCustom extends CommonEditor
 
 		if ($request->hasAttachedVar('customType'))
 			$criteria->add(
-				Expression::eqId('customType', $request->getAttachedVar('customType'))
+				Expression::eqId('type', $request->getAttachedVar('customType'))
 			);
 
 		if ($request->hasAttachedVar('section'))
