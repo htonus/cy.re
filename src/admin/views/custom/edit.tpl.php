@@ -112,22 +112,29 @@
 	</div>
 </div>
 
+
 <table class="table" id="itemList">
 <tbody>
 <?php
+	$total = 0;
+	
 	if (
 		$form->getValue('id')
 		&& ($list = $form->getValue('id')->getItems()->getList())
 	) {
 		foreach ($list as $item) {
+			$total ++;
 			$realty = $item->getRealty();
 ?>
 		<tr>
+			<td class="btn-group btn-group-vertical" width="20px">
+				<a href="#" class="btn"><i class="icon-arrow-up"></i></a>
+				<a href="#" class="btn"><i class="icon-arrow-down"></i></a>
+			</td>
 			<td><img src="<?= PictureSize::thumbnail()->getUrl($realty->getPreview())?>"></td>
 			<td><?= $realty->getName()?></td>
 			<td>
-				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?=$item->getId()?>"/>
-				<input type="hidden" name="order[<?= $realty->getId()?>]" value="<?=$item->getOrder()?>"/>
+				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?=$total?>"/>
 				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-info">View</a>
 				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-warning">Remove</a>
 			</td>
@@ -136,7 +143,7 @@
 		}
 	} else {
 ?>
-		<tr>
+		<tr id="emptyList">
 			<td colspan="3">Empty list</td>
 		</tr>
 <?php
@@ -157,6 +164,8 @@
 </form>
 
 <script type="text/javascript">
+var itemListTotal = <?= $total?>;
+
 jq(document).ready(function(){
 	jq('#searchButton').click(function(){
 		var criteria = jq('#id_or_code').val();
@@ -168,13 +177,20 @@ jq(document).ready(function(){
 			'/index.php?area=custom&action=searchRealty&criteria=' + criteria,
 			function(data){
 				if (data.error == '') {
+					itemListTotal ++;
+					jq('#emptyList').remove();
 					jq('#itemList TBODY').append('\
 			<tr>\
-				<td><img src="' + data.item.url+ '"></td>\
+				<td width="20px">\
+					<div class="btn-group btn-group-vertical">\
+						<a href="#" class="btn btn-small"><i class="icon-arrow-up"></i></a>\
+						<a href="#" class="btn btn-small"><i class="icon-arrow-down"></i></a>\
+					</div>\
+				</td>\
+				<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="' + data.item.url+ '"></td>\
 				<td>' + data.item.name + '</td>\
-				<td>\
-					<input type="hidden" name="item[' + data.item.realty_id + ']" value="' + data.item.id + '"/>\
-					<input type="hidden" name="order[' + data.item.realty_id + ']" value="' + data.item.order + '"/>\
+				<td style="text-align: right">\
+					<input type="hidden" name="item[' + data.item.realty_id + ']" value="' + itemListTotal + '"/>\
 					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-info">View</a>\
 					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-warning">Remove</a>\
 				</td>\

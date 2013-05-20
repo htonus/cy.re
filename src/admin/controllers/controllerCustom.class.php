@@ -74,7 +74,7 @@ final class controllerCustom extends CommonEditor
 				get();
 		}
 
-		$data = array('error' => null);
+		$data = array('error' => '');
 
 		if (empty($item)) {
 			$data['error'] = 'Do not know such realty: '.$idCode;
