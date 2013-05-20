@@ -169,29 +169,9 @@ var itemListTotal = <?= $total?>;
 
 jq(document).ready(function(){
 	
-	jq('.moveup').click(function(){
-		var tr = jq(this).parents('TR');
-		var prevTR = tr.prev();
-		
-		if (prevTR.size()) {
-			var order = tr.find(':hidden').val();
-			tr.remove().insertBefore(prevTR);
-			prevTR.find(':hidden').val(order);
-			tr.find(':hidden').val(order- 1);
-		}
-	});
+	jq('.moveup').click(itemMoveUp);
 	
-	jq('.movedown').click(function(){
-		var tr = jq(this).parents('TR');
-		var nextTR = tr.next();
-		
-		if (nextTR.size()) {
-			var order = tr.find(':hidden').val();
-			tr.remove().insertAfter(nextTR);
-			nextTR.find(':hidden').val(order);
-			tr.find(':hidden').val(order- 1);
-		}
-	});
+	jq('.movedown').click(itemMoveDown);
 	
 	jq('#searchButton').click(function(){
 		var criteria = jq('#id_or_code').val();
@@ -229,4 +209,34 @@ jq(document).ready(function(){
 		);
 	});
 });
+
+function itemMoveUp()
+{
+	var tr = jq(this).parents('TR');
+	var prevTR = tr.prev();
+	
+	if (prevTR.size()) {
+		var order = tr.find(':hidden').val();
+		tr.remove().insertBefore(prevTR);
+		prevTR.find(':hidden').val(order);
+		tr.find(':hidden').val(order - 1);
+		tr.find('.moveup').click(itemMoveUp);
+		tr.find('.movedown').click(itemMoveDown);
+	}
+	
+}
+function itemMoveDown()
+{
+	var tr = jq(this).parents('TR');
+	var nextTR = tr.next();
+	
+	if (nextTR.size()) {
+		var order = tr.find(':hidden').val();
+		tr.remove().insertAfter(nextTR);
+		nextTR.find(':hidden').val(order);
+		tr.find(':hidden').val(order + 1);
+		tr.find('.moveup').click(itemMoveUp);
+		tr.find('.movedown').click(itemMoveDown);
+	}
+}
 </script>
