@@ -173,7 +173,7 @@ jq(document).ready(function(){
 		var tr = jq(this).parents('TR');
 		var prevTR = tr.prev();
 		
-		if (prevTR) {
+		if (prevTR.size()) {
 			var order = tr.find(':hidden').val();
 			prevTR.insertBefore(tr.remove());
 			prevTR.find(':hidden').val(order);
@@ -185,7 +185,7 @@ jq(document).ready(function(){
 		var tr = jq(this).parents('TR');
 		var nextTr = tr.next();
 		
-		if (nextTR) {
+		if (nextTR.size()) {
 			var order = tr.find(':hidden').val();
 			nextTR.insertAfter(tr.remove());
 			nextTR.find(':hidden').val(order);
