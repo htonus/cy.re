@@ -32,5 +32,13 @@
 		}
 		
 		// your brilliant stuff goes here
+		/**
+		 * @return CustomItemsDAO
+		**/
+		public function getItems($lazy = false)
+		{
+			return parent::getItems($lazy)->
+				setCriteria(Criteria::create()->addOrder('order'));
+		}		
 	}
 ?>
