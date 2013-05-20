@@ -99,7 +99,7 @@
 HTML * {
 	text-shadow: none !important;
 	box-shadow: none;
-	color: #333;
+/*	color: #333;*/
 }
 BODY {
 	background: url(/img/d-noise.png) repeat #e2e2e2;
