@@ -62,9 +62,9 @@
 ?>
 						</select>
 					</li>
+					<li><a class="btn btn-info pull-right" href="<?=$baseUrl?>">Reset</a></li>
 				</ul>
 				
-				<a class="btn btn-info pull-right" href="<?=$baseUrl?>">Reset</a>
 				<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a>
 			</form>
 		</div>
