@@ -198,6 +198,23 @@ final class controllerCustom extends CommonEditor
 		);
 	}
 	
+	protected function getListCriteria(HttpRequest $request, Model $model)
+	{
+		$criteria = parent::getListCriteria($request, $model);
+
+		if ($request->hasAttachedVar('customType'))
+			$criteria->add(
+				Expression::eqId('customType', $request->getAttachedVar('customType'))
+			);
+
+		if ($request->hasAttachedVar('section'))
+			$criteria->add(
+				Expression::eqId('section', $request->getAttachedVar('section'))
+			);
+
+		return $criteria;
+	}	
+	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		parent::attachCollections($request, $model);
