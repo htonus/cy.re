@@ -147,7 +147,7 @@ final class controllerCustom extends CommonEditor
 		$list = array();
 		
 		foreach ($itemList as $item) {
-			$list[$item->getRealty()->getId()] = $item;
+			$list[$item->getRealtyId()] = $item;
 		}
 		
 		$listForm = $form->
@@ -161,16 +161,16 @@ final class controllerCustom extends CommonEditor
 		$finalList = array();
 		foreach ($listForm as $realtyId => $order) {
 			if (!empty($list[$realtyId])) {
-				$finalList[$realtyId] = $list[$realtyId]->setOrder($order);
+				$finalList[$realtyId] = $list[$realtyId];
 				unset($list[$realtyId]);
 			} else {
 				$finalList[$realtyId] = CustomItem::create()->
 					setParent($object)->
-					setRealtyId($realtyId)->
-					setOrder($order);
+					setRealtyId($realtyId);
 			}
 			
-			$finalList[$realtyId]->dao()->take($finalList[$realtyId]);
+			$finalList[$realtyId]->dao()->
+				take($finalList[$realtyId]->setOrder($order));
 		}
 
 		foreach ($list as $item)
