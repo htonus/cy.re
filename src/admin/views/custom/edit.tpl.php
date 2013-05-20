@@ -183,7 +183,7 @@ jq(document).ready(function(){
 	
 	jq('.movedown').click(function(){
 		var tr = jq(this).parents('TR');
-		var nextTr = tr.next();
+		var nextTR = tr.next();
 		
 		if (nextTR.size()) {
 			var order = tr.find(':hidden').val();
