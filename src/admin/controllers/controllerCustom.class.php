@@ -164,14 +164,13 @@ final class controllerCustom extends CommonEditor
 				$finalList[$realtyId] = $list[$realtyId]->setOrder($order);
 				unset($list[$realtyId]);
 			} else {
-				$finalList[$realtyId] = CustomItem::dao()->
-					add(
-						CustomItem::create()->
-							setParent($object)->
-							setRealtyId($realtyId)->
-							setOrder($order)
-					);
+				$finalList[$realtyId] = CustomItem::create()->
+					setParent($object)->
+					setRealtyId($realtyId)->
+					setOrder($order);
 			}
+			
+			$finalList[$realtyId]->dao()->take($finalList[$realtyId]);
 		}
 
 		foreach ($list as $item)
