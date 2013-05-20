@@ -175,7 +175,7 @@ jq(document).ready(function(){
 		
 		if (prevTR.size()) {
 			var order = tr.find(':hidden').val();
-			prevTR.insertBefore(tr.remove());
+			tr.remove().insertBefore(prevTR);
 			prevTR.find(':hidden').val(order);
 			tr.find(':hidden').val(order- 1);
 		}
@@ -187,7 +187,7 @@ jq(document).ready(function(){
 		
 		if (nextTR.size()) {
 			var order = tr.find(':hidden').val();
-			nextTR.insertAfter(tr.remove());
+			tr.remove().insertAfter(nextTR);
 			nextTR.find(':hidden').val(order);
 			tr.find(':hidden').val(order- 1);
 		}
