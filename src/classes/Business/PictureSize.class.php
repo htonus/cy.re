@@ -4,19 +4,23 @@
 	{
 		const NORMAL		= 1;
 		const THUMBNAIL	= 2;
+		const CAROUSEL	= 3;
 
 		protected $names = array(
 			self::NORMAL		=> 'normal',
 			self::THUMBNAIL	=> 'thmbnail',
+			self::CAROUSEL	=> 'carousel',
 		);
 
 		private $widths = array(
 			self::NORMAL		=> 1024,
+			self::CAROUSEL	=> 770,
 			self::THUMBNAIL	=> 150,
 		);
 
 		private $heights = array(
 			self::NORMAL		=> 768,
+			self::CAROUSEL	=> 410,
 			self::THUMBNAIL	=> 100,
 		);
 		
@@ -34,6 +38,14 @@
 		public static function thumbnail()
 		{
 			return new self(self::THUMBNAIL);
+		}
+
+		/**
+		 * @return PictureSize
+		 */
+		public static function carousel()
+		{
+			return new self(self::CAROUSEL);
 		}
 
 		public function getWidth()

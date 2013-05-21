@@ -73,6 +73,13 @@ class controllerMain extends MethodMappedController
 			set(
 				'realtyTypeList',
 				CriteriaUtils::getList(RealtyType::dao(), 'i18n.name')
+			)->
+			set(
+				'blocks',
+				array(
+					'carousel' => Custom::dao()->
+						getBlockItems(CustomType::carousel(), Section::buy())
+				)
 			);
 		
 		return $this;

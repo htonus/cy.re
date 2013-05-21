@@ -7,6 +7,21 @@
 
 	class CustomDAO extends AutoCustomDAO
 	{
-		// your brilliant stuff goes here
+		public function getBlockItems(CustomType $type, Section $section)
+		{
+			try {
+				$custom = $this->getByLogic(
+					Expression::andBlock(
+						Expression::eqId('type_id', $type),
+						Expression::eqId('section_id', $section)
+					)
+				);
+				
+				return $custom->getItems()->getList();
+			} catch (Exception $e) {
+				var_dump($e->getMessage());
+				return array();
+			}
+		}
 	}
 ?>

@@ -29,7 +29,6 @@
 					<br />
 
 					<form>
-
 <?php
 	$partViewer->view('_parts/form/filter');
 ?>
@@ -38,9 +37,16 @@
 				</div>
 
 				<div class="span8">
-					<div id="bigCarousel">
-						<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/12/blur.jpg" />
-					</div>
+<?php
+	$partViewer->view(
+		'_parts/js', Model::create()->set('name', 'bootstrap-carousel')
+	);
+
+	$partViewer->view(
+		'_parts/blocks/carousel',
+		Model::create()->set('list', $blocks['carousel'])
+	);
+?>
 				</div>
 
 			</div>
