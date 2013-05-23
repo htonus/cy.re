@@ -28,7 +28,7 @@
 					<p class="intro">Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.</p>
 					<br />
 
-					<form>
+					<form action="/<?= $area?>/list" method="get">
 <?php
 	$partViewer->view('_parts/form/filter');
 ?>
