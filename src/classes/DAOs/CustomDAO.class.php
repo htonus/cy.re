@@ -19,7 +19,6 @@
 				
 				return $custom->getItems()->getList();
 			} catch (Exception $e) {
-				var_dump($e->getMessage());
 				return array();
 			}
 		}
