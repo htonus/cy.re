@@ -12,7 +12,7 @@
 								<label class="control-label" for="input_realtyType">Realty type</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="realtyType">
-										<option>Choose ...</option>
+										<option value="">Choose ...</option>
 <?php
 	foreach ($realtyTypeList as $item) {
 ?>
@@ -29,7 +29,7 @@
 								<label class="control-label" for="input_city">Area, City</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="city">
-										<option>Choose ...</option>
+										<option value="">Choose ...</option>
 <?php
 	foreach ($cityList as $item) {
 ?>
@@ -49,7 +49,7 @@
 								<label class="control-label" for="input_realtyType">Price (&euro;)</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="t[<?= FeatureType::PRICE?>]">
-										<option>Any</option>
+										<option value="">Any</option>
 <?php
 	$priceList = array(
 		'-100000'			=> 'up to 100k',
@@ -103,7 +103,7 @@
 								<label class="control-label" for="input_bedrooms" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">Bedrooms</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::BEDROOMS?>]">
-										<option>Any</option>
+										<option value="">Any</option>
 <?php
 	for ($i = 1; $i < 5; $i ++) {
 ?>
@@ -121,7 +121,7 @@
 								<label class="control-label" for="input_city">Toilets</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::TOILETS?>]">
-										<option>Any</option>
+										<option value="">Any</option>
 <?php
 	for ($i = 1; $i < 5; $i ++) {
 ?>
