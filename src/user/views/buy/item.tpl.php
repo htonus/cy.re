@@ -19,8 +19,10 @@ jq(document).ready(function(){
 		jq('#picture').animate(
 			{opacity: 0},
 			function(){
-				jq('#picture').attr('src', src);
-				jq('#picture').animate({opacity: 1});
+				jq('#picture').ready(function(){
+					jq('#picture').attr('src', src);
+					jq('#picture').animate({opacity: 1});
+				});
 			}
 		);
 	});
