@@ -6,7 +6,26 @@
 	$partViewer->view('_parts/page_title');
 
 ?>
+<script type="text/javascript">
+jq(document).ready(function(){
+	jq('.preview').click(function(){
+		jq('.preview').parent().css('background', "none");
+		jq('.preview').css({opacity: 1});
 
+		jq(this).parent().css('background', "#000");
+		jq(this).animate({opacity: 0.5});
+		var src = jq('#picture').attr('src').replace(/[^\/]+$/, jq(this).attr('src').match(/[^\/]+$/));
+
+		jq('#picture').animate(
+			{opacity: 0},
+			function(){
+				jq('#picture').attr('src', src);
+				jq('#picture').animate({opacity: 1});
+			}
+		);
+	});
+});
+</script>
 	<section>
 
 		<div class="container">
@@ -14,14 +33,14 @@
 
 				<div class="span8 mt20">
 
-					<img src="<?= PictureSize::big()->getUrl($realty->getPreview())?>" />
+					<img src="<?= PictureSize::big()->getUrl($realty->getPreview())?>" id="picture" />
 
 					<div class="row hidden-phone">
 <?php
 	foreach ($realty->getPictures()->getList() as $item) {
 ?>
 						<div class="span2 mt20">
-							<img src="<?= PictureSize::preview()->getUrl($item)?>" />
+							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" />
 						</div>
 <?php
 	}
