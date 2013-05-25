@@ -19,11 +19,11 @@ jq(document).ready(function(){
 		jq('#picture').animate(
 			{opacity: 0},
 			function(){
+				jq('#picture').attr('src', src);
 				jq('#picture').load(function(){
-					jq('#picture').attr('src', src);
 					jq('#picture').animate({opacity: 1});
 				});
-x			}
+			}
 		);
 	});
 });
