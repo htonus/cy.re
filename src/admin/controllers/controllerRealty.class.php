@@ -141,7 +141,7 @@ final class controllerRealty extends i18nEditor
 
 		$model->set(
 			'offerTypeList',
-			OfferType::sale()->getObjectList()
+			OfferType::buy()->getObjectList()
 		);
 
 		$list = $this->getForm()->getValue('id')
