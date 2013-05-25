@@ -17,7 +17,7 @@
 			self::PREVIEW	=> 'preview',
 			self::LIST2		=> 'itemList2',
 		);
-
+		
 		private $widths = array(
 			self::NORMAL		=> 1024,
 			self::CAROUSEL	=> 770,
@@ -26,7 +26,7 @@
 			self::PREVIEW	=> 170,
 			self::LIST2		=> 270,
 		);
-
+		
 		private $heights = array(
 			self::NORMAL		=> 768,
 			self::BIG		=> 600,
@@ -43,7 +43,7 @@
 		{
 			return new self(self::NORMAL);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -51,7 +51,7 @@
 		{
 			return new self(self::THUMBNAIL);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -59,7 +59,7 @@
 		{
 			return new self(self::CAROUSEL);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -67,7 +67,7 @@
 		{
 			return new self(self::BIG);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -75,7 +75,7 @@
 		{
 			return new self(self::PREVIEW);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -91,7 +91,7 @@
 		{
 			return new self(self::LIST3);
 		}
-
+		
 		/**
 		 * @return PictureSize
 		 */
@@ -99,17 +99,17 @@
 		{
 			return new self(self::LIST4);
 		}
-
+		
 		public function getWidth()
 		{
 			return $this->widths[$this->id];
 		}
-
+		
 		public function getHeight()
 		{
 			return $this->heights[$this->id];
 		}
-
+		
 		public function getUrl(Picture $picture)
 		{
 			return PATH_WEB_USER.'p/'
@@ -120,7 +120,7 @@
 				)
 				.$picture->getFileName();
 		}
-
+		
 		public function getImgStyle($css = true)
 		{
 			return $css
