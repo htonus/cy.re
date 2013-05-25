@@ -31,9 +31,9 @@ final class controllerMain extends MethodMappedController
 	public function handleRequest(HttpRequest $request)
 	{
 		$mav = parent::handleRequest($request);
-
+		
 		$request->setAttachedVar('layout', 'default');
-
+		
 		return $mav;
 	}
 

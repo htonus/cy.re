@@ -13,12 +13,8 @@
 			$this->controller = $controller;
 		}
 		
-		/**
-		 * @param HttpRequest $request
-		 * @return Requestfilter $object
-		 */
-		public static function create(Controller $controller)
+		public function handleRequest(HttpRequest $request)
 		{
-			return new self($controller);
+			return $this->controller->handleRequest($request);
 		}
 	}

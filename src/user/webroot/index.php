@@ -1,5 +1,5 @@
 <?php
-
+	
 	define('MODE', 'user');
 
 	$appPath = realpath(dirname(dirname(dirname(dirname(__FILE__)))))
@@ -13,7 +13,7 @@
 	try {
 		if (!Session::isStarted())
 			Session::start();
-
+		
 		$request = HttpRequest::create()->
 			setGet($_GET)->
 			setPost($_POST)->

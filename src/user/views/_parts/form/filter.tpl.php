@@ -2,7 +2,6 @@
 /**
  *
  */
-
 ?>
 					<h4 class="visible-desktop">Search filter:</h4>
 					
@@ -12,11 +11,18 @@
 								<label class="control-label" for="input_realtyType">Realty type</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="realtyType">
-										<option value="">Choose ...</option>
+										<option value="">-</option>
 <?php
+	$default = empty($realtyType)
+		? null
+		: $realtyType->getId();
+	
 	foreach ($realtyTypeList as $item) {
+		$selected = $item->getId() == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $item->getId()?>"><?= ucwords($item->getName())?></option>
+										<option value="<?= $item->getId()?>"<?= $selected?>><?= ucwords($item->getName())?></option>
 <?php
 	}
 ?>
@@ -29,11 +35,18 @@
 								<label class="control-label" for="input_city">Area, City</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="city">
-										<option value="">Choose ...</option>
+										<option value="">-</option>
 <?php
+	$default = empty($city)
+		? null
+		: $city->getId();
+	
 	foreach ($cityList as $item) {
+		$selected = $item->getId() == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $item->getId()?>"><?= ucwords($item->getName())?></option>
+										<option value="<?= $item->getId()?>"<?= $selected?>><?= ucwords($item->getName())?></option>
 <?php
 	}
 ?>
@@ -46,10 +59,10 @@
 					<div class="row-fluid">
 						<div class="span6">
 							<div class="control-group">
-								<label class="control-label" for="input_realtyType">Price (&euro;)</label>
+								<label class="control-label" for="input_f[<?= FeatureType::PRICE?>]">Price (&euro;)</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" name="t[<?= FeatureType::PRICE?>]">
-										<option value="">Any</option>
+									<select type="text" class="input-block-level" name="f[<?= FeatureType::PRICE?>]">
+										<option value="">-</option>
 <?php
 	$priceList = array(
 		'-100000'			=> 'up to 100k',
@@ -60,9 +73,17 @@
 		'500000-1000000'	=> '500k - 1M',
 		'1000000-'			=> 'from 1M',
 	);
+	
+	$default = empty($filter[FeatureType::PRICE])
+		? null
+		: $filter[FeatureType::PRICE];
+	
 	foreach ($priceList as $value => $title) {
+		$selected = $value == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $value?>"><?= $title?></option>
+										<option value="<?= $value?>"<?= $selected?>><?= $title?></option>
 <?php
 	}
 ?>
@@ -72,10 +93,10 @@
 						</div>
 						<div class="span6">
 							<div class="control-group">
-								<label class="control-label" for="input_area">Area (m<sup>2</sup>)</label>
+								<label class="control-label" for="input_f[<?= FeatureType::AREA?>]">Area (m<sup>2</sup>)</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" class="f[<?= FeatureType::AREA?>]">
-										<option value="">Any</option>
+									<select type="text" class="input-block-level" class="f[<?= FeatureType::AREA?>]" id="input_f[<?= FeatureType::AREA?>]">
+										<option value="">-</option>
 <?php
 	$areaList = array(
 		'-100'			=> 'up to 50',
@@ -85,9 +106,17 @@
 		'200-250'		=> '200 - 250',
 		'250-'			=> 'from 250',
 	);
+	
+	$default = empty($filter[FeatureType::AREA])
+		? null
+		: $filter[FeatureType::AREA];
+	
 	foreach ($areaList as $value => $title) {
+		$selected = $value == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $value?>"><?= $title?></option>
+										<option value="<?= $value?>"<?= $selected?>><?= $title?></option>
 <?php
 	}
 ?>
@@ -100,14 +129,21 @@
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="control-group">
-								<label class="control-label" for="input_bedrooms" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">Bedrooms</label>
+								<label class="control-label" for="input_f[<?= FeatureType::BEDROOMS?>]" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">Bedrooms</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" name="f[<?= FeatureType::BEDROOMS?>]">
-										<option value="">Any</option>
+									<select type="text" class="input-block-level" name="f[<?= FeatureType::BEDROOMS?>]" id=""input_f[<?= FeatureType::BEDROOMS?>]>
+										<option value="">-</option>
 <?php
+	$default = empty($filter[FeatureType::BEDROOMS])
+		? null
+		: $filter[FeatureType::BEDROOMS];
+	
 	for ($i = 1; $i < 5; $i ++) {
+		$selected = $value == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $i?>"><?= $i?></option>
+										<option value="<?= $i?>"<?= $selected?>><?= $i?></option>
 <?php
 	}
 ?>
@@ -118,14 +154,21 @@
 						</div>
 						<div class="span4">
 							<div class="control-group">
-								<label class="control-label" for="input_city">Toilets</label>
+								<label class="control-label" for="input_f[<?= FeatureType::TOILETS?>]">Toilets</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" name="f[<?= FeatureType::TOILETS?>]">
-										<option value="">Any</option>
+									<select type="text" class="input-block-level" name="f[<?= FeatureType::TOILETS?>]" id=""input_f[<?= FeatureType::TOILETS?>]>
+										<option value="">-</option>
 <?php
+	$default = empty($filter[FeatureType::BEDROOMS])
+		? null
+		: $filter[FeatureType::BEDROOMS];
+	
 	for ($i = 1; $i < 5; $i ++) {
+		$selected = $value == $default
+			? ' selected="selected"'
+			: null;
 ?>
-										<option value="<?= $i?>"><?= $i?></option>
+										<option value="<?= $i?>"<?= $selected?>><?= $i?></option>
 <?php
 	}
 ?>

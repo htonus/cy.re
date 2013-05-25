@@ -13,9 +13,9 @@
 			<div class="row">
 
 <?php
-	$partViewer->view('list/parts/sidebar-left');
-	$partViewer->view('list/parts/list2');
-	$partViewer->view('list/parts/sidebar-right');
+	$partViewer->view($area.'/parts/sidebar-left');
+	$partViewer->view($area.'/parts/list2');
+	$partViewer->view($area.'/parts/sidebar-right');
 ?>
 
 

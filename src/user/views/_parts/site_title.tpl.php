@@ -2,6 +2,14 @@
 	/**
 	 * $Id$
 	 */
+
+	 $menuList = array(
+		 'buy'		=> 'Buy',
+		 'rent'		=> 'Rent',
+		 'booking'	=> 'Booking',
+		 'contact'	=> 'Contacts',
+		 'about'	=> 'About Us',
+	 );
 ?>
 	<header>
 
@@ -22,7 +30,7 @@
 				<div class="span9">
 
 					<div class="visible-phone">
-						<select style="width: 100%;">
+						<select style="width: 100%;" onchange="focument.location.href='<?= PATH_WEB?>' + jq(this).val()">
 							<option value="buy">Buy</option>
 							<option value="rent">Rent</option>
 							<option value="book">Book</option>
@@ -33,12 +41,13 @@
 
 					<div class="navbar pull-right hidden-phone">
 						<ul class="nav">
-							<li class="selected"><a href="/?area=buy">Buy</a></li>
-							<li><a href="/?area=rent">Rent</a>
-							<li><a href="/?area=book">Book</a></li>
-							<li><a href="/?area=contact">Contact Us</a></li>
-							<li><a href="/?area=about">About Us</a></li>
-
+<?php
+	foreach ($menuList as $slag => $title) {
+?>
+							<li class="<?= $area == $slag ? 'selected' : null?>"><a href="/<?= $slag?>"><?= $title?></a></li>
+<?php
+	}
+?>
 						</ul>
 					</div>
 				</div>

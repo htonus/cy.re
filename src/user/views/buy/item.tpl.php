@@ -14,21 +14,18 @@
 
 				<div class="span8 mt20">
 
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg" />
+					<img src="<?= PictureSize::big()->getUrl($realty->getPreview())?>" />
 
 					<div class="row hidden-phone">
+<?php
+	foreach ($realty->getPictures()->getList() as $item) {
+?>
 						<div class="span2 mt20">
-							<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg" />
+							<img src="<?= PictureSize::preview()->getUrl($item)?>" />
 						</div>
-						<div class="span2 mt20">
-							<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
-						</div>
-						<div class="span2 mt20">
-							<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg" />
-						</div>
-						<div class="span2 mt20">
-							<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
-						</div>
+<?php
+	}
+?>
 					</div>
 
 				</div>

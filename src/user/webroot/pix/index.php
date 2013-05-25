@@ -2,22 +2,14 @@
 
 try {
 	$dir = dirname(__FILE__).'/';
-
-	if (preg_match('|^/pix/([^/]+)/?([^/]+)?/?([^/]+)?|i', $_SERVER['REQUEST_URI'], $m)) {
-		if (empty($m[3])) {
-			$name = $m[1];
-		} else {
-			$name = $m[3];
-			$w1 = intval($m[1]);
-			$h1 = intval($m[2]);
-		}
-	} else {
-		$name = 'dummy.png';
-	}
-
+	
+	$name = empty($_GET['p']) ? 'dummy.png' : $_GET['p'];
+	$w1	= empty($_GET['w']) ? null : $_GET['w'];
+	$h1	= empty($_GET['h']) ? null : $_GET['h'];
+	
 	list($id, $ext) = explode('.', $name);
 	$dir .= implode('/', str_split(substr(sprintf('%08d', $id), 0, -2), 2)).'/';
-
+	
 	$path = $dir.$name;
 	
 	if (!file_exists($path)) {
