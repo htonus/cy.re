@@ -12,6 +12,8 @@
  */
 class controllerBuy extends controllerMain
 {
+	const PER_PAGE = 10;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -37,11 +39,7 @@ class controllerBuy extends controllerMain
 		$mav = ModelAndView::create()->
 			setModel($model);
 		
-		$list = Criteria::create(Realty::dao());
-		
-		$criteria = $this->getListCriteria($request, $model);
-		
-		$model->set('realtyList', $criteria->getList());
+		$this->attachList($request, $model);
 		
 		return $mav;
 	}
@@ -67,65 +65,151 @@ class controllerBuy extends controllerMain
 		return parent::attachCollections($request, $mav);
 	}
 	
-	private function getListCriteria(HttpRequest $request, Model $model)
+	protected function attachList(HttpRequest $request, Model $model)
 	{
 		$form = Form::create()->
 			add(
-				Primitive::identifier('realtyType')->
-				of('RealtyType')
+				Primitive::integer('page')->
+				setMin(1)->
+				setDefault(1)
 			)->
 			add(
 				Primitive::set('f')
+			);
+
+		$fields = array('realtyType', 'city');
+
+		foreach($fields as $field)
+			$form->add(
+				Primitive::identifier($field)->
+				of(ucfirst($field))
+			);
+
+		$form->import($request->getGet());
+		$filters = $form->getValue('f');
+		$orLogic = Expression::orBlock();
+		$filterNumber = 0;
+
+		foreach(FeatureType::dao()->getPlainList() as $type) {
+			$typeId = $type->getId();
+			
+			if (empty($filters[$typeId]))
+				continue;
+			
+			$andBlock = Expression::andBlock()->
+				expAnd(
+					Expression::eq('features.type', $typeId)
+				);
+
+			if (preg_match('/-/', $filters[$typeId])) {
+				$parts = explode('-', $filters[$typeId]);
+				
+				$expression = Expression::chain();
+
+				if (!empty($parts[0])) {
+					$andBlock->expAnd(
+						Expression::gtEq('features.value', $parts[0])
+					);
+				}
+
+				if (!empty($parts[1])) {
+					$andBlock->expAnd(
+						Expression::ltEq('features.value', $parts[1])
+					);
+				}
+			} else {
+				$andBlock->add(
+					Expression::eq('features.value', $value)
+				);
+			}
+
+			$orLogic->expOr($andBlock);
+			$filterNumber ++;
+		}
+		
+		$logic = Expression::chain()->
+			expAnd(
+				Expression::notNull('published')
 			)->
-			import($request->getGet());
-		
-		$criteria = Criteria::create(Realty::dao());
-		
+			expAnd(
+				Expression::eqId("offerType", OfferType::buy())
+			);
+
+
+		if ($type = $form->getValue('city')) {
+			$model->set('city', $type);
+			$logic->expAnd(
+				Expression::eqId('city', $type)
+			);
+		}
+
 		if ($type = $form->getValue('realtyType')) {
 			$model->set('realtyType', $type);
-			$criteria->add(
+			$logic->expAnd(
 				Expression::eqId('realtyType', $type)
 			);
 		}
 		
-		$model->set('filter', $form->getValue('f'));
-		
-		foreach ($form->getValue('f') as $featureId => $value) {
-			if (empty($value))
-				continue;
-			
-			if (preg_match('/-/', $value)) {
-				$parts = explode('-', $value);
-				
-				if (!empty($parts[0])) {
-					$criteria->add(
-						Expression::andBlock(
-							Expression::eq('features.id', $featureId),
-							Expression::gtEq('features.value', $parts[0])
-						)
-					);
-				}
-				
-				if (!empty($parts[1])) {
-					$criteria->add(
-						Expression::andBlock(
-							Expression::eq('features.id', $featureId),
-							Expression::ltEq('features.value', $parts[1])
-						)
-					);
-				}
-			} else {
-				$criteria->add(
-					Expression::andBlock(
-						Expression::eq('features.id', $featureId),
-						Expression::eq('features.value', $value)
+		$projection = Projection::chain()->
+			add(
+				Projection::count('features.id', 'relevance')
+			)->
+			add(
+				Projection::property('id')
+			)->
+			add(
+				Projection::group('id')
+			);
+
+		if ($orLogic->getSize()) {
+			$logic->expAnd($orLogic);
+			$projection->add(	// Remove me in case of neighbores search
+				Projection::having(
+					Expression::eq(
+						SQLFunction::create('count', 'features.id'),
+						$filterNumber
 					)
-				);
-			}
+				)
+			);
 		}
 		
-//		echo $criteria->toString();
 		
-		return $criteria;
+		$criteria = Criteria::create(Realty::dao())->
+			setProjection($projection)->
+			add($logic)->
+			setLimit(self::PER_PAGE)->
+			addOrder(
+				OrderBy::create(DBField::create('relevance'))->desc()
+			)->
+			setOffset(
+				($form->getActualValue('page') - 1) * self::PER_PAGE
+			);
+
+//		echo $criteria->toString();
+//		exit;
+		
+		$relevance = ArrayHelper::toKeyValueArray(
+			$criteria->getCustomList(), 'id', 'relevance'
+		);
+
+		$list = array();
+
+		if (!empty($relevance)) {
+			arsort($relevance);
+
+			$logic = Expression::in('id', array_keys($relevance));
+
+			// Need pager here
+
+			$list = ArrayUtils::convertObjectList(Realty::dao()->getListByLogic($logic));
+		}
+
+		$model->
+			set('relevance', $relevance)->
+			set('filter', $filters)->
+			set('realtyList', $list)->
+			set('page', $form->getActualValue('page'));
+
+		return $this;
 	}
 }

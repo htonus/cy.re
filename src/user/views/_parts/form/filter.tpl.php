@@ -95,7 +95,7 @@
 							<div class="control-group">
 								<label class="control-label" for="input_f[<?= FeatureType::AREA?>]">Area (m<sup>2</sup>)</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" class="f[<?= FeatureType::AREA?>]" id="input_f[<?= FeatureType::AREA?>]">
+									<select type="text" class="input-block-level" name="f[<?= FeatureType::AREA?>]" id="input_f[<?= FeatureType::AREA?>]">
 										<option value="">-</option>
 <?php
 	$areaList = array(

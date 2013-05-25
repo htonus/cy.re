@@ -7,11 +7,11 @@
 
 	class OfferType extends Enumeration
 	{
-		const SALE	= 1;
+		const BUY	= 1;
 		const RENT	= 2;
 		
 		protected $names = array(
-			self::SALE	=> '_S__SALE___',
+			self::BUY	=> '_S__BUY___',
 			self::RENT	=> '_S__RENT___',
 		);
 		
@@ -23,9 +23,9 @@
 		/**
 		 * @return FeatureTypeGroup
 		 */
-		public static function sale()
+		public static function buy()
 		{
-			return new self(self::SALE);
+			return new self(self::BUY);
 		}
 		
 		/**

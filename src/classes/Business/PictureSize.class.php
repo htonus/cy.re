@@ -17,7 +17,7 @@
 			self::PREVIEW	=> 'preview',
 			self::LIST2		=> 'itemList2',
 		);
-		
+
 		private $widths = array(
 			self::NORMAL		=> 1024,
 			self::CAROUSEL	=> 770,
