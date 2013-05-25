@@ -9,22 +9,19 @@
 <script type="text/javascript">
 jq(document).ready(function(){
 	jq('.preview').click(function(){
+		var src = jq('#picture').attr('src').replace(/[^\/]+$/, jq(this).attr('src').match(/[^\/]+$/));
+
+		jq('#picture').animate({opacity: 0});
+		jq('#picture').attr('src', src);
+		jq('#picture').load(function(){
+			jq('#picture').stop().animate({opacity: 1});
+		});
+		
 		jq('.preview').parent().css('background', "none");
 		jq('.preview').css({opacity: 1});
 
 		jq(this).parent().css('background', "#000");
 		jq(this).animate({opacity: 0.5});
-		var src = jq('#picture').attr('src').replace(/[^\/]+$/, jq(this).attr('src').match(/[^\/]+$/));
-
-		jq('#picture').animate(
-			{opacity: 0},
-			function(){
-				jq('#picture').attr('src', src);
-				jq('#picture').load(function(){
-					jq('#picture').animate({opacity: 1});
-				});
-			}
-		);
 	});
 });
 </script>
