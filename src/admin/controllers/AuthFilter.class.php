@@ -12,7 +12,8 @@
  */
 final class AuthFilter extends RequestFilter
 {
-	private $loginActions = array(
+	private $noLoginActions = array(
+		'main'	=> array('login', 'logout'),
 	);
 	
 	public function handleRequest(HttpRequest $request)
@@ -20,11 +21,11 @@ final class AuthFilter extends RequestFilter
 		if (
 			($user = Session::get('user'))
 			|| ($user = $this->doAutoLogin($request))
-			|| !$this->checkAction($request)
+			|| $this->checkAction($request)
 		) {
 			$request->setAttachedVar('user', $user);
 			
-			$mav = parent::handleRequest($request);
+			$mav = $this->controller->handleRequest($request);
 			
 			if (!$mav->viewIsRedirect())
 				$mav->getModel()->
@@ -68,12 +69,12 @@ final class AuthFilter extends RequestFilter
 	
 	private function checkAction(HttpRequest $request)
 	{
-		return !empty($this->loginActions[$request->getAttachedVar('area')])
+		return !empty($this->noLoginActions[$request->getAttachedVar('area')])
 			&& in_array(
 				$request->hasAttachedVar('action')
 					? $request->getAttachedVar('action')
 					: 'index',
-				$this->loginActions[$request->getAttachedVar('area')]
+				$this->noLoginActions[$request->getAttachedVar('area')]
 			);
 	}
 }
