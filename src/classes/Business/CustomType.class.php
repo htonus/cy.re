@@ -8,9 +8,11 @@
 	class CustomType extends Enumeration
 	{
 		const CAROUSEL	= 1;
+		const RECENT	= 2;
 
 		protected $names = array(
 			self::CAROUSEL	=> 'carousel',
+			self::RECENT	=> 'recent',
 		);
 
 		/**
@@ -19,6 +21,14 @@
 		public static function carousel()
 		{
 			return new self(self::CAROUSEL);
+		}
+
+		/**
+		 * @return CustomType
+		 */
+		public static function recent()
+		{
+			return new self(self::RECENT);
 		}
 	}
 ?>

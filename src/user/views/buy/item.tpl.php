@@ -8,9 +8,14 @@
 ?>
 <script type="text/javascript">
 jq(document).ready(function(){
+	dimPreview(jq('#preview_<?= $subject->getPreview()->getId()?>'));
+
 	jq('.preview').click(function(){
 		var src = jq('#picture').attr('src').replace(/[^\/]+$/, jq(this).attr('src').match(/[^\/]+$/));
 
+		if (src == jq('#picture').attr('src'))
+			return;
+		
 		jq('#picture').animate({opacity: 0});
 		jq('#picture').attr('src', src);
 		jq('#picture').load(function(){
@@ -20,11 +25,17 @@ jq(document).ready(function(){
 		jq('.preview').parent().css('background', "none");
 		jq('.preview').css({opacity: 1});
 
-		jq(this).parent().css('background', "#000");
-		jq(this).animate({opacity: 0.5});
+		dimPreview(jq(this));
 	});
 });
+
+function dimPreview(jqObject)
+{
+	jqObject.parent().css('background', "#000");
+	jqObject.animate({opacity: 0.5});
+}
 </script>
+
 	<section>
 
 		<div class="container">
@@ -32,14 +43,14 @@ jq(document).ready(function(){
 
 				<div class="span8 mt20">
 
-					<img src="<?= PictureSize::big()->getUrl($realty->getPreview())?>" id="picture" />
+					<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" id="picture" />
 
 					<div class="row hidden-phone">
 <?php
-	foreach ($realty->getPictures()->getList() as $item) {
+	foreach ($subject->getPictures()->getList() as $item) {
 ?>
 						<div class="span2 mt20">
-							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" />
+							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" id="preview_<?= $item->getId()?>" />
 						</div>
 <?php
 	}
@@ -51,14 +62,66 @@ jq(document).ready(function(){
 				<div class="span4 mt20">
 
 					<div class="well">
-						<div><h4>Summer Time</h4><div class="meta"><span> <strong>&lt; <a href="http://html.orange-idea.com/builder/portfolio-type/somthing/" rel="prev">Somthing</a></strong> </span> <span class="last_item"></span></div></div>
-						<h6 style="font-weight:600 !important; text-transform:uppercase !important">WebSite: <a class="link" href="">www.somesite.com</a></h6>
-						<p class="small">Nearly a third of all bottled drinking water purchased in the US is contaminated with bacteria.</p>
-						<h6 style="font-weight:600 !important; text-transform:uppercase !important">Som words about</h6>
-						<p>Venis potest flens ibidem quod eam in. Ambo una litus vita Apolloni codicellos iam custodio vocem magno dies tuum abscondere.</p>
-						<div class="separator_dash"></div>
-						<h6 style="font-weight:600 !important; text-transform:uppercase !important">Was done</h6>
-						<p class=" nobottommargin">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.<br><br> <span class="small-italic">The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</span></p>
+						<div>
+							<h4>
+								<?= $subject->getName()?>
+								<div class="green">
+									<?= ucfirst($subject->getRealtyType()->getName())?>  <?= $subject->getCity() ? ' in '.$subject->getCity()->getName() : null?>
+								</div>
+							</h4>
+						</div>
+
+						<table class="mb10">
+<?php
+	$group = FeatureTypeGroup::general();
+	foreach ($subject->getFeaturesByGroup($group) as $feature) {
+?>
+						<tr>
+							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
+							<td><?= $feature->getValue()?></td>
+						</tr>
+<?php
+	}
+?>
+						</table>
+
+						<table width="100%">
+						<tr>
+							<td width="50%">
+
+<?php
+	$group = FeatureTypeGroup::indoor();
+?>
+								<h5 class="green mt20"><?= $group->getName()?></h5>
+								<ul>
+<?php
+	foreach ($subject->getFeaturesByGroup($group) as $feature) {
+?>
+									<li><?= ucfirst($feature->getType()->getName())?></li>
+<?php
+	}
+?>
+								</ul>
+							</td>
+							<td width="50%">
+<?php
+	$group = FeatureTypeGroup::outdoor();
+?>
+								<h5 class="green mt20"><?= $group->getName()?></h5>
+								<ul>
+<?php
+	foreach ($subject->getFeaturesByGroup($group) as $feature) {
+?>
+									<li><?= ucfirst($feature->getType()->getName())?></li>
+<?php
+	}
+?>
+								</ul>
+							</td>
+						</tr>
+						</table>
+						
+						<?= $subject->getText()?>
 					</div>
 
 				</div>

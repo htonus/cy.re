@@ -14,8 +14,6 @@ class controllerList extends controllerMain
 {
 	const PER_PAGE = 10;
 
-	protected $offerType = null;
-
 	public function __construct()
 	{
 		parent::__construct();

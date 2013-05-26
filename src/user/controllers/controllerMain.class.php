@@ -15,6 +15,7 @@ class controllerMain extends MethodMappedController
 	const COOKIE_EXPIRE	= '1 year';
 
 	protected $sectionId = null;
+	protected $offerType = null;
 
 	public function __construct()
 	{
@@ -46,10 +47,67 @@ class controllerMain extends MethodMappedController
 		
 		$mav = ModelAndView::create()->
 			setModel($model);
+
+		$carousel = Criteria::create(CustomItem::dao())->
+			add(
+				Expression::andBlock(
+					Expression::eqId('parent.type', CustomType::carousel()),
+					Expression::eq('parent.section', $this->sectionId)
+				)
+			)->
+			getList();
+		
+		$recent = $this->getRecentList();
+
+		$model->
+			set(
+				'blocks',
+				array(
+					CustomType::CAROUSEL		=> $carousel,
+					CustomType::RECENT		=> $recent
+				)
+			);
 		
 		return $mav;
 	}
-	
+
+	private function getRecentList()
+	{
+		$list = Criteria::create(CustomItem::dao())->
+			add(
+				Expression::andBlock(
+					Expression::eqId('parent.type', CustomType::recent()),
+					Expression::eq('parent.section', $this->sectionId)
+				)
+			)->
+			getList();
+
+		$recent = array();
+		foreach ($list as $item)
+			$recent[$item->getRealty()->getId()] = $item->getRealty();
+		
+		if (count($recent) < 4) {
+			$list = Criteria::create(Realty::dao())->
+				add(
+					Expression::andBlock(
+						Expression::eqId('realtyType', $this->offerType),
+//						Expression::notIn('id', array_keys($recent)),
+						Expression::notNull('preview'),
+						Expression::notNull('published')
+					)
+				)->
+				addOrder(
+					OrderBy::create('created')->desc()
+				)->
+				getList();
+			
+			foreach ($list as $item)
+				$recent[$item->getId()] = $item;
+		}
+		
+		return $recent;
+	}
+
 	public function actionError(HttpRequest $request)
 	{
 		if ($request->hasSessionVar('flash.error')) {
@@ -75,16 +133,6 @@ class controllerMain extends MethodMappedController
 			set(
 				'realtyTypeList',
 				CriteriaUtils::getList(RealtyType::dao(), 'i18n.name')
-			)->
-			set(
-				'blocks',
-				array(
-					'carousel' => Custom::dao()->
-						getBlockItems(
-							CustomType::carousel(),
-							Section::create($this->sectionId)
-						)
-				)
 			);
 		
 		return $this;

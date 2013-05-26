@@ -10,14 +10,14 @@
 		public function getBlockItems(CustomType $type, Section $section)
 		{
 			try {
-				$custom = $this->getByLogic(
-					Expression::andBlock(
-						Expression::eqId('type_id', $type),
-						Expression::eqId('section_id', $section)
-					)
-				);
-				
-				return $custom->getItems()->getList();
+				return Criteria::create(CustomItem::dao())->
+					add(
+						Expression::andBlock(
+							Expression::eqId('parent.type', $type),
+							Expression::eqId('parent.section', $section)
+						)
+					)->
+					getList();
 			} catch (Exception $e) {
 				return array();
 			}

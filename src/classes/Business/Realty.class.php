@@ -63,5 +63,12 @@
 		{
 			return StringHelper::me()->getCode($this->id);
 		}
+
+		public function getFeatureValue($featureId)
+		{
+			$list = $this->getFeatureList();
+
+			return $list[$featureId]->getValue();
+		}
 	}
 ?>

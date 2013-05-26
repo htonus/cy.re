@@ -99,6 +99,7 @@ insert into person_status ("id", "name") values (5, 'Full access');
 insert into person ("name", "surname", "created", "status_id", "email", "username", "password") values ('Mikhail', 'Cherviakov', now(), 5, 'htonus@cyprus-realty.com', 'htonus', '28f9e86b0d5f5739612a7fda378ade96f0c30ac9');
 
 insert into custom_type ("id", "name") values (1, 'carousel');
+insert into custom_type ("id", "name") values (2, 'recent');
 insert into "section" ("id", "name") values (1, 'buy');
 insert into "section" ("id", "name") values (2, 'rent');
 
