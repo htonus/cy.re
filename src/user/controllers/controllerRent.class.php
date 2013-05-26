@@ -10,12 +10,12 @@
  *
  * @author htonus
  */
-class controllerBuy extends controllerList
+class controllerRent extends controllerList
 {
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->offerType = OfferType::buy();
+		$this->offerType = OfferType::rent();
 	}
 }
