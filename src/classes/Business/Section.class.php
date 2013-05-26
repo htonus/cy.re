@@ -15,6 +15,11 @@
 			self::RENT	=> '___rent___',
 		);
 
+		public static function create($id)
+		{
+			return new self($id);
+		}
+		
 		/**
 		 * @return Section
 		 */
@@ -23,4 +28,3 @@
 			return new self(self::BUY);
 		}
 	}
-?>

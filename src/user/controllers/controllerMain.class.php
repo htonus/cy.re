@@ -13,7 +13,9 @@
 class controllerMain extends MethodMappedController
 {
 	const COOKIE_EXPIRE	= '1 year';
-	
+
+	protected $sectionId = null;
+
 	public function __construct()
 	{
 		$this->
@@ -78,7 +80,10 @@ class controllerMain extends MethodMappedController
 				'blocks',
 				array(
 					'carousel' => Custom::dao()->
-						getBlockItems(CustomType::carousel(), Section::buy())
+						getBlockItems(
+							CustomType::carousel(),
+							Section::create($this->sectionId)
+						)
 				)
 			);
 		

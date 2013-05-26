@@ -111,7 +111,7 @@ final class controllerMain extends MethodMappedController
 					$this->setAutoLoginCookie($cookie);
 				}
 				
-				$backUrl = '/?area=main';
+				$backUrl = '/buy';
 				
 				if (Session::get('backUrl')) {
 					$backUrl = Session::get('backUrl');
@@ -136,7 +136,7 @@ final class controllerMain extends MethodMappedController
 		
 		return ModelAndView::create()->
 			setView(
-				RedirectView::create('/?area=main')
+				RedirectView::create('/buy')
 			);
 	}
 	

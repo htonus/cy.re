@@ -17,5 +17,6 @@ class controllerBuy extends controllerList
 		parent::__construct();
 
 		$this->offerType = OfferType::buy();
+		$this->sectionId = Section::BUY;
 	}
 }
