@@ -2,6 +2,13 @@
 /*
  * $Id$
  */
+
+$address = <<<ADDRESS
+246 Archbishop Makarios Avenue, Salamis Court,<br />
+P.O.Box 54100,<br />
+3720 Limassol, Cyprus<br />
+ADDRESS;
+
 ?>
 	<footer>
 
@@ -42,9 +49,7 @@
 						<div class="note">
 							<h5>Esperia company</h5>
 							<p>
-								Members of: The International Real Estate Federation, The Cyprus Real Estate Agents Association, Association of Cyprus Travel Agents,
-								The Cyprus Chamber of Commerce and Industry, The Technical Chamber of Cyprus (ETEK), The Institution of  Civil  Engineers,
-								The  Cyprus  Institute  of  Civil  Engineers,   The  Cyprus  Institute  of  Architects  and  Civil  Engineers
+								<?= empty($static[StaticType::ABOUT]) ? null : $static[StaticType::ABOUT]->getAnons(); ?>
 							</p>
 						</div>
 					</div>
@@ -68,14 +73,16 @@
 					<div class="span3">
 						<h5 class="underline">Contact information</h5>
 						<ul class="unstyled">
-							<li title="Telephone"><i class="icon-user icon-white"></i> +357 25366144, FAX +357 25369209</li>
-							<li title="e-Mail"><i class="icon-envelope icon-white"></i> <a href="mailto:info@esperiaestates.com">info@esperiaestates.com</a></li>
+							<li title="Telephone"><i class="icon-user icon-white"></i>
+								<?= empty($static[StaticType::PHONE]) ? '+357 25366144, FAX +357 25369209' : $static[StaticType::PHONE]->getName(); ?>
+							</li>
+							<li title="e-Mail"><i class="icon-envelope icon-white"></i> 
+								<a href="mailto:info@esperiaestates.com"><?= empty($static[StaticType::EMAIL]) ? 'info@esperiaestates.com' : $static[StaticType::EMAIL]->getName(); ?></a>
+							</li>
 							<li title="Adddress">
 								<i class="icon-home icon-white"></i> Head office:<br />
 								<div style="line-height: 12px;">
-									246 Archbishop Makarios Avenue, Salamis Court,<br />
-									P.O.Box 54100,<br />
-									3720 Limassol, Cyprus
+									<?= empty($static[StaticType::ADDRESS]) ? $address : $static[StaticType::ADDRESS]->getAnons(); ?>
 								</div>
 							</li>
 						</ul>

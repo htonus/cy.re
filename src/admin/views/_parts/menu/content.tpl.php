@@ -1,7 +1,7 @@
 <?php
 	$list = array(
-		'custom'	=> 'Custom blocks',
-		'static'	=> 'Static pages',
+		'custom'		=> 'Custom blocks',
+		'staticPage'	=> 'Static pages',
 	);
 
 ?>

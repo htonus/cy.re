@@ -103,6 +103,14 @@ insert into custom_type ("id", "name") values (2, 'recent');
 insert into "section" ("id", "name") values (1, 'buy');
 insert into "section" ("id", "name") values (2, 'rent');
 
+insert into static_type ("id", "name") values (1, 'about');
+insert into static_type ("id", "name") values (2, 'contact');
+insert into static_type ("id", "name") values (3, 'twitter');
+insert into static_type ("id", "name") values (4, 'legal');
+insert into static_type ("id", "name") values (5, 'phone');
+insert into static_type ("id", "name") values (6, 'email');
+insert into static_type ("id", "name") values (7, 'address');
+
 
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;

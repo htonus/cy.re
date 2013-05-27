@@ -43,6 +43,36 @@
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
-	
+
+	<class name="StaticType">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
+
+	<class name="StaticPage" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="type" type="StaticType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
+			<property name="section" type="Section" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="i18n" type="StaticPage_i18n" relation="OneToMany" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+	<class name="StaticPage_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="StaticPage" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="128" required="false" />
+			<property name="anons" type="String" size="526" required="false" />
+			<property name="text" type="String" size="4096" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
 </classes>
 </metaconfiguration>

@@ -34,8 +34,8 @@
 		array(
 			'title'	=> 'Contents',
 			'items'	=> array(
-				'custom'	=> 'Custom blocks',
-				'static'	=> 'Static pages',
+				'custom'		=> 'Custom blocks',
+				'staticPage'	=> 'Static pages',
 			)
 		),
 //		'unit'	=> 'Units',

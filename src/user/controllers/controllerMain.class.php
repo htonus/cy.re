@@ -50,8 +50,9 @@ class controllerMain extends MethodMappedController
 
 		$carousel = $this->getBlockList(CustomType::carousel());
 		$recent = $this->getBlockList(CustomType::recent(), 4);
-		
+
 		$model->
+			set('static', $this->getStaticContent())->
 			set(
 				'blocks',
 				array(
@@ -61,6 +62,39 @@ class controllerMain extends MethodMappedController
 			);
 		
 		return $mav;
+	}
+
+	private function getStaticContent()
+	{
+		$types = StaticType::about()->getNameList();
+
+		$result = array();
+
+		$list =
+			ArrayUtils::convertObjectList(
+				Criteria::create(StaticPage::dao())->
+				add(Expression::eq('section', $this->sectionId))->
+				getList()
+			);
+
+		foreach ($list as $item)
+			$result[$item->getTypeId()] = $item;
+
+		$condition = Expression::chain()->
+			expAnd(Expression::isNull('section'));
+
+		if (count($list))
+			$condition->
+				expAnd(Expression::notIn('type', array_keys($result)));
+
+		$list = Criteria::create(StaticPage::dao())->
+			add($condition)->
+			getList();
+
+		foreach ($list as $item)
+			$result[$item->getTypeId()] = $item;
+
+		return $result;
 	}
 
 	private function getBlockList(CustomType $type, $amount = null)
