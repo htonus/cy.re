@@ -48,17 +48,9 @@ class controllerMain extends MethodMappedController
 		$mav = ModelAndView::create()->
 			setModel($model);
 
-		$carousel = Criteria::create(CustomItem::dao())->
-			add(
-				Expression::andBlock(
-					Expression::eqId('parent.type', CustomType::carousel()),
-					Expression::eq('parent.section', $this->sectionId)
-				)
-			)->
-			getList();
+		$carousel = $this->getBlockList(CustomType::carousel());
+		$recent = $this->getBlockList(CustomType::recent(), 4);
 		
-		$recent = $this->getRecentList();
-
 		$model->
 			set(
 				'blocks',
@@ -71,22 +63,25 @@ class controllerMain extends MethodMappedController
 		return $mav;
 	}
 
-	private function getRecentList()
+	private function getBlockList(CustomType $type, $amount = null)
 	{
 		$list = Criteria::create(CustomItem::dao())->
 			add(
 				Expression::andBlock(
-					Expression::eqId('parent.type', CustomType::recent()),
+					Expression::eqId('parent.type', $type),
 					Expression::eq('parent.section', $this->sectionId)
 				)
 			)->
 			getList();
 
-		$recent = array();
+		$result = array();
 		foreach ($list as $item)
-			$recent[$item->getRealty()->getId()] = $item->getRealty();
+			$result[$item->getRealty()->getId()] = $item->getRealty();
 		
-		if (count($recent) < 4) {
+		if (
+			!empty($amount)
+			&& count($result) < $amount
+		) {
 			$list = Criteria::create(Realty::dao())->
 				add(
 					Expression::andBlock(
@@ -99,14 +94,14 @@ class controllerMain extends MethodMappedController
 				addOrder(
 					OrderBy::create('created')->desc()
 				)->
-				setLimit(4 - count($recent))->
+				setLimit($amount - count($result))->
 				getList();
 			
 			foreach ($list as $item)
-				$recent[$item->getId()] = $item;
+				$result[$item->getId()] = $item;
 		}
 		
-		return $recent;
+		return $result;
 	}
 
 	public function actionError(HttpRequest $request)

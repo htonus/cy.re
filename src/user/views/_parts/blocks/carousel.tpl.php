@@ -28,8 +28,7 @@
 	<div class="carousel-inner">
 <?php
 		$i = 0;
-		foreach ($list as $item) {
-			$realty = $item->getRealty();
+		foreach ($list as $realty) {
 ?>
 		<div class="item <?= $i++ == 0 ? 'active' : ''?>">
 			<img src="<?= PictureSize::carousel()->getUrl($realty->getPreview())?>" alt="">

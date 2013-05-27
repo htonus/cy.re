@@ -23,7 +23,7 @@
 
 				<div class="span3">
 					<div class="logo">
-						<img src="/img/logo1.png"/>
+						<a href="<?= PATH_WEB?>"><img src="/img/logo.gif"/></a>
 					</div>
 				</div>
 

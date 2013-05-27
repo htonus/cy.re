@@ -44,7 +44,7 @@
 
 	$partViewer->view(
 		'_parts/blocks/carousel',
-		Model::create()->set('list', $blocks['carousel'])
+		Model::create()->set('list', $blocks[CustomType::CAROUSEL])
 	);
 ?>
 				</div>
@@ -94,43 +94,14 @@
 
 		<div class="container offers">
 
-			<h3>Recent From Portfolio</h3>
-
-			<div class="row">
-
-				<div class="span3 list-item">
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
-					<h5>
-						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
-					</h5>
-					Some details
-				</div>
-				<div class="span3 list-item">
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg">
-					<a href="http://html.orange-idea.com/builder/portfolio-type/cool-ring/" title="Permalink to Cool Ring">
-					<h5>
-						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
-					</h5>
-					Some details
-					</a>
-				</div>
-				<div class="span3 list-item">
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
-					<h5>
-						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
-					</h5>
-					Some details
-					</a>
-				</div>
-				<div class="span3 list-item">
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg">
-					<h5>
-						<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
-					</h5>
-					Some details
-					</a>
-				</div>
-			</div>
+<?php
+	$partViewer->view(
+		'_parts/blocks/recent',
+		Model::create()->
+			set('area', $area)->
+			set('list', $blocks[CustomType::RECENT])
+	);
+?>
 
 		</div>
 
