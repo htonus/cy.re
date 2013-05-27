@@ -99,6 +99,7 @@ class controllerMain extends MethodMappedController
 				addOrder(
 					OrderBy::create('created')->desc()
 				)->
+				setLimit(4 - count($recent))->
 				getList();
 			
 			foreach ($list as $item)
