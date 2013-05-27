@@ -69,11 +69,13 @@
 						<h5 class="underline">Contact information</h5>
 						<ul class="unstyled">
 							<li title="Telephone"><i class="icon-user icon-white"></i> +357 25366144</li>
-							<li title="Fax"><i class="con-hdd icon-white"></i> +357 25369209</li>
+							<li title="Fax"><i class="icon-hdd icon-white"></i> +357 25369209</li>
 							<li title="e-Mail"><i class="icon-envelope icon-white"></i> <a href="mailto:info@esperiaestates.com">info@esperiaestates.com</a></li>
 							<li title="Adddress">
-								<i class="icon-home icon-white"></i>
-								246 Archbishop Makarios Avenue, Salamis Court, P.O.Box 54100, 3720 Limassol, Cyprus
+								<i class="icon-home icon-white"></i> Head office:<br />
+								246 Archbishop Makarios Avenue, Salamis Court,<br />
+								P.O.Box 54100,<br />
+								3720 Limassol, Cyprus
 							</li>
 						</ul>
 					</div>
