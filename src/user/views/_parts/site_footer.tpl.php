@@ -38,7 +38,7 @@
 						<a href="https://twitter.com" rel="nofollow" target="_blank"><i class="ico-twitter"></i></a>
 					</div>
 
-					<div class="span3 hidden-phone">
+					<div class="span4 hidden-phone">
 						<div class="note">
 							<h5>Esperia company</h5>
 							<p>
@@ -49,7 +49,7 @@
 						</div>
 					</div>
 
-					<div class="span4">
+					<div class="span3">
 						<h5 class="underline">Legal info</h5>
 						<a class="icon-briefcase icon-white pull-left mr10"></a>
 						<p class="pull-left">
