@@ -30,7 +30,7 @@
 			<div class="container">
 				<div class="row">
 
-					<div class="span3">
+					<div class="span2">
 						<h3 class="white">Follow Us</h3>
 						<a href="https://plus.google.com" rel="nofollow publisher" target="_blank"><i class="ico-google"></i></a>
 						<a href="http://www.facebook.com" rel="nofollow" target="_blank"><i class="ico-fb"></i></a>
@@ -49,7 +49,7 @@
 						</div>
 					</div>
 
-					<div class="span3">
+					<div class="span4">
 						<h5 class="underline">Legal info</h5>
 						<a class="icon-briefcase icon-white pull-left mr10"></a>
 						<p class="pull-left">
