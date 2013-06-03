@@ -119,7 +119,7 @@ class controllerMain extends MethodMappedController
 			$list = Criteria::create(Realty::dao())->
 				add(
 					Expression::andBlock(
-						Expression::eqId('realtyType', $this->offerType),
+						Expression::eqId('offerType', $this->offerType),
 //						Expression::notIn('id', array_keys($recent)),
 						Expression::notNull('preview'),
 						Expression::notNull('published')

@@ -14,6 +14,7 @@
 		const PHONE		= 5;
 		const EMAIL		= 6;
 		const ADDRESS	= 7;
+		const COMPANY	= 8;
 
 		protected $names = array(
 			self::ABOUT		=> 'about',
@@ -23,6 +24,7 @@
 			self::PHONE		=> 'phone',
 			self::EMAIL		=> 'email',
 			self::ADDRESS	=> 'address',
+			self::COMPANY	=> 'company',
 		);
 
 		/**

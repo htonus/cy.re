@@ -92,8 +92,6 @@
 		</div>
 
 
-		<div class="container offers">
-
 <?php
 	$partViewer->view(
 		'_parts/blocks/recent',
@@ -101,58 +99,13 @@
 			set('area', $area)->
 			set('list', $blocks[CustomType::RECENT])
 	);
+	
+	$partViewer->view(
+		'_parts/blocks/about',
+		Model::create()->
+			set('area', $area)->
+			set('item', $static[StaticType::COMPANY])
+	);
 ?>
-
-		</div>
-
-		<div class="container extra">
-			<div class="row">
-
-				<div class="span6">
-					<h3>About Company</h3>
-					<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/12/html5.png" class="pull-left">
-					<p>Proin dictum erat et purus egestas in gravida leo vestibulum. Praesent rhoncus blandit mauris vitae fringilla. Curabitur tellus erat, ornare et dictum at sed nisi.</p>
-					<p><i>Various versions have evolved over the years, sometimes by accident</i></p>
-					<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’.</p>
-
-					<a href="#" class="btn"><i class="icon-download"></i> Download our Brochure</a>
-
-					<div class="bloquote">
-						<h4>Clients Testimonials</h4>
-						<p>
-							In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. The readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content.
-						</p>
-						<i>Mikle / CEO Some Company</i>
-					</div>
-
-				</div>
-
-				<div class="span6">
-					<h3>Some nice picture carousel</h3>
-
-					<div id="extraCarousel">
-						<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/Anchor_v1_preview2-880x461.png"/>
-					</div>
-
-					<div class="note">
-						<div class="title">
-							<div class="date">
-								<i class="icon-calendar icon-white"></i>
-								17 Apr, 2013
-							</div>
-							<h4>Post + Right Sidebar</h4>
-							<span>BY SOMEONE / 123 COMMENTS /</span>
-						</div>
-
-						<p>
-							Nulla nunc dui, tristique in semper vel, congue sed ligula. Nam dolor ligula, faucibus id sodales in, auctor fringilla libero. Pellentesque pellentesque tempor tellus eget ...
-						</p>
-
-						<a href="#"><i class="icon-chevron-right icon-white"></i> Read More</a>
-					</div>
-				</div>
-
-			</div>
-		</div>
 
 	</section>

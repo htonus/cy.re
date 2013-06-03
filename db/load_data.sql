@@ -56,13 +56,19 @@ insert into feature_type_group (id, name) values (3, 'general options');
 insert into offer_type (id, name) values (1, 'sale');
 insert into offer_type (id, name) values (2, 'rent');
 
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (1, 'price', 1, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (2, 'area', 2, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (3, 'bedrooms', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (4, 'toylets', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (5, 'parking lots', 3, 3, 10);
-insert into "feature_type" ("id", "name", "unit_id", "group_id", "weight") values (6, 'monthly price', 3, 3, 10);
-insert into "feature_type_i18n" ("object_id", "language_id", "name") select "id", 1, "name" from "feature_type";
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (1, 1, 3, 10);
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (2, 2, 3, 10);
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (3, 3, 3, 10);
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (4, 3, 3, 10);
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (5, 3, 3, 10);
+insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (6, 3, 3, 10);
+
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (1, 'price', 1);
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (2, 'area', 1);
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (3, 'bedrooms', 1);
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (4, 'toylets', 1);
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (5, 'parking lots', 1);
+insert into "feature_type_i18n" ("object_id", "name", "language_id") values (6, 'monthly price', 1);
 
 insert into "realty_type" ("id", "name") values (1, 'house');
 insert into "realty_type" ("id", "name") values (2, 'appartments');
@@ -110,6 +116,7 @@ insert into static_type ("id", "name") values (4, 'legal');
 insert into static_type ("id", "name") values (5, 'phone');
 insert into static_type ("id", "name") values (6, 'email');
 insert into static_type ("id", "name") values (7, 'address');
+insert into static_type ("id", "name") values (8, 'company');
 
 
 alter sequence "language_id" restart with 10;

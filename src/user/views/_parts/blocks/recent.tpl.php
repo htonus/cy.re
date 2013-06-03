@@ -2,7 +2,11 @@
 /**
  *
  */
+
+	if (!empty($list)) {
 ?>
+		<div class="container offers">
+
 			<h3>Recent offers</h3>
 
 			<div class="row">
@@ -25,3 +29,6 @@
 	}
 ?>
 			</div>
+		</div>
+<?php
+	}
