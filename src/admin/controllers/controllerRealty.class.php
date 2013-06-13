@@ -124,7 +124,7 @@ final class controllerRealty extends i18nEditor
 		
 		$model->set(
 			'cityList',
-			Criteria::create(City::dao())->getList()
+			Criteria::create(City::dao())->addOrder('i18n.name')->getList()
 		);
 		
 		$model->set(
