@@ -124,7 +124,12 @@ final class controllerRealty extends i18nEditor
 		
 		$model->set(
 			'cityList',
-			Criteria::create(City::dao())->addOrder('i18n.name')->getList()
+			Criteria::create(City::dao())->
+				add(
+					Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+				)->
+				addOrder('i18n.name')->
+				getList()
 		);
 		
 		$model->set(
@@ -135,7 +140,12 @@ final class controllerRealty extends i18nEditor
 		$model->set(
 			'realtyTypeList',
 			ArrayUtils::convertObjectList(
-				Criteria::create(RealtyType::dao())->getList()
+				Criteria::create(RealtyType::dao())->
+					add(
+						Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+					)->
+					addOrder('i18n.name')->
+					getList()
 			)
 		);
 
