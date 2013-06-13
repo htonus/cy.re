@@ -16,6 +16,7 @@
 					add(
 						Expression::eqId('city', $city)
 					)->
+					addOrder('i18n.name')->
 					getList();
 			}
 			
