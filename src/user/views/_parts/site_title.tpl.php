@@ -29,9 +29,11 @@
 					</div>
 				</div>
 
-				<div class="span3 logo">
-					Telephone:  +357 25366144, &nbsp; +357 25369209<br/>
-					e-Mail: info@esperiaestates.com<br/>
+				<div class="span3">
+					<div class="logo">
+						Telephone:  +357 25366144, &nbsp; +357 25369209<br/>
+						e-Mail: info@esperiaestates.com<br/>
+					</div>
 				</div>
 
 				<div class="span6">
