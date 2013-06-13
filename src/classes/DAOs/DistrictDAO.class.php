@@ -16,6 +16,9 @@
 					add(
 						Expression::eqId('city', $city)
 					)->
+					add(
+						Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+					)->
 					addOrder('i18n.name')->
 					getList();
 			}

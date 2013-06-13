@@ -193,7 +193,15 @@ HEADER .nav > LI.selected > A {
 	color: #FFF !important;
 }
 
-.logo { margin-top: 15px; }
+.logo { margin: 8px 0px; font: 12px bold "Open Sans"; color: #000B5E; }
+.logo IMG { margin-right: 15px; }
+.logo I {
+	font: 24px bold "Open Sans";
+	font-style: oblique;
+	color: #000B5E;
+	line-height: 24px;
+	letter-spacing: 6px;
+}
 
 @media (max-width: 767px) {
 	.logo {	text-align: center;	margin-bottom: 20px; }
