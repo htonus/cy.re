@@ -12,7 +12,7 @@
  */
 class controllerList extends controllerMain
 {
-	const PER_PAGE = 10;
+	const PER_PAGE = 1;
 
 	public function __construct()
 	{
@@ -74,22 +74,29 @@ class controllerList extends controllerMain
 				setDefault(1)
 			)->
 			add(
+				Primitive::integer('list')->
+				setMin(1)->
+				setMax(5)->
+				setDefault(2)
+			)->
+			add(
 				Primitive::set('f')
 			);
 
 		$fields = array('realtyType', 'city');
-
-		foreach($fields as $field)
+		
+		foreach($fields as $field) {
 			$form->add(
 				Primitive::identifier($field)->
 				of(ucfirst($field))
 			);
+		}
 
 		$form->import($request->getGet());
 		$filters = $form->getValue('f');
 		$orLogic = Expression::orBlock();
 		$filterNumber = 0;
-
+		
 		foreach(FeatureType::dao()->getPlainList() as $type) {
 			$typeId = $type->getId();
 			
@@ -173,6 +180,13 @@ class controllerList extends controllerMain
 			);
 		}
 		
+		$page = $form->getActualValue('page');
+		$total = Criteria::create(Realty::dao())->
+			setProjection(
+				Projection::count('id', 'count')
+			)->
+			add($logic)->
+			getCustom('count');
 		
 		$criteria = Criteria::create(Realty::dao())->
 			setProjection($projection)->
@@ -182,9 +196,8 @@ class controllerList extends controllerMain
 				OrderBy::create(DBField::create('relevance'))->desc()
 			)->
 			setOffset(
-				($form->getActualValue('page') - 1) * self::PER_PAGE
+				($page - 1) * self::PER_PAGE
 			);
-
 //		echo $criteria->toString();
 //		exit;
 		
@@ -195,20 +208,33 @@ class controllerList extends controllerMain
 		$list = array();
 
 		if (!empty($relevance)) {
+			// to iterate through this list and show details from realtyList by id
 			arsort($relevance);
-
+			
 			$logic = Expression::in('id', array_keys($relevance));
-
-			// Need pager here
-
 			$list = ArrayUtils::convertObjectList(Realty::dao()->getListByLogic($logic));
 		}
 
+		foreach($fields as $field) {
+			if ($value = $form->getValue($field))
+				$filters[$field] = $value;
+		}
+		
+		$pagerModel = Model::create()->
+			set(
+				'url',
+				PATH_WEB.$this->section->getSlug().'/list?'
+				.(empty($filters) ? '' : http_build_query($filters))
+				.'&list='.$form->getActualValue('list')
+			)->
+			set('pages', ceil($total / self::PER_PAGE))->
+			set('page', $page);
+
 		$model->
-			set('relevance', $relevance)->
+			set('pager', $pagerModel)->
 			set('filter', $filters)->
-			set('realtyList', $list)->
-			set('page', $form->getActualValue('page'));
+			set('list', $relevance)->
+			set('objectList', $list);
 
 		return $this;
 	}

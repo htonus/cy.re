@@ -12,10 +12,10 @@
  */
 class controllerMain extends MethodMappedController
 {
-	const COOKIE_EXPIRE	= '1 year';
+	const COOKIE_EXPIRE		= '1 year';
 
-	protected $sectionId = null;
-	protected $offerType = null;
+	protected $section		= null;
+	protected $offerType	= null;
 
 	public function __construct()
 	{
@@ -73,7 +73,7 @@ class controllerMain extends MethodMappedController
 		$list =
 			ArrayUtils::convertObjectList(
 				Criteria::create(StaticPage::dao())->
-				add(Expression::eq('section', $this->sectionId))->
+				add(Expression::eqId('section', $this->section))->
 				getList()
 			);
 
@@ -103,7 +103,7 @@ class controllerMain extends MethodMappedController
 			add(
 				Expression::andBlock(
 					Expression::eqId('parent.type', $type),
-					Expression::eq('parent.section', $this->sectionId)
+					Expression::eqId('parent.section', $this->section)
 				)
 			)->
 			getList();

@@ -15,6 +15,12 @@
 			self::RENT	=> '___rent___',
 		);
 
+		protected $slugs = array(
+			self::BUY	=> 'buy',
+			self::RENT	=> 'rent',
+		);
+
+
 		public static function create($id)
 		{
 			return new self($id);
@@ -26,5 +32,17 @@
 		public static function buy()
 		{
 			return new self(self::BUY);
+		}
+		/**
+		 * @return Section
+		 */
+		public static function rent()
+		{
+			return new self(self::RENT);
+		}
+
+		public function getSlug()
+		{
+			return $this->slugs[$this->id];
 		}
 	}

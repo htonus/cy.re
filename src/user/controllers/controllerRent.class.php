@@ -17,6 +17,6 @@ class controllerRent extends controllerList
 		parent::__construct();
 
 		$this->offerType = OfferType::rent();
-		$this->sectionId = Section::RENT;
+		$this->section = Section::rent();
 	}
 }
