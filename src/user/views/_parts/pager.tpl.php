@@ -4,6 +4,8 @@
  */
 	
 // echo	$url .= '&page=';
+	if ($pages < 2)
+		return;
 ?>
 <div class="pagination wysiwyg-text-align-center">
 	<ul>
