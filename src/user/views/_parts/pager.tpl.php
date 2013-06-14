@@ -3,7 +3,7 @@
  * $Id$
  */
 	
-echo	$url .= '&page=';
+// echo	$url .= '&page=';
 ?>
 <div class="pagination wysiwyg-text-align-center">
 	<ul>
