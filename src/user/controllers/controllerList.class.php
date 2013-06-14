@@ -12,7 +12,7 @@
  */
 class controllerList extends controllerMain
 {
-	const PER_PAGE = 1;
+	const PER_PAGE = 10;
 
 	public function __construct()
 	{
