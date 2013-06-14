@@ -197,7 +197,7 @@ HEADER .nav > LI.selected > A {
 	color: #FFF !important;
 }
 
-.logo { margin: 8px 0px; font: 12px bold "Open Sans"; color: #000B5E; }
+.logo { margin: 7px 0px; font: 12px bold "Open Sans"; color: #000B5E; }
 .logo IMG { margin-right: 15px; }
 .logo I {
 	font: 24px bold "Open Sans";
