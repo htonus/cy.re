@@ -19,7 +19,21 @@
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
-	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
+
+	<div class="navbar">
+		<div class="navbar-inner">
+			<form class="navbar-form" action="<?= PATH_WEB_ADMIN?>" method="get">
+				<input type="hidden" name="area" value="<?= $area?>" />
+				<input type="hidden" name="action" value="edit" />
+
+				<span class="brand">Enter Code</span>
+				<input type="text" name="code" class="span1" />
+				<button type="submit" class="btn btn-primary">Edit</button>
+
+				<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
+			</form>
+		</div>
+	</div>
 	
 	<table class="table table-striped table-hover">
 	<thead>
@@ -68,4 +82,3 @@
 ?>
 	</tbody>
 	</table>
-	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />

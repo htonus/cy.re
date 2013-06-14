@@ -25,8 +25,20 @@ final class controllerRealty extends i18nEditor
 				Primitive::set('feature')
 			);
 	}
-	
-	protected function addObject(
+
+	public function doEdit(HttpRequest $request)
+	{
+		if ($request->hasGetVar('code')) {
+			$request->setGetVar(
+				'id',
+				StringHelper::me()->getDecode($request->getGetVar('code'))
+			);
+		}
+
+		return parent::doEdit($request);
+	}
+
+		protected function addObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {
 		$db = DBPool::me()->getLink();
