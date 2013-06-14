@@ -32,6 +32,14 @@
 	$partViewer->view('_parts/form/i18n');
 ?>
 
+<div class="control-group">
+	<label class="control-label" for="input_prefix">Prefix for code (1 symbol)</label>
+	<div class="controls">
+		<input type="text" id="input_prefix" placeholder="Prefix 1 symbol" name="prefix" value="<?=$form->getValue('prefix')?>" />
+    </div>
+</div>
+
+
 <div style="border-top: 1px #ddd solid; margin-bottom: 20px;"></div>
 
 <div class="control-group">

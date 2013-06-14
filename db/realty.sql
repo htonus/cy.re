@@ -58,6 +58,7 @@ CREATE UNIQUE INDEX feature_type_i18n_object_id_language_id_uidx ON "feature_typ
 CREATE SEQUENCE "realty_type_id";
 CREATE TABLE "realty_type" (
     "id" INTEGER NOT NULL,
+    "prefix" CHARACTER VARYING(2) NULL,
     "name" CHARACTER VARYING(16) NOT NULL,
     PRIMARY KEY("id")
 );

@@ -12,22 +12,34 @@
 			return self::getInstance(__CLASS__);
 		}
 
-		public function getCode($id)
+		public function getCode(Realty $realty)
 		{
 			$len = strlen($this->code);
-			$out = '';
+			$out = $prefix = '';
+			$id = $realty->getId();
 
 			while ($id > 0) {
 				$out = $this->code[$id % $len] . $out;
 				$id = floor($id  / $len);
 			}
 
-			return str_repeat('O', 4 - strlen($out)).$out;
+			$prefix .= $realty->getCity()
+				&& $realty->getCity()->getPrefix()
+					? $realty->getCity()->getPrefix()
+					: 'OO';
+
+			$prefix .= $realty->getRealtyType()
+				&& $realty->getRealtyType()->getPrefix()
+					? $realty->getRealtyType()->getPrefix()
+					: 'O';
+
+			return $prefix.$out;
 		}
 		
 		public function getDecode($str)
 		{
-			$str = str_replace(array('0', 'O', 'L'), array('', '', '1'), strtoupper($str));
+			$str = strtoupper(substr($str, 3));
+			$str = str_replace(array('0', 'O', 'L'), array('', '', '1'), $str);
 			$code = array_flip(str_split($this->code, 1));
 			$cnt = count($code);
 			$out = 0;

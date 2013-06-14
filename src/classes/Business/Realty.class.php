@@ -61,7 +61,7 @@
 
 		public function getCode()
 		{
-			return StringHelper::me()->getCode($this->id);
+			return StringHelper::me()->getCode($this);
 		}
 
 		public function getFeatureValue($featureId)

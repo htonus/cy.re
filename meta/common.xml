@@ -48,6 +48,7 @@
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
 			<property name="region" type="City" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="prefix" type="String" size="2" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

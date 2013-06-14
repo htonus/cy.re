@@ -15,6 +15,7 @@ CREATE TABLE "city" (
     "latitude" numeric(10,6) NULL,
     "longitude" numeric(10,6) NULL,
     "region_id" BIGINT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+	"prefix" CHARACTER VARYING(2) NULL,
     PRIMARY KEY("id")
 );
 CREATE SEQUENCE "city_i18n_id";

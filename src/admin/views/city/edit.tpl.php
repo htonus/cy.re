@@ -55,6 +55,14 @@
 
 
 <div class="control-group">
+	<label class="control-label" for="input_prefix">Prefix (2 symbols)</label>
+	<div class="controls">
+		<input type="text" id="input_prefix" placeholder="Prefix for code - 2 symbols" name="prefix" value="<?=$form->getValue('prefix')?>" />
+    </div>
+</div>
+
+
+<div class="control-group">
 	<label class="control-label" for="input_latitude">Latitude</label>
 	<div class="controls">
 		<input type="text" id="input_latitude" placeholder="Latitude xx.xxxxxx" name="latitude" value="<?=$form->getValue('latitude')?>" />

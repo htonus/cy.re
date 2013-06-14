@@ -82,7 +82,7 @@ final class controllerCustom extends CommonEditor
 			$data['item'] = array(
 				'id'			=> null,
 				'realty_id'		=> $item->getId(),
-				'realty_code'	=> StringHelper::me()->getCode($item->getId()),
+				'realty_code'	=> $item->getCode(),
 				'name'		=> $item->getName(),
 				'url'		=> PictureSize::thumbnail()->getUrl($preview)
 			);
