@@ -86,7 +86,7 @@ function dimPreview(jqObject)
 						</table>
 
 						<table width="100%">
-						<tr>
+						<tr valign="top">
 							<td width="50%">
 
 <?php
