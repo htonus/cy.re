@@ -114,6 +114,7 @@ BODY {
 }
 .sub-page {
 	background-color: #FDFDFD;
+	padding-top: 60px;
 }
 .mb10 {
 	margin-bottom: 10px
@@ -169,6 +170,9 @@ UL.unstyled { margin: 0px; padding: 0px; list-style: none; }
 HEADER {
 	background: #F6F6F6;
 	border-bottom: 1px solid #DDD;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
 }
 HEADER .navbar {margin: 0px;}
 HEADER .nav > LI > A {

@@ -23,9 +23,11 @@
 
 				<div class="span3">
 					<div class="logo">
-						<a href="<?= PATH_WEB?>"><img src="/img/logo2.png" align="left" /></a>
-						<i>ESPERIA</i><br/>
-						Group of Companies
+						<a href="<?= PATH_WEB?>">
+							<img src="/img/logo2.png" align="left" />
+							<i>ESPERIA</i><br/>
+							Group of Companies
+						</a>
 					</div>
 				</div>
 
