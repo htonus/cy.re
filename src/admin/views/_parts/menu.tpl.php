@@ -13,6 +13,7 @@
 				'realtyType'	=> 'Type of the realty',
 				'city'			=> 'City',
 				'district'		=> 'District',
+				'token'			=> 'Interface texts',
 			)
 		),
 		array(

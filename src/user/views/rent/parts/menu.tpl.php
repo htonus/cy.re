@@ -7,7 +7,7 @@
 <?php
 	foreach ($listVariantList as $id => $limit) {
 ?>
-			<a href="<?= $pager->get('url').'&list='.$id; ?>" class="btn btn-small btn-black <?= $id == $listVariant ? 'active' : null; ?>">___LIST_TYPE_<?= $id?>___</a>
+			<a href="<?= $pager->get('url').'&list='.$id; ?>" class="btn btn-small btn-black <?= $id == $listVariant ? 'active' : null; ?>">___LIST-TYPE-<?= $id?>___</a>
 <?php
 	}
 ?>
