@@ -46,7 +46,7 @@
 <div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area; ?>'">Cancel</button>
     </div>
 </div>
 
