@@ -18,7 +18,7 @@ ADDRESS;
 
 					<div class="span3">
 						<h5 class="white">___TTL-TWITTER-FEED___</h5>
-						Find out what's happening, right now, with the people and organizations you care about.
+						___TWEET-NOTE___
 					</div>
 
 					<div class="span9">
