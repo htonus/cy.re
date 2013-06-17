@@ -7,7 +7,7 @@
 ?>
 		<div class="container offers">
 
-			<h3>Recent offers</h3>
+			<h3>___TTL-RECENT___</h3>
 
 			<div class="row">
 <?php
