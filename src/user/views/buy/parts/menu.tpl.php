@@ -1,8 +1,16 @@
+<?php
+
+?>
+
 	<div class="row">
 		<div class="span6">
-			<a href="#" class="btn btn-small btn-black active">List</a>
-			<a href="#" class="btn btn-small btn-black">2-column</a>
-			<a href="#" class="btn btn-small btn-black">4-column</a>
+<?php
+	foreach ($listVariantList as $id => $limit) {
+?>
+			<a href="<?= $pager->get('url').'&list='.$id; ?>" class="btn btn-small btn-black <?= $id == $listVariant ? 'active' : null; ?>">___LIST_TYPE_<?= $id?>___</a>
+<?php
+	}
+?>
 		</div>
 	</div>
 

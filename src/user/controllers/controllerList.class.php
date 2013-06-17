@@ -12,8 +12,22 @@
  */
 class controllerList extends controllerMain
 {
-	const PER_PAGE = 10;
+	const LIST1	= 1;
+	const LIST2	= 2;
+	const LIST3	= 3;
+	const LIST4	= 4;
+	const LIST5	= 5;
 
+	protected $listVariant = self::LIST2;
+
+	protected $limits = array(
+		self::LIST1	=> 10,
+		self::LIST2	=> 20,
+		self::LIST3	=> 30,
+		self::LIST4	=> 40,
+		self::LIST5	=> 20,
+	);
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -75,9 +89,9 @@ class controllerList extends controllerMain
 			)->
 			add(
 				Primitive::integer('list')->
-				setMin(1)->
-				setMax(5)->
-				setDefault(2)
+				setMin(self::LIST1)->
+				setMax(self::LIST5)->
+				setDefault($this->listVariant)
 			)->
 			add(
 				Primitive::set('f')
@@ -93,6 +107,7 @@ class controllerList extends controllerMain
 		}
 
 		$form->import($request->getGet());
+		$this->listVariant = $form->getActualValue('list');
 		$filters = $form->getValue('f');
 		$orLogic = Expression::orBlock();
 		$filterNumber = 0;
@@ -191,12 +206,12 @@ class controllerList extends controllerMain
 		$criteria = Criteria::create(Realty::dao())->
 			setProjection($projection)->
 			add($logic)->
-			setLimit(self::PER_PAGE)->
+			setLimit($this->limits[$this->listVariant])->
 			addOrder(
 				OrderBy::create(DBField::create('relevance'))->desc()
 			)->
 			setOffset(
-				($page - 1) * self::PER_PAGE
+				($page - 1) * $this->limits[$this->listVariant]
 			);
 //		echo $criteria->toString();
 //		exit;
@@ -215,22 +230,26 @@ class controllerList extends controllerMain
 			$list = ArrayUtils::convertObjectList(Realty::dao()->getListByLogic($logic));
 		}
 
+		$query = array('f' => $filters);
+
 		foreach($fields as $field) {
 			if ($value = $form->getValue($field))
-				$filters[$field] = $value;
+				$query[$field] = $value;
 		}
 		
 		$pagerModel = Model::create()->
 			set(
 				'url',
 				PATH_WEB.$this->section->getSlug().'/list?'
-				.(empty($filters) ? '' : http_build_query($filters))
-				.'&list='.$form->getActualValue('list')
+				.(empty($filters) ? '' : http_build_query($query))
+				.'&list='.$this->listVariant
 			)->
-			set('pages', ceil($total / self::PER_PAGE))->
+			set('pages', ceil($total / $this->limits[$this->listVariant]))->
 			set('page', $page);
 
 		$model->
+			set('listVariant', $this->listVariant)->
+			set('listVariantList', $this->limits)->
 			set('pager', $pagerModel)->
 			set('filter', $filters)->
 			set('list', $relevance)->

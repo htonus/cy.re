@@ -12,24 +12,21 @@
 
 	
 <?php
-	for ($i = 0; $i < 3; $i ++) {
+	$itemUrl = PATH_WEB."$area/item/";
+
+	foreach ($list as $id => $relevance) {
+		$item = $objectList[$id];
+
+		$title = $item->getCity()
+			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			: $item->getNme();
 ?>
 
 	<div class="row">
 		<div class="span6 list-item">
-			<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/port5.jpg">
+			<img src="<?= PictureSize::list1()->getUrl($item->getPreview())?>">
 			<h5>
-				<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
-			</h5>
-			Some details
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="span6 list-item">
-			<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/4.jpg">
-			<h5>
-				<a href="http://html.orange-idea.com/builder/portfolio-type/another-work/" title="Permalink to Another Work">House in Limassol</a>
+				<a href="<?= $itemUrl.$id?>" title="Permalink to Another Work"><?= $title; ?></a>
 			</h5>
 			Some details
 		</div>

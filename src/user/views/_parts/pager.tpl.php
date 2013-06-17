@@ -2,10 +2,11 @@
 /*
  * $Id$
  */
-	
-// echo	$url .= '&page=';
+
 	if ($pages < 2)
 		return;
+	
+	$url .= '&page=';
 ?>
 <div class="pagination wysiwyg-text-align-center">
 	<ul>

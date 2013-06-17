@@ -14,7 +14,7 @@
 
 <?php
 	$partViewer->view($area.'/parts/sidebar-left');
-	$partViewer->view($area.'/parts/list2');
+	$partViewer->view($area.'/parts/list'.$listVariant);
 	$partViewer->view($area.'/parts/sidebar-right');
 ?>
 

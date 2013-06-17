@@ -7,7 +7,9 @@
 		const CAROUSEL	= 3;
 		const BIG		= 4;
 		const PREVIEW	= 5;
-		const LIST2		= 6;
+		const LIST1		= 6;
+		const LIST2		= 7;
+		const LIST5		= 8;
 
 		protected $names = array(
 			self::NORMAL		=> 'normal',
@@ -15,7 +17,9 @@
 			self::CAROUSEL	=> 'carousel',
 			self::BIG		=> 'big',
 			self::PREVIEW	=> 'preview',
+			self::LIST1		=> 'itemList1',
 			self::LIST2		=> 'itemList2',
+			self::LIST5		=> 'itemList5',
 		);
 
 		private $widths = array(
@@ -24,7 +28,9 @@
 			self::THUMBNAIL	=> 150,
 			self::BIG		=> 770,
 			self::PREVIEW	=> 170,
+			self::LIST1		=> 570,
 			self::LIST2		=> 270,
+			self::LIST5		=> 70,
 		);
 		
 		private $heights = array(
@@ -33,7 +39,9 @@
 			self::CAROUSEL	=> 410,
 			self::THUMBNAIL	=> 100,
 			self::PREVIEW	=> 100,
+			self::LIST1		=> 400,
 			self::LIST2		=> 180,
+			self::LIST5		=> 50,
 		);
 		
 		/**
@@ -75,7 +83,15 @@
 		{
 			return new self(self::PREVIEW);
 		}
-		
+
+		/**
+		 * @return PictureSize
+		 */
+		public static function list1()
+		{
+			return new self(self::LIST1);
+		}
+
 		/**
 		 * @return PictureSize
 		 */
@@ -83,7 +99,15 @@
 		{
 			return new self(self::LIST2);
 		}
-		
+
+		/**
+		 * @return PictureSize
+		 */
+		public static function list5()
+		{
+			return new self(self::LIST5);
+		}
+
 		/**
 		 * @return PictureSize
 		 */
