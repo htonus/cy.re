@@ -6,22 +6,17 @@
 
 <div class="span6 mt20">
 
-	<div class="row">
-		<div class="span6">
-			<a href="#" class="btn btn-small btn-black active">List</a>
-			<a href="#" class="btn btn-small btn-black">2-column</a>
-			<a href="#" class="btn btn-small btn-black">4-column</a>
-		</div>
-	</div>
+<?php
+	$partViewer->view("$area/parts/menu");
+?>
 
-	<br/>
-	
 	<div class="row">
 <?php
 	$itemUrl = PATH_WEB."$area/item/";
-	
+
 	$odd = false;
-	foreach ($realtyList as $item) {
+	foreach ($list as $id => $relevance) {
+		$item = $objectList[$id];
 		
 		if ($odd % 2) {
 ?>
@@ -49,5 +44,10 @@
 	}
 ?>
 	</div>
+
+<?php
+	if (!empty($pager))
+		$partViewer->view('_parts/pager', $pager);
+?>
 
 </div>

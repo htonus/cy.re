@@ -15,13 +15,13 @@ jq(document).ready(function(){
 
 		if (src == jq('#picture').attr('src'))
 			return;
-
+		
 		jq('#picture').animate({opacity: 0});
 		jq('#picture').attr('src', src);
 		jq('#picture').load(function(){
 			jq('#picture').stop().animate({opacity: 1});
 		});
-
+		
 		jq('.preview').parent().css('background', "none");
 		jq('.preview').css({opacity: 1});
 
@@ -120,7 +120,7 @@ function dimPreview(jqObject)
 							</td>
 						</tr>
 						</table>
-
+						
 						<?= $subject->getText()?>
 					</div>
 
