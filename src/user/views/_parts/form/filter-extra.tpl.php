@@ -36,7 +36,7 @@
 	</div>
 
 	<div class="row-fluid mt20">
-		<input type="submit" class="btn btn-small btn-black span12" value="Submt">
+		<input type="submit" class="btn btn-small btn-black span12" value="___TTL-SUBMIT___">
 	</div>
 
 <script type="text/javascript">
