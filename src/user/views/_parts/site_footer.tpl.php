@@ -17,7 +17,7 @@ ADDRESS;
 				<div class="row">
 
 					<div class="span3">
-						<h5 class="white">Twitter feed</h5>
+						<h5 class="white">___TTL-TWITTER-FEED___</h5>
 						Find out what's happening, right now, with the people and organizations you care about.
 					</div>
 
@@ -38,7 +38,7 @@ ADDRESS;
 				<div class="row">
 
 					<div class="span2">
-						<h3 class="white">Follow Us</h3>
+						<h3 class="white">___TTL-FOLLOW-US___</h3>
 						<a href="https://plus.google.com" rel="nofollow publisher" target="_blank"><i class="ico-google"></i></a>
 						<a href="http://www.facebook.com" rel="nofollow" target="_blank"><i class="ico-fb"></i></a>
 						<a href="http://cy.linkedin.com" rel="nofollow" target="_blank"><i class="ico-linkdin"></i></a>
@@ -47,15 +47,13 @@ ADDRESS;
 
 					<div class="span4 hidden-phone">
 						<div class="note">
-							<h5>Esperia company</h5>
-							<p>
-								<?= empty($static[StaticType::ABOUT]) ? null : $static[StaticType::ABOUT]->getAnons(); ?>
-							</p>
+							<h5>___TTL-ESPERIA-COMPANY___</h5>
+							<p>___ESPERIA-COMPANY___</p>
 						</div>
 					</div>
 
 					<div class="span3">
-						<h5 class="underline">Legal info</h5>
+						<h5 class="underline">___TTL-LEGAL-INFO___</h5>
 						<a class="icon-briefcase icon-white pull-left mr10"></a>
 						<p class="pull-left">
 							<a href="#">Hello world!</a><br />
@@ -71,7 +69,7 @@ ADDRESS;
 					</div>
 
 					<div class="span3">
-						<h5 class="underline">Contact information</h5>
+						<h5 class="underline">___TTL-CONTACT-INFO___</h5>
 						<ul class="unstyled">
 							<li title="Telephone"><i class="icon-user icon-white"></i>
 								<?= empty($static[StaticType::PHONE]) ? '+357 25366144, FAX +357 25369209' : $static[StaticType::PHONE]->getName(); ?>
@@ -97,12 +95,12 @@ ADDRESS;
 				<div class="row">
 
 					<div class="span6">
-						Copyright 2012 Builder - Company. Design by <a href="#">OrangeIdea</a>
+						Copyright 2012 &copy; Esperia Group of Companies
 					</div>
 
 					<div class="span6 hidden-phone">
 						<div class="pull-right">
-							<a href="/buy">Buy</a> / <a href="/rent">Rent</a> / <a href="/book">Booking</a> / <a href="/contact">Contacts</a> / <a href="/about">About Us</a>
+							<a href="/buy">_S__BUY___</a> / <a href="/rent">_S__RENT___</a> / <a href="/book">_S__BOOKING___</a> / <a href="/contact">_S__CONTACTS___</a> / <a href="/about">_S__ABOUT-US___</a>
 						</div>
 					</div>
 

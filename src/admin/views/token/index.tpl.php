@@ -12,8 +12,7 @@
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Value</th>
+			<th>Token / Text</th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -22,8 +21,11 @@
 	foreach ($list as $item) {
 ?>
 		<tr>
-			<td><?=$item->getName()?></td>
-			<td><?=$item->getValue()?></td>
+			<td>
+				<a href="<?=$url?>edit&id=<?=$item->getId()?>" style="font-family: monospace;"><?= $item->getName(); ?></a>
+				<br/>
+				<?= StringHelper::me()->cutText($item->getValue(), 100); ?>
+			</td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>

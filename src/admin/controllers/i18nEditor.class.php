@@ -32,7 +32,7 @@ class i18nEditor extends CommonEditor
 		return parent::handleRequest($request);
 	}
 
-		private function i18nSetRequest(HttpRequest $request)
+	private function i18nSetRequest(HttpRequest $request)
 	{
 		$form = Form::create()->
 			add(

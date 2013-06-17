@@ -64,7 +64,7 @@
 					foreach ($tokens as $token => $case) {
 						$content = mb_ereg_replace(
 							'_[A-Z]?__'.$token.'___',
-							self::changeCase($token, i18nHelper::$cases[$case]),
+							self::changeCase(str_replace(array('-', 'TTL'), array(' ', ''), $token), i18nHelper::$cases[$case]),
 							$content
 						);
 					}

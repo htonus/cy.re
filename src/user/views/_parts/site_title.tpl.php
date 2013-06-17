@@ -4,11 +4,11 @@
 	 */
 
 	 $menuList = array(
-		 'buy'		=> 'Buy',
-		 'rent'		=> 'Rent',
-		 'booking'	=> 'Booking',
-		 'contact'	=> 'Contacts',
-		 'about'	=> 'About Us',
+		 'buy'		=> '_S__BUY___',
+		 'rent'		=> '_S__RENT___',
+		 'booking'	=> '_S__BOOKING___',
+		 'contact'	=> '_S__CONTACTS___',
+		 'about'	=> '_S__ABOUT___',
 	 );
 ?>
 	<header>
@@ -33,8 +33,8 @@
 
 				<div class="span3">
 					<div class="logo">
-						Telephone:  +357 25366144, &nbsp; +357 25369209<br/>
-						e-Mail: info@esperiaestates.com<br/>
+						_S__TELEPHONE___:  +357 25366144, &nbsp; +357 25369209<br/>
+						_S__EMAIL___: info@esperiaestates.com<br/>
 					</div>
 				</div>
 

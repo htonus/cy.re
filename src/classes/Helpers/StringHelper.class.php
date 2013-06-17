@@ -61,4 +61,14 @@
 
 			(!$exit) || exit();
 		}
+
+		public function cutText($text, $length, $suffix = '...')
+		{
+			if (mb_strlen($text) < $length)
+				return $text;
+
+			$text = mb_substr($text, 0, $length);
+
+			return mb_substr($text, 0, mb_strrpos($text, ' '))." $suffix";
+		}
 	}
