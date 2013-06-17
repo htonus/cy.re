@@ -22,7 +22,7 @@
 			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
 			: $item->getNme();
 
-		if (++$odd % 3 == 0) {
+		if ($odd++ % 3 == 0) {
 ?>
 		</div>
 		<div class="row">
