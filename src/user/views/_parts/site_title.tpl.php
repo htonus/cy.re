@@ -42,16 +42,18 @@
 
 					<div class="visible-phone">
 						<select style="width: 100%;" onchange="focument.location.href='<?= PATH_WEB?>' + jq(this).val()">
-							<option value="buy">Buy</option>
-							<option value="rent">Rent</option>
-							<option value="book">Book</option>
-							<option value="contact">Contact Us</option>
-							<option value="about">About Us</option>
+<?php
+	foreach ($menuList as $slag => $title) {
+?>
+							<option value="<?= $slag?>"><?= $title?></option>
+<?php
+	}
+?>
 						</select>
 					</div>
 
 					<div class="navbar pull-right hidden-phone">
-						<ul class="nav">
+						<ul class="nav" style="margin: 0px;">
 <?php
 	foreach ($menuList as $slag => $title) {
 ?>
