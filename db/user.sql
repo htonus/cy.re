@@ -56,6 +56,8 @@ CREATE TABLE "person" (
     "username" CHARACTER VARYING(16) NOT NULL,
     "password" CHARACTER VARYING(40) NOT NULL,
     "autologin" CHARACTER VARYING(40) NULL,
+	"phone" CHARACTER VARYING(12) NULL,
+	"language_id" BIGINT NULL REFERENCES "language"("id") ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY("id")
 );
 

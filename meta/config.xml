@@ -9,7 +9,7 @@
 <include file="user.xml" generate="false" />
 <include file="realty.xml" generate="false" />
 <include file="article.xml" generate="false" />
-<include file="content.xml" generate="true" />
+<include file="content.xml" generate="false" />
 
 <classes/>
 
