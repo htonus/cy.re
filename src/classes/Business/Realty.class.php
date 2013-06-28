@@ -68,7 +68,9 @@
 		{
 			$list = $this->getFeatureList();
 
-			return $list[$featureId]->getValue();
+			return empty($list[$featureId])
+				? null
+				: $list[$featureId]->getValue();
 		}
 	}
 ?>
