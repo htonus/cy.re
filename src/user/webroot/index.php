@@ -49,6 +49,6 @@
 			echo '</pre>';
 		} else {
 			Logger::me()->error(null, $msg);
-//			header('Location: /');
+			header('Location: /');
 		}
 	}
