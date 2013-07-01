@@ -29,19 +29,26 @@
 		$trace = $e->getTraceAsString();
 		$extensionClass = get_class($e);
 
-		echo '<pre>';
-		echo "Exception: $extensionClass\n";
-		echo 'Message: '.$e->getMessage()."\n";
+		$msg = 'Query URL: '.$_SERVER['REQUEST_URI']."\n";
+		$msg .= "Exception: $extensionClass\n";
+		$msg .= 'Message: '.$e->getMessage()."\n";
 
 		if ($extensionClass == 'ClassNotFoundException') {
 			$className = 'unknown';
 			if (preg_match("/__autoload\(\'([^\']+)\'\)/m", $trace, $m)) {
 				$className = $m[1];
 			}
-			echo 'Class not found: ['.$className.']';
+			$msg .= 'Class not found: ['.$className.']';
 		}
 
-		echo "\nTrace:\n$trace\n";
-		echo '</pre>';
-	//		header('Location: /');
+		$msg .= "\nTrace:\n$trace\n";
+
+		if (defined('DEV_MODE')) {
+			echo '<pre>';
+			echo $msg;
+			echo '</pre>';
+		} else {
+			Logger::me()->error(null, $msg);
+//			header('Location: /');
+		}
 	}

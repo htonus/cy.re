@@ -38,7 +38,7 @@
 	define('PATH_SOURCE', PATH_BASE.'src'.DS.PATH_SOURCE_DIR);
 	define('TEMP_PATH', PATH_BASE.'..'.DS.'tmp'.DS);
 	define('PATH_UPLOAD', TEMP_PATH.'uploads'.DS);
-	define('LOGS_PATH', PATH_BASE.'..'.DS.'logs'.DS);
+	define('PATH_LOG', PATH_BASE.'..'.DS.'logs'.DS);
 	define('PATH_WEBROOT', PATH_SOURCE.'webroot'.DS);
 	define('PATH_IMG', PATH_WEBROOT.'img'.DS);
 	define('PATH_JS', PATH_WEBROOT.'js'.DS);
@@ -60,9 +60,6 @@
 	mb_regex_encoding(DEFAULT_ENCODING);
 	ini_set('upload_tmp_dir', PATH_UPLOAD);
 	ini_set('session.save_path', TEMP_PATH.'sessions');
-
-	define('DEFAULT_AREA', 'main');
-	define('DEFAULT_EMAIL', 'meincyp+test@gmail.com');
 
 	define('PROJECT_NAME', 'real-estate.com.cy');
 
@@ -111,17 +108,31 @@
 	
 	// magic_quotes_gpc must be off
 
-	define('__LOCAL_DEBUG__', true);
-	define('BUGLOVERS', 'some.box@host.domain');
+//	define('DEV_MODE', false);
+	define('BUGLOVERS', 'admin@cyprus-realty.com');
+	define('DEFAULT_AREA', 'buy');
+	define('DEFAULT_EMAIL', 'meincyp+test@gmail.com');
 	
 	// Default language
 	define ('DEFAULT_LANG_CODE', 'en');
 	
 	// Extra consts
 	define('EXT_TMPL', '.tpl.php');
-	
+
 //	Cache::setPeer(
 //		Memcached::create()
 //	);
 //
 //	Cache::setDefaultWorker('SmartDaoWorker');
+
+	// Custom Stuff
+	Logger::me(array(
+		'default'	=> array(
+			'buglovers'	=> BUGLOVERS,
+			'logfolder'	=> PATH_LOG,
+			'level'		=> Logger::ERROR,
+			'append'	=> array(Logger::DEBUG => Logger::A_FILE, Logger::A_FILE, Logger::A_FILE, Logger::A_FILE, Logger::A_FILE),
+			'prefix'	=> MODE,
+			'period'	=> Logger::P_DAY
+		),
+	));
