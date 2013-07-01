@@ -9,15 +9,21 @@
 	{
 		const BUY	= 1;
 		const RENT	= 2;
+		const SELL	= 3;
+		const LEND	= 4;
 
 		protected $names = array(
 			self::BUY	=> '___buy___',
 			self::RENT	=> '___rent___',
+			self::RENT	=> '___sell___',
+			self::RENT	=> '___lend___',
 		);
 
 		protected $slugs = array(
 			self::BUY	=> 'buy',
 			self::RENT	=> 'rent',
+			self::RENT	=> 'sell',
+			self::RENT	=> 'lend',
 		);
 
 
