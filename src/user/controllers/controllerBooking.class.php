@@ -24,7 +24,7 @@ class controllerBooking implements Controller
 	{
 		return ModelAndView::create()->
 			setView(
-				RedirectView::create('/')
+				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-travel-form_ha.asp')
 			);
 	}
 }

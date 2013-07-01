@@ -24,7 +24,7 @@ class controllerAbout implements Controller
 	{
 		return ModelAndView::create()->
 			setView(
-				RedirectView::create('/')
+				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-aboutus.asp')
 			);
 	}
 }

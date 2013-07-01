@@ -24,7 +24,7 @@ class controllerContact implements Controller
 	{
 		return ModelAndView::create()->
 			setView(
-				RedirectView::create('/')
+				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-contactus.asp')
 			);
 	}
 }
