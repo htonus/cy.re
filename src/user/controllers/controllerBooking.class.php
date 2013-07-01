@@ -14,10 +14,10 @@ class controllerBooking implements Controller
 {
 	public function __construct()
 	{
-		parent::__construct();
-
-		$this->offerType = OfferType::buy();
-		$this->section = Section::buy();
+//		parent::__construct();
+//
+//		$this->offerType = OfferType::buy();
+//		$this->section = Section::buy();
 	}
 
 	public function handleRequest(\HttpRequest $request)
