@@ -12,6 +12,8 @@
  */
 final class Application
 {
+	const DEFAULT_AREA = 'main';
+	
 	private $request = null;
 
 	public function __construct(HttpRequest $request)
@@ -58,7 +60,7 @@ final class Application
 			add(
 				Primitive::string('area')->
 				addImportFilter(Filter::trim())->
-				setDefault(DEFAULT_AREA)
+				setDefault(self::DEFAULT_AREA)
 			)->
 			add(
 				Primitive::string('action')->
