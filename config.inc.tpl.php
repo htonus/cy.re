@@ -110,7 +110,6 @@
 
 //	define('DEV_MODE', false);
 	define('BUGLOVERS', 'admin@cyprus-realty.com');
-	define('DEFAULT_AREA', 'buy');
 	define('DEFAULT_EMAIL', 'meincyp+test@gmail.com');
 	
 	// Default language

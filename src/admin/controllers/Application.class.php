@@ -12,6 +12,8 @@
  */
 final class Application
 {
+	const DEFAULT_AREA = 'main';
+
 	private $request = null;
 
 	public function __construct(HttpRequest $request)

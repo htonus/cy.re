@@ -12,7 +12,7 @@
  */
 final class Application
 {
-	const DEFAULT_AREA = 'main';
+	const DEFAULT_AREA = 'buy';
 	
 	private $request = null;
 
