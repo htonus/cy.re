@@ -60,7 +60,7 @@ final class Application
 			add(
 				Primitive::string('area')->
 				addImportFilter(Filter::trim())->
-				setDefault(DEFAULT_AREA)
+				setDefault(self::DEFAULT_AREA)
 			)->
 			add(
 				Primitive::string('action')->
