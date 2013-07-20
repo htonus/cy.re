@@ -44,7 +44,9 @@
 
 	$partViewer->view(
 		'_parts/blocks/carousel',
-		Model::create()->set('list', $blocks[CustomType::CAROUSEL])
+		Model::create()->
+			set('list', $blocks[CustomType::CAROUSEL])->
+			set('area', $area)
 	);
 ?>
 				</div>
