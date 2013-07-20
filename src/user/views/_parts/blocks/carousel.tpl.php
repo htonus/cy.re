@@ -31,12 +31,11 @@
 		foreach ($list as $realty) {
 ?>
 		<div class="item <?= $i++ == 0 ? 'active' : ''?>">
-			<a href="/<?= $area.'/item/'.$realty->getId(); ?>"><img src="<?= PictureSize::carousel()->getUrl($realty->getPreview())?>" alt=""></a>
+			<img src="<?= PictureSize::carousel()->getUrl($realty->getPreview())?>" alt="">
 
 			<div class="carousel-caption">
 				<h4><?= $realty->getName()?></h4>
 				<p><?= $realty->getCity() ? 'Location: '.$realty->getCity()->getName() : ''?></p>
-				&nbsp; 
 			</div>
 		</div>
 <?php
