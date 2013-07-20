@@ -2,6 +2,15 @@
 /*
  * $Id$
  */
+
+	if (empty($title))
+		return;
+		
+	if (empty($subtitle))
+		$subtitle = '';
+	else
+		$subtitle = ' <strong>:</strong> '.$subtitle;
+		
 ?>
 
 <div class="page-title">
@@ -9,12 +18,10 @@
 		<div class="row">
 			<div class="span12">
 				<h3>
-					2 Columns Portfolio
-					<strong>:</strong>
-					our awesome projects
+					<?= $title.$subtitle ?>
 				</h3>
 				<div class="gradus">
-					<a class="subpage_block" href="http://html.orange-idea.com/builder">Home</a> / <span class="subpage_breadcrumbs_dv">2 Columns Portfolio</span>
+					<a class="subpage_block" href="/">Home</a> / <span class="/buy">buy</span>
 				</div>
 			</div>
 		</div>
