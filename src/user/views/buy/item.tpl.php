@@ -3,7 +3,12 @@
  * $Id$
  */
 
-	$partViewer->view('_parts/page_title');
+	$partViewer->view(
+		'_parts/page_title',
+		Model::create()->
+			set('title', $subject->getType()->getName().' in '.$subject->getCity()->getName())->
+			set('subtitle', null)
+	);
 
 ?>
 <script type="text/javascript">
