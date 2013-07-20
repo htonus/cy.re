@@ -36,6 +36,7 @@
 			<div class="carousel-caption">
 				<h4><?= $realty->getName()?></h4>
 				<p><?= $realty->getCity() ? 'Location: '.$realty->getCity()->getName() : ''?></p>
+				&nbsp; &euro; &euro; <?= number_format($realty->getFeatureValue(FeatureType::PRICE), 0, '.', "'");?>
 			</div>
 		</div>
 <?php
