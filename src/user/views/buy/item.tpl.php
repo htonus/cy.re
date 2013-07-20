@@ -6,7 +6,7 @@
 	$partViewer->view(
 		'_parts/page_title',
 		Model::create()->
-			set('title', $subject->getType()->getName().' in '.$subject->getCity()->getName())->
+			set('title', $subject->getRealtyType()->getName().' in '.$subject->getCity()->getName())->
 			set('subtitle', null)
 	);
 
