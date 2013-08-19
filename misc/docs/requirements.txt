@@ -1,0 +1,7 @@
+PHP
+====================
+php-mbstring
+php-pgsql
+php-gd
+php-xml
+php-xmlrpc
