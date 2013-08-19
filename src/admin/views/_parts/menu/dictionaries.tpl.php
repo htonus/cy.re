@@ -6,7 +6,8 @@
 		'realtyType'	=> 'Type of the Realty',
 		'city'			=> 'Cities',
 		'district'		=> 'Districts',
-		'token'			=> 'Interface texts'
+		'token'			=> 'Interface texts',
+		'articleCategory'	=> 'Article categories',
 	);
 
 ?>

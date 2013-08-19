@@ -14,6 +14,7 @@
 				'city'			=> 'City',
 				'district'		=> 'District',
 				'token'			=> 'Interface texts',
+				'articleCategory'	=> 'Article categories',
 			)
 		),
 		array(

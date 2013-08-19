@@ -13,6 +13,7 @@
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Category</th>
 			<th>Created</th>
 			<th>Published</th>
 			<th>Action</th>
@@ -24,6 +25,7 @@
 ?>
 		<tr>
 			<td><?=$item->getName()?></td>
+			<td><?=$item->getCategory() ? $item->getCategory()->getName() : '---'?></td>
 			<td><?=$item->getCreated()->toString()?></td>
 			<td><?=$item->getPublished() ? $item->getPublished()->toString() : '---'?></td>
 			<td>

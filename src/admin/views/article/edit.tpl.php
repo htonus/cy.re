@@ -69,6 +69,37 @@
 	$model->set('editorFor', 'text');
 	$partViewer->view('_parts/form/i18n');
 ?>
+		<div class="control-group">
+			<label class="control-label" for="input_category">Category</label>
+			<div class="controls">
+				<select name="category" id="input_category">
+					<option value=""></option>
+<?php
+	$default = $form->getValue('id') && $form->getValue('id')->getCategory()
+		? $form->getValue('id')->getCategory()->getId()
+		: null;
+	
+	foreach ($categoryList as $item) {
+		if ($item->getParent())
+			continue;
+?>
+					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+<?php
+		foreach ($categoryList as $subItem) {
+			if (
+				!$subItem->getParent()
+				|| $subItem->getParent()->getId() != $item->getId()
+			)
+				continue;
+?>
+					<option value="<?= $subItem->getId()?>"<?= $subItem->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?> : <?= $subItem->getName()?></option>
+<?php
+		}
+	}
+?>
+				</select>
+			</div>
+		</div>
 	</div>
 	
 	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">

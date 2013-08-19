@@ -14,6 +14,33 @@
 	</class>
 
 
+    <class name="ArticleCategory" extends="i18n">
+		<implement interface="Created" />
+		<implement interface="Published" />
+		<properties>
+			<identifier name="id" />
+			<property name="i18n" type="ArticleCategory_i18n" relation="OneToMany" required="false" />
+			<property name="created" type="Timestamp" required="true" />
+			<property name="published" type="Timestamp" required="false" />
+			<property name="parent" type="ArticleCategory" relation="OneToOne" required="false" fetch="lazy" column="parent_id" />
+			<property name="slug" type="String" size="16" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
+	<class name="ArticleCategory_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="ArticleCategory" relation="OneToOne" required="true" fetch="lazy" column="object_id" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="64" required="false" />
+			<property name="text" type="String" size="256" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
+
+
 	<class name="Article" extends="i18n">
 		<implement interface="Pictured" />
 		<implement interface="Created" />
@@ -24,6 +51,7 @@
 
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />
+			<property name="category" type="ArticleCategory" relation="OneToOne" required="false" fetch="lazy" />
 
 			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
 		</properties>
