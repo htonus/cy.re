@@ -187,10 +187,10 @@ HEADER .nav > LI.selected {
 	background-color: #AEC71E !important;
 	border: none;
 }
-HEADER .nav > LI:hover > A {
+HEADER .nav > LI:hover > A, .a_hover {
 	color: #FFF !important;
 }
-HEADER .nav LI:hover {
+HEADER .nav LI:hover, .li_hover {
 	background-color: #444;
 }
 HEADER .nav > LI.selected > A {
@@ -221,7 +221,30 @@ FOOTER {
 	
 }
 
-
+.submenu {
+	position: fixed;
+	width: 100%;
+	z-index: 900;
+}
+.submenu .inner {
+	padding-top: 60px;
+	background-color: #F6F6F6;
+	border: 1px solid #DDD;
+}
+.submenu .inner [class*="span"] :hover {
+	background-color: #F0F0F0;
+}
+.submenu .inner A {
+	display: block;
+	padding: 10px 0px 10px 20px;
+	color: black;
+	min-height: 70px;
+}
+.submenu H5 {
+	color: #AEC71E;
+	font-weight: bold;
+	text-transform: uppercase;
+}
 
 /*
 	Slogan

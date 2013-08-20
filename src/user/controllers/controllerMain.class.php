@@ -163,6 +163,10 @@ class controllerMain extends MethodMappedController
 			set(
 				'realtyTypeList',
 				CriteriaUtils::getList(RealtyType::dao(), 'i18n.name')
+			)->
+			set(
+				'categoryList',
+				CriteriaUtils::getList(ArticleCategory::dao(), 'i18n.name')
 			);
 		
 		return $this;
