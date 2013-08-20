@@ -93,27 +93,21 @@
 var hideInterval = 0;
 
 jq(document).ready(function(){
-	jq('#toRead, .submenu')
+	jq('#toRead, .submenu .inner')
 		.mouseover(doMouseOver)
 		.mouseout(doMouseOut);
 });
 function doMouseOver()
 {
-	jq('.submenu').slideDown();
+	jq('.submenu').fadeIn();
 	if (hideInterval > 0) {
 		clearInterval(hideInterval);
 		hideInterval = 0;
 	}
-	jq('#toRead').addClass('li_hover');
-	jq('#toRead A').addClass('a_hover');
+	jq('#toRead').addClass('hover');
 }
 function doMouseOut()
 {
-	hideInterval = setInterval('jq(".submenu").slideUp(switchHover);', 300);
-}
-function switchHover()
-{
-	jq('#toRead').removeClass('li_hover');
-	jq('#toRead A').removeClass('a_hover');
+	hideInterval = setInterval('jq("#toRead").removeClass("hover"); jq(".submenu").fadeOut();', 300);
 }
 </script>

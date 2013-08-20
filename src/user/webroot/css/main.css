@@ -187,10 +187,10 @@ HEADER .nav > LI.selected {
 	background-color: #AEC71E !important;
 	border: none;
 }
-HEADER .nav > LI:hover > A, .a_hover {
+HEADER .nav > LI:hover > A, HEADER .nav > LI.hover > A {
 	color: #FFF !important;
 }
-HEADER .nav LI:hover, .li_hover {
+HEADER .nav LI:hover, HEADER .nav LI.hover {
 	background-color: #444;
 }
 HEADER .nav > LI.selected > A {
