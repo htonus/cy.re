@@ -31,6 +31,11 @@
 			return Singleton::getInstance('ProtoArticleCategory');
 		}
 		
-		// your brilliant stuff goes here
+		public function getWebSlug()
+		{
+			return $this->getSlug()
+				? $this->getSlug()
+				: $this->getId();
+		}
 	}
 ?>

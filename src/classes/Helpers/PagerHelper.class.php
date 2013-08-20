@@ -11,7 +11,11 @@
 		{
 			$this->request = $request;
 		}
-
+		
+		/**
+		 * @param HttpRequest $request
+		 * @return PagerHelper
+		 */
 		public static function create(HttpRequest $request)
 		{
 			return new self($request);
@@ -59,7 +63,7 @@
 				getCustom('count');
 
 			$pages = ceil($total / $perPage);
-
+			
 			$list = $criteria->
 				setOffset(($page - 1) * $perPage)->
 				setLimit($perPage)->

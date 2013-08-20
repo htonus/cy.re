@@ -11,19 +11,22 @@
 		const RENT	= 2;
 		const SELL	= 3;
 		const LEND	= 4;
+		const READ	= 5;
 
 		protected $names = array(
 			self::BUY	=> '___buy___',
 			self::RENT	=> '___rent___',
-			self::RENT	=> '___sell___',
-			self::RENT	=> '___lend___',
+			self::SELL	=> '___sell___',
+			self::LEND	=> '___lend___',
+			self::READ	=> '___read___',
 		);
 
 		protected $slugs = array(
 			self::BUY	=> 'buy',
 			self::RENT	=> 'rent',
-			self::RENT	=> 'sell',
-			self::RENT	=> 'lend',
+			self::SELL	=> 'sell',
+			self::LEND	=> 'lend',
+			self::READ	=> 'read',
 		);
 
 
@@ -39,12 +42,21 @@
 		{
 			return new self(self::BUY);
 		}
+		
 		/**
 		 * @return Section
 		 */
 		public static function rent()
 		{
 			return new self(self::RENT);
+		}
+
+		/**
+		 * @return Section
+		 */
+		public static function read()
+		{
+			return new self(self::READ);
 		}
 
 		public function getSlug()

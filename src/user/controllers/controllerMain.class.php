@@ -31,10 +31,17 @@ class controllerMain extends MethodMappedController
 
 	public function handleRequest(HttpRequest $request)
 	{
+		$request->
+			setAttachedVar('layout', 'default')->
+			setAttachedVar(
+				'categoryList',
+				ArrayUtils::convertObjectList(
+					Criteria::create(ArticleCategory::dao())->getList()
+				)
+			);
+		
 		$mav = parent::handleRequest($request);
-
-		$request->setAttachedVar('layout', 'default');
-
+		
 		if (!$mav->viewIsRedirect())
 			$this->attachCollections($request, $mav);
 		
@@ -166,7 +173,7 @@ class controllerMain extends MethodMappedController
 			)->
 			set(
 				'categoryList',
-				CriteriaUtils::getList(ArticleCategory::dao(), 'i18n.name')
+				$request->getAttachedVar('categoryList')
 			);
 		
 		return $this;

@@ -64,6 +64,7 @@
 			<property name="object" type="Article" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="name" type="String" size="128" required="false" />
+			<property name="brief" type="String" size="512" required="false" />
 			<property name="text" type="String" size="4096" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />

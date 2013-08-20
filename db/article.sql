@@ -13,7 +13,8 @@ CREATE TABLE "article_category_i18n" (
     "object_id" BIGINT NOT NULL REFERENCES "article_category"("id") ON UPDATE CASCADE ON DELETE CASCADE,
     "language_id" INTEGER NOT NULL REFERENCES "language"("id") ON UPDATE CASCADE ON DELETE CASCADE,
     "name" CHARACTER VARYING(64) NULL,
-    "text" CHARACTER VARYING(256) NULL,
+    "brief" CHARACTER VARYING(512) NULL,
+    "text" CHARACTER VARYING(4096) NULL,
     PRIMARY KEY("id")
 );
 CREATE INDEX article_category_i18n_object_id_idx ON article_category_i18n(object_id);

@@ -74,9 +74,13 @@
 	foreach ($categoryList as $item) {
 		if ($item->getParentId())
 			continue;
+		
+		$categoryUrl = PATH_WEB
+			.Section::read()->getSlug().'/'
+			.($item->getSlug() ? $item->getSlug() : $item->getId());
 ?>
 						<div class="span3">
-							<a href="">
+							<a href="<?= $categoryUrl; ?>">
 								<h5><?= $item->getName()?></h5>
 								<?= $item->getText()?>
 							</a>
