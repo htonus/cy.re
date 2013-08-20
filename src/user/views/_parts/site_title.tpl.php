@@ -93,11 +93,7 @@
 var hideInterval = 0;
 
 jq(document).ready(function(){
-	jq('#toRead')
-		.mouseover(doMouseOver)
-		.mouseout(doMouseOut);
-		
-	jq('.submenu')
+	jq('#toRead, .submenu')
 		.mouseover(doMouseOver)
 		.mouseout(doMouseOut);
 });
