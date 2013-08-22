@@ -21,7 +21,7 @@ class controllerList extends controllerMain
 	protected $listVariant = self::LIST2;
 
 	protected $limits = array(
-		self::LIST1	=> 10,
+		self::LIST1	=> 5,
 		self::LIST2	=> 20,
 		self::LIST3	=> 30,
 		self::LIST4	=> 40,

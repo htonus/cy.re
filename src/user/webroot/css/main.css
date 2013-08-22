@@ -454,3 +454,7 @@ DD {
 .row .odd {
 	background-color: #EDEDED;
 }
+
+.pager .btn {
+	width: 15px;
+}
