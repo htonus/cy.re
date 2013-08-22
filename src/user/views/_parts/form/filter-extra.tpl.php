@@ -2,33 +2,52 @@
 /**
  *
  */
+
+	$group = FeatureTypeGroup::indoor();
+	$features = FeatureType::dao()->getByGroup($group);
 ?>
 	<div class="mt20" id="indoor_features">
-		<h5><a href="#" class="collapsed">Indoor Features:</a></h5>
+		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?></a></h5>
 <?php
-	$indoorList = array(1,2,3,4,5);
+	$features = FeatureType::dao()->getByGroup($group);
 
-	foreach ($indoorList as $item) {
-		$checked = $item % 2 == 0;
+	foreach ($features as $featureId => $item) {
+		$checked = isset($filter[$featureId])
+			|| (
+				!empty($filter[$featureId])
+				&& $filter[$featureId] == 1
+			)
+			? 'checked="checked"'
+			: null;
 ?>
-		<label class="checkbox <?= $checked ? null : 'hide'?>" for="indoor_feature_<?= $item?>">
-			<input <?= $checked ? 'checked="checked"' : null?> type="checkbox" id="indoor_feature_<?= $item?>" name="filter[feature][<?= $item?>]" value="1"> Indoor feature <?= $item?>
+		<label class="checkbox <?= $checked ? null : 'hide'?>" for="input_f[<?=$featureId?>]">
+			<input type="checkbox" id="input_f[<?=$featureId?>]" name="f[<?=$featureId?>]" value="1" <?=$checked?>> <?= ucfirst($item->getName()) ?>
 		</label>
 <?php
 	}
 ?>
 	</div>
 
-	<div class="mt20" id="outdoor_features">
-		<h5><a href="#" class="collapsed">Outdoor Features:</a></h5>
 <?php
-	$outdoorList = array(1,2,3,4,5);
-
-	foreach ($outdoorList as $item) {
-		$checked = $item % 2 == 0;
+	$group = FeatureTypeGroup::outdoor();
+	$features = FeatureType::dao()->getByGroup($group);
 ?>
-		<label class="checkbox <?= $checked ? null : 'hide'?>" for="indoor_feature_<?= $item?>">
-			<input <?= $checked ? 'checked="checked"' : null?> type="checkbox" id="indoor_feature_<?= $item?>" name="filter[feature][<?= $item?>]" value="1"> Outdoor feature <?= $item?>
+	<div class="mt20" id="outdoor_features">
+		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?></a></h5>
+<?php
+	$features = FeatureType::dao()->getByGroup($group);
+
+	foreach ($features as $featureId => $item) {
+		$checked = isset($filter[$featureId])
+			|| (
+				!empty($filter[$featureId])
+				&& $filter[$featureId] == 1
+			)
+			? 'checked="checked"'
+			: null;
+?>
+		<label class="checkbox <?= $checked ? null : 'hide'?>" for="input_f[<?=$featureId?>]">
+			<input type="checkbox" id="input_f[<?=$featureId?>]" name="f[<?=$featureId?>]" value="1" <?=$checked?>> <?= ucfirst($item->getName()) ?>
 		</label>
 <?php
 	}
@@ -47,6 +66,10 @@ jq(document).ready(function(){
 	jq('#outdoor_features A').click(function(){
 		toggleFeaturesList(jq(this));
 	});
+	jq('INPUT:checkbox').click(function(){
+		if (jq(this).parent().parent().find('.collapsed').size())
+			jq(this).parent().fadeOut();
+	});
 });
 
 function toggleFeaturesList(toggle)
@@ -54,12 +77,12 @@ function toggleFeaturesList(toggle)
 	var container = toggle.parent().parent();
 
 	if (toggle.hasClass('collapsed')) {
-		container.find('LABEL').slideDown();
+		container.find('LABEL').fadeIn();
 		toggle.removeClass('collapsed');
 	} else {
-		container.find('LABEL').slideDown();
+		container.find('LABEL').hide();
 		container.find(':checked').each(function(){
-			jq(this).parent().slideUp();
+			jq(this).parent().fadeIn();
 		});
 		toggle.addClass('collapsed');
 	}

@@ -148,8 +148,8 @@ class controllerList extends controllerMain
 					);
 				}
 			} else {
-				$andBlock->add(
-					Expression::eq('features.value', $value)
+				$andBlock->expAnd(
+					Expression::eq('features.value', $filters[$typeId])
 				);
 			}
 
