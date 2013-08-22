@@ -14,7 +14,8 @@
 final class controllerRealty extends i18nEditor
 {
 	const ERROR_NO_CITY = 'set city first';
-
+	const PER_PAGE = 10;
+	
 	public function __construct()
 	{
 		parent::__construct(	Realty::create());

@@ -2,7 +2,7 @@
 /*
  * $Id$
  */
-
+	
 	$url = '/index.php?area='.$area.'&action=';
 
 	$headers = array(
@@ -82,3 +82,7 @@
 ?>
 	</tbody>
 	</table>
+	
+<?php
+
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));

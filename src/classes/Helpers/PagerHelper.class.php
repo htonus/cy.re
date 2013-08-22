@@ -68,11 +68,15 @@
 				setOffset(($page - 1) * $perPage)->
 				setLimit($perPage)->
 				getList();
-
+			
 			$model->
-				set('page', $page)->
-				set('pages', $pages)->
-				set('perPage', $perPage)->
+				set(
+					'pager',
+					Model::create()->
+						set('page', $page)->
+						set('pages', $pages)->
+						set('perPage', $perPage)
+				)->
 				set('list', $list);
 
 			return $this;
