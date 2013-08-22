@@ -39,6 +39,9 @@
 	</div>
 <?php
 	}
+
+	if (!empty($pager))
+		$partViewer->view('_parts/pager', $pager);
 ?>
 
 </div>
