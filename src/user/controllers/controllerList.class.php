@@ -76,6 +76,14 @@ class controllerList extends controllerMain
 	
 	protected function attachCollections(HttpRequest $request, ModelAndView $mav)
 	{
+		$mav->getModel()->
+			set(
+				'featureTypeList',
+				ArrayUtils::convertObjectList(
+					FeatureType::dao()->getPlainList()
+				)
+			);
+		
 		return parent::attachCollections($request, $mav);
 	}
 	

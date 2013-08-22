@@ -41,6 +41,11 @@
 		const FLOOR		= 7;
 		const FLOORS	= 8;
 		
-
+		public function getSign()
+		{
+			return $this->getUnit()
+				? $this->getUnit()->getSign()
+				: null;
+		}
 	}
 ?>

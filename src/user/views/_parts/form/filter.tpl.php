@@ -93,33 +93,11 @@
 						</div>
 						<div class="span6">
 							<div class="control-group">
-								<label class="control-label" for="input_f[<?= FeatureType::AREA?>]">Area (m<sup>2</sup>)</label>
+								<label class="control-label" for="input_f[<?= FeatureType::AREA?>]">
+									Area (<?= $featureTypeList[FeatureType::AREA]->getSign(); ?>)
+								</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::AREA?>]" id="input_f[<?= FeatureType::AREA?>]">
-										<option value="">-</option>
-<?php
-	$areaList = array(
-		'-100'			=> 'up to 50',
-		'50-100'		=> '50 - 100',
-		'100-150'		=> '100 - 150',
-		'150-200'		=> '150 - 200',
-		'200-250'		=> '200 - 250',
-		'250-'			=> 'from 250',
-	);
-	
-	$default = empty($filter[FeatureType::AREA])
-		? null
-		: $filter[FeatureType::AREA];
-	
-	foreach ($areaList as $value => $title) {
-		$selected = $value == $default
-			? ' selected="selected"'
-			: null;
-?>
-										<option value="<?= $value?>"<?= $selected?>><?= $title?></option>
-<?php
-	}
-?>
 									</select>
 								</div>
 							</div>
@@ -186,3 +164,47 @@
 							</div>
 						</div>
 					</div>
+<script type="text/javascript">
+var bigAreaRealty = [11, 17];
+
+jq(document).ready(function(){
+	jq('SELECT[name="realtyType"]').change(function(){
+		manageControls(parseInt(jq(this).val()));
+	});
+	
+	manageControls(jq('SELECT[name="realtyType"]').val());
+});
+
+function manageControls(realtyType)
+{
+	updateArea(realtyType);
+	if (jq.inArray(realtyType, bigAreaRealty) != -1) {
+		jq('SELECT[name="f[<?= FeatureType::BEDROOMS?>]"]').attr('disabled', 'disabled')
+		jq('SELECT[name="f[<?= FeatureType::TOILETS?>]"]').attr('disabled', 'disabled')
+	} else {
+		jq('SELECT[name="f[<?= FeatureType::BEDROOMS?>]"]').removeAttr('disabled');
+		jq('SELECT[name="f[<?= FeatureType::TOILETS?>]"]').removeAttr('disabled');
+	}
+}
+
+function updateArea(realtyType)
+{
+	var step = 50 * (jq.inArray(realtyType, bigAreaRealty) == -1 ? 1: 100);
+
+	var areaSelector = jq('SELECT[name="f[<?= FeatureType::AREA?>]"]');
+	areaSelector.find('OPTION').remove();
+	areaSelector.append('<option value="">-</option>');
+	for (i = 1; i < 7; i ++) {
+		var from = i == 1 ? '' : (i - 1) * step;
+		var to = i == 6 ? '' : i * step;
+		areaSelector.append(
+			'<option value="' + from + '-' + to	+ '">'
+			+ (from == '' ? '&lt; ' : from)
+			+ (from == '' || to == '' ? ' ' : ' - ')
+			+ (to == '' ? '&gt;' : to)
+			+ '</option>'
+		);
+	}
+}
+</script>
+	
