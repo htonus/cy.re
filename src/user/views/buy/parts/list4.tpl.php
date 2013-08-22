@@ -23,10 +23,10 @@
 			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
 			: $item->getNme();
 
-		if (++$odd % 4 == 0) {
+		if ($odd++ % 4 == 0) {
 ?>
 	</div>
-	<div class="row">
+	<div class="row-fluid">
 <?php
 		}
 ?>
