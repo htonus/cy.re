@@ -51,9 +51,11 @@ class controllerRead extends controllerMain
 			}
 		}
 		
-		$model = Model::create()->
-			set('category', $category)->
-			set('search', $form->getValue('search'));
+		$request->
+			setAttachedVar('category', $category)->
+			setAttachedVar('search', $form->getValue('search'));
+		
+		$mav = ModelAndView::create();
 		
 		// Only for top level
 		if (!$category) {
@@ -66,11 +68,10 @@ class controllerRead extends controllerMain
 					OrderBy::create('published')->desc()
 				);
 			
-			$model->set('latestList', $criteria->getList());
+			$mav->getModel()->set('latestList', $criteria->getList());
 		}
 		
-		
-		return ModelAndView::create()->setModel($model);
+		return $mav;
 	}
 	
 	protected function actionItem(HttpRequest $request)
@@ -86,8 +87,11 @@ class controllerRead extends controllerMain
 		
 		if ($article = $form->getValue('id')) {
 			$mav->getModel()->
-				set('category', $article->getCategory())->
 				set('article', $article);
+			
+			$request->
+				setAttachedVar('category', $article->getCategory())->
+				setAttachedVar('search', null);
 		} else {
 			$mav->setView(
 				RedirectView::create(PATH_WEB)
@@ -108,11 +112,13 @@ class controllerRead extends controllerMain
 				OrderBy::create('created')->desc()
 			);
 		
-		if ($category = $mav->getModel()->get('category')) {
+		if ($category = $request->getAttachedVar('category')) {
 			$criteria->add(
 				Expression::eqId('category', $category)
 			);
-		} elseif ($search = $mav->getModel()->get('search')) {
+		}
+		
+		if ($search = $request->getAttachedVar('search')) {
 			$criteria->add(
 				Expression::orBlock()->
 				expOr(Expression::ilike('i18n.name', "%$search%"))->
@@ -120,6 +126,10 @@ class controllerRead extends controllerMain
 				expOr(Expression::ilike('i18n.text', "%$search%"))
 			);
 		}
+		
+		$mav->getModel()->
+			set('category', $category)->
+			set('search', $search);
 		
 		$request->setAttachedVar('criteria', $criteria);
 		
