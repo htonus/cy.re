@@ -3,11 +3,16 @@
  * $Id$
  */
 ?>
-					<h4>Articles</h4>
+					<h3>Articles</h3>
 <?php
 	if (empty($list)) {
-					echo 'No articles in the Section.';
+		echo 'No articles in the Section.';
 	} else {
+		if ($search) {
+?>
+					<div class="well well-small">Found by keyword <b><?= $search ?></b> <?= $pager->get('total') ?> article(s)</div>
+<?php
+		}
 ?>
 					<ul>
 <?php
@@ -34,7 +39,7 @@
 	}
 ?>
 
-<script>
+<script type="text/javascript">
 jq(document).ready(function(){
 	jq('.shortcut').click(function(e){
 		var article = jq('[id="'+jq(this).attr('href').match(/[a-z_0-9]+/i)+'"]');

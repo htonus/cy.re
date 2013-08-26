@@ -12,6 +12,12 @@
 		}
 	}
 	
+	$partViewer->view(
+		'_parts/blocks/latest',
+		Model::create()->
+			set('list', empty($latestList) ? array() : $latestList)
+	);
+	
 	$prefix = PATH_WEB.Section::read()->getSlug().'/';
 	$model->set('prefix', $prefix);
 ?>
@@ -63,6 +69,16 @@
 		<div class="container">
 			<div class="row">
 				<div class="span3 mt20">
+					
+					<form action="" method="get">
+					<div class="row-fluid">
+						<div class="span9"><input type="text" name="search" value="<?= $search?>" class="input-block-level" placeHolder="Search by keyword"/></div>
+						<div class="span3"><input type="submit" class="btn btn-submit btn-black" value="_L__SEARCH___" /></div>
+					</div>
+					</form>
+					
+					<div class="clearfix mt20"></div>
+					
 					<h4>Sections</h4>
 					<ul>
 <?php

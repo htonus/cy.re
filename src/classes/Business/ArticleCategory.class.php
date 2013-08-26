@@ -37,5 +37,11 @@
 				? $this->getSlug()
 				: $this->getId();
 		}
+		
+		public function getIconUrl()
+		{
+			return null;
+		}
 	}
+		
 ?>

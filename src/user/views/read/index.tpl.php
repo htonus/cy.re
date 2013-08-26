@@ -13,6 +13,12 @@
 	}
 	
 	$prefix = PATH_WEB.Section::read()->getSlug().'/';
+	
+	$partViewer->view(
+		'_parts/blocks/latest',
+		Model::create()->
+			set('list', empty($latestList) ? array() : $latestList)
+	);
 ?>
 	<div class="page-title">
 		<div class="container">

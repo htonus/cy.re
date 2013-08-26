@@ -12,7 +12,8 @@
  */
 class controllerRead extends controllerMain
 {
-	const PER_PAGE = 20;
+	const PER_PAGE	= 20;
+	const LATEST	= 3;
 	
 	public function __construct()
 	{
@@ -25,16 +26,18 @@ class controllerRead extends controllerMain
 	
 	public function actionIndex(HttpRequest $request)
 	{
-		$slug = Form::create()->
+		$form = Form::create()->
 			add(
 				Primitive::string('slug')->addImportFilter(Filter::trim())
 			)->
-			import($request->getGet())->
-			getValue('slug');
+			add(
+				Primitive::string('search')->addImportFilter(Filter::trim())
+			)->
+			import($request->getGet());
 		
 		$category = null;
 		
-		if (!empty($slug)) {
+		if ($slug = $form->getValue('slug')) {
 			$list = $request->getAttachedVar('categoryList');
 
 			foreach ($list as $item) {
@@ -48,7 +51,24 @@ class controllerRead extends controllerMain
 			}
 		}
 		
-		$model = Model::create()->set('category', $category);
+		$model = Model::create()->
+			set('category', $category)->
+			set('search', $form->getValue('search'));
+		
+		// Only for top level
+		if (!$category) {
+			$criteria = Criteria::create(Article::dao())->
+				add(
+					Expression::notNull('published')
+				)->
+				setLimit(self::LATEST)->
+				addOrder(
+					OrderBy::create('published')->desc()
+				);
+			
+			$model->set('latestList', $criteria->getList());
+		}
+		
 		
 		return ModelAndView::create()->setModel($model);
 	}
@@ -81,6 +101,9 @@ class controllerRead extends controllerMain
 	{
 		
 		$criteria = Criteria::create(Article::dao())->
+			add(
+				Expression::notNull('published')
+			)->
 			addOrder(
 				OrderBy::create('created')->desc()
 			);
@@ -88,6 +111,13 @@ class controllerRead extends controllerMain
 		if ($category = $mav->getModel()->get('category')) {
 			$criteria->add(
 				Expression::eqId('category', $category)
+			);
+		} elseif ($search = $mav->getModel()->get('search')) {
+			$criteria->add(
+				Expression::orBlock()->
+				expOr(Expression::ilike('i18n.name', "%$search%"))->
+				expOr(Expression::ilike('i18n.brief', "%$search%"))->
+				expOr(Expression::ilike('i18n.text', "%$search%"))
 			);
 		}
 		

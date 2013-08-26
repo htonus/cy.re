@@ -75,7 +75,8 @@
 					Model::create()->
 						set('page', $page)->
 						set('pages', $pages)->
-						set('perPage', $perPage)
+						set('perPage', $perPage)->
+						set('total', $total)
 				)->
 				set('list', $list);
 
