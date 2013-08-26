@@ -32,7 +32,7 @@
 <?php
 	} else {
 ?>
-						Choose section to explore
+						Legal Information, Guides and other Articles
 <?php
 	}
 ?>

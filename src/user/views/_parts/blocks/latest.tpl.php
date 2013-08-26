@@ -29,14 +29,16 @@
 			: next($icons);
 ?>
 				<div class="span<?= floor(12 / $count)?>">
-					<div class="block">
-						<h4>
-							<img title="latest_<?= $i?>" src="<?= $icon?>" alt="" width="25" height="25">
-							<?= $item->getName() ?>
-						</h4>
-						<div class="clearfix"></div>
-						<p><?= $item->getBrief()?></p>
-					</div>
+					<a href="" class="black">
+						<div class="block">
+							<h4>
+								<img title="latest_<?= $i?>" src="<?= $icon?>" alt="" width="25" height="25">
+								<?= $item->getName() ?>
+							</h4>
+							<div class="clearfix"></div>
+							<p><?= $item->getBrief()?></p>
+						</div>
+					</a>
 				</div>
 <?php
 		if (!next($list))

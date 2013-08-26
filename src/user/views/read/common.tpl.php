@@ -12,12 +12,6 @@
 		}
 	}
 	
-	$partViewer->view(
-		'_parts/blocks/latest',
-		Model::create()->
-			set('list', empty($latestList) ? array() : $latestList)
-	);
-	
 	$prefix = PATH_WEB.Section::read()->getSlug().'/';
 	$model->set('prefix', $prefix);
 ?>
@@ -33,7 +27,7 @@
 <?php
 	} else {
 ?>
-						Choose section to explore
+						Legal Information, Guides and other Articles
 <?php
 	}
 ?>
@@ -65,7 +59,15 @@
 	</div>
 
 	<section>
+		
+<?php
 
+	$partViewer->view(
+		'_parts/blocks/latest',
+		Model::create()->
+			set('list', empty($latestList) ? array() : $latestList)
+	);
+?>
 		<div class="container">
 			<div class="row">
 				<div class="span3 mt20">
