@@ -36,6 +36,18 @@ final class controllerArticleCategory extends i18nEditor
 		return parent::beforeHandle($request);
 	}
 	
+	protected function addObject(HttpRequest $request, Form $form, Identifiable $object)
+	{
+		$object = parent::addObject($request, $form, $object);
+		
+		if ($object->getId()) {
+			foreach(ArrayHelper::buildTree($object->dao()->getPlainList()) as $item)
+				$object->dao()->save($item);
+		}
+		
+		return $object;
+	}
+	
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
 		$criteria = parent::getListCriteria($request, $model);
@@ -52,12 +64,19 @@ final class controllerArticleCategory extends i18nEditor
 	{
 		parent::attachCollections($request, $model);
 		
-		$model->set(
-			'topList',
-			Criteria::create(ArticleCategory::dao())->
-				add(Expression::isNull('parent'))->
-				getList()
-		);
+		$list = Criteria::create(ArticleCategory::dao())->
+			add(
+				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+			)->
+			addOrder(
+				OrderBy::create('i18n.name')->asc()
+			)->
+			getList();
+		
+		uasort($list, array($this, 'sortTree'));
+		
+		$model->set('topList', ArrayUtils::convertObjectList($list));
+		$model->set('topListOrder', $list);
 		
 		if ($request->hasAttachedVar('parent'))
 			$model->set('parent', $request->getAttachedVar('parent'));
@@ -77,5 +96,17 @@ final class controllerArticleCategory extends i18nEditor
 				)
 			)
 		);
+	}
+	
+	private function sortTree(ArticleCategory $left, ArticleCategory $right)
+	{
+		return
+			(
+				$left->getLeft() > $right->getLeft()
+				&& $left->getRight() < $right->getRight()
+			)
+			|| $left->getLeft() > $right->getRight()
+				? 1
+				: -1;
 	}
 }

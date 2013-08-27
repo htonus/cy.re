@@ -5,6 +5,8 @@ CREATE TABLE "article_category" (
     "created" timestamp NOT NULL DEFAULT now(),
     "published" timestamp NULL,
     "slug" varchar(16) NULL,
+    "left" integer NULL,
+    "right" integer NULL,
     PRIMARY KEY("id")
 );
 CREATE SEQUENCE "article_category_i18n_id";

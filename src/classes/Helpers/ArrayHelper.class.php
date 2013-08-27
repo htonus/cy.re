@@ -24,9 +24,9 @@
 			foreach ($items as $item) {
 				$pairs[$item->getId()] = $item->getParentId();
 			}
-
-			$treeIndexes = $this->buildPlainTreeIndexes($items, null, true);
-
+			
+			$treeIndexes = self::buildPlainTreeIndexes($pairs, null, true);
+			
 			foreach ($items as $item) {
 				$item->
 					setLeft($treeIndexes[self::ID_PREFIX.$item->getId()][self::ID_LEFT])->
@@ -45,7 +45,7 @@
 		 * @param boolean $reset to reset static vars
 		 * @return array $tree
 		 */
-		function buildTreeIndexes($items, $parent = null, $reset = false)
+		public static function buildTreeIndexes($items, $parent = null, $reset = false)
 		{
 			static $left = 0, $right = 0;
 
@@ -60,7 +60,7 @@
 			);
 			
 			foreach (array_keys($items, $parent) as $child) {
-				$leaves[$child] = $this->buildTreeIndexes($items, $child);
+				$leaves[$child] = self::buildTreeIndexes($items, $child);
 				$leaves[self::ID_RIGHT] = ++ $right;
 			}
 
@@ -78,7 +78,7 @@
 		 * @param boolean $reset to reset static vars
 		 * @return array
 		 */
-        function buildPlainTreeIndexes($items, $parent = null, $reset = false)
+        public static function buildPlainTreeIndexes($items, $parent = 0, $reset = false)
         {
             static $left = 0, $right = 0;
 
@@ -94,11 +94,11 @@
 					self::ID_RIGHT => $right
 				)
 			);
-
+			
             foreach (array_keys($items, $parent) as $child) {
                 $leaves = array_merge(
 					$leaves,
-					$this->buildPlainTreeIndexes($items, $child)
+					self::buildPlainTreeIndexes($items, $child)
 				);
 				
                 $leaf[self::ID_PREFIX.$parent][self::ID_RIGHT] = ++ $right;

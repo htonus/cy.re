@@ -24,6 +24,8 @@
 			<property name="published" type="Timestamp" required="false" />
 			<property name="parent" type="ArticleCategory" relation="OneToOne" required="false" fetch="lazy" column="parent_id" />
 			<property name="slug" type="String" size="16" required="false" />
+			<property name="left" type="Integer" required="false" default="0" />
+			<property name="right" type="Integer" required="false" default="0" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

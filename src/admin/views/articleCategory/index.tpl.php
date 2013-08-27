@@ -21,7 +21,7 @@
 				<input type="hidden" name="area" value="<?= $area?>" />
 				<input type="hidden" name="action" value="<?= $action?>" />
 				
-				<span class="brand">Choose top level Category</span>
+				<span class="brand">Choose Category</span>
 
 				<select name="parent" onchange="this.form.submit()">
 					<option value=""></option>
@@ -30,9 +30,22 @@
 		? null
 		: $parent->getId();
 	
+	$level = 0;
+	$parentId = 0;
 	foreach ($topList as $item) {
+		if ($item->getParentId() != $parentId) {
+			if ($item->getParentId() < 1)
+				$level = 0;
+			else
+				$level ++;
+			
+			$parentId = $item->getParentId();
+		}
 ?>
-				<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>>
+						<?= str_repeat(' &nbsp; &nbsp;  ', $level) ?> 
+						<?= $item->getName()?>
+					</option>
 <?php
 	}
 ?>
