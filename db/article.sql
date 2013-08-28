@@ -4,6 +4,7 @@ CREATE TABLE "article_category" (
     "id" BIGINT NOT NULL default nextval('article_id'),
     "created" timestamp NOT NULL DEFAULT now(),
     "published" timestamp NULL,
+    "parent_id" BIGINT NULL REFERENCES "article_category"("id") ON UPDATE CASCADE ON DELETE CASCADE,
     "slug" varchar(16) NULL,
     "left" integer NULL,
     "right" integer NULL,
