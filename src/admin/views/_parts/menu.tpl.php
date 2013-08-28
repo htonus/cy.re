@@ -5,39 +5,39 @@
 
 	$menu = array(
 		array(
-			'title'	=> 'Edit Dictionaries',
+			'title'	=> 'Contents',
 			'items'	=> array(
 				'language	'	=> 'Language',
+				'token'			=> 'Interface texts',
+				'custom'		=> 'Custom blocks',
+				'staticPage'	=> 'Static pages',
+			)
+		),
+		array(
+			'title'	=> 'Realty',
+			'items'	=> array(
 				'unit'			=> 'Measurement unit',
 				'featureType'	=> 'Property Feature Type',
 				'realtyType'	=> 'Type of the realty',
 				'city'			=> 'City',
 				'district'		=> 'District',
-				'token'			=> 'Interface texts',
-				'articleCategory'	=> 'Article categories',
+				'realty'		=> 'Realty Sites',
 			)
 		),
 		array(
-			'title'	=> 'User management',
+			'title'	=> 'Articles',
+			'items'	=> array(
+				'articleCategory'	=> 'Article categories',
+				'article'			=> 'Articles',
+				'news'				=> 'News',
+			)
+		),
+		array(
+			'title'	=> 'Users',
 			'items'	=> array(
 				'resource'	=> 'Resources',
 				'group'		=> 'Groups',
 				'person'	=> 'Users',
-			)
-		),
-		array(
-			'title'	=> 'Objects',
-			'items'	=> array(
-				'realty'	=> 'Realty Sites',
-				'article'	=> 'Articles',
-				'news'		=> 'News',
-			)
-		),
-		array(
-			'title'	=> 'Contents',
-			'items'	=> array(
-				'custom'		=> 'Custom blocks',
-				'staticPage'	=> 'Static pages',
 			)
 		),
 //		'unit'	=> 'Units',

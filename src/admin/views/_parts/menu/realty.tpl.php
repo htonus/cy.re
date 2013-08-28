@@ -1,13 +1,11 @@
 <?php
 	$list = array(
-		'language'		=> 'Language',
 		'unit'			=> 'Measurement Unit',
 		'featureType'	=> 'Property Feature Type',
 		'realtyType'	=> 'Type of the Realty',
 		'city'			=> 'Cities',
 		'district'		=> 'Districts',
-		'token'			=> 'Interface texts',
-		'articleCategory'	=> 'Article categories',
+		'realty'	=> 'Realty sites',
 	);
 
 ?>

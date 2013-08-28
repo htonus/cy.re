@@ -1,5 +1,7 @@
 <?php
 	$list = array(
+		'language'		=> 'Language',
+		'token'			=> 'Interface texts',
 		'custom'		=> 'Custom blocks',
 		'staticPage'	=> 'Static pages',
 	);

@@ -1,8 +1,8 @@
 <?php
 	$list = array(
-		'realty'	=> 'Realty sites',
-		'article'	=> 'Article',
-		'news'		=> 'News',
+		'articleCategory'	=> 'Article categories',
+		'article'			=> 'Article',
+		'news'				=> 'News',
 	);
 
 ?>

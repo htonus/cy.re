@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="span3">
 <?php
-	$partViewer->view('_parts/menu/objects');
+	$partViewer->view('_parts/menu/article');
 ?>
 		</div>
 

@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="span3">
 <?php
-	$partViewer->view('_parts/menu/dictionaries');
+	$partViewer->view('_parts/menu/content');
 ?>
 		</div>
 

@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="span3">
 <?php
-	$partViewer->view('_parts/menu/objects');
+	$partViewer->view('_parts/menu/realty');
 
 	if ($action == 'index')
 		$partViewer->view($area.'/parts/filter');
