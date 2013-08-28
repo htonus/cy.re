@@ -55,7 +55,7 @@
 		? null
 		: $parent->getId();
 	
-	foreach ($topList as $item) {
+	foreach ($categoryList as $item) {
 		if ($item->getId() == $id)
 			continue;
 ?>

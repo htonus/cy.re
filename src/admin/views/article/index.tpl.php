@@ -7,8 +7,50 @@
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
-	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
-	
+
+	<div class="navbar">
+		<div class="navbar-inner">
+			<form class="navbar-form" action="<?= PATH_WEB_ADMIN?>" method="get">
+				<input type="hidden" name="area" value="<?= $area?>" />
+				<input type="hidden" name="action" value="<?= $action?>" />
+
+				<span class="brand">Choose Category</span>
+
+				<select name="category" onchange="this.form.submit()">
+					<option value=""></option>
+<?php
+	$default = empty($category)
+		? null
+		: $category->getId();
+
+	$level = 0;
+	$parentId = 0;
+	foreach ($categoryList as $item) {
+		if ($item->getParentId() != $parentId) {
+			if ($item->getParentId() < 1)
+				$level = 0;
+			else
+				$level ++;
+
+			$parentId = $item->getParentId();
+		}
+?>
+					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>>
+						<?= str_repeat(' &nbsp; &nbsp;  ', $level) ?>
+						<?= $item->getName()?>
+					</option>
+<?php
+	}
+?>
+				</select>
+
+				<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a>
+			</form>
+		</div>
+	</div>
+
+
+
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -38,4 +80,7 @@
 ?>
 	</tbody>
 	</table>
-	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
+
+<?php
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	

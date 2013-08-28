@@ -105,6 +105,7 @@ final class Application
 			$model->
 				set('area', $this->request->getAttachedVar('area'))->
 				set('urlMapper', $this->request->getAttachedVar('urlMapper'))->
+				set('urlHelper', UrlHelper::create($model))->
 				set('html', HtmlHelper::create());
 			
 //			$model->set('action', $request->getAttachedVar('action'));

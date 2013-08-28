@@ -172,4 +172,16 @@ class CommonEditor extends controllerPictured
 			)
 		);
 	}
+
+	protected function sortTree(ArticleCategory $left, ArticleCategory $right)
+	{
+		return
+			(
+				$left->getLeft() > $right->getLeft()
+				&& $left->getRight() < $right->getRight()
+			)
+			|| $left->getLeft() > $right->getRight()
+				? 1
+				: -1;
+	}
 }

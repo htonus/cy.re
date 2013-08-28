@@ -14,8 +14,6 @@
 		'Published'	=> 'published',
 		'Action'	=> null,
 	);
-
-	$urlHelper = UrlHelper::create($model);
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 

@@ -17,23 +17,8 @@ final class controllerArticleCategory extends i18nEditor
 	{
 		parent::__construct(ArticleCategory::create());
 		
-		$this->map->addSource('parent', RequestType::get());
-		$this->map->addSource('parent', RequestType::post());
-		
 		$this->setMethodMapping('list', 'doList');
 		$this->setAccessMapping('list', Access::UPDATE);
-	}
-	
-	public function beforeHandle(HttpRequest $request)
-	{
-		$city = $this->map->importOne('parent', $request)->
-			getForm()->
-				getValue('parent');
-		
-		if ($city)
-			$request->setAttachedVar('parent', $city);
-		
-		return parent::beforeHandle($request);
 	}
 	
 	protected function addObject(HttpRequest $request, Form $form, Identifiable $object)
@@ -63,7 +48,8 @@ final class controllerArticleCategory extends i18nEditor
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		parent::attachCollections($request, $model);
-		
+
+		// Category list tree-sorted
 		$list = Criteria::create(ArticleCategory::dao())->
 			add(
 				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
@@ -72,41 +58,22 @@ final class controllerArticleCategory extends i18nEditor
 				OrderBy::create('i18n.name')->asc()
 			)->
 			getList();
-		
 		uasort($list, array($this, 'sortTree'));
-		
-		$model->set('topList', ArrayUtils::convertObjectList($list));
-		$model->set('topListOrder', $list);
-		
-		if ($request->hasAttachedVar('parent'))
-			$model->set('parent', $request->getAttachedVar('parent'));
+		$model->set('categoryList', ArrayUtils::convertObjectList($list));
+
+		// Artcle counts list
+		$countList = Criteria::create(Article::dao())->
+			setProjection(
+				Projection::chain()->
+					add(Projection::count('id', 'id'))->
+					add(Projection::group('category', 'count'))
+			)->
+			getCustomList();
+		$articleCountList = array();
+		foreach ($countList as $row)
+			$articleCountList[$row['id']] = $row['count'];
+		$model->set('articleCountList', $articleCountList);
 		
 		return $this;
-	}
-	
-	protected function getRedirectMav(HttpRequest $request)
-	{
-		return ModelAndView::create()->setView(
-			new RedirectView(
-				'/index.php?area=articleCategory&parent='
-				.(
-					$request->hasAttachedVar('parent')
-						? $request->getAttachedVar('parent')->getId()
-						: null
-				)
-			)
-		);
-	}
-	
-	private function sortTree(ArticleCategory $left, ArticleCategory $right)
-	{
-		return
-			(
-				$left->getLeft() > $right->getLeft()
-				&& $left->getRight() < $right->getRight()
-			)
-			|| $left->getLeft() > $right->getRight()
-				? 1
-				: -1;
 	}
 }
