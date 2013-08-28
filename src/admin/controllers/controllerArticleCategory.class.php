@@ -65,8 +65,9 @@ final class controllerArticleCategory extends i18nEditor
 		$countList = Criteria::create(Article::dao())->
 			setProjection(
 				Projection::chain()->
-					add(Projection::count('id', 'id'))->
-					add(Projection::group('category', 'count'))
+					add(Projection::property('category', 'id'))->
+					add(Projection::count('id', 'count'))->
+					add(Projection::group('category'))
 			)->
 			getCustomList();
 		$articleCountList = array();
