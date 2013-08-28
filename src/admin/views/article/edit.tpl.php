@@ -75,26 +75,27 @@
 				<select name="category" id="input_category">
 					<option value=""></option>
 <?php
-	$default = $form->getValue('id') && $form->getValue('id')->getCategory()
-		? $form->getValue('id')->getCategory()->getId()
+	$default = $form->getValue('category')
+		? $form->getValue('category')->getId()
 		: null;
-	
+
+	$level = 0;
+	$parentId = 0;
 	foreach ($categoryList as $item) {
-		if ($item->getParent())
-			continue;
-?>
-					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
-<?php
-		foreach ($categoryList as $subItem) {
-			if (
-				!$subItem->getParent()
-				|| $subItem->getParent()->getId() != $item->getId()
-			)
-				continue;
-?>
-					<option value="<?= $subItem->getId()?>"<?= $subItem->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?> : <?= $subItem->getName()?></option>
-<?php
+		if ($item->getParentId() != $parentId) {
+			if ($item->getParentId() < 1)
+				$level = 0;
+			else
+				$level ++;
+
+			$parentId = $item->getParentId();
 		}
+?>
+					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>>
+						<?= str_repeat(' &nbsp; &nbsp;  ', $level) ?>
+						<?= $item->getName()?>
+					</option>
+<?php
 	}
 ?>
 				</select>

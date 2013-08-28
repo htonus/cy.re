@@ -3,7 +3,9 @@
  * $Id$
  */
 
-	$url = '/index.php?area='.$area.'&action=';
+	$url = '/index.php?area='.$area
+		.'&category='.(empty($category) ? null : $category->getId())
+		.'&action=';
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
