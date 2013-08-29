@@ -10,10 +10,9 @@
 			<div class="row">
 
 				<div class="span4">
-					<div class="catchy">
-						<h2><strong>WELCOME!</strong></h2>
-						<h5 style="color: #fff;">Your most important message or cacthy phrase goes here and also it goes right here.</h5>
-					</div>
+<?php
+	$partViewer->view('_parts/form/login');
+?>
 
 					<p class="intro">Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.</p>
 					<br />

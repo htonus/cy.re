@@ -73,6 +73,24 @@
 		'500000-1000000'	=> '500k - 1M',
 		'1000000-'			=> 'from 1M',
 	);
+
+	$priceList = array();
+
+	$multiplier = $area == 'rent'
+		? 1
+		: 1000;
+	
+	$price = 100 * $multiplier;
+
+	for ($i = 0; $i < 6; $i ++) {
+		$price1 = $price * pow(2, $i - 1);
+		$price2 = $price * pow(2, $i);
+		
+		$priceList[($i == 0 ? '' : $price1).'-'.($i == 5 ? '' : $price2)] =
+			($i == 0 ? 'up to' : number_format($price1, 0, '.', "'"))
+			.($i % 5 ? ' - ' : ' ')
+			.($i == 5 ? 'and more' : number_format($price2, 0, '.', "'"));
+	}
 	
 	$default = empty($filter[FeatureType::PRICE])
 		? null
