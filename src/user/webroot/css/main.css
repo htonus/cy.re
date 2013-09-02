@@ -458,3 +458,6 @@ DD {
 .pager .btn {
 	width: 15px;
 }
+.bigimage .carousel-control {
+	top: 50%;
+}
