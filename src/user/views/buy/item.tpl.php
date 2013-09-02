@@ -73,12 +73,12 @@ function dimPreview(jqObject)
 		<div class="container">
 			<div class="row">
 
-				<div class="span8 mt20 carousel-inner">
-
-					<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" id="picture_<?= $subject->getPreviewId()?>" class="image"/>
-					<a class="left carousel-control" href="#prevPreviev">‹</a>
-					<a class="right carousel-control" href="#nextPreview">›</a>
-					
+				<div class="span8 mt20">
+					<div class="carousel-inner">
+						<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" id="picture_<?= $subject->getPreviewId()?>" class="image"/>
+						<a class="left carousel-control" href="#prevPreviev">‹</a>
+						<a class="right carousel-control" href="#nextPreview">›</a>
+					</div>
 					<div class="row hidden-phone" id="previewList">
 <?php
 	foreach ($subject->getPictures()->getList() as $item) {
