@@ -13,26 +13,53 @@
 ?>
 <script type="text/javascript">
 jq(document).ready(function(){
-	dimPreview(jq('#preview_<?= $subject->getPreview()->getId()?>'));
+	dimPreview(jq('#preview_<?= $subject->getPreview()->getId()?> IMG'));
 
 	jq('.preview').click(function(){
-		var src = jq('#picture').attr('src').replace(/[^\/]+$/, jq(this).attr('src').match(/[^\/]+$/));
-
-		if (src == jq('#picture').attr('src'))
-			return;
+		showPreview(jq(this));
+	});
+	
+	jq('.carousel-control').click(function(){
+		var inList = jq('#preview_' + jq('.image').attr('id').match(/\d+/));
+		var item = null;
 		
-		jq('#picture').animate({opacity: 0});
-		jq('#picture').attr('src', src);
-		jq('#picture').load(function(){
-			jq('#picture').stop().animate({opacity: 1});
-		});
-		
-		jq('.preview').parent().css('background', "none");
-		jq('.preview').css({opacity: 1});
+		if (jq(this).hasClass('right')) {console.log(inList);
+			item = inList.next();
+			console.log(item);
+			if (!item.size())
+				item = inList.parent().find('DIV:first-child');
+		} else if (jq(this).hasClass('left')) {
+			item = inList.prev();
+			if (!item.size())
+				item = inList.parent().find('DIV:last-child');
+		}
 
-		dimPreview(jq(this));
+		showPreview(jq('.preview', item));
 	});
 });
+
+function showPreview(preview)
+{
+	var image = jq('.image');
+
+	var src = image.attr('src').replace(/[^\/]+$/, jq(preview).attr('src').match(/[^\/]+$/));
+
+	if (src == image.attr('src'))
+		return;
+
+	image.animate({opacity: 0});
+	image.attr('src', src);
+	image.attr('id', 'picture_' + preview.parent().attr('id').match(/\d+/));
+	image.load(function(){
+		image.stop().animate({opacity: 1});
+	});
+
+	jq('.preview').parent().css('background', "none");
+	jq('.preview').css({opacity: 1});
+
+	dimPreview(preview);
+}
+
 
 function dimPreview(jqObject)
 {
@@ -46,16 +73,18 @@ function dimPreview(jqObject)
 		<div class="container">
 			<div class="row">
 
-				<div class="span8 mt20">
+				<div class="span8 mt20 carousel-inner">
 
-					<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" id="picture" />
-
-					<div class="row hidden-phone">
+					<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" id="picture_<?= $subject->getPreviewId()?>" class="image"/>
+					<a class="left carousel-control" href="#prevPreviev">‹</a>
+					<a class="right carousel-control" href="#nextPreview">›</a>
+					
+					<div class="row hidden-phone" id="previewList">
 <?php
 	foreach ($subject->getPictures()->getList() as $item) {
 ?>
-						<div class="span2 mt20">
-							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" id="preview_<?= $item->getId()?>" />
+						<div class="span2 mt20" id="preview_<?= $item->getId()?>">
+							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" />
 						</div>
 <?php
 	}
@@ -126,7 +155,7 @@ function dimPreview(jqObject)
 						</tr>
 						</table>
 						
-						<?= $subject->getText()?>
+						<? $subject->getText()?>
 					</div>
 
 				</div>
