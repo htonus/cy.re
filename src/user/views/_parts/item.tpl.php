@@ -24,23 +24,34 @@ jq(document).ready(function(){
 	});
 	
 	jq('.carousel-control').click(function(){
-		var inList = jq('#preview_' + jq('.bigimage').attr('id').match(/\d+/));
-		var item = null;
-		
-		if (jq(this).hasClass('right')) {console.log(inList);
-			item = inList.next();
-			console.log(item);
-			if (!item.size())
-				item = inList.parent().find('DIV:first-child');
-		} else if (jq(this).hasClass('left')) {
-			item = inList.prev();
-			if (!item.size())
-				item = inList.parent().find('DIV:last-child');
-		}
-
-		showPreview(jq('.preview', item));
+		showPreviewItem(jq(this).hasClass('right'));
 	});
+})
+.keyup(function(e){
+	if (e.keyCode == 39) {
+		showPreviewItem(true);
+	} else if (e.keyCode == 37) {
+		showPreviewItem(false);
+	}
 });
+
+function showPreviewItem(next)
+{
+	var inList = jq('#preview_' + jq('.bigimage').attr('id').match(/\d+/));
+	var item = null;
+
+	if (next) {
+		item = inList.next();
+		if (!item.size())
+			item = inList.parent().find('DIV:first-child');
+	} else {
+		item = inList.prev();
+		if (!item.size())
+			item = inList.parent().find('DIV:last-child');
+	}
+
+	return showPreview(jq('.preview', item));
+}
 
 function showPreview(preview)
 {
