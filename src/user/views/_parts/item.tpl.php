@@ -14,6 +14,7 @@
 			set('subtitle', null)
 	);
 
+	$pictureList = $subject->getPictures()->getList();
 ?>
 <script type="text/javascript">
 var PER_ROW = 4;
@@ -146,15 +147,18 @@ function dimPreview(jqObject)
 						<a class="left carousel-control" href="#prevPreviev">‹</a>
 						<a class="right carousel-control" href="#nextPreview">›</a>
 					</div>
-
-					<div align="center" class="big_up mb20">
-						<div></div>
-					</div>
+<?php
+	if (count($pictureList) > 8) {
+?>
+					<div align="center" class="big_up mb20"><div></div></div>
+<?php
+	}
+?>
 
 					<div class="row hidden-phone mb20" id="previewList">
 						<div>
 <?php
-	foreach ($subject->getPictures()->getList() as $item) {
+	foreach ($pictureList as $item) {
 ?>
 						<div class="span2 mb20" id="preview_<?= $item->getId()?>">
 							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" />
@@ -165,7 +169,13 @@ function dimPreview(jqObject)
 						</div>
 					</div>
 					
+<?php
+	if (count($pictureList) > 8) {
+?>
 					<div align="center" class="big_down mb20"><div></div></div>
+<?php
+	}
+?>
 
 				</div>
 
