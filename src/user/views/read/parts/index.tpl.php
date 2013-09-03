@@ -31,7 +31,7 @@
 						<a href="<?= $articleUrlPrefix.$item->getId() ?>">
 							<h4><?= $item->getName()?></h4>
 							<p class="black"><?= $item->getBrief()?></p>
-							<p class="pull-left"><b>Published</b>: <?= $item->getPublished()->toString()?></p>
+							<p class="pull-left"><b>Published</b>: <?= $item->getPublished()->toDate()?></p>
 							<p class="pull-right"><b>Read more &gt;&gt;&gt;</b></p>
 						</a>
 					</div>
