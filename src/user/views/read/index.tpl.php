@@ -112,6 +112,7 @@
 							<p class="pull-right"><b>Read more &gt;&gt;&gt;</b></p>
 						</a>
 					</div>
+					<div class="clearfix"></div>
 <?php
 		}
 	}
