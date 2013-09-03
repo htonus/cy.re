@@ -172,6 +172,7 @@ UL.unstyled { margin: 0px; padding: 0px; list-style: none; }
 */
 
 HEADER {
+	line-height: 58px;
 	background: url(/img/header_bg.gif) #F6F6F6 repeat-x;
 	border-bottom: 1px solid #DDD;
 	position: fixed;
