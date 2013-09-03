@@ -11,3 +11,6 @@
 .input-block-level, SELECT, INPUT {
 	min-height: 20px !important;
 }
+IMG {
+	height: length !important;
+}
