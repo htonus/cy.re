@@ -171,7 +171,7 @@ UL.unstyled { margin: 0px; padding: 0px; list-style: none; }
 	Header
 */
 
-HEADER {
+.header {
 	line-height: 58px;
 	background: url(/img/header_bg.gif) #F6F6F6 repeat-x;
 	border-bottom: 1px solid #DDD;
@@ -181,8 +181,8 @@ HEADER {
 	top: 0px;
 	z-index: 1000;
 }
-HEADER .navbar {margin: 0px;}
-HEADER .nav > LI > A {
+.header .navbar {margin: 0px;}
+.header .nav > LI > A {
 	padding: 20px !important;
 	text-transform: uppercase;
 	font: 12px 'Open Sans';
@@ -190,17 +190,17 @@ HEADER .nav > LI > A {
 	text-shadow: none;
 	color: #666;
 }
-HEADER .nav > LI.selected {
+.header .nav > LI.selected {
 	background-color: #AEC71E !important;
 	border: none;
 }
-HEADER .nav > LI:hover > A, HEADER .nav > LI.hover > A {
+.header .nav > LI:hover > A, .header .nav > LI.hover > A {
 	color: #FFF !important;
 }
-HEADER .nav LI:hover, HEADER .nav LI.hover {
+.header .nav LI:hover, .header .nav LI.hover {
 	background-color: #444;
 }
-HEADER .nav > LI.selected > A {
+.header .nav > LI.selected > A {
 	color: #FFF !important;
 }
 

@@ -11,7 +11,7 @@
 		 'about'	=> '_S__ABOUT___',
 	 );
 ?>
-	<header>
+	<div class="header">
 
 		<div class="hr">
 			<div class="h_2"></div>
@@ -63,7 +63,7 @@
 			</div>
 		</div>
 
-	</header>
+	</div>
 	
 	<div class="submenu hide">
 		<div class="container">
