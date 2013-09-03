@@ -175,7 +175,9 @@ HEADER {
 	background: #F6F6F6;
 	border-bottom: 1px solid #DDD;
 	position: fixed;
-	width: 100%;
+	left: 0px;
+	right: 0px;
+	top: 0px;
 	z-index: 1000;
 }
 HEADER .navbar {margin: 0px;}
