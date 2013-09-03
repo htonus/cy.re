@@ -4,7 +4,7 @@
  */
 ?>
 
-	<section>
+	<div class="section">
 
 		<div class="container main">
 			<div class="row">
@@ -67,4 +67,4 @@
 	);
 ?>
 
-	</section>
+	</div>
