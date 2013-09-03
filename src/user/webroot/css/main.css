@@ -294,6 +294,9 @@ H3 SPAN {
 	height: 30px;
 	max-height: 30px;
 }
+.catchy .input-block-level {
+	min-height: 0px !important;
+}
 .latest {
 	margin-top: 30px;
 }
