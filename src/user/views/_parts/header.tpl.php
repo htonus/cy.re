@@ -29,7 +29,7 @@
 <?php
 	$html->css('bootstrap.min');
 	$html->css('bootstrap-responsive.min');
-	$html->css('main');
+//	$html->css('main');
 	$html->js('jquery-1.9.1.min');
 	$html->js('bootstrap.min');
 	$html->js('main.min');
@@ -38,5 +38,15 @@
 		jq = jQuery.noConflict();
 	');
 ?>
+
+<!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="<?= PATH_WEB_CSS?>main-ie.css" />
+<![endif]-->
+
+<!--[if !IE]>
+  <link rel="stylesheet" type="text/css" href="<?= PATH_WEB_CSS?>main.css" />
+<![endif]-->
+
+</head>
 
 <body>

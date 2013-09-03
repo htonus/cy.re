@@ -290,6 +290,10 @@ H3 SPAN {
 .catchy H2, .catchy H5 {
 	color: #FFF;
 }
+
+.input-block-level, SELECT, INPUT {
+	min-height: 20px !important;
+}
 .latest {
 	margin-top: 30px;
 }
