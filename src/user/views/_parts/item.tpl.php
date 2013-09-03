@@ -67,7 +67,9 @@ function scrollPreviewList(delta)
 		+ delta * ROW_HEIGHT;
 
 	var maxScroll = (PER_PAGE - Math.ceil(jq('#previewList > DIV > DIV').size() / PER_ROW))
-			* ROW_HEIGHT;
+		* ROW_HEIGHT;
+	
+	jq('.big_down > DIV, .big_up > DIV').removeClass('inactive');
 
 	if (marginTop >= 0) {
 		marginTop = 0;
@@ -75,8 +77,6 @@ function scrollPreviewList(delta)
 	} else if (marginTop <= maxScroll) {
 		marginTop = maxScroll;
 		jq('.big_down > DIV').addClass('inactive');
-	} else {
-		jq('.big_down > DIV, .big_up > DIV').removeClass('inactive');
 	}
 
 	jq('#previewList > DIV').animate({'margin-top': marginTop}, 'fast');
