@@ -126,6 +126,7 @@ h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400; color:#555; text-
 A:hover { text-decoration: none; }
 .h_2 { height: 2px; }
 .mr10 { margin-right: 10px; }
+.mt50 { margin-top: 50px; }
 .mt20, .mh20 { margin-top: 20px; }
 .mb20, .mh20 { margin-bottom: 20px; }
 .white { color: #FFF; }

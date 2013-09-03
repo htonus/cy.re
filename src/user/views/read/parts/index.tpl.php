@@ -26,7 +26,8 @@
 		
 		foreach ($list as $item) {
 ?>
-					<div class="mt20" id="article_<?= $item->getId() ?>">
+					<div class="clearfix"></div>
+					<div class="mt50" id="article_<?= $item->getId() ?>">
 						<a href="<?= $articleUrlPrefix.$item->getId() ?>">
 							<h4><?= $item->getName()?></h4>
 							<p class="black"><?= $item->getBrief()?></p>
@@ -34,7 +35,6 @@
 							<p class="pull-right"><b>Read more &gt;&gt;&gt;</b></p>
 						</a>
 					</div>
-					<div class="clearfix mb20"></div>
 <?php
 		}
 	}
