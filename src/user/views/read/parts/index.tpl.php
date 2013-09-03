@@ -34,6 +34,7 @@
 							<p class="pull-right"><b>Read more &gt;&gt;&gt;</b></p>
 						</a>
 					</div>
+					<div class="clearfix mb20"></div>
 <?php
 		}
 	}
