@@ -126,7 +126,8 @@ h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400; color:#555; text-
 A:hover { text-decoration: none; }
 .h_2 { height: 2px; }
 .mr10 { margin-right: 10px; }
-.mt20 { margin-top: 20px; }
+.mt20, .mh20 { margin-top: 20px; }
+.mb20, .mh20 { margin-bottom: 20px; }
 .white { color: #FFF; }
 .green { color: #AEC71E; }
 .black { color: #000; }
@@ -460,4 +461,27 @@ DD {
 }
 .bigimage .carousel-control {
 	top: 50%;
+}
+#previewList {
+	height: 220px;
+	overflow: hidden;
+}
+
+.big_up DIV, .big_down DIV {
+	width: 0px;
+	height: 0px;
+	border: none;
+	border-left: 185px solid transparent;
+	border-right: 185px solid transparent;
+	content: "";
+}
+.big_up DIV { border-bottom: 20px solid #444; }
+.big_down DIV {	border-top: 20px solid #444; }
+.big_up:hover DIV, .big_down:hover DIV {
+	border-top-color: #AEC71E;
+	border-bottom-color: #AEC71E;
+}
+.big_up DIV.inactive, .big_down DIV.inactive {
+	border-top-color: #DDD;
+	border-bottom-color: #DDD;
 }

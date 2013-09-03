@@ -32,6 +32,7 @@
 	$html->css('main');
 	$html->js('jquery-1.9.1.min');
 	$html->js('bootstrap.min');
+	$html->js('main.min');
 	
 	$html->jsRaw('
 		jq = jQuery.noConflict();

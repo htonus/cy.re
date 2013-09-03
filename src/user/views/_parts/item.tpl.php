@@ -16,24 +16,71 @@
 
 ?>
 <script type="text/javascript">
-jq(document).ready(function(){
-	dimPreview(jq('#preview_<?= $subject->getPreview()->getId()?> IMG'));
+var PER_ROW = 4;
+var PER_PAGE = 2;
+var ROW_HEIGHT = <?= PictureSize::preview()->getHeight()?> + 20;
 
-	jq('.preview').click(function(){
-		showPreview(jq(this));
+jq(document)
+	.ready(function(){
+		showPreview(jq('#preview_<?= $subject->getPreview()->getId()?> IMG'));
+
+		jq('.preview').click(function(){
+			showPreview(jq(this));
+		});
+
+		jq('.carousel-control').click(function(){
+			showPreviewItem(jq(this).hasClass('right'));
+		});
+
+		jq('#previewList').mousewheel(function(e, way, dX, dY) {
+			scrollPreviewList(dY);
+			return false; // prevent default
+		});
+
+		jq('.big_up').click(function(){
+			scrollPreviewList(1);
+		});
+		jq('.big_down').click(function(){
+			scrollPreviewList(-1);
+		});
+	})
+	.keydown(function(e){
+		switch(e.keyCode) {
+			case 39: showPreviewItem(true);		break;
+			case 37: showPreviewItem(false);	break;
+			case 40: scrollPreviewList(-1);		break;
+			case 38: scrollPreviewList(1);		break;
+			default: return true;
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
 	});
-	
-	jq('.carousel-control').click(function(){
-		showPreviewItem(jq(this).hasClass('right'));
-	});
-})
-.keyup(function(e){
-	if (e.keyCode == 39) {
-		showPreviewItem(true);
-	} else if (e.keyCode == 37) {
-		showPreviewItem(false);
+
+function scrollPreviewList(delta)
+{
+	if (jq('#previewList > DIV').is(':animated'))
+		return false;
+
+	var marginTop = parseInt(jq('#previewList > DIV').css('margin-top'))
+		+ delta * ROW_HEIGHT;
+
+	var maxScroll = (PER_PAGE - Math.ceil(jq('#previewList > DIV > DIV').size() / PER_ROW))
+			* ROW_HEIGHT;
+
+	if (marginTop >= 0) {
+		marginTop = 0;
+		jq('.big_up > DIV').addClass('inactive');
+	} else if (marginTop <= maxScroll) {
+		marginTop = maxScroll;
+		jq('.big_down > DIV').addClass('inactive');
+	} else {
+		jq('.big_down > DIV, .big_up > DIV').removeClass('inactive');
 	}
-});
+
+	jq('#previewList > DIV').animate({'margin-top': marginTop}, 'fast');
+}
 
 function showPreviewItem(next)
 {
@@ -50,7 +97,7 @@ function showPreviewItem(next)
 			item = inList.parent().find('DIV:last-child');
 	}
 
-	return showPreview(jq('.preview', item));
+	showPreview(jq('.preview', item));
 }
 
 function showPreview(preview)
@@ -59,19 +106,24 @@ function showPreview(preview)
 
 	var src = image.attr('src').replace(/[^\/]+$/, jq(preview).attr('src').match(/[^\/]+$/));
 
-	if (src == image.attr('src'))
-		return;
-
-	image.animate({opacity: 0});
-	image.attr('src', src);
-	image.parent().attr('id', 'picture_' + preview.parent().attr('id').match(/\d+/));
-	image.load(function(){
-		image.stop().animate({opacity: 1});
-	});
-
+	if (src != image.attr('src')) {
+		image.animate({opacity: 0});
+		image.attr('src', src);
+		image.parent().attr('id', 'picture_' + preview.parent().attr('id').match(/\d+/));
+		image.load(function(){
+			image.stop().animate({opacity: 1});
+		});
+	}
+	
 	jq('.preview').parent().css('background', "none");
 	jq('.preview').css({opacity: 1});
 
+	var diff = parseInt(jq('#previewList > DIV').css('margin-top'))
+		 + Math.floor(preview.parent().index() / PER_ROW) * ROW_HEIGHT
+
+	if (diff != 0)
+		scrollPreviewList(- diff / ROW_HEIGHT);
+	
 	dimPreview(preview);
 }
 
@@ -89,22 +141,31 @@ function dimPreview(jqObject)
 			<div class="row">
 
 				<div class="span8 mt20">
-					<div class="carousel-inner bigimage" id="picture_<?= $subject->getPreviewId()?>">
+					<div class="carousel-inner bigimage mb20" id="picture_<?= $subject->getPreviewId()?>">
 						<img src="<?= PictureSize::big()->getUrl($subject->getPreview())?>" />
 						<a class="left carousel-control" href="#prevPreviev">‹</a>
 						<a class="right carousel-control" href="#nextPreview">›</a>
 					</div>
-					<div class="row hidden-phone" id="previewList">
+
+					<div align="center" class="big_up mb20">
+						<div></div>
+					</div>
+
+					<div class="row hidden-phone mb20" id="previewList">
+						<div>
 <?php
 	foreach ($subject->getPictures()->getList() as $item) {
 ?>
-						<div class="span2 mt20" id="preview_<?= $item->getId()?>">
+						<div class="span2 mb20" id="preview_<?= $item->getId()?>">
 							<img src="<?= PictureSize::preview()->getUrl($item)?>" class="preview" />
 						</div>
 <?php
 	}
 ?>
+						</div>
 					</div>
+					
+					<div align="center" class="big_down mb20"><div></div></div>
 
 				</div>
 
