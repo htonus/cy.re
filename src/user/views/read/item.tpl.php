@@ -83,6 +83,7 @@
 				</div>
 
 				<div class="span6 mt20">
+
 <?php
 
 	$partViewer->view(
