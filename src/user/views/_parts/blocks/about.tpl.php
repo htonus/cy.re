@@ -30,7 +30,7 @@
 					<h3>Esperia Group of companies:</h3>
 
 					<div id="extraCarousel">
-						<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/09/Anchor_v1_preview2-880x461.png"/>
+						<img src="<?= PATH_WEB_IMG?>newone.jpg"/>
 					</div>
 
 					<div class="note">
