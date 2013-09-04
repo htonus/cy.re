@@ -18,6 +18,9 @@
 	if (empty($perPage))
 		$perPage = 2;
 
+	$count = count($list);
+
+	if ($count > 1) {
 ?>
 <script type="text/javascript">
 var PER_ROW = <?= $perRow?>;
@@ -145,18 +148,18 @@ function dimPreview(jqObject)
 						<a class="right carousel-control" href="#nextPreview">›</a>
 					</div>
 <?php
-	if (count($list) > 8) {
+		if ($count > 8) {
 ?>
 					<div align="center" class="big_up mb20"><div></div></div>
 <?php
-	}
+		}
 ?>
 
 					<div class="row hidden-phone mb20" id="previewList">
 						<div>
 <?php
-	$previewSize = PictureSize::preview();
-	foreach ($list as $item) {
+		$previewSize = PictureSize::preview();
+		foreach ($list as $item) {
 ?>
 						<div class="span2 mb20" id="preview_<?= $item->getId()?>">
 							<img src="<?= $previewSize->getUrl($item)?>" width="<?= $previewSize->getWidth(); ?>" height="<?= $previewSize->getHeight(); ?>" alt="" class="preview" >
@@ -168,8 +171,15 @@ function dimPreview(jqObject)
 					</div>
 
 <?php
-	if (count($list) > 8) {
+		if ($count > 8) {
 ?>
 					<div align="center" class="big_down mb20"><div></div></div>
+<?php
+		}
+	} else {
+?>
+					<div class="bigimage mb20" id="picture_<?= $preview->getId()?>">
+						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" >
+					</div>
 <?php
 	}
