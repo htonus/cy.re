@@ -6,10 +6,14 @@
  *	- $name
  */
 
-	if (empty($list))
-		return;
+	if (empty($list)) {
+		if (empty($subject))
+			return;
+		
+		$list = $subject->getPictures()->getList();
+	}
 
-	if (empty($preview))
+	if (empty($preview) && !empty($list))
 		$preview = reset($list);
 
 	if (empty($perRow))
@@ -177,9 +181,22 @@ function dimPreview(jqObject)
 <?php
 		}
 	} else {
+		// default picture
+		$url = PATH_WEB_IMG.'newone.jpg';
+		
+		if (empty($preview)) {
+//			if (
+//				$subject instanceof ArticleCategory
+//				&& ($preview = $subject->getCategory()->getPicture())
+//			) {
+//				$url = PictureSize::list1()->getUrl($preview);
+//			}
+		} else {
+			$url = PictureSize::list1()->getUrl($preview);
+		}
 ?>
-					<div class="bigimage mb20" id="picture_<?= $preview->getId()?>">
-						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" >
+					<div class="bigimage mb20" id="picture_<?= empty($preview) ? 0 : $preview->getId()?>">
+						<img src="<?= $url ?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" >
 					</div>
 <?php
 	}

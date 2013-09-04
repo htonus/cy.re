@@ -88,7 +88,7 @@
 
 	$partViewer->view(
 		'_parts/widget/gallery',
-		Model::create()->set('list', $article->getPictures()->getList())
+		Model::create()->set('subject', $article)
 	);
 
 ?>
