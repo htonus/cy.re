@@ -10,5 +10,5 @@
 	
 	<?= $article->getText(); ?>
 	
-	<b class="pull-right">Published: <?= $article->getCreated()->toString()?></b>
+	<b class="pull-right">Published: <?= $article->getCreated()->toDate()?></b>
 	<div class="clearfix"></div>

@@ -22,7 +22,7 @@
 ?>
 					</ul>
 <?php
-		$articleUrlPrefix = PATH_WEB.Section::read()->getSlug().'/article/';
+		$articleUrlPrefix = PATH_WEB.Section::read()->getSlug().'/item/';
 		
 		foreach ($list as $item) {
 ?>
