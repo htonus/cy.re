@@ -16,6 +16,13 @@
 	if (empty($preview) && !empty($list))
 		$preview = reset($list);
 
+	if (!empty($preview)) {
+		$list = ArrayUtils::convertObjectList($list);
+		unset($list[$preview->getId()]);
+		array_unshift($list, $preview);
+		$makeInactive = true;
+	}
+
 	if (empty($perRow))
 		$perRow = 3;
 
@@ -39,7 +46,7 @@ jq(document)
 			showPreview(jq(this));
 		});
 
-		jq('.carousel-control').click(function(){
+		jq('.carousel-control, .right').click(function(){
 			showPreviewItem(jq(this).hasClass('right'));
 		});
 
@@ -147,14 +154,14 @@ function dimPreview(jqObject)
 </script>
 
 					<div class="carousel-inner bigimage mb20" id="picture_<?= $preview->getId()?>">
-						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" >
+						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" class="right" >
 						<a class="left carousel-control" href="#prevPreviev">‹</a>
 						<a class="right carousel-control" href="#nextPreview">›</a>
 					</div>
 <?php
 		if ($count > 8) {
 ?>
-					<div align="center" class="big_up mb20"><div></div></div>
+					<div align="center" class="big_up mb20"><div class="<?= $makeInactive ? 'inactive' : null ?>"></div></div>
 <?php
 		}
 ?>
