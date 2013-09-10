@@ -66,6 +66,7 @@
 		<properties>
 			<identifier name="id" />
 			<property name="prefix" type="String" size="2" required="false" />
+			<property name="areaRange" type="String" size="256" required="false" />
 			<property name="i18n" type="RealtyType_i18n" relation="OneToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />

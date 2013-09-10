@@ -60,6 +60,7 @@ CREATE TABLE "realty_type" (
     "id" INTEGER NOT NULL,
     "prefix" CHARACTER VARYING(2) NULL,
     "name" CHARACTER VARYING(16) NOT NULL,
+    "area_range" CHARACTER VARYING(256) NULL,
     PRIMARY KEY("id")
 );
 

@@ -13,6 +13,7 @@
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Has Area Range</th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -22,6 +23,7 @@
 ?>
 		<tr>
 			<td><?=$item->getName()?></td>
+			<td><div class="badge <?= strlen($item->getAreaRange()) > 0 ? 'badge-warning' : '' ?>">&nbsp;</div></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>
