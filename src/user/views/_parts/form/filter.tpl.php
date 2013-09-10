@@ -245,10 +245,10 @@ function numberFormat(number)
 	var out = '', str = '' + Math.round(number);
 
 	for (i in str) {
-		out += (i % 3 == 0 ? "'" : '') + str[i];
+		out += (i % 3 == 0 ? "," : '') + str[i];
 	}
 
-	return out.replace(/^'/, '');
+	return out.replace(/^,/, '');
 }
 </script>
 	
