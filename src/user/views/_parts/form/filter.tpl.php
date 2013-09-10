@@ -183,6 +183,16 @@
 						</div>
 					</div>
 <script type="text/javascript">
+var areaLists = [];
+<?php
+	foreach ($realtyTypeList as $item) {
+		if ($range = $item->getAreaRange()) {
+?>
+areaLists[<?= $item->getId() ?>] = <?= $range ?>;
+<?php
+		}
+	}
+?>
 var bigAreaRealty = [11, 17];
 
 jq(document).ready(function(){
@@ -207,22 +217,38 @@ function manageControls(realtyType)
 
 function updateArea(realtyType)
 {
-	var step = 50 * (jq.inArray(realtyType, bigAreaRealty) == -1 ? 1: 100);
-
 	var areaSelector = jq('SELECT[name="f[<?= FeatureType::AREA?>]"]');
+	
 	areaSelector.find('OPTION').remove();
-	areaSelector.append('<option value="">-</option>');
-	for (i = 1; i < 7; i ++) {
-		var from = i == 1 ? '' : (i - 1) * step;
-		var to = i == 6 ? '' : i * step;
-		areaSelector.append(
-			'<option value="' + from + '-' + to	+ '">'
-			+ (from == '' ? '&lt; ' : from)
-			+ (from == '' || to == '' ? ' ' : ' - ')
-			+ (to == '' ? '&gt;' : to)
-			+ '</option>'
-		);
+
+	if (typeof areaLists[realtyType] == 'undefined') {
+		areaSelector.prop('disabled', true);
+	} else {
+		areaSelector.prop('disabled', false);
+		areaSelector.append('<option value="">-</option>');
+		var range = areaLists[realtyType];
+		for (i in range) {
+			var f = range[i].f, t = range[i].t;
+			areaSelector.append(
+				'<option value="' + (f == 0 ? '' : f) + '-' + (t == 0 ? '' : t) +'">'
+				+ (f == 0 ? ' &lt; ' : numberFormat(f))
+				+ (t == 0 || f == 0 ? '' : ' - ')
+				+ (t == 0 ? ' &gt; ' : numberFormat(t))
+				+ '</option>'
+			);
+		}
 	}
+}
+
+function numberFormat(number)
+{
+	var out = '', str = '' + Math.round(number);
+
+	for (i in str) {
+		out += (i % 3 == 0 ? "'" : '') + str[i];
+	}
+
+	return out.replace(/^'/, '');
 }
 </script>
 	
