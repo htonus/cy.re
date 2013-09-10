@@ -221,7 +221,7 @@ class controllerList extends controllerMain
 			setOffset(
 				($page - 1) * $this->limits[$this->listVariant]
 			);
-//		echo $criteria->toString();
+//		echo '<br/><br/><br/>'.$criteria->toString();
 //		exit;
 		
 		$relevance = ArrayHelper::toKeyValueArray(
