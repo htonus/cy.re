@@ -29,11 +29,25 @@ final class controllerArticle extends i18nEditor
 
 		if ($category)
 			$request->setAttachedVar('category', $category);
-
+		
 		return parent::beforeHandle($request);
 	}
-	
-	protected function attachCollections(HttpRequest $request, Model $model)
+
+	public function saveObject(HttpRequest $request, Form $form, Identifiable $object)
+	{
+		$object = parent::saveObject($request, $form, $object);
+
+		if (!$form->getErrors()) {
+			$object->getSites()->
+				fetch()->
+				setList($form->getValue('sites'))->
+				save();
+		}
+
+		return $object;
+	}
+
+		protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		parent::attachCollections($request, $model);
 		

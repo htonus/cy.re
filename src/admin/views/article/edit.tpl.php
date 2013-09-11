@@ -180,10 +180,6 @@ var itemListTotal = <?= $total?>;
 
 jq(document).ready(function(){
 
-	jq('.moveup').click(itemMoveUp);
-
-	jq('.movedown').click(itemMoveDown);
-
 	jq('#searchButton').click(function(){
 		var criteria = jq('#id_or_code').val();
 
