@@ -99,3 +99,16 @@
 		</div>
 
 	</div>
+
+<?php
+
+	if ($list = $article->getSites()->getList()) {
+		$partViewer->view(
+			'_parts/blocks/recent',
+			Model::create()->
+				set('title', '___Nearest properties sites___')->
+				set('list', $list)
+		);
+	}
+
+?>
