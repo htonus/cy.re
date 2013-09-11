@@ -7,8 +7,8 @@
 
 <include file="common.xml" generate="false" />
 <include file="user.xml" generate="false" />
-<include file="realty.xml" generate="false" />
-<include file="article.xml" generate="false" />
+<include file="realty.xml" generate="true" />
+<include file="article.xml" generate="true" />
 <include file="content.xml" generate="false" />
 
 <classes/>

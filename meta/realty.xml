@@ -126,6 +126,7 @@
 
 			<property name="pictures" type="RealtyPicture" relation="OneToMany" required="false" />
 			<property name="features" type="Feature" relation="OneToMany" required="false" />
+			<property name="articles" type="Article" relation="ManyToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

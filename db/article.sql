@@ -108,3 +108,11 @@ CREATE TABLE "news_picture" (
     PRIMARY KEY("id")
 );
 CREATE INDEX news_picture_object_id_idx ON news_picture(object_id);
+
+
+CREATE TABLE "article_realty" (
+    "article_id" BIGINT NOT NULL REFERENCES "article"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "realty_id" INTEGER NOT NULL REFERENCES "realty"("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+CREATE INDEX article_realty_article_id_idx ON article_realty(article_id);
+CREATE INDEX article_realty_realty_id_idx ON article_realty(realty_id);

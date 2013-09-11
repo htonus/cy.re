@@ -56,6 +56,7 @@
 			<property name="category" type="ArticleCategory" relation="OneToOne" required="false" fetch="lazy" />
 
 			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
+			<property name="sites" type="Realty" relation="ManyToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>
