@@ -153,12 +153,18 @@
 					$top += 5;
 					$pdf->SetFont('Times', '', 10);
 					$pdf->SetTextColor(0, 0x88, 0xCC);
-					$pdf->Text(20, $top, i18nHelper::detokenize($group->getName()));
+
+					$pdf->Text(
+						empty($text) ? 110 : 20,
+						$top,
+						i18nHelper::detokenize($group->getName())
+					);
 
 					$features = array();
 					foreach ($this->realty->getFeaturesByGroup($group) as $item) {
 						$features[] = $item->getType()->getName();
 					}
+
 					$features = array_merge($features,$features,$features);
 					$top += 4;
 					$pdf->SetFont('Helvetica', '', 8);
