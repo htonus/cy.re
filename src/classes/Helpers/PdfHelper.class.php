@@ -126,6 +126,11 @@
 			$top += 10;
 			$descTop = $top;
 
+			$text = strip_tags($this->realty->getText(), 'p br');
+			$text = preg_replace('/<p[^>]*>/', '   ', $text);
+			$text = preg_replace('/<\/p>/', "\n", $text);
+			$text = preg_replace('/<br[^>]*>/', "\n", $text);
+
 			$pdf = $this->getPdf();
 			$list = $this->realty->getFeaturesByGroup(FeatureTypeGroup::general());
 
@@ -140,8 +145,9 @@
 			}
 
 			// Indoor & Outdoor features
-			$pdf->SetLeftMargin(20);
-			$pdf->SetRightMargin(100);
+			if (empty($text))
+				$top = $descTop;
+			
 			foreach (array(FeatureTypeGroup::indoor(), FeatureTypeGroup::outdoor()) as $group) {
 				if ($list = $this->realty->getFeaturesByGroup($group)) {
 					$top += 5;
@@ -157,16 +163,12 @@
 					$top += 4;
 					$pdf->SetFont('Helvetica', '', 8);
 					$pdf->SetTextColor(0x44, 0x44, 0x44);
-					$top = $this->write(20, $top, implode(', ', $features), 80, 4);
+					$top = $this->write(20, $top, implode(', ', $features), 80, 4, empty($text) ? null : 5);
 				}
 			}
 
 			// Description
 			$top = $descTop;
-			$text = strip_tags($this->realty->getText(), 'p br');
-			$text = preg_replace('/<p[^>]*>/', '   ', $text);
-			$text = preg_replace('/<\/p>/', "\n", $text);
-			$text = preg_replace('/<br[^>]*>/', "\n", $text);
 			$pdf->SetTextColor(0x44, 0x44, 0x44);
 			$pdf->SetFont('Helvetica', '', 8);
 			$this->write(110, $top, $text, 80, 3, 25);
