@@ -39,7 +39,7 @@ final class controllerRealty extends i18nEditor
 		return parent::doEdit($request);
 	}
 
-		protected function addObject(
+	protected function addObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {
 		$db = DBPool::me()->getLink();

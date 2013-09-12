@@ -71,6 +71,17 @@ class controllerMain extends MethodMappedController
 		return $mav;
 	}
 
+	protected function getObject(HttpRequest $request, $class)
+	{
+		return Form::create()->
+			add(
+				Primitive::identifier('id')->
+				of($class)
+			)->
+			import($request->getGet())->
+			getValue('id');
+	}
+
 	private function getStaticContent()
 	{
 		$types = StaticType::about()->getNameList();

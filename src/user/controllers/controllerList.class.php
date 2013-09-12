@@ -37,6 +37,7 @@ class controllerList extends controllerMain
 				array(
 					'list'		=> 'actionList',
 					'item'		=> 'actionItem',
+					'pdf'		=> 'actionPdf',
 				)
 			);
 	}
@@ -60,20 +61,19 @@ class controllerList extends controllerMain
 	
 	public function actionItem(HttpRequest $request)
 	{
-		$realty = Form::create()->
-			add(
-				Primitive::identifier('id')->
-				of('Realty')
-			)->
-			import($request->getGet())->
-			getValue('id');
-		
-		$model = Model::create()->set('subject', $realty);
+		$model = Model::create()->
+			set('subject', $this->getObject($request, 'Realty'));
 		
 		return ModelAndView::create()->
 			setModel($model);
 	}
-	
+
+	public function actionPdf(HttpRequest $request)
+	{
+		PdfHelper::me()->make($this->getObject($request, 'Realty'));
+		exit;
+	}
+
 	protected function attachCollections(HttpRequest $request, ModelAndView $mav)
 	{
 		$mav->getModel()->

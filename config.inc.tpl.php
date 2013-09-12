@@ -49,11 +49,12 @@
 	define('PATH_CLASSES', PATH_BASE.'src'.DS.'classes'.DS);
 	define('PATH_CONTROLLERS', PATH_SOURCE.'controllers'.DS);
 	define('PATH_TEMPLATES', PATH_SOURCE.'views'.DS);
-        
+	define('PATH_VENDORS', PATH_BASE.'vendors'.DS);
+	
 	// onPHP init
 	define('ONPHP_TEMP_PATH', TEMP_PATH.'onphp'.DS);
 	require PATH_BASE.'../onphp/global.inc.php.tpl';
-
+	
 	// everything else
 	define('DEFAULT_ENCODING', 'UTF-8');
 	mb_internal_encoding(DEFAULT_ENCODING);

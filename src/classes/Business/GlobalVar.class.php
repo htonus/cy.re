@@ -8,7 +8,10 @@
 	class GlobalVar extends Singleton
 	{
 		private $vars = array();
-		
+
+		/**
+		 * @return GlobalVar
+		 */
 		public static function me()
 		{
 			return parent::getInstance(__CLASS__);
@@ -44,5 +47,20 @@
 		{
 			return $this->vars;
 		}
+
+		public function import($vendor)
+		{
+			$path = PATH_VENDORS.$vendor;
+
+			if (!file_exists($path))
+				throw new MissingElementException('Vendor does not exist '.$vendor);
+
+			if (class_exists('AutoloaderPool')) {
+				AutoloaderPool::get('onPHP')->addPath($path);
+			} else {
+				set_include_path(get_include_path().PS.$path);
+			}
+			
+			return $this;
+		}
 	}
-?>
