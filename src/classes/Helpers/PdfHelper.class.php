@@ -163,7 +163,14 @@
 					$top += 4;
 					$pdf->SetFont('Helvetica', '', 8);
 					$pdf->SetTextColor(0x44, 0x44, 0x44);
-					$top = $this->write(20, $top, implode(', ', $features), 80, 4, empty($text) ? null : 5);
+					$top = $this->write(
+						empty($text) ? 110 : 20,
+						$top,
+						implode(', ', $features),
+						80,
+						4,
+						empty($text) ? null : 5
+					);
 				}
 			}
 
