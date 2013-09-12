@@ -144,13 +144,14 @@
 				$top += 5;
 			}
 
+			$top += 5;
+
 			// Indoor & Outdoor features
 			if (empty($text))
 				$top = $descTop;
 			
 			foreach (array(FeatureTypeGroup::indoor(), FeatureTypeGroup::outdoor()) as $group) {
 				if ($list = $this->realty->getFeaturesByGroup($group)) {
-					$top += 5;
 					$pdf->SetFont('Times', '', 10);
 					$pdf->SetTextColor(0, 0x88, 0xCC);
 
@@ -177,6 +178,8 @@
 						4,
 						empty($text) ? null : 5
 					);
+					
+					$top += 5;
 				}
 			}
 
