@@ -142,7 +142,7 @@
 
 				if ($typeId == FeatureType::PRICE) {
 					$sign = 'EUR';
-					$value = number_format($feature->getValue(), 0, '.');
+					$value = number_format($feature->getValue(), 0, null, '.');
 				} else {
 					$sign = strip_tags($feature->getType()->getUnit()->getSign());
 					$value = $feature->getValue();
