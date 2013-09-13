@@ -172,7 +172,6 @@
 						$features[] = $item->getType()->getName();
 					}
 
-					$features = array_merge($features,$features,$features);
 					$top += 4;
 					$pdf->SetFont('Helvetica', '', 8);
 					$pdf->SetTextColor(0x44, 0x44, 0x44);
