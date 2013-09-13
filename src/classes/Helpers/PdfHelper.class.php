@@ -133,14 +133,20 @@
 
 			$pdf = $this->getPdf();
 			$list = $this->realty->getFeaturesByGroup(FeatureTypeGroup::general());
-
+			ksort($list);
 			$pdf->SetFont('Helvetica', '', 10);
+			
 			foreach ($list as $typeId => $feature) {
 				$pdf->SetTextColor(0, 0x88, 0xCC);
 				$pdf->Text(20, $top, $feature->getType()->getName());
 
 				$pdf->SetTextColor(0x44, 0x44, 0x44);
-				$pdf->Text(50, $top, $feature->getValue().' '.strip_tags($feature->getType()->getUnit()->getSign()));
+				$pdf->Text(
+					50,
+					$top,
+					$feature->getValue().' '
+					.htmlspecialchars_decode(strip_tags($feature->getType()->getUnit()->getSign()))
+				);
 				$top += 5;
 			}
 
