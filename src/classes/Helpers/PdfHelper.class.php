@@ -145,7 +145,7 @@
 					50,
 					$top,
 					$feature->getValue().' '
-					.htmlspecialchars_decode(strip_tags($feature->getType()->getUnit()->getSign()))
+					.html_entity_decode(strip_tags($feature->getType()->getUnit()->getSign()))
 				);
 				$top += 5;
 			}
