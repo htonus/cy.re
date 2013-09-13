@@ -140,9 +140,16 @@
 				$pdf->SetTextColor(0, 0x88, 0xCC);
 				$pdf->Text(20, $top, $feature->getType()->getName());
 
-				$sign = $typeId == FeatureType::PRICE ? 'EUR' : strip_tags($feature->getType()->getUnit()->getSign());
+				if ($typeId == FeatureType::PRICE) {
+					$sign = 'EUR';
+					$value = number_format($feature->getValue(), 0, '.');
+				} else {
+					$sign = strip_tags($feature->getType()->getUnit()->getSign());
+					$value = $feature->getValue();
+				}
+
 				$pdf->SetTextColor(0x44, 0x44, 0x44);
-				$pdf->Text(50, $top, $feature->getValue().' '.$sign);
+				$pdf->Text(50, $top, $value.' '.$sign);
 				$top += 5;
 			}
 
