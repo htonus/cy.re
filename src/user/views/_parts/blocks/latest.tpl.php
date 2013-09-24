@@ -29,7 +29,7 @@
 			: next($icons);
 ?>
 				<div class="span<?= floor(12 / $count)?>">
-					<a href="<?= PATH_WEB.Section::read()->getSlug().'/article/'.$item->getId() ?>" class="black">
+					<a href="<?= PATH_WEB.Section::read()->getSlug().'/item/'.$item->getId() ?>" class="black">
 						<div class="block">
 							<h4>
 								<img title="latest_<?= $i?>" src="<?= $icon?>" alt="" width="25" height="25">
