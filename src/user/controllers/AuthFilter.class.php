@@ -12,34 +12,47 @@
  */
 final class AuthFilter extends RequestFilter
 {
+	const DEFAULT_USER_NAME	= 'nobody';
+
 	private $noLoginActions = array(
 		'main'	=> array('login', 'logout'),
 	);
 	
 	public function handleRequest(HttpRequest $request)
 	{
-		if (
-			($user = Session::get('user'))
-			|| ($user = $this->doAutoLogin($request))
-			|| $this->checkAction($request)
-		) {
-			$request->setAttachedVar('user', $user);
-			
-			$mav = $this->controller->handleRequest($request);
-			
-			if (!$mav->viewIsRedirect())
-				$mav->getModel()->
-					set('user', $request->getAttachedVar('user'));
-
-		} elseif (false) {
-			Session::assign('backUrl', $request->getServerVar('REQUEST_URI'));
-			
-			$mav = ModelAndView::create()->
-				setView(RedirectView::create('/?area=main&action=login'));
+		if ($user = Session::get('user')) {
+			// we have user in session
+		} elseif ($user = $this->doAutoLogin($request)) {
+			// we retrieved user from auto login cookie
 		} else {
-			// before I decide what to do with unlogged users
-			$mav = $this->controller->handleRequest($request);
+			// time to create fake user to setup defualt access
+			$user = Criteria::create(Person::dao())->
+				add(
+					Expression::eq('name', self::DEFAULT_USER_NAME)
+				)->
+				get();
+
+			if (empty($user))
+				throw new MissingElementException('There is no defualt User!!!');
 		}
+
+		$request->setAttachedVar('user', $user);
+		
+		$mav = $this->controller->handleRequest($request);
+			
+		if (!$mav->viewIsRedirect())
+			$mav->getModel()->
+				set('user', $request->getAttachedVar('user'));
+
+//		} elseif (false) {
+//			Session::assign('backUrl', $request->getServerVar('REQUEST_URI'));
+//
+//			$mav = ModelAndView::create()->
+//				setView(RedirectView::create('/?area=main&action=login'));
+//		} else {
+//			// before I decide what to do with unlogged users
+//			$mav = $this->controller->handleRequest($request);
+//		}
 		
 		return $mav;
 	}
