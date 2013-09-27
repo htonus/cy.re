@@ -10,7 +10,7 @@
  *
  * @author htonus
  */
-class controllerMain extends MethodMappedController
+class controllerMain extends AclController
 {
 	const COOKIE_EXPIRE		= '1 year';
 

@@ -12,34 +12,40 @@
  */
 final class AuthFilter extends RequestFilter
 {
-	const DEFAULT_USER_NAME	= 'nobody';
-
 	private $noLoginActions = array(
 		'main'	=> array('login', 'logout'),
 	);
 	
 	public function handleRequest(HttpRequest $request)
 	{
-		if ($user = Session::get('user')) {
-			// we have user in session
-		} elseif ($user = $this->doAutoLogin($request)) {
-			// we retrieved user from auto login cookie
+		if ($this->doLogout($request)) {
+			$mav = ModelAndView::create()->
+				setView(
+					RedirectView::create('/')
+				);
 		} else {
-			// time to create fake user to setup defualt access
-			$user = Criteria::create(Person::dao())->
-				add(
-					Expression::eq('name', self::DEFAULT_USER_NAME)
-				)->
-				get();
+			if ($request->hasSessionVar('user')) {
+				$user = $request->getSessionVar('user');
+			} elseif (!($user = $this->doAutoLogin($request))) {
+				// time to create fake user to setup default access
+				$user = Criteria::create(Person::dao())->
+					add(
+						Expression::eq('name', Person::DEFAULT_USER_NAME)
+					)->
+					get();
 
+				if ($user)
+					Session::assign('user', $user);
+			}
+			
 			if (empty($user))
 				throw new MissingElementException('There is no defualt User!!!');
-		}
 
-		$request->setAttachedVar('user', $user);
+			$request->setAttachedVar('user', $user);
+
+			$mav = $this->controller->handleRequest($request);
+		}
 		
-		$mav = $this->controller->handleRequest($request);
-			
 		if (!$mav->viewIsRedirect())
 			$mav->getModel()->
 				set('user', $request->getAttachedVar('user'));
@@ -56,7 +62,18 @@ final class AuthFilter extends RequestFilter
 		
 		return $mav;
 	}
-	
+
+	private function doLogout(HttpRequest $request)
+	{
+		if ($request->hasGetVar('signout')) {
+			Session::destroy();
+			setcookie(Person::COOKIE_NAME, 1, strtotime('-1 year'));
+			return true;
+		}
+
+		return false;
+	}
+
 	private function doAutoLogin(HttpRequest $request)
 	{
 		$form = Form::create()->

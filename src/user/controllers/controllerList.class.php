@@ -32,14 +32,24 @@ class controllerList extends controllerMain
 	{
 		parent::__construct();
 		
-		$this->
-			setMethodMappingList(
-				array(
-					'list'		=> 'actionList',
-					'item'		=> 'actionItem',
-					'pdf'		=> 'actionPdf',
-				)
-			);
+		$this->accessObject = Realty::create();
+
+		$this->setAccessRules(
+			array(
+				'index'		=> Access::LISTS,
+				'list'		=> Access::LISTS,
+				'item'		=> Access::READ,
+				'pdf'		=> Access::PUBLISH,
+			)
+		);
+
+		$this->setMethodMappingList(
+			array(
+				'list'		=> 'actionList',
+				'item'		=> 'actionItem',
+				'pdf'		=> 'actionPdf',
+			)
+		);
 	}
 
 	public function handleRequest(HttpRequest $request)

@@ -7,7 +7,8 @@
 
 	class Person extends AutoPerson implements Prototyped, DAOConnected
 	{
-		const COOKIE_NAME = 'autoLogin';
+		const COOKIE_NAME		= 'autoLogin';
+		const DEFAULT_USER_NAME	= 'nobody';
 		
 		/**
 		 * @return Person
@@ -41,11 +42,7 @@
 		 */
 		public function getAcl()
 		{
-			if (empty($this->acl)) {
-				$this->acl = new Acl($this);
-			}
-			
-			return $this->acl;
+			return Acl::me($this);
 		}
 		
 		public function isSuper()

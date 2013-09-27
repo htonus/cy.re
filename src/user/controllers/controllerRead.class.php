@@ -20,6 +20,14 @@ class controllerRead extends controllerMain
 		parent::__construct();
 		
 		$this->setMethodMapping('item', 'actionItem');
+		$this->accessObject = Article::create();
+
+		$this->setAccessRules(
+			array(
+				'index'		=> Access::LISTS,
+				'item'		=> Access::READ,
+			)
+		);
 		
 		$this->section = Section::read();
 	}
