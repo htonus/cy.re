@@ -43,7 +43,7 @@ $list = $article->getPictures()->getList();
 <?php
 	if ($list) {
 ?>
-					<div><img src="<?= PictureSize::normal()->getUrl(reset($list)); ?>" width="100%"></div>
+					<div><img src="<?= PictureSize::list1()->getUrl(reset($list)); ?>" width="100%"></div>
 <?php
 	}
 
