@@ -5,20 +5,26 @@
  *   This file will never be generated again - feel free to edit.            *
  *****************************************************************************/
 
-	final class Acl extends Singleton
+	final class Acl
 	{
+		private static $me		= null;
+		
 		private $status			= null;
 		private $accessList		= array();
 		private $resourceMap	= array();
-		
+
+		private function __construct() {/*_*/}
+
 		public static function me(Person $user = null)
 		{
-			$me = parent::getInstance(__CLASS__);
+			if (empty(self::$me)); {
+				self::$me = new self;
+			}
 
 			if ($user)
-				$me->setUser($user);
+				self::$me->setUser($user);
 
-			return $me;
+			return self::$me;
 		}
 		
 		public function setUser(Person $user)
