@@ -54,18 +54,20 @@ ADDRESS;
 
 					<div class="span3">
 						<h5 class="underline">___TTL-LEGAL-INFO___</h5>
+<?php
+	if (!empty($legalList)) {
+		foreach($legalList as $legal) {
+?>
 						<a class="icon-briefcase icon-white pull-left mr10"></a>
 						<p class="pull-left">
-							<a href="#">Hello world!</a><br />
-							Dec 1, 2012 / 3 Comments
+							<a href="javascript:void(null)"><?= $legal->getName(); ?></a><br />
+							<?= $legal->getAnons(); ?>
 						</p>
 						<div class="clearfix"></div>
-						<a class="icon-briefcase icon-white pull-left mr10"></a>
-						<p class="pull-left">
-							<a href="#">Hello world!</a><br />
-							Dec 1, 2012 / 3 Comments
-						</p>
-						<div class="clearfix"></div>
+<?php
+		}
+	}
+?>
 					</div>
 
 					<div class="span3">

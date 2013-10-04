@@ -187,6 +187,10 @@ class controllerMain extends AclController
 			set(
 				'categoryList',
 				$request->getAttachedVar('categoryList')
+			)->
+			set(
+				'legalList',
+				StaticPage::dao()->getList($this->section, StaticType::LEGAL)
 			);
 		
 		return $this;

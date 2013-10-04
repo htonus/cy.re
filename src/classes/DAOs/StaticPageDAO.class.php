@@ -7,6 +7,35 @@
 
 	class StaticPageDAO extends AutoStaticPageDAO
 	{
-		// your brilliant stuff goes here
+		private $static = array();
+
+		public function getList(Section $section, $typeId = null)
+		{
+			if (empty($this->static)) {
+				$list = Criteria::create($this)->
+					add(
+						Expression::andBlock(
+							Expression::orBlock(
+								Expression::eqId('section', $section),
+								Expression::isNull('section')
+							)
+						)
+					)->
+					getList();
+
+				foreach ($list as $item) {
+					if (empty($this->static[$item->getType()->getId()]))
+						$this->static[$item->getType()->getId()] = array();
+
+					$this->static[$item->getType()->getId()][] = $item;
+				}
+			}
+
+			if (empty($typeId))
+				return $this->static;
+
+			return empty($this->static[$typeId])
+				? array()
+				: $this->static[$typeId];
+		}
 	}
-?>
