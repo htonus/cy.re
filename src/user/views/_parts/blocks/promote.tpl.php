@@ -40,8 +40,13 @@ $list = $article->getPictures()->getList();
 				</div>
 
 				<div class="span6">
+<?php
+	if ($list) {
+?>
 					<div><img src="<?= PictureSize::normal()->getUrl(reset($list)); ?>" width="100%"></div>
 <?php
+	}
+
 /*
 					<h3>Esperia Group of companies:</h3>
 
