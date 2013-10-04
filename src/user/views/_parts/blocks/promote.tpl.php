@@ -23,7 +23,7 @@ $list = $article->getPictures()->getList();
 					</div>
 
 					<div class="pull-right">
-						<a href="/read/<?= $article->getId()?>">read more</a>
+						<a href="/read/item/<?= $article->getId()?>">read more</a>
 					</div>
 					</div>
 
