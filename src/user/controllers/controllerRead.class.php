@@ -67,16 +67,7 @@ class controllerRead extends controllerMain
 		
 		// Only for top level
 		if (!$category) {
-			$criteria = Criteria::create(Article::dao())->
-				add(
-					Expression::notNull('published')
-				)->
-				setLimit(self::LATEST)->
-				addOrder(
-					OrderBy::create('published')->desc()
-				);
-			
-			$mav->getModel()->set('latestList', $criteria->getList());
+			$mav->getModel()->set('latestList', $this->getLatestList());
 		}
 		
 		return $mav;
@@ -146,5 +137,23 @@ class controllerRead extends controllerMain
 			doPage($mav->getModel());
 		
 		return parent::attachCollections($request, $mav);
+	}
+
+	protected function getLatestList()
+	{
+		$list = Criteria::create(Article::dao())->
+			add(
+				Expression::notNull('published')
+			)->
+			add(
+				Expression::isFalse('promote')
+			)->
+			addOrder(
+				OrderBy::create('created')->desc()
+			)->
+			setLimit(self::LATEST)->
+			getList();
+
+		return $list;
 	}
 }
