@@ -66,10 +66,7 @@
 <div class="tab-content">
 
 	<div class="tab-pane<?= $id ? null : ' active'?>" id="tab_description">
-<?php
-	$model->set('editorFor', 'text');
-	$partViewer->view('_parts/form/i18n');
-?>
+		
 		<div class="control-group">
 			<label class="control-label" for="input_category">Category</label>
 			<div class="controls">
@@ -102,6 +99,19 @@
 				</select>
 			</div>
 		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox" for="input_promote">
+					<input id="input_promote" type="checkbox" name="promote" value="1" <?= $form->getValue('promote') ? ' checked="checked"' : null; ?>/> Promote on the main page
+				</label>
+			</div>
+		</div>
+
+<?php
+	$model->set('editorFor', 'text');
+	$partViewer->view('_parts/form/i18n');
+?>
 	</div>
 	
 	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
