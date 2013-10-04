@@ -219,6 +219,9 @@ class controllerMain extends AclController
 			add(
 				Expression::notNull('published')
 			)->
+			add(
+				Expression::notEq('promote', true)
+			)->
 			addOrder(
 				OrderBy::create('created')->desc()
 			)->
