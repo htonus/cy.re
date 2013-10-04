@@ -137,5 +137,7 @@
 		{
 			return $this->check($resource, Access::PUBLISH);
 		}
+
+		final public function __sleep() {/* restless class */}
 	}
-?>
+
