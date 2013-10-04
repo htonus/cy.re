@@ -220,7 +220,7 @@ class controllerMain extends AclController
 				Expression::notNull('published')
 			)->
 			add(
-				Expression::notEq('promote', true)
+				Expression::isFalse('promote')
 			)->
 			addOrder(
 				OrderBy::create('created')->desc()
