@@ -36,7 +36,7 @@ final class controllerStaticPage extends i18nEditor
 				getValue('type');
 
 		if ($type)
-			$request->setAttachedVar('staticType', $type);
+			$request->setAttachedVar('type', $type);
 
 		$section = $this->map->importOne('section', $request)->
 			getForm()->
@@ -47,14 +47,27 @@ final class controllerStaticPage extends i18nEditor
 
 		return parent::beforeHandle($request);
 	}
-	
+
+	public function afterHandle(HttpRequest $request, ModelAndView $mav)
+	{
+		if (!$mav->viewIsRedirect()) {
+			if ($request->hasAttachedVar('type'))
+				$mav->getModel()->set('type', $request->getAttachedVar('type'));
+
+			if ($request->hasAttachedVar('section'))
+				$mav->getModel()->set('section', $request->getAttachedVar('section'));
+		}
+
+		parent::afterHandle($request, $mav);
+	}
+
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
 		$criteria = parent::getListCriteria($request, $model);
 
-		if ($request->hasAttachedVar('staticType'))
+		if ($request->hasAttachedVar('type'))
 			$criteria->add(
-				Expression::eqId('type', $request->getAttachedVar('staticType'))
+				Expression::eqId('type', $request->getAttachedVar('type'))
 			);
 
 		if ($request->hasAttachedVar('section'))
@@ -73,12 +86,23 @@ final class controllerStaticPage extends i18nEditor
 
 		$model->set('sectionList', Section::buy()->getObjectList());
 
-		if ($request->hasAttachedVar('staticType'))
-			$model->set('staticType', $request->getAttachedVar('staticType'));
+		if ($request->hasAttachedVar('type'))
+			$model->set('type', $request->getAttachedVar('type'));
 
 		if ($request->hasAttachedVar('section'))
 			$model->set('section', $request->getAttachedVar('section'));
 
 		return $this;
+	}
+	
+	protected function getRedirectMav(HttpRequest $request)
+	{
+		return ModelAndView::create()->setView(
+			new RedirectView(
+				'/index.php?area='.lcfirst(get_class($this->subject))
+				.'&type='.($request->hasAttachedVar('type') ? $request->getAttachedVar('type')->getId() : null)
+				.'&section'.($request->hasAttachedVar('section') ? $request->getAttachedVar('section')->getId() : null)
+			)
+		);
 	}
 }

@@ -5,8 +5,8 @@
 
 	$baseUrl = $url = '/index.php?area='.$area;
 
-	if (!empty($customType))
-		$url .= '&type='.$customType->getId();
+	if (!empty($type))
+		$url .= '&type='.$type->getId();
 
 	if (!empty($section))
 		$url .= '&section='.$section->getId();
@@ -29,9 +29,9 @@
 						<select name="type" onchange="this.form.submit()" class="span2">
 							<option value=""></option>
 <?php
-	$default = empty($staticType)
+	$default = empty($type)
 		? null
-		: $staticType->getId();
+		: $type->getId();
 
 	foreach ($staticTypeList as $item) {
 ?>

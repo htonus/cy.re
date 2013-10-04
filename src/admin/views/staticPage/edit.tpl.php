@@ -44,17 +44,17 @@
 	<div class="controls">
 		<select name="type" class="select">
 <?php
-	if (empty($staticType)) {
+	if (empty($type)) {
 		$default = $form->getValue('type')
 			? $form->getValue('type')->getId()
 			: null;
 	} else {
-		$default = $staticType->getId();
+		$default = $type->getId();
 	}
 
 	foreach ($staticTypeList as $item) {
 		if (
-			!empty($staticType)
+			!empty($type)
 			&& $default != $item->getId()
 		)
 			continue;
@@ -99,7 +99,7 @@
 <div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?=$area?>'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?=$area?>&type=<?= empty($type) ? null : $type->getId(); ?>&section=<?= empty($section)? null : $section->getId(); ?>'">Cancel</button>
     </div>
 </div>
 
