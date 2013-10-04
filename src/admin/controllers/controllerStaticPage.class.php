@@ -52,9 +52,9 @@ final class controllerStaticPage extends i18nEditor
 	{
 		$criteria = parent::getListCriteria($request, $model);
 
-		if ($request->hasAttachedVar('customType'))
+		if ($request->hasAttachedVar('staticType'))
 			$criteria->add(
-				Expression::eqId('type', $request->getAttachedVar('customType'))
+				Expression::eqId('type', $request->getAttachedVar('staticType'))
 			);
 
 		if ($request->hasAttachedVar('section'))
