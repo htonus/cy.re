@@ -2,31 +2,47 @@
 /**
  *
  */
+
+$list = $article->getPictures()->getList();
 ?>
 		<div class="container extra">
 
 			<div class="row">
 
 				<div class="span6">
-					<h3><?= $item->getName(); ?></h3>
+					<h3><?= $article->getName(); ?></h3>
 
 					<img src="<?= PATH_WEB_IMG ?>logo-about.gif" class="pull-left" style="margin-right: 10px">
 
-					<p><?= $item->getText(); ?></p>
+					<p><?= mb_ereg_replace("\n", '</p><p>', $article->getBrief()); ?></p>
 
-					<a href="#" class="btn pull-right"><i class="icon-download"></i> Download our Brochure</a>
+					<div class="hr mt20" style="height: 1px;">
+					
+					<div class="pull-left">
+						<b><?= $article->getPublished()->toDate(); ?></b>
+					</div>
 
-					<div class="bloquote">
+					<div class="pull-right">
+						<a href="/read/<?= $article->getId()?>">read more</a>
+					</div>
+					</div>
+
+					<!-- a href="#" class="btn pull-right"><i class="icon-download"></i> Download our Brochure</a -->
+
+					<!-- div class="bloquote">
 						<h4>Clients Testimonials</h4>
 						<p>
 							In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. The readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content.
 						</p>
 						<i>Mikle / CEO Some Company</i>
-					</div>
+					</div -->
 
 				</div>
 
 				<div class="span6">
+					<div><img src="<?= PictureSize::normal()->getUrl(reset($list)); ?>" width="100%"></div>
+<?php
+/*
 					<h3>Esperia Group of companies:</h3>
 
 					<div id="extraCarousel">
@@ -50,6 +66,9 @@
 						<a href="#"><i class="icon-chevron-right icon-white"></i> Read More</a>
 					</div>
 				</div>
+
+ */
+?>
 
 			</div>
 		</div>

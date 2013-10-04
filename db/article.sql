@@ -32,6 +32,7 @@ CREATE TABLE "article" (
     "created" timestamp NOT NULL DEFAULT now(),
     "published" timestamp NULL,
     "category_id" BIGINT NOT NULL REFERENCES "article_category"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "promote" boolean not null default false,
 
     "name" CHARACTER VARYING(128) NULL,
     "text" CHARACTER VARYING(4096) NULL,

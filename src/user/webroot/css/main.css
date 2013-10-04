@@ -355,7 +355,9 @@ H3 SPAN {
 .extra .row > DIV {
 	margin-top: 30px;
 }
-
+.extra P {
+	text-indent: 50px;
+}
 /*
 	FOOTER
 */

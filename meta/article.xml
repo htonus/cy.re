@@ -54,6 +54,7 @@
 			<property name="created" type="Timestamp" required="true" />
 			<property name="published" type="Timestamp" required="false" />
 			<property name="category" type="ArticleCategory" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="promote" type="Boolean" required="false" default="false" />
 
 			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
 			<property name="sites" type="Realty" relation="ManyToMany" required="false" />
@@ -67,7 +68,7 @@
 			<property name="object" type="Article" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="name" type="String" size="128" required="false" />
-			<property name="brief" type="String" size="512" required="false" />
+			<property name="brief" type="String" size="1024" required="false" />
 			<property name="text" type="String" size="4096" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />

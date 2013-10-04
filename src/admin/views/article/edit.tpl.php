@@ -132,7 +132,7 @@
 					<b><?= $realty->getCode()?></b> : <?= $realty->getName()?>
 				</td>
 				<td style="text-align: right">
-					<input type="hidden" name="sites[]" value="<?= $id?>"/>
+					<input type="hidden" name="sites[]" value="<?= $item->getId()?>"/>
 					<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-info">View</a>
 					<button type="button" class="btn btn-warning" onclick="jq(this).parents('TR').remove()">Remove</button>
 				</td>

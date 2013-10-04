@@ -8,19 +8,24 @@
 
 	if (empty($editorFor))
 		$editorFor = null;
-	
+
+	$proto = call_user_func(array(get_class($subject).'_i18n', 'proto'));
+
 	if (!empty($editorFor)) {
 		$partViewer->view('_parts/form/wysywig');
 ?>
 <script type="text/javascript">
 jq(document).ready(function(){
-//	jq('#i18nBlock a[data-toggle=tab]').click(function (e) {
+/*
+	jq('#i18nBlock a[data-toggle=tab]').click(function (e) {
+*/
 	jq('#i18nBlock a[data-toggle=tab]').on('shown', function (e) {
 		var lang = jq(e.target).attr('id').replace(/lang_tab_/, '');
 		attachEditor('input_<?=$editorFor?>_' + lang);
 	});
-	
+
 	attachEditor('input_<?=$editorFor?>_en');
+
 });
 </script>
 <?php
@@ -61,6 +66,8 @@ jq(document).ready(function(){
 				: $i18nList[$lang->getCode()][$name];
 
 			$id = 'input_'.$name.'_'.$lang->getCode();
+
+			$max = $proto->getPropertyByName($name)->getMax()
 ?>
 
 		<div class="control-group">
@@ -68,13 +75,13 @@ jq(document).ready(function(){
 			<div class="controls">
 
 <?php
-			if ($name == $editorFor) {
+			if ($name == $editorFor || $name == 'brief') {
 ?>
-				<textarea id="<?=$id?>" placeholder="Enter <?=$name?> ..." rows="15" class="span7" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" style="height: 300px"><?=$value?></textarea>
+				<textarea maxlength="<?= $max; ?>" id="<?=$id?>" placeholder="Enter <?=$name?> ..." rows="15" class="span7" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" style="height: 300px"><?=$value?></textarea>
 <?php
 			} else {
 ?>
-				<input type="text" id="<?=$id?>" class="span7" placeholder="Enter <?=$name?> (<?=$lang->getCode()?>)" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" value="<?=$value?>" />
+				<input maxlength="<?= $max; ?>" type="text" id="<?=$id?>" class="span7" placeholder="Enter <?=$name?> (<?=$lang->getCode()?>)" name="i18n_field[<?=$lang->getCode()?>][<?=$name?>]" value="<?=$value?>" />
 <?php
 			}
 ?>

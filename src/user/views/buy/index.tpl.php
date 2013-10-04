@@ -60,10 +60,10 @@
 	);
 	
 	$partViewer->view(
-		'_parts/blocks/about',
+		'_parts/blocks/promote',
 		Model::create()->
 			set('area', $area)->
-			set('item', $static[StaticType::COMPANY])
+			set('article', $promote)
 	);
 ?>
 

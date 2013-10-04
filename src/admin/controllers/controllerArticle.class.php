@@ -26,7 +26,7 @@ final class controllerArticle extends i18nEditor
 		$category = $this->map->importOne('category', $request)->
 			getForm()->
 				getValue('category');
-
+		
 		if ($category)
 			$request->setAttachedVar('category', $category);
 		
@@ -36,7 +36,7 @@ final class controllerArticle extends i18nEditor
 	public function saveObject(HttpRequest $request, Form $form, Identifiable $object)
 	{
 		$object = parent::saveObject($request, $form, $object);
-
+		
 		if (!$form->getErrors()) {
 			$object->getSites()->
 				fetch()->
@@ -47,7 +47,7 @@ final class controllerArticle extends i18nEditor
 		return $object;
 	}
 
-		protected function attachCollections(HttpRequest $request, Model $model)
+	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		parent::attachCollections($request, $model);
 		

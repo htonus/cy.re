@@ -60,6 +60,8 @@ class controllerMain extends AclController
 
 		$model->
 			set('static', $this->getStaticContent())->
+			set('promote', $this->getPromoteArticle())->
+			set('latestList', $this->getLatestList())->
 			set(
 				'blocks',
 				array(
@@ -188,5 +190,41 @@ class controllerMain extends AclController
 			);
 		
 		return $this;
+	}
+
+	protected function getPromoteArticle()
+	{
+		$promote = Criteria::create(Article::dao())->
+			add(
+				Expression::notNull('published')
+			)->
+			addOrder(
+				OrderChain::create()->
+				add(
+					OrderBy::create('promote')->desc()
+				)->
+				add(
+					OrderBy::create('created')->desc()
+				)
+			)->
+			setLimit(1)->
+			getList();
+
+		return reset($promote);
+	}
+
+	protected function getLatestList()
+	{
+		$list = Criteria::create(Article::dao())->
+			add(
+				Expression::notNull('published')
+			)->
+			addOrder(
+				OrderBy::create('created')->desc()
+			)->
+			setLimit(3)->
+			getList();
+
+		return $list;
 	}
 }
