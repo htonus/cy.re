@@ -93,7 +93,7 @@ jq(document).ready(function(){
 						<tr>
 							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
 							<td id="mainFeatures">
-								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $feature->getValue()?></span>
+								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $featureId == FeatureType::PRICE ? number_format($feature->getValue(), 0, '', '.') : $feature->getValue() ?></span>
 							</td>
 						</tr>
 <?php
