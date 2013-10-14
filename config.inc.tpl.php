@@ -20,7 +20,7 @@
 	if (isset($_SERVER['HTTP_HOST']))
 		define('DOMAIN', preg_replace('/(admin|www)\./i', '', $_SERVER['HTTP_HOST']));
 	else
-		define('DOMAIN', 'real-estate.com.cy');
+		define('DOMAIN', 'cyprus-realty.com');
 
 	// web path
 	define('COOKIE_DOMAIN', '.'.DOMAIN);
