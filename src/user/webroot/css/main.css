@@ -488,9 +488,11 @@ DD {
 	background-color: transparent;
 	color: #000;
 	border: 1px solid #444;
+	cursor: pointer;
 }
 .badge-active {
 	background-color: #000;
 	color: #FFF;
 	border: 1px solid #000;
+	cursor: pointer;
 }
