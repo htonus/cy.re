@@ -72,7 +72,8 @@ class controllerList extends controllerMain
 	public function actionItem(HttpRequest $request)
 	{
 		$model = Model::create()->
-			set('subject', $this->getObject($request, 'Realty'));
+			set('subject', $this->getObject($request, 'Realty'))->
+			set('currencyRates', ServiceHelper::create()->getCurrencyRates());
 		
 		return ModelAndView::create()->
 			setModel($model);

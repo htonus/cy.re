@@ -15,7 +15,32 @@
 	);
 
 	$pictureList = $subject->getPictures()->getList();
+
+	$signs = array(
+		'EUR'	=> '&euro;',
+		'USD'	=> '&dollar;',
+		'RUB'	=> '<strike>P</strike>',
+		'GBP'	=> '&pound;',
+		'CNY'	=> 'Ұ',
+	);
 ?>
+
+<script typy="text/javascript">
+var currencyRates = <?= json_encode($currencyRates, JSON_NUMERIC_CHECK)?>;
+
+jq(document).ready(function(){
+	jq('#currencyForPrice .badge').click(function(){
+		var priceSpan = jq('SPAN#type_<?= FeatureType::PRICE?>');
+		var formatter = new Intl.NumberFormat('en-EN');
+		var price = parseFloat(priceSpan.attr('data')) * currencyRates[jq(this).attr('title')]
+		jq('SPAN#type_<?= FeatureType::PRICE?>').text(formatter.format(price));
+		jq('#currencyForPrice .badge-active')
+			.removeClass('badge-active')
+			.addClass('badge-inactive');
+		jq(this).addClass('badge-active');
+	});
+});
+</script>
 
 	<div class="section">
 
@@ -49,13 +74,27 @@
 						</div>
 
 						<table class="mb10">
+						<tr>
+							<td></td>
+							<td id="currencyForPrice">
+<?php
+	foreach ($currencyRates as $currency => $rate) {
+?>
+								<span title="<?= $currency; ?>" class="badge <?= $currency == 'EUR' ? 'badge-active' : 'badge-inactive'?>"><?= $signs[$currency]; ?></span>
+<?php
+	}
+?>
+							</td>
+						</tr>
 <?php
 	$group = FeatureTypeGroup::general();
-	foreach ($subject->getFeaturesByGroup($group) as $feature) {
+	foreach ($subject->getFeaturesByGroup($group) as $featureId => $feature) {
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
-							<td><?= $feature->getValue()?></td>
+							<td id="mainFeatures">
+								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $feature->getValue()?></span>
+							</td>
 						</tr>
 <?php
 	}

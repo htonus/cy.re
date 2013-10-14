@@ -15,13 +15,18 @@
 	else
 		require_once ($appPath.'config.inc.tpl.php');
 	
-//	Cache::me()->mark('cyprus-realty.com')->clean();
+	SocketMemcached::create()->mark(DOMAIN)->clean();
 
-	$res = array();
-	if (!($res = SocketMemcached::create()->mark(DOMAIN)->get('currency_rates'))) {
-//		GlobalVar::me()->import('CurrencyFetcher');
-//		$rates = CurrencyFetcher::create()->getRates();
-//		SocketMemcached::create()->mark('cyprus-realty.com')->set('rates', $rates);
+	$rates = array();
+	if (!($rates = SocketMemcached::create()->mark(DOMAIN)->get('rates'))) {
+		$supported = array('USD', 'RUB', 'GBP', 'CNY');
+
+		GlobalVar::me()->import('CurrencyFetcher');
+		if ($rates = CurrencyFetcher::create()->getRates()) {
+			$rates = array_intersect_key($rates, array_flip($supported));
+			$rates['EUR'] = 1;
+			SocketMemcached::create()->mark(DOMAIN)->set('rates', $rates);
+		}
 	}
 
-	print_r($res);
+	print_r($rates);
