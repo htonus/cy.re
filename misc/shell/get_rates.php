@@ -18,10 +18,10 @@
 //	Cache::me()->mark('cyprus-realty.com')->clean();
 
 	$res = array();
-	if (!($res = SocketMemcached::create()->mark('cyprus-realty.com')->get('rates'))) {
-		GlobalVar::me()->import('CurrencyFetcher');
-		$rates = CurrencyFetcher::create()->getRates();
-		SocketMemcached::create()->mark('cyprus-realty.com')->set('rates', $rates);
+	if (!($res = SocketMemcached::create()->mark(DOMAIN)->get('currency_rates'))) {
+//		GlobalVar::me()->import('CurrencyFetcher');
+//		$rates = CurrencyFetcher::create()->getRates();
+//		SocketMemcached::create()->mark('cyprus-realty.com')->set('rates', $rates);
 	}
 
 	print_r($res);
