@@ -18,23 +18,10 @@
 //	Cache::me()->mark('cyprus-realty.com')->clean();
 
 	$res = array();
-	if (!($res = Cache::me()->mark('cyprus-realty.com')->get('rates'))) {
-//		GlobalVar::me()->import('CurrencyFetcher');
-//		$rates = CurrencyFetcher::create()->getRates();
-//		Cache::me()->mark('cyprus-realty.com')->set('rates', $rates);
+	if (!($res = SocketMemcached::create()->mark('cyprus-realty.com')->get('rates'))) {
+		GlobalVar::me()->import('CurrencyFetcher');
+		$rates = CurrencyFetcher::create()->getRates();
+		SocketMemcached::create()->mark('cyprus-realty.com')->set('rates', $rates);
 	}
 
 	print_r($res);
-
-//	$m = new Memcached();
-//	$m->setOption(Memcached::OPT_PREFIX_KEY, 'aaa');
-//	$m->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
-//	$m->addServer('localhost', 11211);
-//	$m->add('aaa', 12345);
-//	print_r($m->getAllKeys());
-//	$res = $mc->connect('localhost', 11211);
-//	var_dump($res);
-
-//	$m->set('qaz', 12345);
-//	$m->flush();
-//	print_r($m->get('aaa'));
