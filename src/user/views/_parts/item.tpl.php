@@ -68,6 +68,7 @@ jq(document).ready(function(){
 							<h4>
 								<?= $subject->getName()?>
 								<div class="green">
+									<small><b><?= $subject->getCode(); ?></b></small>
 									<?= ucfirst($subject->getRealtyType()->getName())?>  <?= $subject->getCity() ? ' in '.$subject->getCity()->getName() : null?>
 								</div>
 							</h4>
