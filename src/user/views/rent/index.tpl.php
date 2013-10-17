@@ -14,7 +14,7 @@
 	$partViewer->view('_parts/form/login');
 ?>
 
-					<p class="intro">Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.</p>
+					<!--p class="intro">Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.</p -->
 					<br />
 
 					<form action="/<?= $area?>/list" method="get">
