@@ -4,6 +4,9 @@
  */
 ?>
 
+<div class="row-fluid">
+
+	<div class="span6">
 		<div class="control-group">
 			<label class="control-label" for="input_offerType">Offer Type</label>
 			<div class="controls">
@@ -11,7 +14,7 @@
 	$default = $form->getValue('offerType')
 		? $form->getValue('offerType')->getId()
 		: null;
-	
+
 	foreach ($offerTypeList as $item) {
 ?>
 				<label class="radio inline">
@@ -23,6 +26,32 @@
 ?>
 			</div>
 		</div>
+	</div>
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="input_country">Country</label>
+			<div class="controls">
+				<select name="country" id="input_country">
+					<option value=""></option>
+<?php
+	$default = $form->getValue('city')
+		? $form->getValue('city')->getCountryId()
+		: null;
+
+	foreach ($countryList as $item) {
+?>
+					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+<?php
+	}
+?>
+				</select>
+			</div>
+		</div>
+	</div>
+
+</div>
+
 
 <div class="row-fluid">
 
@@ -35,7 +64,7 @@
 	$default = $form->getValue('realtyType')
 		? $form->getValue('realtyType')->getId()
 		: null;
-		
+
 	foreach ($realtyTypeList as $item) {
 ?>
 					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?=$item->getName()?></option>
@@ -46,19 +75,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="span6">
-		<div class="control-group">
-			<label class="control-label" for="input_longitude">Longitude</label>
-			<div class="controls">
-				<input type="text" id="input_longitude" placeholder="longitude" name="longitude" value="<?= $form->getValue('longitude')?>" />
-			</div>
-		</div>
-	</div>
-	
-</div>
-
-<div class="row-fluid">
 
 	<div class="span6">
 		<div class="control-group">
@@ -82,19 +98,18 @@
 		</div>
 	</div>
 
+</div>
+
+<div class="row-fluid">
+
 	<div class="span6">
 		<div class="control-group">
-			<label class="control-label" for="input_latitude">Latitude</label>
+			<label class="control-label" for="input_longitude">Longitude</label>
 			<div class="controls">
-				<input type="text" id="input_latitude" placeholder="latitude" name="latitude" value="<?= $form->getValue('latitude')?>" />
+				<input type="text" id="input_longitude" placeholder="longitude" name="longitude" value="<?= $form->getValue('longitude')?>" />
 			</div>
 		</div>
 	</div>
-
-</div>
-
-
-<div class="row-fluid">
 
 	<div class="span6">
 		<div class="control-group">
@@ -118,8 +133,33 @@
 		</div>
 	</div>
 
+</div>
+
+
+<div class="row-fluid">
+
 	<div class="span6">
-		<br/>
+		<div class="control-group">
+			<label class="control-label" for="input_latitude">Latitude</label>
+			<div class="controls">
+				<input type="text" id="input_latitude" placeholder="latitude" name="latitude" value="<?= $form->getValue('latitude')?>" />
+			</div>
+		</div>
+	</div>
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="input_zip">ZIP (Post Code)</label>
+			<div class="controls">
+				<input type="text" id="input_zip" placeholder="ZIP (Post Code)" name="zip" value="<?= $form->getValue('zip')?>" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="input_address">Address</label>
+			<div class="controls">
+				<input type="text" id="input_address" placeholder="Address" name="address" value="<?= $form->getValue('address')?>" />
+			</div>
+		</div>
 	</div>
 
 </div>
@@ -128,16 +168,16 @@
 jq(document).ready(function(){
 	jq('#input_city').change(function(){
 		jq('#input_district OPTION').remove();
-		
+
 		jq.getJSON(
 			'/?area=district&action=list&city=' + jq(this).val(),
 			function(data){
 				var districtSelector = jq('#input_district')
 				districtSelector.append('<option value=""></option>');
-				
+
 				if (typeof data.districtList != undefined) {
 					var list = data.districtList;
-					
+
 					for (id in list) {
 						districtSelector.append('<option value="' + id + '">' + list[id] + '</option>');
 					}
@@ -147,3 +187,9 @@ jq(document).ready(function(){
 	});
 });
 </script>
+
+<?php
+
+	$model->set('editorFor', 'text');
+	$partViewer->view('_parts/form/i18n');
+

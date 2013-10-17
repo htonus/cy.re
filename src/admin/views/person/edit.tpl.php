@@ -53,6 +53,14 @@
 
 
 <div class="control-group">
+	<label class="control-label" for="input_phone">Telephone</label>
+	<div class="controls">
+		<input type="text" id="input_phone" placeholder="Telephone" name="phone" value="<?=$form->getValue('phone')?>" />
+    </div>
+</div>
+
+
+<div class="control-group">
 	<label class="control-label" for="input_username">Username (login)</label>
 	<div class="controls">
 		<input type="text" id="input_username" placeholder="Username" name="username" value="<?=$form->getValue('username')?>" />

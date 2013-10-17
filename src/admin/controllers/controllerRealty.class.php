@@ -18,13 +18,25 @@ final class controllerRealty extends i18nEditor
 	
 	public function __construct()
 	{
-		parent::__construct(	Realty::create());
+		parent::__construct(Realty::create());
 
 		$this->getForm()->
 			drop('preview')->
 			add(
 				Primitive::set('feature')
 			);
+	}
+	
+	public function handleRequest(HttpRequest $request)
+	{
+		$request->setAttachedVar(
+			'defaultOwner',
+			Criteria::create(Person::dao())->
+				add(Expression::eq('username', 'esperia'))->
+				get()
+		);
+
+		return parent::handleRequest($request);
 	}
 
 	public function doEdit(HttpRequest $request)
@@ -46,6 +58,8 @@ final class controllerRealty extends i18nEditor
 		$db->begin();
 
 		try {
+			$this->updateOwner($request, $form);
+
 			$object = parent::addObject($request, $form, $object);
 
 			if (!$form->getErrors()) {
@@ -67,6 +81,8 @@ final class controllerRealty extends i18nEditor
 		$db->begin();
 
 		try {
+			$this->updateOwner($request, $form);
+			
 			$object = parent::saveObject($request, $form, $object);
 
 			if (!$form->getErrors()) {
@@ -130,10 +146,7 @@ final class controllerRealty extends i18nEditor
 
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
-//		$model->set(
-//			'featureGroupList',
-//			FeatureTypeGroup::getAnyObject()->getObjectList()
-//		);
+		$model->set('defaultOwner', $request->getAttachedVar('defaultOwner'));
 		
 		$model->set(
 			'cityList',
@@ -144,7 +157,17 @@ final class controllerRealty extends i18nEditor
 				addOrder('i18n.name')->
 				getList()
 		);
-		
+
+		$model->set(
+			'countryList',
+			Criteria::create(Country::dao())->
+				add(
+					Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+				)->
+				addOrder('i18n.name')->
+				getList()
+		);
+
 		$model->set(
 			'districtList',
 			District::dao()->getByCity($model->get('subject')->getCity())
@@ -162,10 +185,7 @@ final class controllerRealty extends i18nEditor
 			)
 		);
 
-		$model->set(
-			'offerTypeList',
-			OfferType::buy()->getObjectList()
-		);
+		$model->set('offerTypeList', OfferType::buy()->getObjectList());
 
 		$list = $this->getForm()->getValue('id')
 			? $this->getForm()->getValue('id')->getFeatureList()
@@ -254,5 +274,34 @@ final class controllerRealty extends i18nEditor
 			$model->set('filter', $filter);
 		
 		return $criteria;
+	}
+
+	private function updateOwner(HttpRequest $request, Form $form)
+	{
+		if (!$form->getValue('owner')) {
+			$fields = Form::create()->
+				add(
+					Primitive::set('_owner')->
+					setDefault(array())
+				)->
+				import($request->getPost())->
+				getValue('_owner');
+
+			$person = Person::create()->
+				setCreated(Timestamp::makeNow())->
+				setStatus(PersonStatus::normal());
+
+			foreach ($fields as $field => $value) {
+				$person->{'set'.ucfirst($field)}($value);
+			}
+
+			if ($person = $person->dao()->add($person)) {
+				$form->get('owner')->setValue($person);
+			} else {
+				throw new Exception('Can not add Owner to setup realty');
+			}
+		}
+		
+		return $this;
 	}
 }

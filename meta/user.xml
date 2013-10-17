@@ -64,15 +64,16 @@
 		<implement interface="Created" />
 		<properties>
 			<identifier name="id" />
+			<property name="created" type="Timestamp" required="true" />
 			<property name="name" type="String" size="16" required="true" />
-			<property name="surname" type="String" size="16" required="false" />
-			<property name="email" type="String" size="32" required="true" />
+			<property name="status" type="PersonStatus" relation="OneToOne" required="true" />
+
+			<property name="surname" type="String" size="32" required="false" />
+			<property name="email" type="String" size="32" required="false" />
 			<property name="phone" type="String" size="12" required="false" />
 			<property name="language" type="Language" relation="OneToOne" required="false" />
-			<property name="status" type="PersonStatus" relation="OneToOne" required="true" />
-			<property name="created" type="Timestamp" required="true" />
-			<property name="username" type="String" size="16" required="true" />
-			<property name="password" type="String" size="40" required="true" />
+			<property name="username" type="String" size="16" required="false" />
+			<property name="password" type="String" size="40" required="false" />
 			<property name="autologin" type="String" size="40" required="false" />
 			<property name="groups" type="Group" relation="ManyToMany" required="false" />
 		</properties>

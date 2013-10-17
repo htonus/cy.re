@@ -95,6 +95,8 @@ CREATE TABLE "realty" (
     "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "district_id" INTEGER NOT NULL REFERENCES "district"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
 	
+    "owner_id" BIGINT NULL REFERENCES "Person"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+
     PRIMARY KEY("id")
 );
 CREATE INDEX realty_type_id_idx ON realty(type_id);

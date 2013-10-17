@@ -36,6 +36,27 @@
 
 
 <div class="control-group">
+	<label class="control-label" for="input_country">Country</label>
+	<div class="controls">
+		<select name="country">
+			<option value="">Choose country</option>
+<?php
+	$default = $form->getValue('country')
+		? $form->getValue('country')->getId()
+		: null;
+
+	foreach ($countryList as $item) {
+?>
+			<option value="<?=$item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null ?>><?=$item->getName()?></option>
+<?php
+	}
+?>
+		</select>
+    </div>
+</div>
+
+
+<div class="control-group">
 	<label class="control-label" for="input_longitude">Region</label>
 	<div class="controls">
 		<select name="region">

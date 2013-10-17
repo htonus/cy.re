@@ -19,6 +19,9 @@ final class controllerPerson extends CommonEditor
 		
 		$this->setMethodMapping('access', 'doAccess');
 		$this->setAccessMapping('access', Access::UPDATE);
+
+		$this->setMethodMapping('browse', 'doBrowse');
+		$this->setAccessMapping('browse', Access::LISTS);
 	}
 	
 	protected function doAccess(HttpRequest $request)
@@ -94,7 +97,61 @@ final class controllerPerson extends CommonEditor
 
 		return parent::doSave($request);
 	}
-	
+
+	public function doBrowse(HttpRequest $request)
+	{
+		$result = array(
+			'status'	=> 1,
+			'list'		=> array()
+		);
+
+		$fieldList = array(
+			'name'		=> 'name',
+			'suename'	=> 'surname',
+			'email'		=> 'email',
+			'phone'		=> 'phone',
+			'username'	=> 'username',
+		);
+		
+		$form = Form::create()->
+			add(
+				Primitive::choice('field')->
+					setList($fieldList)
+			)->
+			add(
+				Primitive::string('value')
+			)->
+			import($request->getGet())->
+			importMore($request->getPost());
+		
+		if (
+			($field = $form->getChoiceValue('field'))
+			&& ($value = $form->getValue('value'))
+		) {
+			$list = Criteria::create($this->subject->dao())->
+				add(
+					Expression::ilike($field, "%$value%")
+				)->
+				setLimit(20)->
+				getList();
+
+			foreach ($list as $item) {
+				$set = array('owner' => $item->getId());
+
+				foreach ($fieldList as $field) {
+					$set[$field] = $item->{'get'.ucfirst($field)}();
+				}
+
+				$result['list'][] = $set;
+			}
+		} else {
+			$result['status'] = 0;
+		}
+
+		echo json_encode($result);
+		exit;
+	}
+
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		$model->set(

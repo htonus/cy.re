@@ -20,6 +20,7 @@ final class controllerCity extends i18nEditor
 	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
+		$model->set('countryList', Criteria::create(Country::dao())->getList());
 		$model->set('cityList', Criteria::create(City::dao())->getList());
 		
 		return parent::attachCollections($request, $model);

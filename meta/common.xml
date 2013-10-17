@@ -41,12 +41,32 @@
 		<pattern name="StraightMapping" />
 	</class>
 
+	<class name="Country" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="i18n" type="Country_i18n" relation="OneToMany" required="false" />
+			<property name="countryCode" type="String" size="2" required="false" />
+			<property name="phoneCode" type="Integer" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	<class name="Country_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="Country" relation="OneToOne" required="true" fetch="lazy" column="object_id" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="16" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+
 	<class name="City" extends="i18n">
 		<properties>
 			<identifier name="id" />
 			<property name="i18n" type="City_i18n" relation="OneToMany" required="false" />
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
+			<property name="country" type="Country" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="region" type="City" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="prefix" type="String" size="2" required="false" />
 		</properties>

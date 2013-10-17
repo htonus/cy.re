@@ -119,6 +119,9 @@
 			<property name="offerType" type="OfferType" relation="OneToOne" required="true" fetch="lazy" column="offer_id" />
 			<property name="city" type="City" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="district" type="District" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="zip" type="String" size="8" required="false" />
+			<property name="address" type="String" size="256" required="false" />
+
 			<property name="preview" type="RealtyPicture" relation="OneToOne" required="false" fetch="lazy" column="preview_id" />
 
 			<property name="created" type="Timestamp" required="true" />
@@ -127,6 +130,9 @@
 			<property name="pictures" type="RealtyPicture" relation="OneToMany" required="false" />
 			<property name="features" type="Feature" relation="OneToMany" required="false" />
 			<property name="articles" type="Article" relation="ManyToMany" required="false" />
+
+			<property name="owner" type="Person" relation="OneToOne" required="false" fetch="lazy"  />
+
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

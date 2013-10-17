@@ -18,9 +18,18 @@ class CommonEditor extends controllerPictured
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
-		
-		$this->map->addSource('id', RequestType::post());
 
+		$this->getForm()->
+			add(
+				Primitive::string('tab')->
+				optional()
+			);
+		
+		$this->map->
+			addSource('id', RequestType::post())->
+			addSource('tab', RequestType::get())->
+			addSource('tab', RequestType::post());
+		
 		if ($this->subject instanceof Created) {
 			$this->subject->setCreated(Timestamp::makeNow());
 			$this->getForm()->drop('created');
@@ -161,6 +170,8 @@ class CommonEditor extends controllerPictured
 	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
+		$model->set('activeTabName', $this->getForm()->getValue('tab'));
+		
 		return $this;
 	}
 

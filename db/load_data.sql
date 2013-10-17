@@ -118,6 +118,8 @@ insert into static_type ("id", "name") values (6, 'email');
 insert into static_type ("id", "name") values (7, 'address');
 insert into static_type ("id", "name") values (8, 'company');
 
+insert into country (country_code, phone_code) values ('CY', 357);
+insert into country_i18n (object_id, language_id, "name") select id, 1, 'Cyprus' from country where country_code='CY';
 
 alter sequence "language_id" restart with 10;
 alter sequence "unit_id" restart  with 10;

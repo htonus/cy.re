@@ -9,9 +9,30 @@ CREATE TABLE "language" (
 );
 
 
+CREATE SEQUENCE "country_id";
+CREATE TABLE "country" (
+    "id" INTEGER NOT NULL default nextval('country_id'),
+    "country_code" varchar(2) NULL,
+    "phone_code" integer NULL,
+    PRIMARY KEY("id")
+);
+CREATE SEQUENCE "country_i18n_id";
+CREATE TABLE "country_i18n" (
+    "id" BIGINT NOT NULL default nextval('country_i18n_id'),
+    "object_id" INTEGER NOT NULL REFERENCES "country"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "language_id" INTEGER NOT NULL REFERENCES "language"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "name" CHARACTER VARYING(16) NULL,
+    PRIMARY KEY("id")
+);
+CREATE INDEX country_i18n_object_id_idx ON country_i18n(object_id);
+CREATE INDEX country_i18n_language_id_idx ON country_i18n(language_id);
+CREATE UNIQUE INDEX country_i18n_object_id_language_id_uidx ON "country_i18n"("object_id", "language_id");
+
+
 CREATE SEQUENCE "city_id";
 CREATE TABLE "city" (
     "id" INTEGER NOT NULL default nextval('unit_id'),
+    "country_id" INTEGER NOT NULL REFERENCES "country"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "latitude" numeric(10,6) NULL,
     "longitude" numeric(10,6) NULL,
     "region_id" BIGINT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,

@@ -8,6 +8,20 @@
 		: null;
 	
 	$class = get_class($subject);
+
+	if (empty($activeTabName)) {
+		if ($id)
+			$activeTabName = 'pictures';
+		else
+			$activeTabName = 'description';
+	}
+
+	$tabList = array(
+		'description'	=> 'Description',
+		'features'		=> 'Features',
+		'pictures'		=> 'Pictures',
+		'owner'			=> 'Owner'
+	);
 ?>
 
 <h1><?=$id ? 'Update Realty site: '.$form->getValue('id')->getName() : 'Add new Realty site'?></h1>
@@ -43,11 +57,15 @@
 	<div class="navbar-inner">
 		<b class="brand">Sections</b>
 		<ul class="nav nav-tabs">
-			<li<?= $id ? null : ' class="active"'?>><a href="#tab_description" data-toggle="tab">Description</a></li>
-			<li><a href="#tab_features" data-toggle="tab">Features</a></li>
-			<li<?= $id ? ' class="active"' : null?>><a href="#tab_pictures" data-toggle="tab">Pictures</a></li>
+<?php
+	foreach ($tabList as $tabName => $tabTitle) {
+?>
+			<li<?= $tabName == $activeTabName ? ' class="active"' : null ?>><a href="#tab_<?= $tabName?>" data-toggle="tab"><?= $tabTitle; ?></a></li>
+<?php
+	}
+?>
 		</ul>
-		<div class="controls pull-right">
+		<div class="pull-right">
 			<button class="btn" type="button" onclick="document.location.href='/index.php?area=<?= $area?>'">Cancel</button>
 			<button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
 <?php
@@ -64,28 +82,19 @@
 
 
 <div class="tab-content">
-	
-	<div class="tab-pane<?= $id ? null : ' active'?>" id="tab_description">
-<?php
-	$partViewer->view('realty/parts/main');
-	$model->set('editorFor', 'text');
-	$partViewer->view('_parts/form/i18n');
-?>
-	</div>
 
-	
-	<div class="tab-pane" id="tab_features">
 <?php
-	$partViewer->view('realty/parts/features');
+	foreach ($tabList as $tabName => $tabTitle) {
+?>
+	<div class="tab-pane<?= $tabName == $activeTabName ? ' active' : null ?>" id="tab_<?= $tabName; ?>">
+<?php
+	$partViewer->view('realty/parts/'.$tabName);
 ?>
 	</div>
-	
-	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
 <?php
-	$partViewer->view('realty/parts/pictures');
+	}
 ?>
-	</div>
-	
+
 </div>
 
 </form>
