@@ -93,6 +93,7 @@ class controllerPictured extends AclEditor
 						'delete_type'	=> 'GET', // 'DELETE'
 						'delete_url'	=> $actionUrl.'drop_picture',
 						'name'			=> $picture->getName(),
+						'text'			=> $picture->getText(),
 						'size'			=> $picture->getSize(),
 						'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 						'type'			=> $picture->getType()->getMimeType(),
@@ -139,6 +140,7 @@ class controllerPictured extends AclEditor
 				'delete_type'	=> 'GET', // 'DELETE'
 				'delete_url'	=> $actionUrl.'drop_picture',
 				'name'			=> $picture->getName(),
+				'text'			=> $picture->getText(),
 				'size'			=> $picture->getSize(),
 				'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 				'type'			=> $picture->getType()->getMimeType(),
@@ -225,5 +227,10 @@ class controllerPictured extends AclEditor
 		$mav->getModel()->set('data', array('success' => $result));
 
 		return $mav;
+	}
+
+	protected function doAddTextToPicture(HttpRequest $request)
+	{
+		
 	}
 }

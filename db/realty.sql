@@ -137,6 +137,7 @@ CREATE TABLE "realty_picture" (
 	"size" BIGINT NULL default 0,
 	"width" INT NOT NULL,
 	"height" INT NOT NULL,
+	"text" CHARACTER VARYING(256) NULL,
 
     PRIMARY KEY("id")
 );

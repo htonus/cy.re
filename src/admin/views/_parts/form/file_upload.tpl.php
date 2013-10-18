@@ -213,6 +213,7 @@ function togglePreviewPicture(btn)
 {%		if (file.preview_url) { %}
 				<button class="btn btn-small span1 btn-info" onclick="togglePreviewPicture(this)" data-url="{%=file.preview_url%}" type="button">Preview</button>
 {%		} %}
+				<button class="btn btn-small span1 btn-success">Edit Text</button>
 				<button class="btn btn-small span1 btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button>
 			</div>
         </td>

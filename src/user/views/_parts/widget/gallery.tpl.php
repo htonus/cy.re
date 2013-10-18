@@ -15,7 +15,7 @@
 
 	if (empty($preview) && !empty($list))
 		$preview = reset($list);
-
+	
 	if (!empty($preview)) {
 		$list = ArrayUtils::convertObjectList($list);
 		unset($list[$preview->getId()]);
