@@ -38,13 +38,19 @@ final class controllerFeatureType extends i18nEditor
 
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
-		$criteria = parent::getListCriteria($request, $model);
-
+		$criteria = parent::getListCriteria($request, $model)->
+			add(
+				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+			)->
+			order(
+				OrderBy::create('i16b.name')->asc()
+			);
+		
 		if ($request->hasAttachedVar('group'))
 			$criteria->add(
 				Expression::eqId('group', $request->getAttachedVar('group'))
 			);
-
+		
 		return $criteria;
 	}
 
