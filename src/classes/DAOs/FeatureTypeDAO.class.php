@@ -12,7 +12,12 @@
 			$out = array();
 			
 			try {
-				$list = $this->getPlainList();
+				$list = Criteria::create($this)->
+					add(
+						Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+					)->
+					addOrder('i18n.name')->
+					getList();
 
 				foreach ($list as $feature) {
 					if ($feature->getGroup()->getId() == $group->getId())
