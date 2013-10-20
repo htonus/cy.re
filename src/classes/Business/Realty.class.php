@@ -44,7 +44,7 @@
 					setCriteria(
 						Criteria::create()->
 							add(
-								Expression::eqId('i18n.language', Global::me()->get('language'))
+								Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 							)->
 							addOrder(
 								OrderBy('i18n.name')->asc()
