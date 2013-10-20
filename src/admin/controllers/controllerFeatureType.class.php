@@ -39,6 +39,7 @@ final class controllerFeatureType extends i18nEditor
 	protected function getListCriteria(HttpRequest $request, Model $model)
 	{
 		$criteria = parent::getListCriteria($request, $model)->
+			dropOrders()->
 			add(
 				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 			)->
