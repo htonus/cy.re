@@ -47,7 +47,7 @@
 								Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 							)->
 							addOrder(
-								OrderBy('i18n.name')->asc()
+								OrderBy::create('i18n.name')->asc()
 							)
 					)->
 					getList();
