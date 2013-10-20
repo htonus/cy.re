@@ -42,7 +42,7 @@ final class controllerFeatureType extends i18nEditor
 			add(
 				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 			)->
-			order(
+			addOrder(
 				OrderBy::create('i16b.name')->asc()
 			);
 		
