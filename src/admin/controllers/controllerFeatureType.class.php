@@ -43,7 +43,7 @@ final class controllerFeatureType extends i18nEditor
 				Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
 			)->
 			addOrder(
-				OrderBy::create('i16b.name')->asc()
+				OrderBy::create('i18n.name')->asc()
 			);
 		
 		if ($request->hasAttachedVar('group'))
