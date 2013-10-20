@@ -125,7 +125,7 @@
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="control-group">
-								<label class="control-label" for="input_f[<?= FeatureType::BEDROOMS?>]" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">Bedrooms</label>
+								<label class="control-label" for="input_f[<?= FeatureType::BEDROOMS?>]" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">___BEDROOMS___</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::BEDROOMS?>]" id=""input_f[<?= FeatureType::BEDROOMS?>]>
 										<option value="">-</option>
@@ -150,7 +150,7 @@
 						</div>
 						<div class="span4">
 							<div class="control-group">
-								<label class="control-label" for="input_f[<?= FeatureType::TOILETS?>]">Toilets</label>
+								<label class="control-label" for="input_f[<?= FeatureType::TOILETS?>]">___BATHROOMS___</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::TOILETS?>]" id=""input_f[<?= FeatureType::TOILETS?>]>
 										<option value="">-</option>
