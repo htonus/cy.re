@@ -40,7 +40,17 @@
 		public function getFeatureList()
 		{
 			if (empty($this->featureList)) {
-				$list = $this->getFeatures()->getList();
+				$list = $this->getFeatures()->
+					setCriteria(
+						Criteria::create()->
+							add(
+								Expression::eqId('i18n.language', Global::me()->get('language'))
+							)->
+							addOrder(
+								OrderBy('i18n.name')->asc()
+							)
+					)->
+					getList();
 				
 				$this->featureList = array();
 				foreach ($list as $item) {
