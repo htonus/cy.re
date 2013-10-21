@@ -53,9 +53,13 @@
 					? 'checked="checked"'
 					: null;
 ?>
-				<label class="checkbox">
-					<input type="checkbox" name="feature[<?=$featureId?>]" value="1" <?=$checked?>> <?=$item->getName()?>
-				</label>
+				<div class="control-group">
+					<div class="controls">
+						<label class="checkbox">
+							<input type="checkbox" name="feature[<?=$featureId?>]" value="1" <?=$checked?>> <?=$item->getName()?>
+						</label>
+					</div>
+				</div>
 <?php
 			} else {
 				$featureValue = isset($formFeatures[$featureId])
