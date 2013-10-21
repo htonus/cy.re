@@ -31,7 +31,7 @@ var currencyRates = <?= json_encode($currencyRates, JSON_NUMERIC_CHECK)?>;
 jq(document).ready(function(){
 	jq('#currencyForPrice .badge').click(function(){
 		var priceSpan = jq('SPAN#type_<?= $area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY ?>');
-		var formatter = new Intl.NumberFormat('en-EN');
+		var formatter = new Intl.NumberFormat('en-EN', {'maximumFractionDigits' : 0});
 		var price = parseFloat(priceSpan.attr('data')) * currencyRates[jq(this).attr('title')]
 		priceSpan.text(formatter.format(price));
 		jq('#currencyForPrice .badge-active')
