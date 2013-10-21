@@ -19,22 +19,40 @@ final class AuthFilter extends RequestFilter
 	public function handleRequest(HttpRequest $request)
 	{
 		if (
-			($user = Session::get('user'))
-			|| ($user = $this->doAutoLogin($request))
-			|| $this->checkAction($request)
+			(
+				($user = Session::get('user'))
+				|| ($user = $this->doAutoLogin($request))
+			)
+			&& $user->isAdmin()
 		) {
 			$request->setAttachedVar('user', $user);
-			
+		}
+		
+		if (
+			$this->checkAction($request)
+			|| (
+				!empty($user)
+				&& $user->isAdmin()
+			)
+		) {
 			$mav = $this->controller->handleRequest($request);
 			
-			if (!$mav->viewIsRedirect())
+			if (
+				!$mav->viewIsRedirect()
+				&& $request->hasAttachedVar('user')
+			)
 				$mav->getModel()->
 					set('user', $request->getAttachedVar('user'));
 		} else {
+			Session::destroy();
+			Session::start();
+			
 			Session::assign('backUrl', $request->getServerVar('REQUEST_URI'));
 			
 			$mav = ModelAndView::create()->
-				setView(RedirectView::create('/?area=main&action=login'));
+				setView(RedirectView::create(
+					PATH_WEB_ADMIN.'/?area=main&action=login')
+				);
 		}
 		
 		return $mav;
