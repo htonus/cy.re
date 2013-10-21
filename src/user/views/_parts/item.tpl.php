@@ -33,7 +33,7 @@ jq(document).ready(function(){
 		var priceSpan = jq('SPAN#type_<?= $area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY ?>');
 		var formatter = new Intl.NumberFormat('en-EN');
 		var price = parseFloat(priceSpan.attr('data')) * currencyRates[jq(this).attr('title')]
-		jq('SPAN#type_<?= FeatureType::PRICE?>').text(formatter.format(price));
+		priceSpan.text(formatter.format(price));
 		jq('#currencyForPrice .badge-active')
 			.removeClass('badge-active')
 			.addClass('badge-inactive');
