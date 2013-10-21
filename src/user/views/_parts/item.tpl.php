@@ -49,7 +49,6 @@ jq(document).ready(function(){
 
 				<div class="span8 mt20">
 <?php
-
 	$partViewer->view(
 		'_parts/widget/gallery',
 		Model::create()->
@@ -57,7 +56,6 @@ jq(document).ready(function(){
 			set('preview', $subject->getPreview())->
 			set('perRow', 4)
 	);
-
 ?>
 				</div>
 
@@ -68,7 +66,20 @@ jq(document).ready(function(){
 							<h4>
 								<?= $subject->getName()?>
 								<div class="green">
+<?php
+	if (
+		!empty($user)
+		&& $user->isAdmin()
+	) {
+?>
+									<a href="<?= PATH_WEB_ADMIN?>?area=realty&action=edit&tab=description&id=<?= $subject->getId(); ?>" target="_blank"><small><b><?= $subject->getCode(); ?></b></small></a> : 
+<?php
+	} else {
+?>
 									<small><b><?= $subject->getCode(); ?></b></small> : 
+<?php
+	}
+?>
 									<?= ucfirst($subject->getRealtyType()->getName())?>  <?= $subject->getCity() ? ' in '.$subject->getCity()->getName() : null?>
 								</div>
 							</h4>
@@ -89,7 +100,20 @@ jq(document).ready(function(){
 						</tr>
 <?php
 	$group = FeatureTypeGroup::general();
-	foreach ($subject->getFeaturesByGroup($group) as $featureId => $feature) {
+	$featureList = $subject->getFeaturesByGroup($group);
+	$price = $featureList[$area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY];
+?>
+						<tr>
+							<td align="right"><?= ucfirst($price->getType()->getName())?> : &nbsp;</td>
+							<td id="mainFeatures">
+								<span id="type_<?= $price->getTypeId(); ?>" data="<?= $price->getValue()?>"><?= number_format($price->getValue(), 0, '', '.') ?></span>
+							</td>
+						</tr>
+<?php
+	unset($featureList[FeatureType::PRICE]);
+	unset($featureList[FeatureType::PRICE_MONTHLY]);
+	
+	foreach ($featureList as $featureId => $feature) {
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>

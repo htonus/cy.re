@@ -33,7 +33,7 @@ final class AuthFilter extends RequestFilter
 						Expression::eq('name', Person::DEFAULT_USER_NAME)
 					)->
 					get();
-
+				
 				if ($user)
 					Session::assign('user', $user);
 			}

@@ -61,7 +61,8 @@
 	mb_regex_encoding(DEFAULT_ENCODING);
 	ini_set('upload_tmp_dir', PATH_UPLOAD);
 	ini_set('session.save_path', TEMP_PATH.'sessions');
-
+	session_set_cookie_params(3600, '/', COOKIE_DOMAIN, false, true);
+	
 	define('PROJECT_NAME', 'real-estate.com.cy');
 
 	DBPool::me()->setDefault(
