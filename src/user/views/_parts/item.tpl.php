@@ -141,7 +141,7 @@ jq(document).ready(function(){
 						<div class="clearfix"></div>
 						<a href="<?= PATH_WEB."$area/pdf/".$subject->getId()?>" target="_blank" class="btn btn-black input-block-level mt20">Download Property Booklet</a>
 						
-						<? $subject->getText()?>
+						<?= $subject->getText()?>
 					</div>
 
 				</div>
