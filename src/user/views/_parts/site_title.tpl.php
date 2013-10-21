@@ -31,14 +31,7 @@
 					</div>
 				</div>
 
-				<div class="span3">
-					<div class="logo">
-						_S__TELEPHONE___:  +357 25366144, &nbsp; +357 25369209<br/>
-						_S__EMAIL___: info@esperiaestates.com<br/>
-					</div>
-				</div>
-
-				<div class="span6">
+				<div class="span9">
 
 					<div class="visible-phone">
 						<select style="width: 100%;" onchange="focument.location.href='<?= PATH_WEB?>' + jq(this).val()">
