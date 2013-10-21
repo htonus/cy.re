@@ -11,7 +11,7 @@
 			<identifier name="id" />
 			<property name="i18n" type="Unit_i18n" relation="OneToMany" required="false" />
 			<property name="sign" type="String" size="16" required="false" />
-			<!-- property name="cast" type="Integer" required="true" / >  <!- - representation (not sure) -->
+			<property name="type" type="Integer" required="true" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

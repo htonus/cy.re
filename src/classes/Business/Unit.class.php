@@ -7,6 +7,20 @@
 
 	class Unit extends AutoUnit implements Prototyped, DAOConnected
 	{
+		const TYPE_BOOL		= 1;
+		const TYPE_INT		= 2;
+		const TYPE_TEXT		= 3;
+		const TYPE_DATE		= 4;
+		const TYPE_MONEY	= 5;
+		
+		private $names = array(
+			self::TYPE_BOOL		=>	'boolean',
+			self::TYPE_INT		=>	'integer',
+			self::TYPE_TEXT		=>	'text',
+			self::TYPE_DATE		=>	'date',
+			self::TYPE_MONEY	=>	'money',
+		);
+		
 		/**
 		 * @return Unit
 		**/
@@ -31,6 +45,15 @@
 			return Singleton::getInstance('ProtoUnit');
 		}
 		
-		// your brilliant stuff goes here
+		public function getTypeList()
+		{
+			return $this->names;
+		}
+		
+		public function getTypeName()
+		{
+			return $this->type
+				? $this->names[$this->type]
+				: null;
+		}
 	}
-?>

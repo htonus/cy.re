@@ -66,6 +66,8 @@ final class controllerRealty extends i18nEditor
 				$this->saveFeatures($object, $request);
 				$db->commit();
 			}
+			
+			$this->subject = $object;
 		} catch (Exception $e) {
 			$db->rollback();
 			$form->markCustom('id', $e->getMessage());
@@ -89,6 +91,8 @@ final class controllerRealty extends i18nEditor
 				$this->saveFeatures($object, $request);
 				$db->commit();
 			}
+			
+			$this->subject = $object;
 		} catch (Exception $e) {
 			$db->rollback();
 			$form->markCustom('id', $e->getMessage());
@@ -304,4 +308,14 @@ final class controllerRealty extends i18nEditor
 		
 		return $this;
 	}
+	
+	protected function getRedirectMav(HttpRequest $request)
+	{
+		return ModelAndView::create()->setView(
+			new RedirectView(
+				'/index.php?area='.lcfirst(get_class($this->subject))
+				.'&action=edit&id='.$this->subject->getId()
+			)
+		);
+	}	
 }

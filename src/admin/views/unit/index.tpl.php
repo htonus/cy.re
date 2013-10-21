@@ -13,6 +13,7 @@
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Type</th>
 			<th>Sign</th>
 			<th>Action</th>
 		</tr>
@@ -23,6 +24,7 @@
 ?>
 		<tr>
 			<td><?=$item->getName()?></td>
+			<td><?=$item->getTypeName()?></td>
 			<td><?=$item->getSign()?></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |

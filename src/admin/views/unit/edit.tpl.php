@@ -44,9 +44,30 @@
 
 
 <div class="control-group">
+	<label class="control-label" for="input_native">Type</label>
+	<div class="controls">
+		<select name="type">
+			<option value="">Choose ...</option>
+<?php
+	$default = $form->getValue('type')
+		? $form->getValue('type')
+		: null;
+	
+	foreach (Unit::create()->getTypeList() as $id => $name) {
+?>
+			<option value="<?= $id?>" <?= $default == $id ? ' selected="selected"' : null; ?>><?= $name; ?></option>
+<?php
+	}
+?>
+		</select>
+    </div>
+</div>
+
+
+<div class="control-group">
 	<div class="controls">
 		<button class="btn btn-primary" type="submit">Submit</button>
-		<button class="btn" type="button" onclick="document.location.href='/index.php?area=language'">Cancel</button>
+		<button class="btn" type="button" onclick="document.location.href='/index.php?area=unit'">Cancel</button>
     </div>
 </div>
 

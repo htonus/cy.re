@@ -16,6 +16,7 @@ CREATE SEQUENCE "unit_id";
 CREATE TABLE "unit" (
     "id" INTEGER NOT NULL default nextval('unit_id'),
     "sign" CHARACTER VARYING(16) NULL,
+    "type" INTEGER NULL DEFAULT 1,
     PRIMARY KEY("id")
 );
 CREATE SEQUENCE "unit_i18n_id";
