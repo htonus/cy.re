@@ -136,7 +136,7 @@ final class controllerMain extends MethodMappedController
 		
 		return ModelAndView::create()->
 			setView(
-				RedirectView::create('/buy')
+				RedirectView::create(PATH_WEB_USER.'buy')
 			);
 	}
 	
