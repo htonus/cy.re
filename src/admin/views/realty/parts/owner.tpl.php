@@ -17,7 +17,7 @@
 	$disabled = $owner ? 'disabled="disabled"' : null;
 ?>
 
-		<input type="hidden" name="owner" value="<?= $form->getValue('owner') ? $form->getValue('owner')->getId() : null; ?>" />
+		<input type="hidden" name="owner" value="<?= $owner ? $owner->getId() : null; ?>" />
 
 		<div class="control-group">
 			<label class="control-label" for="input_name">Name</label>
