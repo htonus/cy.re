@@ -141,11 +141,17 @@ jq(document).ready(function(){
 						<div class="clearfix"></div>
 						<a href="<?= PATH_WEB."$area/pdf/".$subject->getId()?>" target="_blank" class="btn btn-black input-block-level mt20">Download Property Booklet</a>
 						
-						<?= $subject->getText()?>
+						<!-- distance group -->
 					</div>
 
 				</div>
 
+			</div>
+			
+			<div class="row">
+				<div class="span12">
+					<?= $subject->getText() ?>
+				</div>
 			</div>
 		</div>
 
