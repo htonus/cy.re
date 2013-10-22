@@ -71,6 +71,8 @@
 					if (!unlink ($path))
 						throw new Exception('Can not remove picture from the path: '.$path);
 				
+				@exec('rm -f '.dirname($path).'/cache/'.$id.'.*');
+				
 				$db->commit();
 			} catch (Exception $e) {
 				$db->rollback();

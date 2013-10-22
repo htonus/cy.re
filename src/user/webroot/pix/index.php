@@ -10,6 +10,8 @@
 class NotFoundException extends Exception {/*_*/}
 class FoundException extends Exception {/* expects file path to show */}
 
+define ('PADDING', 2);
+
 $mime = null;
 
 try {
@@ -33,7 +35,7 @@ try {
 		throw new FoundException($path);
 	
 	$cachePath = $dir.'cache/';
-	$cacheName = "$w1.$h1.$name";
+	$cacheName = "$id.$w1-$h1.$ext";
 
 	// Have cached picture let's show
 	if (file_exists($cachePath.$cacheName))
@@ -49,26 +51,58 @@ try {
 		$w2 = $info[0];
 		$h2 = $info[1];
 		$k2 = $w2/$h2;
-
+		
 		$dst = imagecreatetruecolor($w1, $h1);
 		$src = call_user_func('imagecreatefrom'.$ext, $path);
 
-		if ($k1 > $k2) {
-			$w3 = $w2;
-			$h3 = $w2 / $k1;
+		// If we have vertical picture, don't cut
+		if ($k2 < 1) {
+			
+			// Too narow, let us cut
+			if ($k2 < 0.25) {
+				$h3 = $w2 / 0.5;
+			} else {
+				$h3 = $h2;
+			}
+			
+			$w3 = $w2 * $h1 / $h3;
+			
+			imagefill($dst, 0, 0, imagecolorallocate($dst, 0x44, 0x44, 0x44));
+			
+			imagecopyresampled(
+				$dst, $src,					// $dst_image, $src_image
+				($w1 - $w3) / 2, 0,			// $dst_x, $dst_y
+				0, ($h2 - $h3) / 2,			// $src_x, $src_y
+				$w3, $h1,					// $dst_w, $dst_h
+				$w2, $h3					// $src_w, $src_h
+			);
+			
+			// Nice white lines from left and right sides of the picture
+			$white	= imagecolorallocate($dst, 0xFF, 0xFF, 0xFF);
+			$left	= ($w1 - $w3) / 2 - PADDING;
+			$right	= ($w1 + $w3) / 2 + PADDING;
+			imagesetthickness($dst, PADDING);
+			imageline($dst, $left, 0, $left, $h1, $white);
+			imageline($dst, $right, 0, $right, $h1, $white);
 		} else {
-			$w3 = $h2 * $k1;
-			$h3 = $h2;
+			// Square or landscape picture
+			if ($k1 > $k2) {
+				$w3 = $w2;
+				$h3 = $w2 / $k1;
+			} else {
+				$w3 = $h2 * $k1;
+				$h3 = $h2;
+			}
+
+			imagecopyresampled(
+				$dst, $src,					// $dst_image, $src_image
+				0, 0,						// $dst_x, $dst_y
+				($w2 - $w3) / 2, ($h2 - $h3) / 2,	// $src_x, $src_y
+				$w1, $h1,					// $dst_w, $dst_h
+				$w3, $h3					// $src_w, $src_h
+			);
 		}
-
-		imagecopyresampled(
-			$dst, $src,					// $dst_image, $src_image
-			0, 0,						// $dst_x, $dst_y
-			floor(($w2 - $w3) / 2), floor(($h2 - $h3) / 2),	// $src_x, $src_y
-			$w1, $h1,					// $dst_w, $dst_h
-			$w3, $h3					// $src_w, $src_h
-		);
-
+		
 		if (!file_exists($cachePath))
 			mkdir($cachePath, 0775, true);
 		
