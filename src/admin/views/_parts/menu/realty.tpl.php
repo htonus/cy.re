@@ -1,11 +1,13 @@
 <?php
 	$list = array(
 		'unit'			=> 'Measurement Unit',
-		'featureType'	=> 'Property Feature Type',
-		'realtyType'	=> 'Type of the Realty',
-		'city'			=> 'Cities',
-		'district'		=> 'Districts',
-		'realty'	=> 'Realty sites',
+		'featureType'	=> 'Feature Type',
+		'realtyType'	=> 'Realty Type',
+		'country'		=> 'Country',
+		'region'		=> 'District',
+		'city'			=> 'City',
+		'district'		=> 'Municipaty',
+		'realty'		=> 'Realty site',
 	);
 
 ?>

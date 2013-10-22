@@ -93,7 +93,7 @@ final class controllerFeatureType extends i18nEditor
 			)
 		);
 	}
-
+	
 	protected function doList(HttpRequest $request)
 	{
 		$list = array();
@@ -103,5 +103,6 @@ final class controllerFeatureType extends i18nEditor
 				getByCity($request->getAttachedVar('group'), true);
 		}
 
-		return $this->sendJson(array('featureTypeList' => $list));	}
+		return $this->sendJson(array('featureTypeList' => $list));
+	}
 }

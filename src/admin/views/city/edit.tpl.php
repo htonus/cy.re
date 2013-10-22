@@ -57,16 +57,18 @@
 
 
 <div class="control-group">
-	<label class="control-label" for="input_longitude">Region</label>
+	<label class="control-label" for="input_region">District</label>
 	<div class="controls">
 		<select name="region">
-			<option value="">Choose main city of the Region</option>
+			<option value="">Choose District</option>
 <?php
-	foreach ($cityList as $item) {
-		if ($item->getRegion())
-			continue;
+	$default = $form->getValue('region')
+		? $form->getValue('region')->getId()
+		: null;
+	
+	foreach ($regionList as $item) {
 ?>
-			<option value="<?=$item->getId()?>"><?=$item->getName()?></option>
+			<option value="<?=$item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null ?>><?=$item->getName()?></option>
 <?php
 	}
 ?>

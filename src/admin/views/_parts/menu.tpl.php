@@ -16,12 +16,14 @@
 		array(
 			'title'	=> 'Realty',
 			'items'	=> array(
-				'unit'			=> 'Measurement unit',
-				'featureType'	=> 'Property Feature Type',
-				'realtyType'	=> 'Type of the realty',
+				'unit'			=> 'Measurement Unit',
+				'featureType'	=> 'Feature Type',
+				'realtyType'	=> 'Realty Type',
+				'country'		=> 'Country',
+				'region'		=> 'District',
 				'city'			=> 'City',
-				'district'		=> 'District',
-				'realty'		=> 'Realty Sites',
+				'district'		=> 'Municipaty',
+				'realty'		=> 'Realty site',
 			)
 		),
 		array(

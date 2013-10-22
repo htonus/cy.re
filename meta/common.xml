@@ -60,6 +60,26 @@
 		<pattern name="StraightMapping" />
 	</class>
 
+	<class name="Region" extends="i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="i18n" type="Region_i18n" relation="OneToMany" required="false" />
+			<property name="latitude" type="Numeric" size="10,6" required="false" />
+			<property name="longitude" type="Numeric" size="10,6" required="false" />
+			<property name="country" type="Country" relation="OneToOne" required="true" fetch="lazy" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	<class name="Region_i18n">
+		<properties>
+			<identifier name="id" />
+			<property name="object" type="Region" relation="OneToOne" required="true" fetch="lazy" column="object_id" />
+			<property name="language" type="Language" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="name" type="String" size="32" required="false" />
+		</properties>
+		<pattern name="StraightMapping" />
+	</class>
+	
 	<class name="City" extends="i18n">
 		<properties>
 			<identifier name="id" />
@@ -67,7 +87,7 @@
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
 			<property name="country" type="Country" relation="OneToOne" required="true" fetch="lazy" />
-			<property name="region" type="City" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="region" type="Region" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="prefix" type="String" size="2" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
