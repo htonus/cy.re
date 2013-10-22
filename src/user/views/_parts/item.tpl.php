@@ -23,6 +23,8 @@
 		'GBP'	=> '&pound;',
 		'CNY'	=> 'Ұ',
 	);
+	
+	$partViewer->view('_parts/js', Model::create()->set('name', 'format.currency'));
 ?>
 
 <script typy="text/javascript">
@@ -30,10 +32,10 @@ var currencyRates = <?= json_encode($currencyRates, JSON_NUMERIC_CHECK)?>;
 
 jq(document).ready(function(){
 	jq('#currencyForPrice .badge').click(function(){
-		var priceSpan = jq('SPAN#type_<?= $area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY ?>');
-		var formatter = new Intl.NumberFormat('en-EN', {'maximumFractionDigits' : 0});
-		var price = parseFloat(priceSpan.attr('data')) * currencyRates[jq(this).attr('title')]
-		priceSpan.text(formatter.format(price));
+		var priceSpan = jq('SPAN#price');
+		var currency = jq(this).attr('title');
+		var price = parseFloat(priceSpan.attr('data')) * currencyRates[currency]
+		priceSpan.numberFormat(price, currency);
 		jq('#currencyForPrice .badge-active')
 			.removeClass('badge-active')
 			.addClass('badge-inactive');
@@ -105,8 +107,8 @@ jq(document).ready(function(){
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($price->getType()->getName())?> : &nbsp;</td>
-							<td id="mainFeatures">
-								<span id="type_<?= $price->getTypeId(); ?>" data="<?= $price->getValue()?>"><?= number_format($price->getValue(), 0, '', '.') ?></span>
+							<td>
+								<span id="price" data="<?= $price->getValue()?>">EUR <?= number_format($price->getValue(), 0, '', "'") ?></span>
 							</td>
 						</tr>
 <?php
@@ -118,7 +120,7 @@ jq(document).ready(function(){
 						<tr>
 							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
 							<td id="mainFeatures">
-								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $featureId == FeatureType::PRICE ? number_format($feature->getValue(), 0, '', '.') : $feature->getValue() ?></span>
+								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $featureId == FeatureType::PRICE ? number_format($feature->getValue(), 0, '', '.') : $feature->getValue() ?> <?= $feature->getType()->getSign(); ?></span>
 							</td>
 						</tr>
 <?php
