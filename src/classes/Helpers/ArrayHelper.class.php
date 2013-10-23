@@ -109,4 +109,20 @@
 
             return $leaves;
 		}
+		
+		/**
+		 * Expects collection of NamedObject elements to convert it ID => NAME
+		 * @param array $array
+		 * @return array $result
+		 */
+		public static function toNameList(array $array)
+		{
+			$out = array();
+			
+			foreach ($array as $item) {
+				$out[$item->getId()] = $item->getName();
+			}
+			
+			return $out;;
+		}
 	}

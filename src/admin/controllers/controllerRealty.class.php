@@ -44,7 +44,9 @@ final class controllerRealty extends i18nEditor
 		if ($request->hasGetVar('code')) {
 			$request->setGetVar(
 				'id',
-				StringHelper::me()->getDecode($request->getGetVar('code'))
+				is_numeric($request->getGetVar('code'))
+					? $request->getGetVar('code')
+					: StringHelper::me()->getDecode($request->getGetVar('code'))
 			);
 		}
 
@@ -147,35 +149,43 @@ final class controllerRealty extends i18nEditor
 		
 		return $error;
 	}
-
+	
 	protected function attachCollections(HttpRequest $request, Model $model)
 	{
 		$model->set('defaultOwner', $request->getAttachedVar('defaultOwner'));
 		
 		$model->set(
-			'cityList',
-			Criteria::create(City::dao())->
-				add(
-					Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
-				)->
-				addOrder('i18n.name')->
-				getList()
-		);
-
-		$model->set(
 			'countryList',
-			Criteria::create(Country::dao())->
+			CriteriaUtils::getSortedCriteria(Country::dao())->getList()
+		);
+		
+		$regionList = $cityList = $districtlist = array();
+		
+		if ($city = $this->getForm()->getValue('city')) {
+			$country = $city->getCountry();
+			
+			$cityList = CriteriaUtils::getSortedCriteria(City::dao())->
 				add(
-					Expression::eqId('i18n.language', GlobalVar::me()->get('language'))
+					Expression::eqId('country', $country)
 				)->
-				addOrder('i18n.name')->
-				getList()
-		);
-
-		$model->set(
-			'districtList',
-			District::dao()->getByCity($model->get('subject')->getCity())
-		);
+				getList();
+			
+			$regionList = CriteriaUtils::getSortedCriteria(Region::dao())->
+				add(
+					Expression::eqId('country', $country)
+				)->
+				getList();
+			
+			$districtlist = CriteriaUtils::getSortedCriteria(District::dao())->
+				add(
+					Expression::eqId('city', $city)
+				)->
+				getList();
+		}
+		
+		$model->set('cityList', $cityList);
+		$model->set('regionList', $regionList);
+		$model->set('districtList', $districtlist);
 
 		$model->set(
 			'realtyTypeList',

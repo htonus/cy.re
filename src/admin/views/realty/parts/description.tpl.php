@@ -62,12 +62,16 @@
 
 	</div>
 
+	
+	
+	
+	
 	<div class="span6">
 
 		<div class="control-group">
 			<label class="control-label" for="input_country">Country</label>
 			<div class="controls">
-				<select name="country" id="input_country">
+				<select name="country" id="input_country" style="background-color: #EFE;">
 					<option value=""></option>
 <?php
 	$default = $form->getValue('city')
@@ -85,7 +89,27 @@
 		</div>
 
 		<div class="control-group">
-			<label class="control-label" for="input_realtyType">City</label>
+			<label class="control-label" for="input_region">District</label>
+			<div class="controls">
+				<select name="region" id="input_region" style="background-color: #EFE;">
+					<option value=""></option>
+<?php
+	$default = $form->getValue('city')
+		? $form->getValue('city')->getRegionId()
+		: null;
+
+	foreach ($regionList as $item) {
+?>
+					<option value="<?=$item->getId()?>"<?=$default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+<?php
+	}
+?>
+				</select>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="input_city">City</label>
 			<div class="controls">
 				<select name="city" id="input_city">
 					<option value=""></option>
@@ -105,7 +129,7 @@
 		</div>
 
 		<div class="control-group">
-			<label class="control-label" for="input_district">District</label>
+			<label class="control-label" for="input_district">Municipality</label>
 			<div class="controls">
 				<select name="district" id="input_district">
 					<option value=""></option>
@@ -143,6 +167,43 @@
 
 <script type="text/javascript">
 jq(document).ready(function(){
+	
+	jq('#input_country, #input_region, #input_city').change(function(){
+		var countryId = regionId = cityId = null;
+		
+		if (jq(this).attr('id').match(/country/)) {
+			jq('#input_region OPTION, #input_city OPTION, #input_district OPTION').remove();
+			countryId = jq(this).val();
+		}
+		
+		if (jq(this).attr('id').match(/region/)) {
+			jq('#input_city OPTION, #input_district OPTION').remove();
+			regionId = jq(this).val();
+		}
+		
+		if (jq(this).attr('id').match(/city/)) {
+			jq('#input_district OPTION').remove();
+			cityId = jq(this).val();
+		}
+		
+		jq.getJSON(
+			'<?= PATH_WEB_ADMIN?>?area=city&action=list',
+			{
+				country	: countryId
+			,	region	: regionId
+			,	city	: cityId
+			},
+			function(data){
+				if (typeof data.regionList != 'undefined')
+					updateSelector('region', data.regionList);
+				if (typeof data.cityList != 'undefined')
+					updateSelector('city', data.regionList);
+				if (typeof data.districtList != 'undefined')
+					updateSelector('district', data.districtList);
+			}
+		);
+	});
+	
 	jq('#input_city').change(function(){
 		jq('#input_district OPTION').remove();
 
@@ -163,6 +224,23 @@ jq(document).ready(function(){
 		)
 	});
 });
+
+function updateSelector(name, list)
+{
+	var selector = jq('#input_' + name);
+	var selected = false;
+	
+	jq('OPTIONS', selector).remove();
+	
+	if (list.length > 1) {
+		selector.append('<option value=""></option>');
+	} else if (list.length == 1) {
+		selected = ' selected="selected"';
+	}
+	
+	for (var id in list)
+		selector.append('<option value="' + id + '"' + selected + '>' + list[id] + '</option>');
+}
 </script>
 
 <?php

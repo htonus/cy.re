@@ -31,4 +31,24 @@
 			
 			return $criteria->getList();
 		}
+		
+		public static function getSortedCriteria(ProtoDAO $dao)
+		{
+			$criteria = Criteria::create($dao);
+
+			if ($dao instanceof i18nDAO) {
+				$criteria->
+					add(
+						Expression::eqId(
+							'i18n.language',
+							 GlobalVar::me()->get('language')
+						)
+					)->
+					addOrder(
+						OrderBy::create('i18n.name')->asc()
+					);
+			}
+			
+			return $criteria;
+		}
 	}

@@ -21,6 +21,9 @@ final class controllerCity extends i18nEditor
 		$this->map->addSource('country', RequestType::post());
 		$this->map->addSource('region', RequestType::get());
 		$this->map->addSource('region', RequestType::post());
+		
+		$this->setMethodMapping('list', 'doList');
+		$this->setAccessMapping('list', Access::UPDATE);
 	}
 	
 	public function beforeHandle(HttpRequest $request)
@@ -38,6 +41,7 @@ final class controllerCity extends i18nEditor
 		
 		if (
 			$region
+			&& $country
 			&& $region->getCountryId() == $country->getId()
 		)
 			$request->setAttachedVar('region', $region);
@@ -123,5 +127,66 @@ final class controllerCity extends i18nEditor
 				)
 			)
 		);
-	}	
+	}
+	
+	protected function doList(HttpRequest $request)
+	{
+		$form = Form::create()->
+			add(
+				Primitive::identifier('country')->of('Country')
+			)->
+			add(
+				Primitive::identifier('region')->of('region')
+			)->
+			add(
+				Primitive::identifier('city')->of('city')
+			)->
+			import($request->getGet())->
+			importMore($request->getPost());
+		
+		$regionList = $cityList = $districtList = array();
+		$country = $form->getValue('country');
+		$region = $form->getValue('region');
+		$city = $form->getValue('city');
+		
+		switch (true) {
+			case !empty($country):
+				$regionList = CriteriaUtils::getSortedCriteria(Region::dao())->
+					add(
+						Expression::eqId('country', $country)
+					)->
+					getList();
+				
+				if (count($regionList) == 1)
+					$region = reset($regionList);
+				
+			case !empty($region):
+				$cityList = CriteriaUtils::getSortedCriteria(City::dao())->
+					add(
+						empty($region)
+							? Expression::eqId('country', $country)
+							: Expression::eqId('region', $region)
+					)->
+					getList();
+				
+				if (count($cityList) == 1)
+					$city = reset($cityList);
+				
+			case !empty($city):
+				if (!empty($city)) {
+					$districtList = CriteriaUtils::getSortedCriteria(District::dao())->
+						add(
+							Expression::eqId('city', $city)
+						)->
+						getList();
+				}
+		}
+		
+		$regionList		= ArrayHelper::toNameList($regionList);
+		$cityList		= ArrayHelper::toNameList($cityList);
+		$districtList	= ArrayHelper::toNameList($districtList);
+		
+		
+		return $this->sendJson(compact('regionList', 'cityList', 'districtList'));
+	}
 }
