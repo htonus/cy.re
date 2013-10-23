@@ -53,12 +53,16 @@ final class controllerCity extends i18nEditor
 	{
 		$regionList = array();
 		
+		$countryList = Criteria::create(Country::dao())->getList();
+		$model->set('countryList', $countryList);
+		
 		if ($request->hasAttachedVar('country')) {
 			$country = $request->getAttachedVar('country');
-		} else {
-			$country = $this->getForm()->getValue('country');
+		} elseif (!($country = $this->getForm()->getValue('country'))) {
+			if (count($countryList) == 1)
+				$country = reset($countryList);
 		}
-			
+		
 		if ($country) {
 			$model->set('country', $country);
 			
@@ -80,7 +84,6 @@ final class controllerCity extends i18nEditor
 					setValue('region', $request->getAttachedVar('region'));
 		}
 		
-		$model->set('countryList', Criteria::create(Country::dao())->getList());
 		$model->set('regionList', $regionList);
 		
 		return parent::attachCollections($request, $model);
