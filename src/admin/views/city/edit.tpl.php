@@ -38,7 +38,7 @@
 <div class="control-group">
 	<label class="control-label" for="input_country">Country</label>
 	<div class="controls">
-		<select name="country">
+		<select name="country" id="input_country">
 			<option value="">Choose country</option>
 <?php
 	$default = $form->getValue('country')
@@ -59,7 +59,7 @@
 <div class="control-group">
 	<label class="control-label" for="input_region">District</label>
 	<div class="controls">
-		<select name="region">
+		<select name="region" id="input_region">
 			<option value="">Choose District</option>
 <?php
 	$default = $form->getValue('region')
@@ -110,3 +110,42 @@
 
 
 </form>
+
+<script type="text/javascript">
+jq(document).ready(function(){
+	
+	jq('#input_country').change(function(){
+		jq('#input_region OPTION').remove();
+		
+		jq.getJSON(
+			'<?= PATH_WEB_ADMIN?>?area=city&action=list',
+			{
+				country	: jq(this).val()
+			,	region	: null
+			,	city	: null
+			},
+			function(data){
+				if (typeof data.regionList != 'undefined')
+					updateSelector('region', data.regionList);
+			}
+		);
+	});
+});
+
+function updateSelector(name, list)
+{
+	var selector = jq('#input_' + name);
+	var selected = false;
+	
+	jq('OPTIONS', selector).remove();
+	
+	if (list.length > 1) {
+		selector.append('<option value=""></option>');
+	} else if (list.length == 1) {
+		selected = ' selected="selected"';
+	}
+	
+	for (var id in list)
+		selector.append('<option value="' + id + '"' + selected + '>' + list[id] + '</option>');
+}
+</script>

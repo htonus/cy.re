@@ -3,7 +3,15 @@
  * $Id$
  */
 
-	$url = '/index.php?area='.$area.'&action=';
+	$url = '/index.php?area='.$area;
+	
+	if (!empty($country))
+		$url .= '&country='.$country->getId();
+	
+	if (!empty($region))
+		$url .= '&region='.$region->getId();
+	
+	$url .= '&action=';
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
