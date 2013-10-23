@@ -197,7 +197,7 @@ jq(document).ready(function(){
 				if (typeof data.regionList != 'undefined')
 					updateSelector('region', data.regionList);
 				if (typeof data.cityList != 'undefined')
-					updateSelector('city', data.regionList);
+					updateSelector('city', data.cityList);
 				if (typeof data.districtList != 'undefined')
 					updateSelector('district', data.districtList);
 			}
