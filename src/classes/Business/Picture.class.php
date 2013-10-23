@@ -34,11 +34,16 @@
 			return PATH_WEB_PIX.$this->getFileName();
 		}
 
-		public function getPath()
+		public function getPath($isCachePath = false)
 		{
 			return PATH_PIX
+				.($isCachePath ? 'cache/' : null)
 				.implode(DS, str_split(substr(sprintf('%08d', $this->getId()), 0, -2), 2)).DS
-				.$this->getId().'.'.$this->getType()->getExtension();
+				.(
+					$isCachePath
+						? null
+						: $this->getId().'.'.$this->getType()->getExtension()
+				);
 		}
 	}
 ?>
