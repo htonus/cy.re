@@ -15,16 +15,17 @@ define ('PADDING', 2);
 $mime = null;
 
 try {
-	$dir = dirname(__FILE__).'/';
-	
 	$name = empty($_GET['p']) ? 'dummy.png' : $_GET['p'];
 	$w1	= empty($_GET['w']) ? null : $_GET['w'];
 	$h1	= empty($_GET['h']) ? null : $_GET['h'];
 	
 	list($id, $ext) = explode('.', $name);
-	$dir .= implode('/', str_split(substr(sprintf('%08d', $id), 0, -2), 2)).'/';
+	$idPath = implode('/', str_split(substr(sprintf('%08d', $id), 0, -2), 2)).'/';
 	
-	$path = $dir.$name;
+	$base = dirname(__FILE__).'/';
+	$filePath = $base.$idPath;
+	$cachePath = $base.'cache/'.$idPath;
+	$path = $filePath.$name;
 
 	// Requested file does not exist
 	if (!file_exists($path))
@@ -34,7 +35,6 @@ try {
 	if ($w1 + $h1 < 1)
 		throw new FoundException($path);
 	
-	$cachePath = $dir.'cache/';
 	$cacheName = "$id.$w1-$h1.$ext";
 
 	// Have cached picture let's show
