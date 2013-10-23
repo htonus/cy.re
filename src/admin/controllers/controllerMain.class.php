@@ -23,7 +23,9 @@ final class controllerMain extends MethodMappedController
 					'error'		=> 'actionError',
 					'login'		=> 'actionLogin',
 					'logout'	=> 'actionLogout',
-				)
+					'cache'		=> 'cleanPictureCache',
+					'check'		=> 'checkPictureIntegrity',
+					'clean'		=> 'fixPictureIntegrity'				)
 			)->
 			setDefaultAction('index');
 	}
