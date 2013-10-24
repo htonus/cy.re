@@ -34,7 +34,9 @@
 <script type="text/javascript">
 jq(document).ready(function () {
     'use strict';
-
+	
+	jq('#pictureTable').tableDnD();
+	
     // Initialize the jQuery File Upload widget:
     jq('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
@@ -190,7 +192,7 @@ function togglePreviewPicture(btn)
 	<div class="fileupload-loading"></div>
 	<br>
 	<!-- The table listing the files available for upload/download -->
-	<table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+	<table role="presentation" class="table table-striped" id="pictureTable"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
 
 
 <!-- modal-gallery is the modal dialog used for the image gallery -->
