@@ -35,8 +35,6 @@
 jq(document).ready(function () {
     'use strict';
 	
-	jq('#pictureTable').tableDnD();
-	
     // Initialize the jQuery File Upload widget:
     jq('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
@@ -68,10 +66,6 @@ jq(document).ready(function () {
 	}).done(function (result) {
 		jq(this).fileupload('option', 'done')
 			.call(this, null, {result: result});
-		
-		jq('.moveup').click(itemMoveUp);
-
-		jq('.movedown').click(itemMoveDown);	
 	});
 	
 	jq('#btnSetOrder').click(function(){
@@ -101,6 +95,9 @@ jq(document).ready(function () {
 			}
 		);
 	});
+	
+	jq('#pictureTable').tableDnD();
+
 });
 
 function itemMoveUp(button)
