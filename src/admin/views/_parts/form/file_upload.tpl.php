@@ -103,8 +103,12 @@ jq(document).ready(function () {
 function configureDnD()
 {
 	jq("#pictureTable").tableDnD({
-		'onDragStyle'	: 'dragStarted'
-	,	'onDropStyle'	: 'dragDroped'
+		onDragClass	: 'dragStarted'
+	,	onDrop		: function(){
+			jq(this)
+				.removeClass('dragStarted')
+				.addClass('dragMoved')
+		}
 	});
 }
 
