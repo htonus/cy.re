@@ -14,3 +14,9 @@
 .green {
 	color: green;
 }
+.dragStarted TD {
+	background-color: #CFC !important;
+}
+.dragDroped { 
+	background-color: #FEE !important;
+}
