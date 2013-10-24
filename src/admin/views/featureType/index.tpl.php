@@ -40,6 +40,13 @@
 		</div>
 	</div>
 
+<?php
+
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	
+?>
+	
+	
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -69,3 +76,8 @@
 ?>
 	</tbody>
 	</table>
+
+<?php
+
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	
