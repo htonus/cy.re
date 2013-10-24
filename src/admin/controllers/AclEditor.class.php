@@ -89,4 +89,19 @@ class AclEditor extends PrototypedEditor
 	{
 		return $this->setAccessMappingList($first, $second);
 	}
+	
+	protected function sendJson($data)
+	{
+		header(
+			'Content-type: '
+			.ContentTypeHeader::create()->
+				setMediaType('text/json')->
+				setCharset('utf-8')->
+				toString()
+		);
+		
+		echo json_encode($data);
+		
+		exit;
+	}
 }

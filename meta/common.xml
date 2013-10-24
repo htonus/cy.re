@@ -133,6 +133,7 @@
 		<properties>
 			<identifier name="id" />
 			<property name="name" type="String" size="128" required="true" /> <!-- in file system -->
+			<property name="order" type="Integer" required="false" />
 			<property name="type" type="ImageType" relation="OneToOne" required="true" fetch="lazy" />
 			<property name="main" type="Boolean" required="false" default="false" />
 			<property name="size" type="BigInteger" required="false" default="0" />

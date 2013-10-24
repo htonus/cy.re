@@ -135,6 +135,7 @@ CREATE TABLE "realty_picture" (
     "type_id" INTEGER NOT NULL,
     "name" CHARACTER VARYING(128) NOT NULL,
     "main" BOOLEAN NULL DEFAULT false,
+    "order" INTEGER NULL,
 	"size" BIGINT NULL default 0,
 	"width" INT NOT NULL,
 	"height" INT NOT NULL,

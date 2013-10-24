@@ -43,7 +43,7 @@ jq(document).ready(function () {
         list_url: '/?area=<?= $area?>&action=get_pictures&id=<?=$form->getValue('id')->getId()?>',
 		previewMaxWidth: <?=  PictureSize::thumbnail()->getWidth()?>,
 		previewMaxHeight: <?=  PictureSize::thumbnail()->getHeight()?>,
-		prependFiles: true,
+		prependFiles: false,
     });
 	
     // Enable iframe cross-domain access via redirect option:
@@ -66,9 +66,70 @@ jq(document).ready(function () {
 	}).done(function (result) {
 		jq(this).fileupload('option', 'done')
 			.call(this, null, {result: result});
-	});
+		
+		jq('.moveup').click(itemMoveUp);
 
+		jq('.movedown').click(itemMoveDown);	
+	});
+	
+	jq('#btnSetOrder').click(function(){
+		var order = 0, numbers = {};
+
+		jq('.orderable').each(function(){
+			jq(this).val(++order);
+			numbers['' + jq(this).attr('name').match(/\d+/)] = order;
+		});
+		
+		jq.getJSON(
+			'/index.php?area=<?= $area ?>&action=numbering',
+			{
+				'numbers' : numbers
+			},
+			function(data){
+				if (data.result == 1) {
+					jq('#orderResult').text('Success').removeClass('red').addClass('green');
+				} else {
+					jq('#orderResult').text('Failed').removeClass('green').addClass('red');
+				}
+				
+				jq('#orderResult')
+					.fadeIn('slow', function(){
+						jq(this).fadeOut('slow');
+					});
+			}
+		);
+	});
 });
+
+function itemMoveUp()
+{
+	var tr = jq(this).parents('TR');
+	var prevTR = tr.prev();
+	
+	if (prevTR.size()) {
+		var order = tr.find(':hidden').val();
+		tr.remove().insertBefore(prevTR);
+		prevTR.find(':hidden').val(order);
+		tr.find(':hidden').val(order - 1);
+		tr.find('.moveup').click(itemMoveUp);
+		tr.find('.movedown').click(itemMoveDown);
+	}
+	
+}
+function itemMoveDown()
+{
+	var tr = jq(this).parents('TR');
+	var nextTR = tr.next();
+	
+	if (nextTR.size()) {
+		var order = tr.find(':hidden').val();
+		tr.remove().insertAfter(nextTR);
+		nextTR.find(':hidden').val(order);
+		tr.find(':hidden').val(order + 1);
+		tr.find('.moveup').click(itemMoveUp);
+		tr.find('.movedown').click(itemMoveDown);
+	}
+}
 
 function togglePreviewPicture(btn)
 {
@@ -90,7 +151,7 @@ function togglePreviewPicture(btn)
 
 	<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 	<div class="row fileupload-buttonbar">
-		<div class="span6">
+		<div class="span8">
 			<!-- The fileinput-button span is used to style the file input field as button -->
 			<span class="btn btn-success fileinput-button">
 				<i class="icon-plus icon-white"></i>
@@ -109,6 +170,11 @@ function togglePreviewPicture(btn)
 				<i class="icon-trash icon-white"></i>
 				<span>Delete</span>
 			</button>
+			<button type="button" class="btn btn-info" id="btnSetOrder">
+				<i class="icon-chevron-down icon-white"></i>
+				<span>Set order</span>
+			</button>
+			<span id="orderResult" class="hide"></span>
 		</div>
 		<!-- The global progress information -->
 		<div class="span3 fileupload-progress fade">
@@ -158,8 +224,9 @@ function togglePreviewPicture(btn)
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
-	<td class="preview"><span class="fade"></span></td>
-        <td>
+		<td></td>
+		<td class="preview"><span class="fade"></span></td>
+		<td>
 			<div class="name">{%=file.name%}</div>
 			<div class="size">{%=o.formatFileSize(file.size)%}</div>
 			<div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
@@ -193,12 +260,20 @@ function togglePreviewPicture(btn)
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
 {%	if (file.error) { %}
+			<td></td>
 			<td>
 				<div class="name"><span>{%=file.name%}</span></div>
 				<div class="size"><span>{%=o.formatFileSize(file.size)%}</span></div>
 			</td>
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
 {%	} else { %}
+			<td width="30px">
+				<div class="btn-group btn-group-vertical">
+					<a name="#" class="btn moveup"><i class="icon-arrow-up"></i></a>
+					<input type="hidden" class="orderable" style="width: 25px;" name="order[{%= file.id %}]" value="{%= file.order %}" />
+					<a name="#" class="btn movedown"><i class="icon-arrow-down"></i></a>
+				</div>
+			</td>
             <td class="preview" style="width: <?=  PictureSize::thumbnail()->getWidth()?>px">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
             {% } %}</td>

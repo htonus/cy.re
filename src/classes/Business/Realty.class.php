@@ -85,5 +85,20 @@
 				? null
 				: $list[$featureId]->getValue();
 		}
+		
+		/**
+		 * @return RealtyPicturesDAO
+		**/
+		public function getPictures($lazy = false)
+		{
+			if (!$this->pictures || ($this->pictures->isLazy() != $lazy)) {
+				parent::getPictures($lazy);
+				
+				$this->pictures->setCriteria(
+					Criteria::create()->addOrder('order')
+				);
+			}
+			
+			return $this->pictures;
+		}
 	}
-?>

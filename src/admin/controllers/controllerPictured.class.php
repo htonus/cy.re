@@ -28,7 +28,8 @@ class controllerPictured extends AclEditor
 				'get_pictures'		=> 'doGetPictures',
 				'add_pictures'		=> 'doAddPictures',
 				'drop_picture'		=> 'doDropPicture',
-				'preview_picture'	=> 'doPreviewPicture'
+				'preview_picture'	=> 'doPreviewPicture',
+				'numbering'			=> 'doNumbering',
 			);
 
 			$this->setMethodMappingList($list);
@@ -98,6 +99,8 @@ class controllerPictured extends AclEditor
 						'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 						'type'			=> $picture->getType()->getMimeType(),
 						'url'			=> $picture->getUrl(),
+						'id'			=> $picture->getId(),
+						'order'			=> $picture->getOrder(),
 					);
 
 					if (
@@ -145,6 +148,8 @@ class controllerPictured extends AclEditor
 				'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 				'type'			=> $picture->getType()->getMimeType(),
 				'url'			=> $picture->getUrl(),
+				'id'			=> $picture->getId(),
+				'order'			=> $picture->getOrder(),
 			);
 
 			if (
@@ -232,5 +237,35 @@ class controllerPictured extends AclEditor
 	protected function doAddTextToPicture(HttpRequest $request)
 	{
 		
+	}
+
+	protected function doNumbering(HttpRequest $request)
+	{
+		$numbers = Form::create()->
+			add(
+				Primitive::set('numbers')
+			)->
+			import($request->getGet())->
+			importMore($request->getPost())->
+			getValue('numbers');
+		
+		$return = 0;
+		
+		try {
+			if ($numbers) {
+				$db = DBPool::me()->getLink();
+				
+				foreach ($numbers as $id => $order) {
+					$result = $db->queryRaw('update "'.RealtyPicture::dao()->getTable().'" set "order"='.$order.' where "id"='.$id);
+					RealtyPicture::dao()->uncacheById($id);
+				}
+
+				RealtyPicture::dao()->uncacheLists();
+
+				$return = 1;
+			}
+		} catch (Exception $e) {/*_*/}
+			
+		return $this->sendJson(array('result' => $return));
 	}
 }
