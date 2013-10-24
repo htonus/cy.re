@@ -96,7 +96,7 @@ jq(document).ready(function () {
 		);
 	});
 	
-	setTimeout('configureDnD', 1000);
+	setTimeout('configureDnD()', 1000);
 
 });
 
