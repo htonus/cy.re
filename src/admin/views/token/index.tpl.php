@@ -9,6 +9,12 @@
 
 	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
 	
+<?php
+
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	
+?>
+	
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -37,3 +43,8 @@
 	</tbody>
 	</table>
 	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
+
+<?php
+
+	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	
