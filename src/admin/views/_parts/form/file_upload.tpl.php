@@ -1,4 +1,3 @@
-
 <!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
@@ -28,6 +27,7 @@
 //			'fu-main',				// The main application script
 			'bootstrap-image-gallery.min',	// Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo
 			'jquery.iframe-transport',		// The Iframe Transport is required for browsers without support for XHR file uploads
+			'jquery.tablednd'	// move table rows plugin for pictures
 		))
 	);
 ?>
