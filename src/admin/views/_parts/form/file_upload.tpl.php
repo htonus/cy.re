@@ -96,9 +96,17 @@ jq(document).ready(function () {
 		);
 	});
 	
-	jq('#pictureTable').tableDnD();
+	setTimeout('configureDnD', 1000);
 
 });
+
+function configureDnD()
+{
+	jq("#pictureTable").tableDnD({
+		'onDragStyle'	: 'dragStarted'
+	,	'onDropStyle'	: 'dragDroped'
+	});
+}
 
 function itemMoveUp(button)
 {
