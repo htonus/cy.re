@@ -3,15 +3,38 @@
  * $Id$
  */
 
-	$url = '/index.php?area=token&action=';
+	$url = '/index.php?area='.$area
+		.(empty($search) ? $search = '' : '&search='.$search)
+		.'&action=';
 ?>
 	<h1>Items of type: <?=ucfirst($area)?></h1>
 
-	<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a><br />
+	<form class="" action="<?= PATH_WEB_ADMIN?>" method="get">
+		<input type="hidden" name="area" value="<?= $area?>" />
+		<input type="hidden" name="action" value="<?= $action?>" />
+	<div class="navbar">
+		<div class="navbar-inner">
+			<span class="brand">Filter</span>
+			<ul class="nav">
+				<li><a name="">Text to search</a></li>
+				<li class="navbar-search">
+					<input type="text" name="search" value="<?= $search ?>" class="input-medium search-query">
+				</li>
+				<li>&nbsp;</li>
+				<li>
+					<button type="submit" class="btn">Search</button>
+				</li>
+			</ul>
+			<div class="pull-right">
+				<a class="btn btn-success pull-right" href="<?=$url?>edit">Add new</a>
+			</div>
+		</div>
+	</div>
+	</form>
 	
 <?php
 
-	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	$partViewer->view('_parts/pager', $pager->set('url', $url.'index'));
 	
 ?>
 	
@@ -46,5 +69,5 @@
 
 <?php
 
-	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
-	
+	$partViewer->view('_parts/pager', $pager->set('url', $url.'index'));
+
