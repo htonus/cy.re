@@ -17,6 +17,6 @@
 .dragStarted TD {
 	background-color: #CFC !important;
 }
-.dragDroped { 
+.dragDroped TD { 
 	background-color: #FEE !important;
 }
