@@ -17,6 +17,7 @@
 	$partViewer->view(
 		'_parts/js',
 		Model::create()->set('name', array(
+			'jquery.tablednd',	// move table rows plugin for pictures
 			'tmpl.min',				// The Templates plugin is included to render the upload/download listings
 			'jquery.ui.widget',		// The jQuery UI widget factory, can be omitted if jQuery UI is already included
 			'load-image.min',		// The Load Image plugin is included for the preview images and image resizing functionality
@@ -27,7 +28,6 @@
 //			'fu-main',				// The main application script
 			'bootstrap-image-gallery.min',	// Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo
 			'jquery.iframe-transport',		// The Iframe Transport is required for browsers without support for XHR file uploads
-			'jquery.tablednd'	// move table rows plugin for pictures
 		))
 	);
 ?>
