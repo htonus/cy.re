@@ -101,9 +101,9 @@ jq(document).ready(function () {
 	});
 });
 
-function itemMoveUp()
+function itemMoveUp(button)
 {
-	var tr = jq(this).parents('TR');
+	var tr = jq(button).parents('TR');
 	var prevTR = tr.prev();
 	
 	if (prevTR.size()) {
@@ -116,9 +116,9 @@ function itemMoveUp()
 	}
 	
 }
-function itemMoveDown()
+function itemMoveDown(button)
 {
-	var tr = jq(this).parents('TR');
+	var tr = jq(button).parents('TR');
 	var nextTR = tr.next();
 	
 	if (nextTR.size()) {
@@ -269,9 +269,9 @@ function togglePreviewPicture(btn)
 {%	} else { %}
 			<td width="30px">
 				<div class="btn-group btn-group-vertical">
-					<a name="#" class="btn moveup"><i class="icon-arrow-up"></i></a>
+					<a name="#" class="btn moveup" onclick="itemMoveUp(this)"><i class="icon-arrow-up"></i></a>
 					<input type="hidden" class="orderable" style="width: 25px;" name="order[{%= file.id %}]" value="{%= file.order %}" />
-					<a name="#" class="btn movedown"><i class="icon-arrow-down"></i></a>
+					<a name="#" class="btn movedown" onclick="itemMoveDown(this)"><i class="icon-arrow-down"></i></a>
 				</div>
 			</td>
             <td class="preview" style="width: <?=  PictureSize::thumbnail()->getWidth()?>px">{% if (file.thumbnail_url) { %}
