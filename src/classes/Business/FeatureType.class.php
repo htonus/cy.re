@@ -32,14 +32,16 @@
 		}
 		
 		// Some very important features from the COMMON group (SYNC with DB)
-		const PRICE		= 1;
-		const AREA		= 2;
-		const BEDROOMS	= 3;
-		const TOILETS	= 4;
+		const PRICE			= 1;
+		const AREA			= 2;
+		const BEDROOMS		= 3;
+		const TOILETS		= 4;
 		const PARKING_LOTS	= 5;
 		const PRICE_MONTHLY	= 6;	// for rent (future)
-		const FLOOR		= 7;
-		const FLOORS	= 8;
+		const FLOOR			= 7;
+		const FLOORS			= 8;
+		
+		const VAT			= 77;
 		
 		public function getSign()
 		{
