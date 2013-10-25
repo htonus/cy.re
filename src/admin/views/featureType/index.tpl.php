@@ -29,7 +29,7 @@
 
 	foreach ($groupList as $item) {
 ?>
-				<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+				<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= i18nHelper::detokenize($item->getName()); ?></option>
 <?php
 	}
 ?>
