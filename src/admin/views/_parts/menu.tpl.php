@@ -30,7 +30,9 @@
 			'title'	=> 'Articles',
 			'items'	=> array(
 				'articleCategory'	=> 'Article categories',
-				'article'			=> 'Articles',
+				'information'		=> 'Information',
+				'project'			=> 'Project',
+				'about'				=> 'About Us',
 				'news'				=> 'News',
 			)
 		),

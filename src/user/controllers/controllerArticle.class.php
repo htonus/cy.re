@@ -10,10 +10,15 @@
  *
  * @author htonus
  */
-class controllerRead extends controllerMain
+class controllerArticle extends controllerMain
 {
 	const PER_PAGE	= 20;
 	const LATEST	= 3;
+	
+	/**
+	 * @var ArticleType 
+	 */
+	protected $type = null;
 	
 	public function __construct()
 	{
@@ -28,8 +33,6 @@ class controllerRead extends controllerMain
 				'item'		=> Access::READ,
 			)
 		);
-		
-		$this->section = Section::read();
 	}
 	
 	public function actionIndex(HttpRequest $request)
@@ -107,6 +110,9 @@ class controllerRead extends controllerMain
 			add(
 				Expression::notNull('published')
 			)->
+			add(
+				Expression::eqId('type', $this->type)
+			)->
 			addOrder(
 				OrderBy::create('created')->desc()
 			);
@@ -115,6 +121,8 @@ class controllerRead extends controllerMain
 			$criteria->add(
 				Expression::eqId('category', $category)
 			);
+			
+			$mav->getModel()->set('category', $category);
 		}
 		
 		if ($search = $request->getAttachedVar('search')) {
@@ -127,8 +135,8 @@ class controllerRead extends controllerMain
 		}
 		
 		$mav->getModel()->
-			set('category', $category)->
-			set('search', $search);
+			set('search', $search)->
+			set('section', $this->section);
 		
 		$request->setAttachedVar('criteria', $criteria);
 		

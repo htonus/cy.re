@@ -35,19 +35,25 @@
 
 					<div class="visible-phone">
 						<select style="width: 100%;" onchange="focument.location.href='<?= PATH_WEB?>' + jq(this).val()">
-							<option value="buy">_S__BUY___</option>
-							<option value="rent">_S__RENT___</option>
-							<option value="read">_S__READ___</option>
-							<option value="abount">_S__ABOUT___</option>
+<?php
+	foreach (Section::getMenuList() as $item) {
+?>
+							<option value="<?= $item->getSlug() ?>"><?= $item->getName() ?></option>
+<?php
+	}
+?>
 						</select>
 					</div>
 
 					<div class="navbar pull-right hidden-phone">
 						<ul class="nav" style="margin: 0px;">
-							<li class="<?= $area == 'buy' ? 'selected' : null?>"><a href="/buy">_S__BUY___</a></li>
-							<li class="<?= $area == 'rent' ? 'selected' : null?>"><a href="/rent">_S__RENT___</a></li>
-							<li class="<?= $area == 'read' ? 'selected' : null?>" id="toRead"><a href="#">_S__READ___</a></li>
-							<li class="<?= $area == 'abount' ? 'selected' : null?>"><a href="/about">_S__ABOUT___</a></li>
+<?php
+	foreach (Section::getMenuList() as $item) {
+?>
+							<li class="<?= $area == $item->getSlug() ? 'selected' : null ?>" id="section_<?= ucfirst($item->getId()) ?>"><a href="/<?= $item->getSlug() ?>"><?= $item->getName()?></a></li>
+<?php
+	}
+?>
 						</ul>
 					</div>
 					
@@ -69,7 +75,7 @@
 			continue;
 		
 		$categoryUrl = PATH_WEB
-			.Section::read()->getSlug().'/'
+			.Section::info()->getSlug().'/'
 			.($item->getSlug() ? $item->getSlug() : $item->getId());
 ?>
 						<div class="span3">
@@ -90,7 +96,7 @@
 var hideInterval = 0;
 
 jq(document).ready(function(){
-	jq('#toRead, .submenu .inner')
+	jq('#section_<?= Section::INFO ?>, .submenu .inner')
 		.mouseover(doMouseOver)
 		.mouseout(doMouseOut);
 });
@@ -101,7 +107,7 @@ function doMouseOver()
 		clearInterval(hideInterval);
 		hideInterval = 0;
 	}
-	jq('#toRead').addClass('hover');
+	jq('#section_<?= Section::INFO ?>').addClass('hover');
 }
 function doMouseOut()
 {

@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h1><?=$id ? 'Update Article: '.$form->getValue('id')->getName() : 'Add new Article'?></h1>
+<h1><?=$id ? 'Update '.ucfirst($area).': '.$form->getValue('id')->getName() : 'Add new '.ucfirst($area)?></h1>
 
 <?php
 	$partViewer->view('_parts/form/flash');
@@ -116,7 +116,7 @@
 	
 	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
 <?php
-	$partViewer->view('article/parts/pictures');
+	$partViewer->view($area.'/parts/pictures');
 ?>
 	</div>
 

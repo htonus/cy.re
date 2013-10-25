@@ -25,13 +25,20 @@ CREATE INDEX article_category_i18n_language_id_idx ON article_category_i18n(lang
 CREATE UNIQUE INDEX article_category_i18n_object_id_language_id_uidx ON "article_category_i18n"("object_id", "language_id");
 
 
+CREATE TABLE "article_type" (
+    "id" BIGINT NOT NULL,
+    "name" CHARACTER VARYING(16) NULL,
+    PRIMARY KEY("id")
+);
+
 
 CREATE SEQUENCE "article_id";
 CREATE TABLE "article" (
     "id" BIGINT NOT NULL default nextval('article_id'),
     "created" timestamp NOT NULL DEFAULT now(),
     "published" timestamp NULL,
-    "category_id" BIGINT NOT NULL REFERENCES "article_category"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "category_id" BIGINT NOT NULL REFERENCES "article_category"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
+    "type_id" BIGINT NOT NULL REFERENCES "article_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "promote" boolean not null default false,
 
     "name" CHARACTER VARYING(128) NULL,
@@ -39,6 +46,8 @@ CREATE TABLE "article" (
 
     PRIMARY KEY("id")
 );
+CREATE INDEX article_category_id_idx ON "article"("category_id");
+CREATE INDEX article_type_id_idx ON "article"("type_id");
 
 CREATE SEQUENCE "article_i18n_id";
 CREATE TABLE "article_i18n" (
@@ -61,6 +70,7 @@ CREATE TABLE "article_picture" (
     "type_id" INTEGER NOT NULL,
     "order" INTEGER NULL,
     "name" CHARACTER VARYING(128) NOT NULL,
+    "text" CHARACTER VARYING(256) NULL;
     "main" BOOLEAN NULL DEFAULT false,
 	"size" BIGINT NULL default 0,
 	"width" INT NOT NULL,
@@ -102,6 +112,7 @@ CREATE TABLE "news_picture" (
     "object_id" BIGINT NOT NULL REFERENCES "news"("id") ON UPDATE CASCADE ON DELETE CASCADE,
     "type_id" INTEGER NOT NULL,
     "name" CHARACTER VARYING(128) NOT NULL,
+    "text" CHARACTER VARYING(256) NULL;
     "order" INTEGER NULL,
     "main" BOOLEAN NULL DEFAULT false,
 	"size" BIGINT NULL default 0,

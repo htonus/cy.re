@@ -12,7 +12,7 @@
 		}
 	}
 	
-	$prefix = PATH_WEB.Section::read()->getSlug().'/';
+	$prefix = PATH_WEB.Section::info()->getSlug().'/';
 	$model->set('prefix', $prefix);
 ?>
 	<div class="page-title">

@@ -108,6 +108,11 @@ insert into custom_type ("id", "name") values (1, 'carousel');
 insert into custom_type ("id", "name") values (2, 'recent');
 insert into "section" ("id", "name") values (1, 'buy');
 insert into "section" ("id", "name") values (2, 'rent');
+insert into "section" ("id", "name") values (3, 'sell');
+insert into "section" ("id", "name") values (4, 'lend');
+insert into "section" ("id", "name") values (5, 'info');
+insert into "section" ("id", "name") values (6, 'project');
+insert into "section" ("id", "name") values (7, 'about');
 
 insert into static_type ("id", "name") values (1, 'about');
 insert into static_type ("id", "name") values (2, 'contact');
@@ -117,6 +122,10 @@ insert into static_type ("id", "name") values (5, 'phone');
 insert into static_type ("id", "name") values (6, 'email');
 insert into static_type ("id", "name") values (7, 'address');
 insert into static_type ("id", "name") values (8, 'company');
+
+insert into article_type ("id", "name") values (1, 'information');
+insert into article_type ("id", "name") values (2, 'project');
+insert into article_type ("id", "name") values (3, 'about');
 
 insert into country (country_code, phone_code) values ('CY', 357);
 insert into country_i18n (object_id, language_id, "name") select id, 1, 'Cyprus' from country where country_code='CY';

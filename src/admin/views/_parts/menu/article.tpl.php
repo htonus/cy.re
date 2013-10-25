@@ -1,7 +1,9 @@
 <?php
 	$list = array(
 		'articleCategory'	=> 'Article categories',
-		'article'			=> 'Article',
+		'information'		=> 'Information',
+		'project'			=> 'Project',
+		'about'				=> 'About Us',
 		'news'				=> 'News',
 	);
 

@@ -5,10 +5,10 @@
 	RewriteRule ^p/([^/]+)$				pix/index.php?p=$1 [L]
 	RewriteRule ^p/(\d+)/(\d+)/(.+)$	pix/index.php?w=$1&h=$2&p=$3 [L]
 
-	RewriteRule ^(buy|rent|read)/?$							index.php?area=$1&action=index& [QSA,L]
-	RewriteRule ^(buy|rent|read)/([\d+])/?$					index.php?area=$1&action=index&id=$2& [QSA,L]
-	RewriteRule ^(buy|rent|read)/(list|item|pdf)/(\d+)/?$	index.php?area=$1&action=$2&id=$3& [QSA,L]
-	RewriteRule ^(buy|rent|read)/(list|item)/?(.*)?/?$		index.php?area=$1&action=$2&query=$3& [QSA,L]
+	RewriteRule ^(buy|rent|information|project|about)/?$	index.php?area=$1&action=index& [QSA,L]
+	RewriteRule ^(buy|rent|information|project|about)/([\d+])/?$	index.php?area=$1&action=index&id=$2& [QSA,L]
+	RewriteRule ^(buy|rent|information|project|about)/(list|item|pdf)/(\d+)/?$	index.php?area=$1&action=$2&id=$3& [QSA,L]
+	RewriteRule ^(buy|rent|information|project|about)/(list|item)/?(.*)?/?$		index.php?area=$1&action=$2&query=$3& [QSA,L]
 	RewriteRule ^(user)/([^\/]+)/?$							index.php?area=$1&action=$2&query=$3& [QSA,L]
 	
 #	RewriteRule ^(buy|rent)/(.+)/(.+)$		index.php?area=search&action=$1&property=$2&filter=$3 [L]

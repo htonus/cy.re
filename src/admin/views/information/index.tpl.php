@@ -3,7 +3,7 @@
  * $Id$
  */
 
-	$url = '/index.php?area='.$area
+	$url = '/index.php?area=information'
 		.'&category='.(empty($category) ? null : $category->getId())
 		.'&action=';
 ?>

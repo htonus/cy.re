@@ -11,12 +11,22 @@
  *
  * @author htonus
  */
-final class controllerArticle extends i18nEditor
+class controllerArticle extends i18nEditor
 {
+	/**
+	 * @var ArticleType 
+	 */
+	protected $type = null;
+
+
 	public function __construct()
 	{
 		parent::__construct(Article::create());
-
+		
+		$this->subject->setType($this->type);
+		
+		$this->getForm()->drop('type');
+		
 		$this->map->addSource('category', RequestType::get());
 		$this->map->addSource('category', RequestType::post());
 	}
@@ -63,10 +73,38 @@ final class controllerArticle extends i18nEditor
 		uasort($list, array($this, 'sortTree'));
 
 		$model->set('categoryList', ArrayUtils::convertObjectList($list));
+		$model->set('type', $this->type);
 		
 		if ($request->hasAttachedVar('category'))
 			$model->set('category', $request->getAttachedVar('category'));
 		
 		return $this;
 	}
+	
+	/**
+	 * Returns base list criteria
+	 * @param HttpRequest $request
+	 * @param Model $model
+	 * @return Criteria $criteria
+	 */
+	protected function getListCriteria(HttpRequest $request, Model $model)
+	{
+		$criteria = parent::getListCriteria($request, $model);
+		
+		$criteria->add(
+			Expression::eqId('type', $this->type)
+		);
+		
+		return $criteria;
+	}
+	
+
+	protected function getRedirectMav(HttpRequest $request)
+	{
+		return ModelAndView::create()->setView(
+			new RedirectView(
+				'/index.php?area='.$request->getAttachedVar('area')
+			)
+		);
+	}	
 }

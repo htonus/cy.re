@@ -41,6 +41,14 @@
 		<pattern name="StraightMapping" />
 	</class>
 
+	
+	<class name="ArticleType">
+		<properties>
+			<identifier name="id" />
+			<property name="name" type="String" size="16" required="true" />
+		</properties>
+		<pattern name="EnumerationClass" />
+	</class>
 
 
 	<class name="Article" extends="i18n">
@@ -57,6 +65,7 @@
 			<property name="promote" type="Boolean" required="false" default="false" />
 
 			<property name="pictures" type="ArticlePicture" relation="OneToMany" required="false" />
+			<property name="type" type="ArticleType" relation="OneToOne" required="true" column="type_id" />
 			<property name="sites" type="Realty" relation="ManyToMany" required="false" />
 		</properties>
 		<pattern name="StraightMapping" />
