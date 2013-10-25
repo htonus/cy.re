@@ -56,7 +56,7 @@
 
 	foreach ($sectionList as $item) {
 ?>
-							<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+							<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= i18nHelper::detokenize($item->getName()); ?></option>
 <?php
 	}
 ?>
@@ -90,9 +90,9 @@
 			.'&action=';
 ?>
 		<tr>
-			<td><?=$item->getType()->getName()?></td>
-			<td><?=$item->getSection()->getName()?></td>
-			<td><?=$item->getItems()->getCount()?></td>
+			<td><?= $item->getType()->getName() ?></td>
+			<td><?= i18nHelper::detokenize($item->getSection()->getName()); ?></td>
+			<td><?= $item->getItems()->getCount() ?></td>
 			<td>
 				<a href="<?= $itemUrl?>edit">edit</a> |
 				<a href="<?= $itemUrl?>drop">drop</a>
