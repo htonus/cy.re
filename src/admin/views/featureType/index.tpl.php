@@ -62,10 +62,10 @@
 	foreach ($list as $item) {
 ?>
 		<tr>
-			<td><?=$item->getName()?></td>
-			<td><?=$item->getUnit()->getSign()?></td>
-			<td><?=$item->getGroup()->getName()?></td>
-			<td><?=$item->getWeight()?></td>
+			<td><?= $item->getName(); ?></td>
+			<td><?= $item->getUnit()->getSign(); ?></td>
+			<td><?= i18nHelper::detokenize($item->getGroup()->getName()); ?></td>
+			<td><?= $item->getWeight(); ?></td>
 			<td>
 				<a href="<?=$url?>edit&id=<?=$item->getId()?>">edit</a> |
 				<a href="<?=$url?>drop&id=<?=$item->getId()?>">drop</a>
