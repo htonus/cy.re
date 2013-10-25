@@ -103,12 +103,20 @@ jq(document).ready(function(){
 <?php
 	$group = FeatureTypeGroup::general();
 	$featureList = $subject->getFeaturesByGroup($group);
+	
+	$vat = empty($featureList[FeatureType::VAT])
+		? null
+		: $featureList[FeatureType::VAT]->getView();
+	
+	unset($featureList[FeatureType::VAT]);
+	
 	$price = $featureList[$area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY];
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($price->getType()->getName())?> : &nbsp;</td>
 							<td>
 								<span id="price" data="<?= $price->getValue()?>">EUR <?= number_format($price->getValue(), 0, '', "'") ?></span>
+								<?= $vat; ?>
 							</td>
 						</tr>
 <?php
