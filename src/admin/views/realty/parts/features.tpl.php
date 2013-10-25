@@ -17,7 +17,7 @@
 <?php
 	foreach (FeatureTypeGroup::general()->getObjectList() as $group) {
 ?>
-		<li class="<?= empty($first) ? 'active' : null ?>"><a href="#tab_<?= $group->getId()?>" data-toggle="tab"><?= $group->getName() ?></a></li>
+		<li class="<?= empty($first) ? 'active' : null ?>"><a href="#tab_<?= $group->getId()?>" data-toggle="tab"><?= i18nHelper::detokenize($group->getName()); ?></a></li>
 <?php
 		$first = true;
 	}
@@ -32,7 +32,7 @@
 ?>
 		
 		<div class="tab-pane <?= empty($first) ? 'active' : null ?>" id="tab_<?= $group->getId()?>">
-			<h4><?=$group->getName()?></h4>
+			<h4><?= i18nHelper::detokenize($group->getName()); ?></h4>
 			<div class="row">
 <?php
 		$features = FeatureType::dao()->getByGroup($group);
