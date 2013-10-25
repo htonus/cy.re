@@ -47,6 +47,7 @@
 			<property name="i18n" type="FeatureType_i18n" relation="OneToMany" required="false" />
 			<property name="unit" type="Unit" relation="OneToOne" required="false" fetch="lazy" />
 			<property name="group" type="FeatureTypeGroup" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="view" type="String" size="16" required="false" default="" />
 			<property name="weight" type="Integer" required="true" default="1" /> <!-- for relevant serarch -->
 		</properties>
 		<pattern name="StraightMapping" />

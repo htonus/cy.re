@@ -79,6 +79,14 @@
 </div>
 
 <div class="control-group">
+	<label class="control-label" for="input_native">Value to view</label>
+	<div class="controls">
+		<input type="text" id="input_weight" placeholder="Value to view" name="view" value="<?=$form->getValue('view')?>" />
+    </div>
+</div>
+
+
+<div class="control-group">
 	<label class="control-label" for="input_native">Seek Weight</label>
 	<div class="controls">
 		<input type="text" id="input_weight" placeholder="Weight" name="weight" value="<?=$form->getValue('weight')?>" />

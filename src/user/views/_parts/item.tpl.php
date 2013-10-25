@@ -116,11 +116,17 @@ jq(document).ready(function(){
 	unset($featureList[FeatureType::PRICE_MONTHLY]);
 	
 	foreach ($featureList as $featureId => $feature) {
+		$value = Unit::TYPE_BOOL == $feature->getType()->getUnit()->getType()
+			&& ($view = $feature->getType()->getView())
+				? $view
+				: $feature->getValue().' '.$feature->getType()->getSign();
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
 							<td id="mainFeatures">
-								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>"><?= $featureId == FeatureType::PRICE ? number_format($feature->getValue(), 0, '', '.') : $feature->getValue() ?> <?= $feature->getType()->getSign(); ?></span>
+								<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>">
+									<?= $value ?> 
+								</span>
 							</td>
 						</tr>
 <?php

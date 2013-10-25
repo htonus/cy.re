@@ -40,6 +40,7 @@ CREATE TABLE "feature_type" (
     "unit_id" INTEGER NULL REFERENCES "unit"("id") ON UPDATE CASCADE ON DELETE CASCADE,
 	"group_id" INTEGER NULL REFERENCES "feature_type_group"("id") ON UPDATE CASCADE ON DELETE SET NULL,
 	"weight" INTEGER NOT NULL DEFAULT '1',
+    "view" CHARACTER VARYING(16) NULL DEFAULT '',
     PRIMARY KEY("id")
 );
 CREATE SEQUENCE "feature_type_i18n_id";
