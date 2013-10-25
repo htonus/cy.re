@@ -19,7 +19,7 @@
 ?>
 				<label class="radio inline">
 					<input type="radio" name="offerType" id="offerType<?=$item->getId()?>" value="<?=$item->getId()?>" <?=$default == $item->getId() ? 'checked="checked"' : null?>>
-					<?=$item->getName()?>
+					<?= i18nHelper::detokenize($item->getName()); ?>
 				</label>
 <?php
 	}
