@@ -88,7 +88,7 @@
 		)
 			continue;
 ?>
-			<option value="<?= $item->getId()?>"<?= $default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+			<option value="<?= $item->getId()?>"<?= $default == $item->getId() ? ' selected="selected"' : null?>><?= i18nHelper::detokenize($item->getName()); ?></option>
 <?php
 	}
 ?>
