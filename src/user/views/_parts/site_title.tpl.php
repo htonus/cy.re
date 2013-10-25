@@ -111,6 +111,6 @@ function doMouseOver()
 }
 function doMouseOut()
 {
-	hideInterval = setInterval('jq("#toRead").removeClass("hover"); jq(".submenu").fadeOut();', 300);
+	hideInterval = setInterval('jq("#section_<?= Section::INFO ?>").removeClass("hover"); jq(".submenu").fadeOut();', 300);
 }
 </script>
