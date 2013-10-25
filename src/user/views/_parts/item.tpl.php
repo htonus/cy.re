@@ -106,7 +106,7 @@ jq(document).ready(function(){
 	
 	$vat = empty($featureList[FeatureType::VAT])
 		? null
-		: $featureList[FeatureType::VAT]->getView();
+		: $featureList[FeatureType::VAT]->getType()->getView();
 	
 	unset($featureList[FeatureType::VAT]);
 	
