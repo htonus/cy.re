@@ -14,7 +14,9 @@
 class CommonEditor extends controllerPictured
 {
 	const PER_PAGE = 20;
-
+	
+	protected $proceedHandle = true;
+	
 	public function __construct($subject)
 	{
 		parent::__construct($subject);
@@ -47,7 +49,10 @@ class CommonEditor extends controllerPictured
 	{
 		$this->beforeHandle($request);
 		
-		$mav = parent::handleRequest($request);
+		if ($this->proceedHandle)
+			$mav = parent::handleRequest($request);
+		
+		$this->afterHandle($request, $mav);
 		
 		$model = $mav->getModel();
 		
@@ -64,12 +69,13 @@ class CommonEditor extends controllerPictured
 			$model->set('action', 'edit');
 		}
 		
-		$this->afterHandle($request, $mav);
-		
 		return $mav;
 	}
 	
-	protected function beforeHandle(HttpRequest $request) {/*_*/}
+	protected function beforeHandle(HttpRequest $request)
+	{
+		return $this;
+	}
 	
 	protected function afterHandle(HttpRequest $request, ModelAndView $mav)
 	{

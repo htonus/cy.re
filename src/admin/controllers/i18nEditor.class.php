@@ -41,7 +41,8 @@ class i18nEditor extends CommonEditor
 			add(
 				Primitive::set('i18n_field')
 			)->
-			import($request->getPost());
+			import($request->getPost())->
+			importMore($request->getGet());	// inline form case
 		
 		$ids = $form->getValue('i18n_id');
 		$fields = $form->getValue('i18n_field');
@@ -49,23 +50,14 @@ class i18nEditor extends CommonEditor
 		$request->setAttachedVar('i18n_ids', $ids);
 		$request->setAttachedVar('i18n_fields', $fields);
 		
-//		// Setup main object with default language
-//		foreach ($fields[constant('DEFAULT_LANG_CODE')] as $name => $value) {
-//			$request->setPostVar($name, $value);
-//		}
-		
 		return $this;
-	}
-	
-	public function doAdd(HttpRequest $request)
-	{
-		$this->i18nSetRequest($request);
-		return parent::doAdd($request);
 	}
 	
 	protected function addObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {
+		$this->i18nSetRequest($request);
+		
 		$db = DBPool::me()->getLink();
 		$db->begin();
 		
@@ -73,27 +65,23 @@ class i18nEditor extends CommonEditor
 			$object = parent::addObject($request, $form, $object);
 			
 			if (!$form->getErrors()) {
-				$this->saveI18n($object, $request);
+				$this->subject = $object;
+				$this->saveI18n($request);
 				$db->commit();
 			}
 		} catch (Exception $e) {
-						print_r($e);
 			$db->rollback();
 			$form->markWrong('id');
 		}
 		
 		return $object;
 	}	
-
-	public function doSave(HttpRequest $request)
-	{
-		$this->i18nSetRequest($request);
-		return parent::doSave($request);
-	}
 	
 	protected function saveObject(
 		HttpRequest $request, Form $form, Identifiable $object
 	) {
+		$this->i18nSetRequest($request);
+		
 		$db = DBPool::me()->getLink();
 		$db->begin();
 		
@@ -101,7 +89,8 @@ class i18nEditor extends CommonEditor
 			$object = parent::saveObject($request, $form, $object);
 			
 			if (!$form->getErrors()) {
-				$this->saveI18n($object, $request);
+				$this->subject = $object;
+				$this->saveI18n($request);
 				$db->commit();
 			}
 		} catch (Exception $e) {
@@ -112,7 +101,7 @@ class i18nEditor extends CommonEditor
 		return $object;
 	}
 	
-	private function saveI18n(Identifiable $subject, HttpRequest $request)
+	private function saveI18n(HttpRequest $request)
 	{
 		$languageList = $request->getAttachedVar('languageList');
 		$ids = $request->getAttachedVar('i18n_ids');
@@ -122,7 +111,7 @@ class i18nEditor extends CommonEditor
 			if (empty($id)) {
 				$i18n = clone $this->i18nSubject;
 				$i18n->
-					setObject($subject)->
+					setObject($this->subject)->
 					setLanguage($languageList[$code]);
 			} else {
 				$i18n = $this->i18nSubject->dao()->getById($id);

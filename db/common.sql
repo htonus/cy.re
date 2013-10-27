@@ -99,7 +99,9 @@ CREATE UNIQUE INDEX district_i18n_object_id_language_id_uidx ON "district_i18n"(
 CREATE SEQUENCE "token_id";
 CREATE TABLE "token" (
     "id" INTEGER NOT NULL default nextval('token_id'),
-    "name" CHARACTER VARYING(16) NOT NULL,
+    "name" CHARACTER VARYING(32) NOT NULL,
+    "object" CHARACTER VARYING(16) NULL,
+    "object_id" INTEGER NULL,
     PRIMARY KEY("id")
 );
 CREATE SEQUENCE "token_i18n_id";

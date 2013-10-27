@@ -7,6 +7,29 @@
 
 	class TokenDAO extends AutoTokenDAO
 	{
-		// your brilliant stuff goes here
+		public function dropById($id)
+		{
+			$db = DBPool::me()->getLink()->begin();
+			$result = 0;
+			
+			try {
+				$token = $this->getById($id);
+				
+				if ($token->getObject()) {
+					$object = call_user_func(array($token->getObject(), 'dao'))->
+						getById($token->getObjectId());
+					
+					$object->dao()->save($object->setText(null));
+				}
+				
+				$result = parent::dropById($id);
+				
+				$db->commit();
+			} catch (Exception $e) {
+				$db->rollback();
+			}
+			
+			return $result;
+		}
 	}
 ?>

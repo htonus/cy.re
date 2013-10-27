@@ -63,6 +63,14 @@
 			
 			try {
 				$picture = $this->getById($id);
+				
+				if ($text = $picture->getText()) {
+					try {
+						$token = Token::dao()->getByLogic(Expression::eq('name', $text));
+						$token->dao()->drop($token);
+					} catch (Exception $e) {/*_*/}
+				}
+				
 				$path = $picture->getPath();
 				
 				$result = parent::dropById($id);

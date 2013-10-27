@@ -87,7 +87,7 @@ class controllerPictured extends AclEditor
 
 			foreach ($pictures as $picture) {
 				if ($picture = $this->pictureObject->dao()->add($picture)) {
-					$actionUrl = '/?area='.strtolower(get_class($this->subject))
+					$actionUrl = '/?area='.$request->getAttachedVar('area')
 						.'&id='.$picture->getId().'&action=';
 					
 					$item = array(
@@ -98,9 +98,14 @@ class controllerPictured extends AclEditor
 						'size'			=> $picture->getSize(),
 						'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 						'type'			=> $picture->getType()->getMimeType(),
-						'url'			=> $picture->getUrl(),
+						'url'			=> PictureSize::normal()->getUrl($picture),
 						'id'			=> $picture->getId(),
 						'order'			=> $picture->getOrder(),
+						'id'			=> $picture->getId(),
+						'object'		=> get_class($this->pictureObject),
+						'text'			=> $picture->getText()
+							? i18nHelper::detokenize($picture->getText())
+							: $picture->getName()
 					);
 
 					if (
@@ -136,9 +141,9 @@ class controllerPictured extends AclEditor
 		$response = array();
 		
 		foreach ($form->getValue('id')->getPictures()->getList() as $picture) {
-			$actionUrl = '/?area='.strtolower(get_class($this->subject))
+			$actionUrl = '/?area='.$request->getAttachedVar('area')
 				.'&id='.$picture->getId().'&action=';
-
+			
 			$item = array(
 				'delete_type'	=> 'GET', // 'DELETE'
 				'delete_url'	=> $actionUrl.'drop_picture',
@@ -147,9 +152,14 @@ class controllerPictured extends AclEditor
 				'size'			=> $picture->getSize(),
 				'thumbnail_url'	=> PictureSize::thumbnail()->getUrl($picture),
 				'type'			=> $picture->getType()->getMimeType(),
-				'url'			=> $picture->getUrl(),
+				'url'			=> PictureSize::normal()->getUrl($picture),
 				'id'			=> $picture->getId(),
 				'order'			=> $picture->getOrder(),
+				'id'			=> $picture->getId(),
+				'object'		=> get_class($this->pictureObject),
+				'text'			=> $picture->getText()
+					? i18nHelper::detokenize('___'.$picture->getText().'___')
+					: $picture->getName()
 			);
 
 			if (

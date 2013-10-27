@@ -26,6 +26,8 @@
 <input type="hidden" name="area" value="<?=$area?>" />
 <input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
 <input type="hidden" name="id" value="<?=$id?>" />
+<input type="hidden" name="object" value="<?= $form->getValue('object') ?>" />
+<input type="hidden" name="objectId" value="<?= $form->getValue('objectId') ?>" />
 
 
 <?php
@@ -38,7 +40,7 @@
 <div class="control-group">
 	<label class="control-label" for="input_name">Token Name (Capitals)</label>
 	<div class="controls">
-		<input type="text" id="input_name" placeholder="Token name (capitals only)" name="name" value="<?=$form->getValue('name')?>" />
+		<input type="text" id="input_name" placeholder="Token name (capitals only)" name="name" value="<?=$form->getValue('name')?>" <?= $form->getValue('object') ? 'readonly="readonly"' : null ?>/>
     </div>
 </div>
 

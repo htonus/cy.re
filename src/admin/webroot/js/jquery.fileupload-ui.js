@@ -392,7 +392,10 @@
         },
 
         _formatFileSize: function (bytes) {
-            if (typeof bytes !== 'number') {
+            if (typeof bytes === 'string') {
+                bytes = parseInt(bytes);
+            }
+			if (typeof bytes !== 'number') {
                 return '';
             }
             if (bytes >= 1000000000) {

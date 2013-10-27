@@ -19,10 +19,4 @@ class controllerInformation extends controllerArticle
 		
 		parent::__construct();
 	}
-	
-	
-	protected function attachCollections(HttpRequest $request, ModelAndView $mav)
-	{
-		return parent::attachCollections($request, $mav);
-	}
 }
