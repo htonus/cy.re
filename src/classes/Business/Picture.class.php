@@ -45,5 +45,13 @@
 						: $this->getId().'.'.$this->getType()->getExtension()
 				);
 		}
+		
+		public function getTextToken()
+		{
+			if ($text = $this->getText())
+				return "___{$text}___";
+			
+			return null;
+		}
 	}
 ?>
