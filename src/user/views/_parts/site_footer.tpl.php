@@ -12,7 +12,7 @@ ADDRESS;
 ?>
 	<footer class="mt20">
 
-		<div class="twitter hidden-phone">
+		<!-- div class="twitter hidden-phone">
 			<div class="container">
 				<div class="row">
 
@@ -31,7 +31,7 @@ ADDRESS;
 
 				</div>
 			</div>
-		</div>
+		</div -->
 
 		<div class="social">
 			<div class="container">
