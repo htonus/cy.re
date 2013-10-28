@@ -132,8 +132,10 @@ function showPreview(preview)
 			image.stop().animate({opacity: 1});
 		});
 		if (image.attr('alt').length()) {
-			jq('.carousel-caption').text(image.attr('alt')).fadeIn();
+			jq('.carousel-caption P').text(image.attr('alt'));
+			jq('.carousel-caption').fadeIn()
 		} else {
+			jq('.carousel-caption P').text('');
 			jq('.carousel-caption').hide()
 		}
 	}
@@ -162,7 +164,7 @@ function dimPreview(jqObject)
 						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" class="right" >
 						<a class="left carousel-control" href="#prevPreviev">‹</a>
 						<a class="right carousel-control" href="#nextPreview">›</a>
-						<div class="carousel-caption<?= $preview->getText() ? null : ' hide'; ?>"><?= $preview->getTextToken(); ?></div>
+						<div class="carousel-caption<?= $preview->getText() ? null : ' hide'; ?>"><p><?= $preview->getTextToken(); ?></p></div>
 					</div>
 <?php
 		if ($count > 8) {
