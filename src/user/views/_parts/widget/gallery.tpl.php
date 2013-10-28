@@ -162,7 +162,7 @@ function dimPreview(jqObject)
 						<img src="<?= PictureSize::list1()->getUrl($preview)?>" width="<?= PictureSize::big()->getWidth(); ?>" height="<?= PictureSize::big()->getHeight(); ?>" alt="" class="right" >
 						<a class="left carousel-control" href="#prevPreviev">‹</a>
 						<a class="right carousel-control" href="#nextPreview">›</a>
-						<div class="carousel-caption<?= $preview->getText() ? null : ' hide'; ?>"><?= $preview->getText(); ?></div>
+						<div class="carousel-caption<?= $preview->getText() ? null : ' hide'; ?>"><?= $preview->getTextToken(); ?></div>
 					</div>
 <?php
 		if ($count > 8) {
@@ -179,7 +179,7 @@ function dimPreview(jqObject)
 		foreach ($list as $item) {
 ?>
 						<div class="span2 mb20" id="preview_<?= $item->getId()?>">
-							<img src="<?= $previewSize->getUrl($item)?>" width="<?= $previewSize->getWidth(); ?>" height="<?= $previewSize->getHeight(); ?>" alt="<?= $item->getText() ?>" class="preview" >
+							<img src="<?= $previewSize->getUrl($item)?>" width="<?= $previewSize->getWidth(); ?>" height="<?= $previewSize->getHeight(); ?>" alt="<?= $item->getTextToken() ?>" class="preview" >
 						</div>
 <?php
 	}
