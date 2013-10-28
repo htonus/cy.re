@@ -131,8 +131,8 @@ function showPreview(preview)
 		image.load(function(){
 			image.stop().animate({opacity: 1});
 		});
-		if (image.attr('title').length()) {
-			jq('.carousel-caption P').text(image.attr('title'));
+		if (preview.attr('title').length()) {
+			jq('.carousel-caption P').text(preview.attr('title'));
 			jq('.carousel-caption').fadeIn()
 		} else {
 			jq('.carousel-caption P').text('');
