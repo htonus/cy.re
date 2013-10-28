@@ -131,8 +131,8 @@ function showPreview(preview)
 		image.load(function(){
 			image.stop().animate({opacity: 1});
 		});
-		if (image.attr('alt').length()) {
-			jq('.carousel-caption P').text(image.attr('alt'));
+		if (image.attr('title').length()) {
+			jq('.carousel-caption P').text(image.attr('title'));
 			jq('.carousel-caption').fadeIn()
 		} else {
 			jq('.carousel-caption P').text('');
@@ -181,7 +181,7 @@ function dimPreview(jqObject)
 		foreach ($list as $item) {
 ?>
 						<div class="span2 mb20" id="preview_<?= $item->getId()?>">
-							<img src="<?= $previewSize->getUrl($item)?>" width="<?= $previewSize->getWidth(); ?>" height="<?= $previewSize->getHeight(); ?>" alt="<?= $item->getTextToken() ?>" class="preview" >
+							<img src="<?= $previewSize->getUrl($item)?>" width="<?= $previewSize->getWidth(); ?>" height="<?= $previewSize->getHeight(); ?>" title="<?= $item->getTextToken() ?>" class="preview" >
 						</div>
 <?php
 	}
