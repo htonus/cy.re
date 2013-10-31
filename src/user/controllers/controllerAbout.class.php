@@ -20,7 +20,7 @@ class controllerAbout extends controllerArticle
                 parent::__construct();
         }
 	
-	public function doIndex(HttpRequest $request)
+	public function actionIndex(HttpRequest $request)
 	{
 		$items = Criteria::create(Article::dao())->
 			add(
