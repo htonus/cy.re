@@ -48,13 +48,14 @@ class controllerAbout extends controllerArticle
 		return $mav;
 	}
 	
-	/*
-	public function handleRequest(HttpRequest $request)
+	protected function attachCollections(HttpRequest $request, ModelAndView $mav)
 	{
-		return ModelAndView::create()->
-			setView(
-				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-aboutus.asp')
+		$mav->getModel()->
+			set(
+				'legalList',
+				StaticPage::dao()->getList($this->section, StaticType::LEGAL)
 			);
-	}
-	*/
+                
+                return $this;
+        }	
 }
