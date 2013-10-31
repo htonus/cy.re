@@ -10,7 +10,7 @@
  *
  * @author htonus
  */
-class controllerProject extends controllerArticle
+class controllerAbout extends controllerArticle
 {
         public function __construct()
         {
