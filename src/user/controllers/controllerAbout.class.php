@@ -52,6 +52,10 @@ class controllerAbout extends controllerArticle
 	{
 		$mav->getModel()->
 			set(
+				'categoryList',
+				$request->getAttachedVar('categoryList')
+			)->
+			set(
 				'legalList',
 				StaticPage::dao()->getList($this->section, StaticType::LEGAL)
 			);
