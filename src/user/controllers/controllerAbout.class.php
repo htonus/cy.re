@@ -36,7 +36,7 @@ class controllerAbout extends controllerArticle
 		
 		if (count($items)) {
 			$mav->getModel()->
-				set('subject', reset($items))->
+				set('article', reset($items))->
 				set('action', 'item');
 				
 		} else {
