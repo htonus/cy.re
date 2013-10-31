@@ -20,6 +20,16 @@ class controllerAbout extends controllerArticle
                 parent::__construct();
         }
 	
+	public function handleRequest(HttpRequest $request)
+	{
+		$mav = parent::handleRequest($request);
+		
+		if (!$mav->viewIsRedirect())
+			$mav->getModel()->set('action', 'item');
+		
+		return $mav;
+	}
+	
 	public function actionIndex(HttpRequest $request)
 	{
 		$items = Criteria::create(Article::dao())->
