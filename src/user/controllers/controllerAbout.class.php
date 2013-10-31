@@ -10,21 +10,23 @@
  *
  * @author htonus
  */
-class controllerAbout implements Controller
+class controllerProject extends controllerArticle
 {
-	public function __construct()
-	{
-//		parent::__construct();
-//
-//		$this->offerType = OfferType::buy();
-//		$this->section = Section::buy();
-	}
-
-	public function handleRequest(\HttpRequest $request)
+        public function __construct()
+        {
+                $this->type = ArticleType::about();
+                $this->section = Section::about();
+                
+                parent::__construct();
+        }
+	
+	/*
+	public function handleRequest(HttpRequest $request)
 	{
 		return ModelAndView::create()->
 			setView(
 				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-aboutus.asp')
 			);
 	}
+	*/
 }
