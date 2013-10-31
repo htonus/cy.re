@@ -20,6 +20,34 @@ class controllerAbout extends controllerArticle
                 parent::__construct();
         }
 	
+	public function doIndex(HttpRequest $request)
+	{
+		$items = Criteria::create(Article::dao())->
+			add(
+				Expression::eqId('type', $this->type)
+			)->
+			add(
+				Expression::notNull('published')
+			)->
+			setLimit(1)->
+			getList();
+		
+		$mav = ModelAndView::create();
+		
+		if (count($items)) {
+			$mav->getModel()->
+				set('subject', reset($items))->
+				set('action', 'item');
+				
+		} else {
+			$mav->setView(
+				RedirectView::create('http://www.esperiaestates.com/htdocs/colb-aboutus.asp')
+			);
+		}
+		
+		return $mav;
+	}
+	
 	/*
 	public function handleRequest(HttpRequest $request)
 	{
