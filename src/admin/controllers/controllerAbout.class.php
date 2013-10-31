@@ -11,7 +11,7 @@
  *
  * @author htonus
  */
-class controllerAbount extends controllerArticle
+class controllerAbout extends controllerArticle
 {
 	public function __construct()
 	{
