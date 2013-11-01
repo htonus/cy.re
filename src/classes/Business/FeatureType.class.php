@@ -38,8 +38,7 @@
 		const TOILETS		= 4;
 		const PARKING_LOTS	= 5;
 		const PRICE_MONTHLY	= 6;	// for rent (future)
-		const FLOOR			= 7;
-		const FLOORS			= 8;
+		const PRICE_DAYLY	= 7;
 		
 		const VAT			= 77;
 		
@@ -49,5 +48,13 @@
 				? $this->getUnit()->getSign()
 				: null;
 		}
+		
+		public function getPriceTypes()
+		{
+			return array(
+				self::PRICE,
+				self::PRICE_MONTHLY,
+				self::PRICE_DAYLY,
+			);
+		}
 	}
-?>

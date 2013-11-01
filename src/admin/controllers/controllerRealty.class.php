@@ -199,8 +199,6 @@ final class controllerRealty extends i18nEditor
 			)
 		);
 
-		$model->set('offerTypeList', OfferType::buy()->getObjectList());
-
 		$list = $this->getForm()->getValue('id')
 			? $this->getForm()->getValue('id')->getFeatureList()
 			: array();
@@ -240,7 +238,6 @@ final class controllerRealty extends i18nEditor
 						break;
 					case 'code':
 					case 'city':
-					case 'offerType':
 					case 'realtyType':
 						$criteria->add(
 							Expression::eq($m[1], $value)

@@ -60,7 +60,7 @@
 <?php
 	foreach ($tabList as $tabName => $tabTitle) {
 ?>
-			<li<?= $tabName == $activeTabName ? ' class="active"' : null ?>><a href="#tab_<?= $tabName?>" data-toggle="tab"><?= $tabTitle; ?></a></li>
+			<li<?= $tabName == $activeTabName ? ' class="active"' : null ?> id="navtab_<?=$tabName?>"><a href="#tab_<?= $tabName?>" data-toggle="tab"><?= $tabTitle; ?></a></li>
 <?php
 	}
 ?>
@@ -100,3 +100,40 @@
 </form>
 
 </div>
+
+
+<script type="text/javascript">
+var filtered = false;
+
+jq(document).keyup(function(e){
+	if (jq('#tab_features .tab-content .active').size() > 0) {
+		
+		if (filtered) {
+			jq('#tab_features .tab-content .active .span4').show();
+			filtered = false;
+		}
+		
+		if (
+			(e.keyCode > 64 && e.keyCode < 91)
+			|| (e.keyCode > 95 && e.keyCode < 123)
+		) {
+			var char = String.fromCharCode(e.which || e.keyCode).toLowerCase();
+			
+			jq('#tab_features .tab-content .active LABEL').each(function(){
+				if (jq(this).text().trim().match(eval('/^[^' + char + ']/i'))) {
+					jq(this).parents('.span4').hide();
+				}
+			});
+			
+			filtered = true;
+		}
+	}
+});
+
+jq('#fileupload').submit(function(){
+	if (filtered) {
+		jq('#tab_features .tab-content .span4').show();
+		filtered = false;
+	}
+});
+</script>

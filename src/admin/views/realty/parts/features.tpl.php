@@ -6,8 +6,6 @@
 	$formFeatures = $form->getValue('feature')
 		? $form->getValue('feature')
 		: null;
-
-	$group = FeatureTypeGroup::general();
 ?>
 
 <div class="tabbable" style="margin-bottom: 18px;">
@@ -40,7 +38,7 @@
 		$odd = false;
 		foreach ($features as $featureId => $item) {
 ?>
-			<div class="span4">
+			<div class="span4"><p>
 <?php
 			$featureName = i18nHelper::changeCase($item->getName(), i18nHelper::SC);
 			
@@ -53,30 +51,21 @@
 					? 'checked="checked"'
 					: null;
 ?>
-				<div class="control-group">
-					<div class="controls">
-						<label class="checkbox">
-							<input type="checkbox" name="feature[<?=$featureId?>]" value="1" <?=$checked?>> <?=$item->getName()?>
-						</label>
-					</div>
-				</div>
+				<label class="checkbox">
+					<input type="checkbox" name="feature[<?=$featureId?>]" value="1" <?=$checked?>> <?=$item->getName()?>
+				</label>
 <?php
 			} else {
 				$featureValue = isset($formFeatures[$featureId])
 					? $formFeatures[$featureId]
 					: (empty($featureList[$featureId]) ? null : $featureList[$featureId]);
 ?>
-
-					<div class="control-group">
-						<label class="control-label" for="input_native"><?=$featureName?></label>
-						<div class="controls">
-							<input type="text" id="input_name" placeholder="<?=$featureName?>" name="feature[<?=$featureId?>]" value="<?=$featureValue?>" />
-						</div>
-					</div>
+				<label for="input_native"><?=$featureName?></label>
+				<input type="text" id="input_name" placeholder="<?=$featureName?>" name="feature[<?=$featureId?>]" value="<?=$featureValue?>" />
 <?php
 			}
 ?>
-			</div>
+			</p></div>
 <?php
 		}
 		

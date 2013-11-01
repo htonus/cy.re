@@ -7,25 +7,6 @@
 <div class="row-fluid">
 
 	<div class="span6">
-		<div class="control-group">
-			<label class="control-label" for="input_offerType">Offer Type</label>
-			<div class="controls">
-<?php
-	$default = $form->getValue('offerType')
-		? $form->getValue('offerType')->getId()
-		: null;
-
-	foreach ($offerTypeList as $item) {
-?>
-				<label class="radio inline">
-					<input type="radio" name="offerType" id="offerType<?=$item->getId()?>" value="<?=$item->getId()?>" <?=$default == $item->getId() ? 'checked="checked"' : null?>>
-					<?= i18nHelper::detokenize($item->getName()); ?>
-				</label>
-<?php
-	}
-?>
-			</div>
-		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="input_realtyType">Realty Type</label>

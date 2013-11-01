@@ -5,13 +5,6 @@ CREATE TABLE "feature_type_group" (
 );
 
 
-CREATE TABLE "offer_type" (
-    "id" INTEGER NOT NULL,
-    "name" CHARACTER VARYING(16) NOT NULL,
-    PRIMARY KEY("id")
-);
-
-
 CREATE SEQUENCE "unit_id";
 CREATE TABLE "unit" (
     "id" INTEGER NOT NULL default nextval('unit_id'),
@@ -93,7 +86,6 @@ CREATE TABLE "realty" (
     "longitude" numeric(10,6) NULL,
 
     "type_id" INTEGER NOT NULL REFERENCES "realty_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
-    "offer_id" INTEGER NOT NULL REFERENCES "offer_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "district_id" INTEGER NOT NULL REFERENCES "district"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
 	
