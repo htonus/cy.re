@@ -2,6 +2,11 @@
 /**
  *
  */
+	$features2show = array(
+		FeatureType::AREA,
+		FeatureType::BEDROOMS,
+		FeatureType::TOILETS,
+	);
 ?>
 
 <div class="span6 mt20">
@@ -26,19 +31,25 @@
 		}
 		
 		$title = $item->getCity()
-			? $item->getRealtyType()->getName().' in '.$item->getCity()->getName()
-			: $item->getNme();
+			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			: $item->getName();
 ?>
 		<div class="span3 list-item">
 			<a href="<?= $itemUrl.$item->getId()?>" title="Permalink to Cool Ring">
 				<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 			</a>
-			<h5>
-				<a href="<?= $itemUrl.$item->getId()?>" title="<?= $title?>">
-				<?= $title?>
-			</a>
-			</h5>
-			Some details
+			<div align="left">
+				<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+				<br />
+<?php
+		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
+			if (!in_array($typeId, $features2show))
+				continue;
+			
+			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+		}
+?>
+			</div>
 		</div>
 <?php
 	}
