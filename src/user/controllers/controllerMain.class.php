@@ -139,8 +139,7 @@ class controllerMain extends AclController
 			$list = Criteria::create(Realty::dao())->
 				add(
 					Expression::andBlock(
-						Expression::notNull('features.type', $this->priceType),
-//						Expression::notIn('id', array_keys($recent)),
+						Expression::eq('features.type', $this->priceType),
 						Expression::notNull('preview'),
 						Expression::notNull('published')
 					)
