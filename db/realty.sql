@@ -94,7 +94,6 @@ CREATE TABLE "realty" (
     PRIMARY KEY("id")
 );
 CREATE INDEX realty_type_id_idx ON realty(type_id);
-CREATE INDEX realty_offer_id_idx ON realty(offer_id);
 CREATE INDEX realty_city_id_idx ON realty(city_id);
 
 CREATE SEQUENCE "realty_i18n_id";

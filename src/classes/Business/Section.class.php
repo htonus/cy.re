@@ -35,11 +35,6 @@
 			self::ABOUT		=> 'about',
 		);
 
-		static protected $offerMap = array(
-			OfferType::BUY	=> self::BUY,
-			OfferType::RENT	=> self::RENT,
-		);
-
 
 		public static function create($id)
 		{
@@ -89,11 +84,6 @@
 		public function getSlug()
 		{
 			return $this->slugs[$this->id];
-		}
-
-		public static function byOffer(OfferType $offer)
-		{
-			return new self(self::$offerMap[$offer->getId()]);
 		}
 		
 		public static function getMenuList()

@@ -603,15 +603,6 @@ CREATE TABLE news_picture (
 );
 
 
---
--- Name: offer_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE offer_type (
-    id integer NOT NULL,
-    name character varying(16) NOT NULL
-);
-
 
 --
 -- Name: person_id; Type: SEQUENCE; Schema: public; Owner: -
@@ -1672,15 +1663,6 @@ COPY news_picture (id, object_id, type_id, name, main, size, width, height) FROM
 \.
 
 
---
--- Data for Name: offer_type; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY offer_type (id, name) FROM stdin;
-1	sale
-2	rent
-\.
-
 
 --
 -- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: -
@@ -2478,14 +2460,6 @@ ALTER TABLE ONLY news
 
 
 --
--- Name: offer_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY offer_type
-    ADD CONSTRAINT offer_type_pkey PRIMARY KEY (id);
-
-
---
 -- Name: person_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -3169,14 +3143,6 @@ ALTER TABLE ONLY realty_i18n
 
 ALTER TABLE ONLY realty_i18n
     ADD CONSTRAINT realty_i18n_object_id_fkey FOREIGN KEY (object_id) REFERENCES realty(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: realty_offer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY realty
-    ADD CONSTRAINT realty_offer_id_fkey FOREIGN KEY (offer_id) REFERENCES offer_type(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --

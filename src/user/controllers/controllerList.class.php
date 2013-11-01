@@ -171,12 +171,16 @@ class controllerList extends controllerMain
 		$logic = Expression::chain()->
 			expAnd(
 				Expression::notNull('published')
-			)->
-			expAnd(
-				Expression::eqId("offerType", $this->offerType)
 			);
-
-
+		
+		if (empty($filters[$this->priceType]))
+			$logic->expAnd(
+				Expression::andBlock (
+					Expression::eq('features.type', $this->priceType),
+					Expression::notNull('features.value')
+				)
+			);
+		
 		if ($type = $form->getValue('city')) {
 			$model->set('city', $type);
 			$logic->expAnd(

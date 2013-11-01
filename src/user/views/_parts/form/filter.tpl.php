@@ -59,9 +59,9 @@
 					<div class="row-fluid">
 						<div class="span6">
 							<div class="control-group">
-								<label class="control-label" for="input_f[<?= FeatureType::PRICE?>]">Price (&euro;)</label>
+								<label class="control-label" for="input_f[<?= $priceType ?>]">Price (&euro;)</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" name="f[<?= FeatureType::PRICE?>]">
+									<select type="text" class="input-block-level" name="f[<?= $priceType ?>]">
 										<option value="">-</option>
 <?php
 	$priceList = array(
@@ -92,9 +92,9 @@
 			.($i == 5 ? 'and more' : number_format($price2, 0, '.', "'"));
 	}
 	
-	$default = empty($filter[FeatureType::PRICE])
+	$default = empty($filter[$priceType])
 		? null
-		: $filter[FeatureType::PRICE];
+		: $filter[$priceType];
 	
 	foreach ($priceList as $value => $title) {
 		$selected = $value == $default

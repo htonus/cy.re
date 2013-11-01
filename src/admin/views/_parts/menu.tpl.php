@@ -47,7 +47,6 @@
 //		'unit'	=> 'Units',
 //		'city'	=> 'Cities',
 //		'featureType'	=> 'Feature Types',
-//		'property'		=> 'Properties to Offer',
 	);
 ?>
 <div class="navbar navbar-inverse navbar-fixed-top">

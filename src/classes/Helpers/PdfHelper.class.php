@@ -80,8 +80,8 @@
 			$pdf = $this->getPdf();
 			
 			$title = ucfirst($this->realty->getRealtyType()->getName())
-				.' in '.$this->realty->getCity()->getName()
-				.' to '.i18nHelper::detokenize($this->realty->getOfferType()->getName());
+				.' in '.$this->realty->getCity()->getName();
+//				.' to '.i18nHelper::detokenize($this->realty->getOfferType()->getName());
 			
 			$pdf->SetTextColor(0x44, 0x44, 0x44);
 			$pdf->SetFont('Times', 'B', 20);

@@ -15,7 +15,7 @@ class controllerMain extends AclController
 	const COOKIE_EXPIRE		= '1 year';
 
 	protected $section		= null;
-	protected $offerType	= null;
+	protected $priceType	= null;
 
 	public function __construct()
 	{
@@ -139,7 +139,7 @@ class controllerMain extends AclController
 			$list = Criteria::create(Realty::dao())->
 				add(
 					Expression::andBlock(
-						Expression::eqId('offerType', $this->offerType),
+						Expression::notNull('features.type', $this->priceType),
 //						Expression::notIn('id', array_keys($recent)),
 						Expression::notNull('preview'),
 						Expression::notNull('published')
@@ -191,6 +191,9 @@ class controllerMain extends AclController
 			set(
 				'legalList',
 				StaticPage::dao()->getList($this->section, StaticType::LEGAL)
+			)->
+			set(
+				'priceType', $this->priceType
 			);
 		
 		return $this;

@@ -3,7 +3,6 @@ truncate "unit" cascade;
 truncate "city" cascade;
 truncate "feature_type" cascade;
 truncate "feature_type_group" cascade;
-truncate "offer_type" cascade;
 truncate "realty_type" cascade;
 truncate "resource_type" cascade;
 truncate "access_type" cascade;
@@ -52,9 +51,6 @@ insert into "city_i18n" ("object_id", "language_id", "name") select "id", 1, "na
 insert into feature_type_group (id, name) values (1, 'indoor options');
 insert into feature_type_group (id, name) values (2, 'outdoor options');
 insert into feature_type_group (id, name) values (3, 'general options');
-
-insert into offer_type (id, name) values (1, 'sale');
-insert into offer_type (id, name) values (2, 'rent');
 
 insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (1, 1, 3, 10);
 insert into "feature_type" ("id", "unit_id", "group_id", "weight") values (2, 2, 3, 10);

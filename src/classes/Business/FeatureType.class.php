@@ -49,12 +49,12 @@
 				: null;
 		}
 		
-		public function getPriceTypes()
+		public static function getPriceTypes()
 		{
 			return array(
-				self::PRICE,
-				self::PRICE_MONTHLY,
-				self::PRICE_DAYLY,
+				self::PRICE			=> 'Sell',
+				self::PRICE_MONTHLY	=> 'Long-term Rent',
+				self::PRICE_DAYLY	=> 'Short-term Rent',
 			);
 		}
 	}

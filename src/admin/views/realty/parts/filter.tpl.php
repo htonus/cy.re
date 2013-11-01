@@ -42,18 +42,18 @@
 
 	<div class="span6">
 		<div class="control-group">
-			<label class="control-label" for="input_offer_type">Proposal</label>
+			<label class="control-label" for="input_offer_type">Offer for</label>
 			<div class="controls">
 				<select id="input_offer_type" class="input-block-level" name="filter:offerType">
 					<option value=""></option>
 <?php
-	$default = isset($filter['filter:offerType'])
-		? $filter['filter:offerType']
+	$default = isset($filter['filter:priceType'])
+		? $filter['filter:priceType']
 		: null;
 	
-	foreach ($offerTypeList as $item) {
+	foreach (FeatureType::getPriceTypes() as $itemId => $itemName) {
 ?>
-					<option value="<?= $item->getId()?>"<?= $item->getId() == $default ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+					<option value="<?= $itemId ?>"<?= $itemId == $default ? ' selected="selected"' : null?>><?= $itemName ?></option>
 <?php
 	}
 ?>
