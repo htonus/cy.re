@@ -229,6 +229,9 @@ class controllerMain extends AclController
 			add(
 				Expression::isFalse('promote')
 			)->
+			add(
+				Expression::eqId('type', ArticleType::information())
+			)->
 			addOrder(
 				OrderBy::create('created')->desc()
 			)->
