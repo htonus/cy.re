@@ -32,14 +32,18 @@ var currencyRates = <?= json_encode($currencyRates, JSON_NUMERIC_CHECK)?>;
 
 jq(document).ready(function(){
 	jq('#currencyForPrice .badge').click(function(){
-		var priceSpan = jq('SPAN#price');
-		var currency = jq(this).attr('title');
-		var price = parseFloat(priceSpan.attr('data')) * currencyRates[currency]
-		priceSpan.numberFormat(price, currency);
-		jq('#currencyForPrice .badge-active')
-			.removeClass('badge-active')
-			.addClass('badge-inactive');
-		jq(this).addClass('badge-active');
+		var currencyBadge = jq(this);
+		
+		jq('SPAN.price').each(function(){
+			var currency = currencyBadge.attr('title');
+			var price = parseFloat(jq(this).attr('data')) * currencyRates[currency]
+			jq(this).numberFormat(price, currency);
+			jq('#currencyForPrice .badge-active')
+				.removeClass('badge-active')
+				.addClass('badge-inactive');
+		});
+		
+		currencyBadge.addClass('badge-active');
 	});
 });
 </script>
@@ -110,18 +114,25 @@ jq(document).ready(function(){
 	
 	unset($featureList[FeatureType::VAT]);
 	
-	$price = $featureList[$area == 'buy' ? FeatureType::PRICE : FeatureType::PRICE_MONTHLY];
+	foreach (FeatureType::getPriceTypes() as $typeId => $typeName) {
+		if (empty($featureList[$typeId]))
+			continue;
+		
+		$price = $featureList[$typeId];
 ?>
 						<tr>
 							<td align="right"><?= ucfirst($price->getType()->getName())?> : &nbsp;</td>
 							<td>
-								<span id="price" data="<?= $price->getValue()?>">EUR <?= number_format($price->getValue(), 0, '', "'") ?></span>
+								<span class="price" data="<?= $price->getValue()?>">EUR <?= number_format($price->getValue(), 0, '', "'") ?></span>
 								<?= $vat; ?>
 							</td>
 						</tr>
 <?php
+	}
+	
 	unset($featureList[FeatureType::PRICE]);
 	unset($featureList[FeatureType::PRICE_MONTHLY]);
+	unset($featureList[FeatureType::PRICE_DAYLY]);
 	
 	foreach ($featureList as $featureId => $feature) {
 		$value = Unit::TYPE_BOOL == $feature->getType()->getUnit()->getType()

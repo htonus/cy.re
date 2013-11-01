@@ -19,7 +19,11 @@
 			to += (length-- % 3 ? '' : settings.thousandSign) + from[i];
 		}
 		
-		this.text(prefix + to + frac);
+		this.text(
+			prefix
+			+ to.replace(eval('/^' + settings.thousandSign + '/'), '')
+			+ frac
+		);
 		
 		return this;
 	}
