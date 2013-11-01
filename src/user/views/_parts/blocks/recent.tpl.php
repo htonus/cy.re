@@ -34,6 +34,7 @@
 					<div align="left">
 						<a href=""><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
 						<br />
+						<small>
 <?php
 		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
 			if (!in_array($typeId, $features2show))
@@ -42,6 +43,7 @@
 			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
 		}
 ?>
+						</small>
 					</div>
 				</div>
 <?php

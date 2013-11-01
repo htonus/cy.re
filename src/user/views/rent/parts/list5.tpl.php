@@ -36,6 +36,7 @@
 		<div class="span4">
 				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
 				<br />
+				<small>
 <?php
 		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
 			if (!in_array($typeId, $features2show))
@@ -44,6 +45,7 @@
 			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
 		}
 ?>
+				</small>
 		</div>
 		<div class="span1">
 			<a href="<?= $itemUrl.$id; ?>" class="btn btn-small btn-black pull-right">Details</a>

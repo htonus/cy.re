@@ -31,8 +31,9 @@
 	<div class="row">
 		<div class="span6 list-item">
 			<img src="<?= PictureSize::list1()->getUrl($item->getPreview())?>">
-				<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
-				<br />
+			<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+			<br />
+			<small>
 <?php
 		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
 			if (!in_array($typeId, $features2show))
@@ -41,6 +42,7 @@
 			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
 		}
 ?>
+			</small>
 		</div>
 	</div>
 
