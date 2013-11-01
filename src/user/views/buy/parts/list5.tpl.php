@@ -2,6 +2,12 @@
 /**
  *
  */
+
+	$features2show = array(
+		FeatureType::AREA,
+		FeatureType::BEDROOMS,
+		FeatureType::TOILETS,
+	);
 ?>
 
 <div class="span6 mt20">
@@ -14,8 +20,8 @@
 		$item = $objectList[$id];
 
 		$title = $item->getCity()
-			? $item->getRealtyType()->getName().' in '.$item->getCity()->getName()
-			: $item->getNme();
+			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			: $item->getName();
 ?>
 
 	<div class="row">
@@ -28,10 +34,16 @@
 			</a>
 		</div>
 		<div class="span4">
-			<h5>
-				<a href="<?= $itemUrl.$id; ?>" title="Permalink to Another Work"><?= $title; ?></a>
-			</h5>
-			Some details
+				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+				<br />
+<?php
+		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
+			if (!in_array($typeId, $features2show))
+				continue;
+			
+			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+		}
+?>
 		</div>
 		<div class="span1">
 			<a href="<?= $itemUrl.$id; ?>" class="btn btn-small btn-black pull-right">Details</a>

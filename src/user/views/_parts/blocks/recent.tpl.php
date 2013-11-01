@@ -7,6 +7,12 @@
 
 		if (empty($title))
 			$title = '___TTL-RECENT___';
+		
+		$features2show = array(
+			FeatureType::AREA,
+			FeatureType::BEDROOMS,
+			FeatureType::TOILETS,
+		);
 ?>
 		<div class="container offers">
 
@@ -25,10 +31,18 @@
 					<a href="<?= $url ?>" title="Permalink to Another Work">
 						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 					</a>
-					<h5>
-						<a href="<?= $url ?>" title="Permalink to Another Work"><?= $title?></a>
-					</h5>
-					Price: <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?>
+					<div align="left">
+						<a href=""><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+						<br />
+<?php
+		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
+			if (!in_array($typeId, $features2show))
+				continue;
+			
+			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+		}
+?>
+					</div>
 				</div>
 <?php
 	}

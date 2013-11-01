@@ -496,3 +496,16 @@ DD {
 	border: 1px solid #000;
 	cursor: pointer;
 }
+.ico-home {
+	background: url('/img/home_icons.gif') 0px 0px no-repeat;
+	width: 25px;
+	height: 25px;
+	display: block;
+}
+
+.home_4 { /* bathrooms */
+	background-position: 0px 0px;
+}
+.home_3 { /* bedrooms */
+	background-position: -25px 0px;
+}
