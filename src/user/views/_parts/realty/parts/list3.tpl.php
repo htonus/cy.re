@@ -14,27 +14,32 @@
 
 <?php
 	$partViewer->view("$area/parts/menu");
-	$itemUrl = PATH_WEB."$area/item/";
 
+	$itemUrl = PATH_WEB."$area/item/";
+?>
+	
+	<div class="row">
+<?php
+	$odd = 0;
 	foreach ($list as $id => $relevance) {
 		$item = $objectList[$id];
 
 		$title = $item->getCity()
 			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
 			: $item->getName();
-?>
 
-	<div class="row">
-		<div class="span6 hr mt20"></div>
-	</div>
-	<div class="row">
-		<div class="span1">
-			<a href="<?= $itemUrl.$id; ?>" title="<?= $title; ?>">
-				<img src="<?= PictureSize::list5()->getUrl($item->getPreview())?>">
-			</a>
+		if ($odd++ % 3 == 0) {
+?>
 		</div>
-		<div class="span4">
-				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+		<div class="row">
+<?php
+		}
+?>
+		<div class="span2 list-item">
+			<img src="<?= PictureSize::preview()->getUrl($item->getPreview())?>">
+			<div align="left">
+				<a href="<?= $itemUrl.$id; ?>"><?= $title?><br />
+				<b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
 				<br />
 				<small>
 <?php
@@ -46,17 +51,16 @@
 		}
 ?>
 				</small>
+			</div>
 		</div>
-		<div class="span1">
-			<a href="<?= $itemUrl.$id; ?>" class="btn btn-small btn-black pull-right">Details</a>
-		</div>
-	</div>
 <?php
 	}
-
+?>
+	</div>
+	
+<?php
 	if (!empty($pager))
 		$partViewer->view('_parts/pager', $pager);
 ?>
-
 
 </div>

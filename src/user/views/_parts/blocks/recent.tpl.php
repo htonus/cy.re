@@ -32,7 +32,7 @@
 						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 					</a>
 					<div align="left">
-						<a href=""><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+						<a href=""><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
 						<br />
 						<small>
 <?php

@@ -35,7 +35,7 @@
 			self::ABOUT		=> 'about',
 		);
 
-
+		
 		public static function create($id)
 		{
 			return new self($id);
@@ -84,16 +84,5 @@
 		public function getSlug()
 		{
 			return $this->slugs[$this->id];
-		}
-		
-		public static function getMenuList()
-		{
-			return array(
-				self::buy(),
-				self::rent(),
-				self::project(),
-				self::info(),
-				self::about()
-			);
 		}
 	}

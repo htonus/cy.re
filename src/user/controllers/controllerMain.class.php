@@ -193,6 +193,9 @@ class controllerMain extends AclController
 			)->
 			set(
 				'priceType', $this->priceType
+			)->
+			set(
+				'section', $this->section
 			);
 		
 		return $this;

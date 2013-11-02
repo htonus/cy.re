@@ -48,12 +48,13 @@
 						$case = $tokens[$row['name']];
 					}
 					
-					$content = mb_ereg_replace(
-						'_'.$case.'__'.$row['name'].'___',
+					$content = mb_eregi_replace(
+						'_'.$case.'?__'.$row['name'].'___',
 						isset(i18nHelper::$cases[$case])
 							? i18nHelper::changeCase($row['value'], i18nHelper::$cases[$case])
 							: $row['value'],
-						$content
+						$content,
+						'mp'
 					);
 					
 					unset($tokens[$row['name']]);

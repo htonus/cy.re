@@ -2,7 +2,6 @@
 /**
  *
  */
-
 	$features2show = array(
 		FeatureType::AREA,
 		FeatureType::BEDROOMS,
@@ -14,27 +13,33 @@
 
 <?php
 	$partViewer->view("$area/parts/menu");
+?>
+
+	<div class="row">
+<?php
 	$itemUrl = PATH_WEB."$area/item/";
 
+	$odd = false;
 	foreach ($list as $id => $relevance) {
 		$item = $objectList[$id];
-
+		
+		if ($odd % 2) {
+?>
+	</div>
+	<div class="row">
+<?php
+		}
+		
 		$title = $item->getCity()
 			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
 			: $item->getName();
 ?>
-
-	<div class="row">
-		<div class="span6 hr mt20"></div>
-	</div>
-	<div class="row">
-		<div class="span1">
-			<a href="<?= $itemUrl.$id; ?>" title="<?= $title; ?>">
-				<img src="<?= PictureSize::list5()->getUrl($item->getPreview())?>">
+		<div class="span3 list-item">
+			<a href="<?= $itemUrl.$item->getId()?>" title="Permalink to Cool Ring">
+				<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 			</a>
-		</div>
-		<div class="span4">
-				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+			<div align="left">
+				<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
 				<br />
 				<small>
 <?php
@@ -46,17 +51,16 @@
 		}
 ?>
 				</small>
+			</div>
 		</div>
-		<div class="span1">
-			<a href="<?= $itemUrl.$id; ?>" class="btn btn-small btn-black pull-right">Details</a>
-		</div>
-	</div>
 <?php
 	}
+?>
+	</div>
 
+<?php
 	if (!empty($pager))
 		$partViewer->view('_parts/pager', $pager);
 ?>
-
 
 </div>

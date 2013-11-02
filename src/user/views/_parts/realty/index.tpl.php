@@ -4,7 +4,7 @@
  */
 ?>
 
-	<div class="section">
+	<section>
 
 		<div class="container main">
 			<div class="row">
@@ -14,7 +14,7 @@
 	$partViewer->view('_parts/form/login');
 ?>
 
-					<!-- p class="intro"></p -->
+					<!--p class="intro">Simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.</p -->
 					<br />
 
 					<form action="/<?= $area?>/list" method="get">
@@ -45,20 +45,21 @@
 
 
 <?php
-	
+
 	$partViewer->view(
 		'_parts/blocks/latest',
 		Model::create()->
 			set('list', empty($latestList) ? array() : $latestList)
 	);
-	
+
 	$partViewer->view(
 		'_parts/blocks/recent',
 		Model::create()->
 			set('area', $area)->
-			set('list', $blocks[CustomType::RECENT])
+			set('list', $blocks[CustomType::RECENT])->
+			set('priceType', $priceType)
 	);
-	
+
 	$partViewer->view(
 		'_parts/blocks/promote',
 		Model::create()->
@@ -66,5 +67,4 @@
 			set('article', $promote)
 	);
 ?>
-
-	</div>
+	</section>

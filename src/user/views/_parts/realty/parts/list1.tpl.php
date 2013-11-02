@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="span6 list-item">
 			<img src="<?= PictureSize::list1()->getUrl($item->getPreview())?>">
-			<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue(FeatureType::PRICE)?></a>
+			<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
 			<br />
 			<small>
 <?php
