@@ -13,7 +13,7 @@
 <div class="span6 mt20">
 
 <?php
-	$partViewer->view("$area/parts/menu");
+	$partViewer->view('_parts/realty/parts/menu');
 	$itemUrl = PATH_WEB."$area/item/";
 
 	foreach ($list as $id => $relevance) {

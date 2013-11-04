@@ -12,7 +12,7 @@
 <div class="span6 mt20">
 
 <?php
-	$partViewer->view("$area/parts/menu");
+	$partViewer->view('_parts/realty/parts/menu');
 ?>
 
 	<div class="row">
