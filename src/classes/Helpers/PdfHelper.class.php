@@ -207,6 +207,8 @@
 			$strings = array();
 			$start = $pos = $offset = $line = 0;
 
+			$text = html_entity_decode($text);
+
 			if (empty($w)) {
 				$strings[] = $text;
 			} else {
