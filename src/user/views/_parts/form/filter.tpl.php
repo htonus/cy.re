@@ -11,7 +11,7 @@
 								<label class="control-label" for="input_realtyType">Realty type</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="realtyType">
-										<option value="">-</option>
+										<option value="">___ANY___</option>
 <?php
 	$default = empty($realtyType)
 		? null
@@ -35,7 +35,7 @@
 								<label class="control-label" for="input_city">Area, City</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="city">
-										<option value="">-</option>
+										<option value="">___ANY___</option>
 <?php
 	$default = empty($city)
 		? null
@@ -62,7 +62,7 @@
 								<label class="control-label" for="input_f[<?= $priceType ?>]">Price (&euro;)</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= $priceType ?>]">
-										<option value="">-</option>
+										<option value="">___ANY___</option>
 <?php
 	$priceList = array(
 		'-100000'			=> 'up to 100k',
@@ -128,7 +128,7 @@
 								<label class="control-label" for="input_f[<?= FeatureType::BEDROOMS?>]" title="Bedrooms" style="overflow: hidden; white-space: nowrap;">___BEDROOMS___</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::BEDROOMS?>]" id=""input_f[<?= FeatureType::BEDROOMS?>]>
-										<option value="">-</option>
+										<option value="">___ANY___</option>
 <?php
 	$default = empty($filter[FeatureType::BEDROOMS])
 		? null
@@ -153,7 +153,7 @@
 								<label class="control-label" for="input_f[<?= FeatureType::TOILETS?>]">___BATHROOMS___</label>
 								<div class="controls">
 									<select type="text" class="input-block-level" name="f[<?= FeatureType::TOILETS?>]" id=""input_f[<?= FeatureType::TOILETS?>]>
-										<option value="">-</option>
+										<option value="">___ANY___</option>
 <?php
 	$default = empty($filter[FeatureType::BEDROOMS])
 		? null
@@ -225,7 +225,7 @@ function updateArea(realtyType)
 		areaSelector.prop('disabled', true);
 	} else {
 		areaSelector.prop('disabled', false);
-		areaSelector.append('<option value="">-</option>');
+		areaSelector.append('<option value="">___ANY___</option>');
 		var range = areaLists[realtyType];
 		for (i in range) {
 			var f = range[i].f, t = range[i].t;
