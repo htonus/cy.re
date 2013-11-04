@@ -25,6 +25,7 @@ function attachEditor(textarea)
 		useLineBreaks: false
 	});
 }
+
 </script>
 
 <div id="toolbar" style="display: none; width: 670px">
@@ -72,8 +73,8 @@ function attachEditor(textarea)
 		<a data-wysihtml5-command="insertOrderedList" class="btn" alt="ordered list"><i class="icon-th-list"></i></a>
 	</div>
 
-	<a data-wysihtml5-action="change_view" class="btn pull-right" alt="switch to html view"><i class="icon-edit"></i></a>
-	<button class="btn pull-right" alt="cleanup" onlick="cleanupEditor()"><i class="icon-remove"></i></button>
+	<a data-wysihtml5-action="change_view" class="btn pull-right" title="switch to html view"><i class="icon-edit"></i></a>
+	<a data-wysihtml5-command="removeFormat" class="btn pull-right" title="select text to clear and press the button to remove formatting"><i class="icon-remove"></i></a>
 	
 	<div data-wysihtml5-dialog="createLink" style="display: none;" class="input-append input-prepend breadcrumb">
 		<span class="add-on span1">&nbsp; Link &nbsp;</span>
