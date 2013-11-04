@@ -37,7 +37,7 @@
 				<h4><?= $realty->getName()?></h4>
 				<p>
 					<?= $realty->getCity() ? $realty->getCity()->getName() : ''?>
-					&nbsp; &euro; <?= number_format($realty->getFeatureValue(FeatureType::PRICE), 0, '.', "'");?>
+					&nbsp; &euro; <?= number_format($realty->getFeatureValue($priceType), 0, '.', "'");?>
 				</p>
 			</div>
 		</div>

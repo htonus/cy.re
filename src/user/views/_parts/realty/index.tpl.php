@@ -35,7 +35,8 @@
 		'_parts/blocks/carousel',
 		Model::create()->
 			set('list', $blocks[CustomType::CAROUSEL])->
-			set('area', $area)
+			set('area', $area)->
+			set('priceType', $priceType)
 	);
 ?>
 				</div>
