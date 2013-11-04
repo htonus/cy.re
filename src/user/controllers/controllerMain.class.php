@@ -144,7 +144,7 @@ class controllerMain extends AclController
 						)
 					)->
 					addOrder(
-						OrderBy::create('created')->desc()
+						OrderBy::create('order')->desc()
 					)->
 					setLimit($amount - count($result))->
 					getList();
