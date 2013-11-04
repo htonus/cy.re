@@ -124,6 +124,9 @@ class controllerMain extends AclController
 					Expression::eqId('parent.section', $this->section)
 				)
 			)->
+			addOrder(
+				OrderBy::create('order')->asc()
+			)->
 			getList();
 
 		$result = array();
