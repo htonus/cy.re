@@ -35,7 +35,13 @@
 			self::ABOUT		=> 'about',
 		);
 
-		
+		protected static $types = array(
+			ArticleType::INFO		=> self::INFO,
+			ArticleType::PROJECT	=> self::PROJECT,
+			ArticleType::ABOUT		=> self::ABOUT,
+		);
+
+
 		public static function create($id)
 		{
 			return new self($id);
@@ -84,5 +90,11 @@
 		public function getSlug()
 		{
 			return $this->slugs[$this->id];
+		}
+
+		public static function getByType(ArticleType $type)
+		{
+			$section = new self(self::$types[$type->getId()]);
+			return $section->getSlug();
 		}
 	}

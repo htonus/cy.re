@@ -31,7 +31,7 @@
 								</div>
 
 								<div class="pull-right">
-									<a href="/<?= get_class($item) == 'Realty' ? $area : 'read' ?>/item/<?= $item->getId()?>">read more</a>
+									<a href="/<?= $item instanceof Article ? Section::getByType($item->getType()) : $area ?>/item/<?= $item->getId()?>">read more</a>
 								</div>
 							</div>
 
