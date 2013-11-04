@@ -68,7 +68,7 @@
 			$pdf->Text(35, $top + 15, 'Group of Companies');
 
 			$pdf->SetTextColor(0, 0xB, 0x5E);
-			$pdf->Text(120, $top + 9, 'Telephone: +357 25366144, +357 25369209');
+			$pdf->Text(120, $top + 9, 'Telephone: +357 25366144');
 			$pdf->Text(128.5, $top + 13, 'Email: info@esperiaestates.com');
 			$pdf->Text(130, $top + 17,	'Web: http://www.cyprus-realty.com');
 
