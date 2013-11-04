@@ -139,7 +139,6 @@ class controllerMain extends AclController
 					add(
 						Expression::andBlock(
 							Expression::eqId('type', ArticleType::project()),
-							Expression::notNull('preview'),
 							Expression::notNull('published')
 						)
 					)->
