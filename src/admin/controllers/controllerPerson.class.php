@@ -71,33 +71,28 @@ final class controllerPerson extends CommonEditor
 	) {
 		if ($password = $form->getValue('password')) {
 			$object->setPassword(sha1($password));
-			$form->drop('password');
-			
+			$this->getForm()->drop('password');
+
 			$object = parent::addObject($request, $form, $object);
 		} else {
 			$form->markMissing('password');
 		}
-		
+
 		return $object;
 	}
 
-	public function doSave(HttpRequest $request)
-	{
-		$password = $this->map->importOne('password', $request)->
-				getForm()->
-					getValue('password');
-		
-		if ($password) {
-			$this->subject->setPassword(sha1(password));
-		} else {
-			$this->getForm()->markGood('password');
+	protected function saveObject(
+		HttpRequest $request, Form $form, Identifiable $object
+	) {
+		if ($password = $form->getValue('password')) {
+			$object->setPassword(sha1($password));
 		}
 		
 		$this->getForm()->drop('password');
-
-		return parent::doSave($request);
+		
+		return parent::saveObject($request, $form, $object);
 	}
-
+	
 	public function doBrowse(HttpRequest $request)
 	{
 		$result = array(

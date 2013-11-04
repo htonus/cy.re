@@ -67,6 +67,11 @@ final class controllerMain extends MethodMappedController
 	
 	protected function actionLogin(HttpRequest $request)
 	{
+		$mav = ModelAndView::create();
+		
+		if ($request->hasAttachedVar('user'))
+			return $mav->setView(RedirectView::create('/'));
+
 		$form = Form::create()->
 			add(
 				Primitive::string('username')->
@@ -90,8 +95,6 @@ final class controllerMain extends MethodMappedController
 			import($request->getPost())->
 			importMore($request->getCookie());
 		
-		$mav = ModelAndView::create();
-		
 		if (!$form->getErrors()) {
 			$user = Criteria::create(Person::dao())->
 				add(
@@ -113,7 +116,7 @@ final class controllerMain extends MethodMappedController
 					$this->setAutoLoginCookie($cookie);
 				}
 				
-				$backUrl = '/buy';
+				$backUrl = '/	';
 				
 				if (Session::get('backUrl')) {
 					$backUrl = Session::get('backUrl');

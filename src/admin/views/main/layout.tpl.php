@@ -14,14 +14,31 @@
 	<div class="row">
 		<div class="span3">
 <?php
-	$partViewer->view('_parts/menu/main');
+	if (empty($user)) {
+?>
+		<div class="span12">
+			<section>
+<?php
+	$partViewer->view("$area/$action");
+?>
+			</section>
+		</div>
+
+<?php
+	} else {
+?>
+		<div class="span12">
+			<section>
+<?php
+		$partViewer->view('_parts/menu/main');
 ?>
 		</div>
 
 		<div class="span9">
 			<section>
 <?php
-	$partViewer->view("$area/$action")
+		$partViewer->view("$area/$action");
+	}
 ?>
 			</section>
 		</div>
