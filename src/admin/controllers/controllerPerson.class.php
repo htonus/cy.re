@@ -83,10 +83,10 @@ final class controllerPerson extends CommonEditor
 
 	public function doSave(HttpRequest $request)
 	{
-		$password = $this->getForm()->
-			importOne('password', $request->getGet())->
-			getValue('password');
-
+		$password = $this->map->importOne('password', $request)->
+				getForm()->
+					getValue('password');
+		
 		if ($password) {
 			$this->subject->setPassword(sha1(password));
 		} else {
