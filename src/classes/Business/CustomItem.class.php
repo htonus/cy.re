@@ -31,6 +31,41 @@
 			return Singleton::getInstance('ProtoCustomItem');
 		}
 		
-		// your brilliant stuff goes here
+		public function setObjectId($type, $id)
+		{
+			switch($type) {
+				case 'realty':
+					$this->setRealtyId($id);
+					break;
+				case 'article':
+					$this->setArticleId($id);
+					break;
+			}
+
+			return $this;
+		}
+		
+		public function setObject(Identifiable $object)
+		{
+			switch(true) {
+				case $object instanceOf Realty:
+					$this->setRealty($object);
+					break;
+				case $object instanceOf Article:
+					$this->setArticle($object);
+					break;
+			}
+
+			return $this;
+		}
+
+		public function getObject()
+		{
+			foreach (array('realty', 'article') as $type) {
+				if ($this->{$type.'Id'} > 0)
+					return $this->{'get'.ucfirst($type)}();
+			}
+			
+			return null;
+		}
 	}
-?>

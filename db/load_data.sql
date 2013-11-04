@@ -104,6 +104,8 @@ insert into person ("name", "surname", "created", "status_id", "email", "usernam
 
 insert into custom_type ("id", "name") values (1, 'carousel');
 insert into custom_type ("id", "name") values (2, 'recent');
+insert into custom_type ("id", "name") values (3, 'projects');
+
 insert into "section" ("id", "name") values (1, 'buy');
 insert into "section" ("id", "name") values (2, 'rent');
 insert into "section" ("id", "name") values (3, 'sell');

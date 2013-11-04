@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h1><?=$id ? 'Update Block [ '.$form->getValue('type')->getName().' | '. $form->getValue('section')->getName().' ]': 'Add new Custom block'?></h1>
+<h1><?=$id ? 'Update Block [ '.$form->getValue('type')->getName().' | '.i18nHelper::detokenize($form->getValue('section')->getName()).' ]': 'Add new Custom block'?></h1>
 
 <?php
 	$partViewer->view('_parts/form/flash');
@@ -76,7 +76,7 @@
 		)
 			continue;
 ?>
-			<option value="<?= $item->getId()?>"<?= $default == $item->getId() ? ' selected="selected"' : null?>><?= $item->getName()?></option>
+			<option value="<?= $item->getId()?>"<?= $default == $item->getId() ? ' selected="selected"' : null?>><?= i18nHelper::detokenize($item->getName()); ?></option>
 <?php
 	}
 ?>
@@ -96,19 +96,14 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
-			<a class="brand" href="#">Realty search</a>
+			<a class="brand" href="#">Object search</a>
 
-			<ul class="nav">
-				<li><a href="#">Enter ID or CODE</a></li>
-				<li class="navbar-search">
-					<input type="text" id="id_or_code" name="id_or_code" class="search-query span2" placeholder="Search">
-				</li>
-				<li>&nbsp;</li>
-				<li>
-					<input type="button" id="searchButton" name="input_id_or_code" value="Attach" class="btn">
-				</li>
-			</ul>
-
+			<div class="navbar-search pull-left input-append">
+				<input type="text" id="id_or_code" name="id_or_code" class="span2" placeholder="Search">
+				<input type="button" id="searchButton" name="type" value="Article" class="btn">
+				<input type="button" id="searchButton" name="type" value="Realty" class="btn">
+			</div>
+			
 			<div class="pull-right">
 				<button class="btn btn-primary" type="submit">Submit</button>
 				<button class="btn" type="button" onclick="document.location.href='/index.php?area=district'">Cancel</button>
@@ -128,8 +123,7 @@
 		&& ($list = $form->getValue('id')->getItems()->getList())
 	) {
 		foreach ($list as $item) {
-			$total ++;
-			$realty = $item->getRealty();
+			$object = $item->getObject();
 ?>
 		<tr>
 			<td width="30px">
@@ -138,13 +132,17 @@
 					<a name="#" class="btn movedown"><i class="icon-arrow-down"></i></a>
 				</div>
 			</td>
-			<td><img src="<?= PictureSize::thumbnail()->getUrl($realty->getPreview())?>"></td>
+			<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="<?= PictureSize::thumbnail()->getUrl($object->getPreview())?>"></td>
 			<td>
-				<b><?= $realty->getCode()?></b> : <?= $realty->getName()?>
+				<?= strtoupper(get_class($object)) ?> |
+				ID : <?= $object->getId() ?>
+				<?= get_class($object) == 'Realty' ? ' | Realty '.$object->getCode() : null ?>
+				<br />
+				<?= $object->getName()?>
 			</td>
 			<td class="pull-right">
-				<input type="hidden" name="item[<?= $realty->getId()?>]" value="<?= $total?>"/>
-				<a href="/index.php?area=realty&action=edit&id=<?= $realty->getId()?>" target="_blank" class="btn btn-info">View</a>
+				<input type="hidden" name="item[][<?= $object->getId() ?>]" value="<?= strtolower(get_class($object))?>"/>
+				<a href="/index.php?area=<?= TextUtils::downFirst(get_class($object)) ?>&action=edit&id=<?= $object->getId()?>" target="_blank" class="btn btn-info">View</a>
 				<button type="button" class="btn btn-warning" onclick="jq(this).parents('TR').remove()">Remove</button>
 			</td>
 		</tr>
@@ -165,7 +163,6 @@
 </form>
 
 <script type="text/javascript">
-var itemListTotal = <?= $total?>;
 
 jq(document).ready(function(){
 	
@@ -173,19 +170,19 @@ jq(document).ready(function(){
 	
 	jq('.movedown').click(itemMoveDown);
 	
-	jq('#searchButton').click(function(){
+	jq('.navbar-search .btn').click(function(){
 		var criteria = jq('#id_or_code').val();
 
 		if (criteria.length < 1)
 			return;
 
 		jq.getJSON(
-			'/index.php?area=custom&action=searchRealty&criteria=' + criteria,
+			'/index.php?area=custom&action=searchObject&object=' + jq(this).val() + '&criteria=' + criteria,
 			function(data){
 				if (data.error == '') {
-					itemListTotal ++;
 					jq('#emptyList').remove();
-					jq('#itemList TBODY').append('\
+					
+					var tr = jq('#itemList TBODY').append('\
 			<tr>\
 				<td width="30px">\
 					<div class="btn-group btn-group-vertical">\
@@ -194,14 +191,18 @@ jq(document).ready(function(){
 					</div>\
 				</td>\
 				<td style="width: <?= PictureSize::thumbnail()->getWidth()?>px"><img src="' + data.item.url+ '"></td>\
-				<td><b>' + data.item.realty_code + '</b> : ' + data.item.name + '</td>\
+				<td>' + data.item.type.toUpperCase() + ' | ID : ' + data.item.id + ' ' + (data.item.code ? ' | Code : ' + data.item.code : ' ') + '<br>' + data.item.name + '</td>\
 				<td class="pull-right">\
-					<input type="hidden" name="item[' + data.item.realty_id + ']" value="' + itemListTotal + '"/>\
-					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-info">View</a>\
-					<a href="/index.php?area=realty&action=edit&id=' + data.item.realty_id + '" target="_blank" class="btn btn-warning">Remove</a>\
+					<input type="hidden" name="item[][' + data.item.object_id + ']" value="' + data.item.type + '"/>\
+					<a href="/index.php?area=' + data.item.type + '&action=edit&id=' + data.item.object_id + '" target="_blank" class="btn btn-info">View</a>\
+					<a href="/index.php?area=' + data.item.type + '&action=edit&id=' + data.item.object_id + '" target="_blank" class="btn btn-warning">Remove</a>\
 				</td>\
 			</tr>\
 					');
+					
+					tr.find('.moveup').click(itemMoveUp);
+					tr.find('.movedown').click(itemMoveDown);
+					jq('#id_or_code').val('');
 				} else {
 					alert(data.error);
 				}
@@ -216,10 +217,7 @@ function itemMoveUp()
 	var prevTR = tr.prev();
 	
 	if (prevTR.size()) {
-		var order = tr.find(':hidden').val();
 		tr.remove().insertBefore(prevTR);
-		prevTR.find(':hidden').val(order);
-		tr.find(':hidden').val(order - 1);
 		tr.find('.moveup').click(itemMoveUp);
 		tr.find('.movedown').click(itemMoveDown);
 	}
@@ -231,10 +229,7 @@ function itemMoveDown()
 	var nextTR = tr.next();
 	
 	if (nextTR.size()) {
-		var order = tr.find(':hidden').val();
 		tr.remove().insertAfter(nextTR);
-		nextTR.find(':hidden').val(order);
-		tr.find(':hidden').val(order + 1);
 		tr.find('.moveup').click(itemMoveUp);
 		tr.find('.movedown').click(itemMoveDown);
 	}

@@ -39,6 +39,5 @@
 		{
 			return parent::getItems($lazy)->
 				setCriteria(Criteria::create()->addOrder('order'));
-		}		
+		}
 	}
-?>

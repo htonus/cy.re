@@ -10,7 +10,7 @@
 	$class = get_class($subject);
 ?>
 
-<h1><?=$id ? 'Update '.ucfirst($area).': '.$form->getValue('id')->getName() : 'Add new '.ucfirst($area)?></h1>
+<h1><?=$id ? 'Update '.ucfirst($area).': '.$form->getValue('id')->getName().' ['.$form->getValue('id')->getId().']' : 'Add new '.ucfirst($area)?></h1>
 
 <?php
 	$partViewer->view('_parts/form/flash');
@@ -116,7 +116,13 @@
 	
 	<div class="tab-pane<?= $id ? ' active' : null?>" id="tab_pictures">
 <?php
-	$partViewer->view($area.'/parts/pictures');
+	if ($form->getValue('id')) {
+		$partViewer->view('_parts/form/file_upload');
+	} else {
+?>
+	<div class="alert alert-info">You need to save new Article first. Then you could manage the pictures.</div>
+<?php
+	}
 ?>
 	</div>
 

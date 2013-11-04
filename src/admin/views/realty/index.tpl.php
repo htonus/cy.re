@@ -63,7 +63,7 @@
 ?>
 			</td>
 			<td>
-				<b><?= $item->getCode()?></b><br />
+				<b><?= $item->getCode()?></b> [ <?= $item->getId()?> ]<br />
 				<?= $item->getCity() ? $item->getCity()->getName() : '---'?><br />
 <?php
 		if ($item->getDistrict())

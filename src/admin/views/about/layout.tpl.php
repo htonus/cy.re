@@ -7,7 +7,7 @@
 		$partViewer->view(
 			'_parts/site_title',
 			Model::create()->
-				set('title', 'Articles')->
+				set('title', 'Articles : '.ucfirst($area))->
 				set('hint', 'Does not go to live unless are published by Moderator')
 		);
 ?>
@@ -22,7 +22,7 @@
 		<div class="span9">
 			<section>
 <?php
-	$partViewer->view("$area/$action")
+	$partViewer->view('_parts/article/'.$action);
 ?>
 			</section>
 		</div>

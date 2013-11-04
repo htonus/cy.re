@@ -356,7 +356,9 @@ H3 SPAN {
 	margin-top: 30px;
 }
 .extra P {
-	text-indent: 50px;
+/*	text-indent: 50px;*/
+	text-align: justify;
+	margin-bottom: 10px;
 }
 /*
 	FOOTER

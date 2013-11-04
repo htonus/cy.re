@@ -54,10 +54,7 @@ class controllerMain extends AclController
 		
 		$mav = ModelAndView::create()->
 			setModel($model);
-
-		$carousel = $this->getBlockList(CustomType::carousel());
-		$recent = $this->getBlockList(CustomType::recent(), 4);
-
+		
 		$model->
 			set('static', $this->getStaticContent())->
 			set('promote', $this->getPromoteArticle())->
@@ -65,8 +62,9 @@ class controllerMain extends AclController
 			set(
 				'blocks',
 				array(
-					CustomType::CAROUSEL		=> $carousel,
-					CustomType::RECENT		=> $recent
+					CustomType::CAROUSEL	=> $this->getBlockList(CustomType::carousel()),
+					CustomType::RECENT	=> $this->getBlockList(CustomType::recent(), 4),
+					CustomType::PROJECTS=> $this->getBlockList(CustomType::projects(), 2),
 				)
 			);
 		
@@ -130,26 +128,42 @@ class controllerMain extends AclController
 
 		$result = array();
 		foreach ($list as $item)
-			$result[$item->getRealty()->getId()] = $item->getRealty();
+			$result[$item->getObject()->getId()] = $item->getObject();
 		
 		if (
 			!empty($amount)
 			&& count($result) < $amount
 		) {
-			$list = Criteria::create(Realty::dao())->
-				add(
-					Expression::andBlock(
-						Expression::eq('features.type', $this->priceType),
-						Expression::notNull('preview'),
-						Expression::notNull('published')
-					)
-				)->
-				addOrder(
-					OrderBy::create('created')->desc()
-				)->
-				setLimit($amount - count($result))->
-				getList();
-			
+			if ($type->getId() == CustomType::PROJECTS) {
+				$list = Criteria::create(Article::dao())->
+					add(
+						Expression::andBlock(
+							Expression::eqId('type', ArticleType::project()),
+							Expression::notNull('preview'),
+							Expression::notNull('published')
+						)
+					)->
+					addOrder(
+						OrderBy::create('created')->desc()
+					)->
+					setLimit($amount - count($result))->
+					getList();
+			} else {
+				$list = Criteria::create(Realty::dao())->
+					add(
+						Expression::andBlock(
+							Expression::eq('features.type', $this->priceType),
+							Expression::notNull('preview'),
+							Expression::notNull('published')
+						)
+					)->
+					addOrder(
+						OrderBy::create('created')->desc()
+					)->
+					setLimit($amount - count($result))->
+					getList();
+			}
+
 			foreach ($list as $item)
 				$result[$item->getId()] = $item;
 		}

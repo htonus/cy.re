@@ -3,7 +3,7 @@
  * $Id$
  */
 
-	$url = '/index.php?area=information'
+	$url = '/index.php?area='.$area
 		.'&category='.(empty($category) ? null : $category->getId())
 		.'&action=';
 ?>
@@ -56,6 +56,7 @@
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
+			<th>ID</th>
 			<th>Name</th>
 			<th>Category</th>
 			<th>Created</th>
@@ -68,6 +69,7 @@
 	foreach ($list as $item) {
 ?>
 		<tr>
+			<td><?= $item->getId()?></td>
 			<td><?=$item->getName()?></td>
 			<td><?=$item->getCategory() ? $item->getCategory()->getName() : '---'?></td>
 			<td><?=$item->getCreated()->toString()?></td>

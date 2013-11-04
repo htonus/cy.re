@@ -8,6 +8,7 @@
 	class Realty extends AutoRealty implements Prototyped, DAOConnected
 	{
 		private $featureList = array();
+		private $brief = null;
 		
 		/**
 		 * @return Realty
@@ -100,5 +101,15 @@
 			}
 			
 			return $this->pictures;
+		}
+
+		public function getBrief()
+		{
+			if ($this->brief === null) {
+				$this->brief = TextUtils::cutOnSpace(strip_tags($this->getText()), 512, '...');
+				$this->brief = '<p>'.str_replace("\n", '</p><p>', $this->brief).'</p>';
+			}
+
+			return $this->brief;
 		}
 	}

@@ -31,6 +31,11 @@
 			return Singleton::getInstance('ProtoArticle');
 		}
 		
-		// your brilliant stuff goes here
+		public function getPreview()
+		{
+			$list = $this->getPictures()->getList();
+
+			return reset($list);
+		}
 	}
 ?>

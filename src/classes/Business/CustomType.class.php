@@ -9,10 +9,12 @@
 	{
 		const CAROUSEL	= 1;
 		const RECENT	= 2;
+		const PROJECTS	= 3;
 
 		protected $names = array(
 			self::CAROUSEL	=> 'carousel',
 			self::RECENT	=> 'recent',
+			self::PROJECTS	=> 'projects',
 		);
 
 		/**
@@ -30,5 +32,12 @@
 		{
 			return new self(self::RECENT);
 		}
+
+		/**
+		 * @return CustomType
+		 */
+		public static function projects()
+		{
+			return new self(self::PROJECTS);
+		}
 	}
-?>

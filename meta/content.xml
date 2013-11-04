@@ -28,7 +28,8 @@
 			<property name="name" type="String" size="256" required="false" />
 			<property name="order" type="Integer" required="false" />
 			<property name="parent" type="Custom" relation="OneToOne" required="true" fetch="lazy" column="parent_id" />
-			<property name="realty" type="Realty" relation="OneToOne" required="true" fetch="lazy" />
+			<property name="realty" type="Realty" relation="OneToOne" required="false" fetch="lazy" />
+			<property name="article" type="Article" relation="OneToOne" required="false" fetch="lazy" />
 		</properties>
 		<pattern name="StraightMapping" />
 	</class>

@@ -62,6 +62,13 @@
 	);
 
 	$partViewer->view(
+		'_parts/blocks/projects',
+		Model::create()->
+			set('area', $area)->
+			set('list', $blocks[CustomType::PROJECTS])
+	);
+
+	$partViewer->view(
 		'_parts/blocks/promote',
 		Model::create()->
 			set('area', $area)->

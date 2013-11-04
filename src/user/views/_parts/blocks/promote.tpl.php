@@ -2,8 +2,6 @@
 /**
  *
  */
-
-$list = $article->getPictures()->getList();
 ?>
 		<div class="container extra">
 
@@ -41,9 +39,9 @@ $list = $article->getPictures()->getList();
 
 				<div class="span6">
 <?php
-	if ($list) {
+	if ($preview = $article->getPreview()) {
 ?>
-					<div><img src="<?= PictureSize::list1()->getUrl(reset($list)); ?>" width="100%"></div>
+					<div><img src="<?= PictureSize::list1()->getUrl($preview); ?>" width="100%"></div>
 <?php
 	}
 

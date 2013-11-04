@@ -25,7 +25,8 @@ CREATE TABLE "custom_item" (
     "id" BIGINT NOT NULL default nextval('custom_item_id'),
     "order" INTEGER NULL,
     "parent_id" BIGINT NOT NULL REFERENCES "custom"("id") ON UPDATE CASCADE ON DELETE CASCADE,
-    "realty_id" BIGINT NOT NULL REFERENCES "realty"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "realty_id" BIGINT NULL REFERENCES "realty"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "article_id" BIGINT NULL REFERENCES "article"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     "name" CHARACTER VARYING(256) NULL,
     PRIMARY KEY("id")
 );
