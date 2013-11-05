@@ -27,7 +27,7 @@
 	$partViewer->view('_parts/js', Model::create()->set('name', 'format.currency'));
 ?>
 
-<script typy="text/javascript">
+<script type="text/javascript">
 var currencyRates = <?= json_encode($currencyRates, JSON_NUMERIC_CHECK)?>;
 
 jq(document).ready(function(){
