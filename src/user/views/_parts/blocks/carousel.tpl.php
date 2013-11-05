@@ -2,6 +2,21 @@
 /*
  * $Id$
  */
+	/*
+	$partViewer->view(
+		'_parts/admin-bar',
+		Model::create()->
+			set(
+				'adminUrl',
+				'?area=custom&action=edit'
+				.(
+					empty($blockIds[CustomType::CAROUSEL])
+						? '&section='.$section->getId().'&type='.CustomType::CAROUSEL
+						: '&id='.$blockIds[CustomType::CAROUSEL]
+				)
+			)
+	);
+	 */
 ?>
 
 <div id="myCarousel" class="carousel slide">

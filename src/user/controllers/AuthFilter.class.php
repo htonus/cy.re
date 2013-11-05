@@ -18,11 +18,18 @@ final class AuthFilter extends RequestFilter
 	
 	public function handleRequest(HttpRequest $request)
 	{
+		$mav = ModelAndView::create();
+
 		if ($this->doLogout($request)) {
-			$mav = ModelAndView::create()->
-				setView(
-					RedirectView::create('/')
-				);
+			$mav->setView(
+				RedirectView::create('/')
+			);
+		} elseif ($user = $this->doLogin($request)) {
+			Session::assign('user', $user);
+			
+			$mav->setView(
+				RedirectView::create($request->getServerVar('REQUEST_URI'))
+			);
 		} else {
 			if (
 				$request->hasSessionVar('user')
@@ -30,13 +37,7 @@ final class AuthFilter extends RequestFilter
 			) {
 				$user = $request->getSessionVar('user');
 			} else {
-				if (
-					($user = $this->doLogin($request))
-					|| ($user = $this->doAutoLogin($request))
-				) {
-					Session::assign('user', $user);
-					$request->setAttachedVar('user', $user);
-				} else {
+				if (!($user = $this->doAutoLogin($request))) {
 					// time to create fake user to setup default access
 					$user = Criteria::create(Person::dao())->
 						add(

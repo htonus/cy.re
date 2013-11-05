@@ -21,11 +21,12 @@
 	} else {
 ?>
 					<div class="catchy">
-						<h2><strong>___WELCOME___</strong></h2>
+						<h5>Hello, <strong><?= $user->getName() ?></strong>, choose the action:</h5>
 						<div class="row-fluid form-inline">
 							<h5>
-								<a class="btn btn-black" href="<?= PATH_WEB_ADMIN ?>?area=person&action=edit&id=<?= $user->getId() ?>" target="_blank"><?= $user->getName() ?></a>
+								<a class="btn btn-black" href="<?= PATH_WEB_ADMIN ?>?area=person&action=edit&id=<?= $user->getId() ?>" target="_blank">Settings</a>
 								<a class="btn btn-black" href="<?= PATH_WEB_ADMIN ?>" target="_blank">Back office</a>
+								<a class="btn btn-black" href="<?= PATH_WEB_USER ?>?signout">Sign out</a>
 							</h5>
 						</div>
 					</div>
