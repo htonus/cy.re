@@ -26,7 +26,7 @@
 							<h5>
 								<a class="btn btn-black" href="<?= PATH_WEB_ADMIN ?>?area=person&action=edit&id=<?= $user->getId() ?>" target="_blank">Settings</a>
 								<a class="btn btn-black" href="<?= PATH_WEB_ADMIN ?>" target="_blank">Back office</a>
-								<a class="btn btn-black" href="<?= PATH_WEB_USER ?>?signout">Sign out</a>
+								<a class="btn btn-black" href="<?= PATH_WEB_USER ?>?signout=1">Sign out</a>
 							</h5>
 						</div>
 					</div>
