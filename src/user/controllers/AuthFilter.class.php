@@ -24,22 +24,32 @@ final class AuthFilter extends RequestFilter
 					RedirectView::create('/')
 				);
 		} else {
-			if ($request->hasSessionVar('user')) {
+			if (
+				$request->hasSessionVar('user')
+				&& !$request->getSessionVar('user')->isFake()
+			) {
 				$user = $request->getSessionVar('user');
-			} elseif (!($user = $this->doAutoLogin($request))) {
-				// time to create fake user to setup default access
-				$user = Criteria::create(Person::dao())->
-					add(
-						Expression::eq('name', Person::DEFAULT_USER_NAME)
-					)->
-					get();
-				
+			} else {
+				if (
+					($user = $this->doLogin($request))
+					|| ($user = $this->doAutoLogin($request))
+				) {
+					Session::assign('user', $user);
+					$request->setAttachedVar('user', $user);
+				} else {
+					// time to create fake user to setup default access
+					$user = Criteria::create(Person::dao())->
+						add(
+							Expression::eq('name', Person::DEFAULT_USER_NAME)
+						)->
+						get();
+				}
+			
 				if ($user)
 					Session::assign('user', $user);
+				else
+					throw new MissingElementException('There is no defualt User!!!');
 			}
-			
-			if (empty($user))
-				throw new MissingElementException('There is no defualt User!!!');
 
 			$request->setAttachedVar('user', $user);
 
@@ -73,7 +83,43 @@ final class AuthFilter extends RequestFilter
 
 		return false;
 	}
+	
+	private function doLogin(HttpRequest $request)
+	{
+		$form = Form::create()->
+			add(
+				Primitive::string('username')->
+					addImportFilter(Filter::trim())->
+					required()
+			)->
+			add(
+				Primitive::string('password')->
+					addImportFilter(Filter::trim())->
+					addImportFilter(Filter::hash())->
+					required()
+			)->
+			import($request->getPost());
 
+		$user = null;
+		
+		if (!$form->getErrors()) {
+			$user = Criteria::create(Person::dao())->
+				add(
+					Expression::eq('username', $form->getValue('username'))
+				)->
+				add(
+					Expression::eq('password', $form->getValue('password'))
+				)->
+				get();
+
+			if (!$user) {
+				Session::assign('flash.error', 'Wrong user credentials');
+			}
+		}
+		
+		return $user;
+	}
+	
 	private function doAutoLogin(HttpRequest $request)
 	{
 		$form = Form::create()->

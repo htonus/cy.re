@@ -49,10 +49,14 @@
 		{
 			return $this->getStatus()->getId() == PersonStatus::ROOT;
 		}
-		
+
 		public function isAdmin()
 		{
 			return $this->getStatus()->getId() > PersonStatus::NORMAL;
 		}
+
+		public function isFake()
+		{
+			return $this->username == self::DEFAULT_USER_NAME;
+		}
 	}
-?>
