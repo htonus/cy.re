@@ -115,8 +115,11 @@ class controllerMain extends AclController
 	{
 		$blocks = $model->has('blocks')
 			? $model->get('blocks')
-			: array($typeId => array());
-		
+			: array();
+
+		if (empty($blocks[$typeId]))
+			$blocks[$typeId] = array();
+
 		$blockIds = $model->has('blockIds')
 			? $model->get('blockIds')
 			: array();
