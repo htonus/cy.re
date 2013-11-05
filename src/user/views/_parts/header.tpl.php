@@ -7,9 +7,9 @@
 <html lang="<?= $language->getCode()?>">
 <head>
 	<title>Generic </title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta http-equiv="content-language" content="<?= $language->getCode()?>" />
-	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="content-language" content="<?= $language->getCode()?>">
+	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="Expires" content="0">
