@@ -79,7 +79,8 @@
 		{
 			$pdf = $this->getPdf();
 			
-			$title = ucfirst($this->realty->getRealtyType()->getName())
+			$title = $this->realty->getCode().': '
+				.ucfirst($this->realty->getRealtyType()->getName())
 				.' in '.$this->realty->getCity()->getName();
 //				.' to '.i18nHelper::detokenize($this->realty->getOfferType()->getName());
 			
