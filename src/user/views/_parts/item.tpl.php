@@ -34,13 +34,17 @@ jq(document).ready(function(){
 	jq('#currencyForPrice .badge').click(function(){
 		var currencyBadge = jq(this);
 		
+		jq('#currencyForPrice .badge-active')
+			.removeClass('badge-active')
+			.addClass('badge-inactive');
+
 		jq('SPAN.price').each(function(){
-			var currency = currencyBadge.attr('title');
-			var price = parseFloat(jq(this).attr('data')) * currencyRates[currency]
-			jq(this).numberFormat(price, currency);
-			jq('#currencyForPrice .badge-active')
-				.removeClass('badge-active')
-				.addClass('badge-inactive');
+			jq(this).fadeOut('fast', function(){
+				var currency = currencyBadge.attr('title');
+				var price = parseFloat(jq(this).attr('data')) * currencyRates[currency]
+				jq(this).numberFormat(price, currency);
+				jq(this).fadeIn('fast');
+			});
 		});
 		
 		currencyBadge.addClass('badge-active');
