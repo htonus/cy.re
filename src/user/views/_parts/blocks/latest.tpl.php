@@ -3,14 +3,14 @@
  *
  */
 
-	if (empty($list))
+	if (empty($latestList))
 		return $this;
 ?>
 		<div class="container latest">
 			<div class="row">
 <?php
-	reset($list);
-	$count = count($list);
+	reset($latestList);
+	$count = count($latestList);
 	
 	$icons = array(
 		PATH_WEB_IMG.'icons/admin.png',
@@ -22,13 +22,22 @@
 	);
 	
 	for ($i = 0; $i < $count; $i++) {
-		$item = current($list);
-		$key = key($list);
+		$item = current($latestList);
+		$key = key($latestList);
 		$icon = $item->getCategory() && $item->getCategory()->getIconUrl()
 			? $item->getCategory()->getIconUrl()
 			: next($icons);
 ?>
 				<div class="span<?= floor(12 / $count)?>">
+<?php
+	$partViewer->view(
+		'_parts/admin-bar',
+		$model->set(
+			'adminUrl',
+			'?area=article&action=edit&id='.$item->getId()
+		)
+	);
+?>
 					<a href="<?= PATH_WEB.Section::info()->getSlug().'/item/'.$item->getId() ?>" class="black">
 						<div class="block">
 							<h4>
@@ -41,7 +50,7 @@
 					</a>
 				</div>
 <?php
-		if (!next($list))
+		if (!next($latestList))
 			break;
 	}
 ?>

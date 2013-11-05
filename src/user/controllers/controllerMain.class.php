@@ -58,15 +58,11 @@ class controllerMain extends AclController
 		$model->
 			set('static', $this->getStaticContent())->
 			set('promote', $this->getPromoteArticle())->
-			set('latestList', $this->getLatestList())->
-			set(
-				'blocks',
-				array(
-					CustomType::CAROUSEL	=> $this->getBlockList(CustomType::carousel()),
-					CustomType::RECENT	=> $this->getBlockList(CustomType::recent(), 4),
-					CustomType::PROJECTS=> $this->getBlockList(CustomType::projects(), 2),
-				)
-			);
+			set('latestList', $this->getLatestList());
+		
+		$this->attachBlockList($model, CustomType::CAROUSEL);
+		$this->attachBlockList($model, CustomType::RECENT, 4);
+		$this->attachBlockList($model, CustomType::PROJECTS, 2);
 		
 		return $mav;
 	}
@@ -115,29 +111,37 @@ class controllerMain extends AclController
 		return $result;
 	}
 
-	private function getBlockList(CustomType $type, $amount = null)
+	private function attachBlockList(Model $model, $typeId, $amount = null)
 	{
-		$list = Criteria::create(CustomItem::dao())->
+		$blocks = $model->has('blocks')
+			? $model->get('blocks')
+			: array($typeId => array());
+		
+		$blockIds = $model->has('blockIds')
+			? $model->get('blockIds')
+			: array();
+
+		$custom = Criteria::create(Custom::dao())->
 			add(
 				Expression::andBlock(
-					Expression::eqId('parent.type', $type),
-					Expression::eqId('parent.section', $this->section)
+					Expression::eq('type', $typeId),
+					Expression::eqId('section', $this->section)
 				)
 			)->
-			addOrder(
-				OrderBy::create('order')->asc()
-			)->
-			getList();
+			get();
 
-		$result = array();
-		foreach ($list as $item)
-			$result[$item->getObject()->getId()] = $item->getObject();
-		
+		if ($custom) {
+			$blockIds[$typeId] = $custom->getId();
+			
+			foreach ($custom->getItems()->getList() as $item)
+				$blocks[$typeId][$item->getObject()->getId()] = $item->getObject();
+		}
+
 		if (
 			!empty($amount)
-			&& count($result) < $amount
+			&& ($count = count($blocks[$typeId])) < $amount
 		) {
-			if ($type->getId() == CustomType::PROJECTS) {
+			if ($typeId == CustomType::PROJECTS) {
 				$list = Criteria::create(Article::dao())->
 					add(
 						Expression::andBlock(
@@ -148,7 +152,7 @@ class controllerMain extends AclController
 					addOrder(
 						OrderBy::create('created')->desc()
 					)->
-					setLimit($amount - count($result))->
+					setLimit($amount - $count)->
 					getList();
 			} else {
 				$list = Criteria::create(Realty::dao())->
@@ -162,15 +166,19 @@ class controllerMain extends AclController
 					addOrder(
 						OrderBy::create('created')->desc()
 					)->
-					setLimit($amount - count($result))->
+					setLimit($amount - $count)->
 					getList();
 			}
 
 			foreach ($list as $item)
-				$result[$item->getId()] = $item;
+				$blocks[$typeId][$item->getId()] = $item;
 		}
 		
-		return $result;
+		$model->
+			set('blocks', $blocks)->
+			set('blockIds', $blockIds);
+		
+		return $this;
 	}
 
 	public function actionError(HttpRequest $request)

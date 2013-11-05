@@ -31,13 +31,7 @@
 		'_parts/js', Model::create()->set('name', 'bootstrap-carousel')
 	);
 
-	$partViewer->view(
-		'_parts/blocks/carousel',
-		Model::create()->
-			set('list', $blocks[CustomType::CAROUSEL])->
-			set('area', $area)->
-			set('priceType', $priceType)
-	);
+	$partViewer->view('_parts/blocks/carousel');
 ?>
 				</div>
 
@@ -47,32 +41,12 @@
 
 <?php
 
-	$partViewer->view(
-		'_parts/blocks/latest',
-		Model::create()->
-			set('list', empty($latestList) ? array() : $latestList)
-	);
+	$partViewer->view('_parts/blocks/latest');
 
-	$partViewer->view(
-		'_parts/blocks/recent',
-		Model::create()->
-			set('area', $area)->
-			set('list', $blocks[CustomType::RECENT])->
-			set('priceType', $priceType)
-	);
+	$partViewer->view('_parts/blocks/recent');
 
-	$partViewer->view(
-		'_parts/blocks/projects',
-		Model::create()->
-			set('area', $area)->
-			set('list', $blocks[CustomType::PROJECTS])
-	);
+	$partViewer->view('_parts/blocks/projects');
 
-	$partViewer->view(
-		'_parts/blocks/promote',
-		Model::create()->
-			set('area', $area)->
-			set('article', $promote)
-	);
+	$partViewer->view('_parts/blocks/promote');
 ?>
 	</section>

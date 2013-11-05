@@ -6,22 +6,34 @@
 		<div class="container extra">
 
 			<div class="row">
+				<div class="span12"><h3><?= $promote->getName(); ?></h3></div>
+			</div>
+
+<?php
+	$partViewer->view(
+		'_parts/admin-bar',
+		$model->set(
+			'adminUrl',
+			'?area='.Section::getByType($promote->getType()).'&action=edit&id='.$promote->getId()
+		)
+	);
+?>
+			<div class="row">
 
 				<div class="span6">
-					<h3><?= $article->getName(); ?></h3>
 
 					<img src="<?= PATH_WEB_IMG ?>logo-about.gif" class="pull-left" style="margin-right: 10px">
 
-					<p><?= mb_ereg_replace("\n", '</p><p>', $article->getBrief()); ?></p>
+					<p><?= mb_ereg_replace("\n", '</p><p>', $promote->getBrief()); ?></p>
 
 					<div class="hr mt20" style="height: 1px;">
 					
 					<div class="pull-left">
-						<b><?= $article->getPublished()->toDate(); ?></b>
+						<b><?= $promote->getPublished()->toDate(); ?></b>
 					</div>
 
 					<div class="pull-right">
-						<a href="/read/item/<?= $article->getId()?>">read more</a>
+						<a href="/read/item/<?= $promote->getId()?>">read more</a>
 					</div>
 					</div>
 
@@ -39,7 +51,7 @@
 
 				<div class="span6">
 <?php
-	if ($preview = $article->getPreview()) {
+	if ($preview = $promote->getPreview()) {
 ?>
 					<div><img src="<?= PictureSize::list1()->getUrl($preview); ?>" width="100%"></div>
 <?php

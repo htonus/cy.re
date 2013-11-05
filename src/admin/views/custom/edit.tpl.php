@@ -136,7 +136,7 @@
 			<td>
 				<?= strtoupper(get_class($object)) ?> |
 				ID : <?= $object->getId() ?>
-				<?= get_class($object) == 'Realty' ? ' | Realty '.$object->getCode() : null ?>
+				<?= get_class($object) == 'Realty' ? ' | Code '.$object->getCode() : null ?>
 				<br />
 				<?= $object->getName()?>
 			</td>

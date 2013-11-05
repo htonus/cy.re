@@ -133,6 +133,11 @@ A:hover { text-decoration: none; }
 .green { color: #AEC71E; }
 .black { color: #000; }
 
+.admin A {
+	color: #00D !important;
+	font-family: monospace;
+}
+
 .note { padding: 20px; line-height: 16px; background-color: #EDEDED; }
 .note P { margin-bottom: 10px; }
 .underline { border-bottom: 2px solid #3A3A3A; }

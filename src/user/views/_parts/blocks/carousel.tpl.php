@@ -2,27 +2,26 @@
 /*
  * $Id$
  */
-	/*
+
 	$partViewer->view(
 		'_parts/admin-bar',
-		Model::create()->
-			set(
-				'adminUrl',
-				'?area=custom&action=edit'
-				.(
-					empty($blockIds[CustomType::CAROUSEL])
-						? '&section='.$section->getId().'&type='.CustomType::CAROUSEL
-						: '&id='.$blockIds[CustomType::CAROUSEL]
-				)
+		$model->set(
+			'adminUrl',
+			'?area=custom&action=edit'
+			.(
+				empty($blockIds[CustomType::CAROUSEL])
+					? '&section='.$section->getId().'&type='.CustomType::CAROUSEL
+					: '&id='.$blockIds[CustomType::CAROUSEL]
 			)
+		)
 	);
-	 */
+	
 ?>
 
 <div id="myCarousel" class="carousel slide">
 
 <?php
-	if (empty($list)) {
+	if (empty($blocks[CustomType::CAROUSEL])) {
 ?>
 	<img src="http://html.orange-idea.com/builder/wp-content/uploads/2012/12/blur.jpg" />
 <?php
@@ -33,7 +32,7 @@
 
 <?php
 		$i = 0;
-		foreach ($list as $item) {
+		foreach ($blocks[CustomType::CAROUSEL] as $item) {
 ?>
 		<li class="<?= $i == 0 ? 'active' : ''?>" data-target="#myCarousel" data-slide-to="<?= $i ++?>"></li>
 <?php
@@ -43,7 +42,7 @@
 	<div class="carousel-inner">
 <?php
 		$i = 0;
-		foreach ($list as $realty) {
+		foreach ($blocks[CustomType::CAROUSEL] as $realty) {
 ?>
 		<div class="item <?= $i++ == 0 ? 'active' : ''?>">
 			<a href="/<?= $area.'/item/'.$realty->getId() ?>"><img src="<?= PictureSize::carousel()->getUrl($realty->getPreview())?>" alt=""></a>

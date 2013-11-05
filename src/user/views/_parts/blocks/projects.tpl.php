@@ -3,7 +3,7 @@
  *
  */
 
-	if (empty($list))
+	if (empty($blocks[CustomType::PROJECTS]))
 		return;
 	
 ?>
@@ -13,16 +13,40 @@
 				<div class="span12"><h3>___PROJECTS___</h3></div>
 			</div>
 
+<?php
+	$partViewer->view(
+		'_parts/admin-bar',
+		$model->
+			set(
+				'adminUrl',
+				'?area=custom&action=edit'
+				.(
+					empty($blockIds[CustomType::PROJECTS])
+						? '&section='.$section->getId().'&type='.CustomType::PROJECTS
+						: '&id='.$blockIds[CustomType::PROJECTS]
+				)
+			)
+	);
+?>
+			
 			<div class="row">
 <?php
-	foreach ($list as $item) {
+	foreach ($blocks[CustomType::PROJECTS] as $item) {
 ?>
 				<div class="span6">
 					<h4><?= $item->getName(); ?> &nbsp; </h4>
 
+<?php
+	$partViewer->view(
+		'_parts/admin-bar',
+		$model->set(
+			'adminUrl',
+			'?area='.($item instanceof Article ? Section::getByType($item->getType()) : 'realty').'&action=edit&id='.$item->getId()
+		)
+	);
+?>
 					<div class="row-fluid">
 						<div class="span6">
-
 							<p><?= mb_ereg_replace("\n", '</p><p>', $item->getBrief()); ?></p>
 
 							<div class="hr mt20" style="height: 1px;">
