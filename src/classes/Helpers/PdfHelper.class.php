@@ -127,10 +127,11 @@
 			$descTop = $top;
 
 			$text = strip_tags($this->realty->getText(), 'p br');
-			$text = preg_replace('/<p[^>]*>/', '   ', $text);
-			$text = preg_replace('/<\/p>/', "\n", $text);
-			$text = preg_replace('/<br[^>]*>/', "\n", $text);
-
+			$text = preg_replace('/<p[^>]*>/i', '   ', $text);
+			$text = preg_replace('/<\/p>/i', "\n", $text);
+			$text = preg_replace('/<br[^>]*>/i', "\n", $text);
+			$text = html_entity_decode($text);
+			
 			$pdf = $this->getPdf();
 			$list = $this->realty->getFeaturesByGroup(FeatureTypeGroup::general());
 			ksort($list);
@@ -206,8 +207,6 @@
 
 			$strings = array();
 			$start = $pos = $offset = $line = 0;
-
-			$text = html_entity_decode($text);
 
 			if (empty($w)) {
 				$strings[] = $text;
