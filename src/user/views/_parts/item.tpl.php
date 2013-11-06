@@ -194,9 +194,51 @@ jq(document).ready(function(){
 						</table>
 
 						<div class="clearfix"></div>
+
+						<div class="">
+<?php
+	$group = FeatureTypeGroup::distance();
+
+	if ($list = $subject->getFeaturesByGroup($group)) {
+?>
+							<h5 class="green mt20"><?= $group->getName()?></h5>
+
+							<table>
+<?php
+		foreach ($list as $feature) {
+			$value = (int)$feature->getValue();
+			$sign = $feature->getType()->getSign();
+			$dec = 0;
+			
+			if ($value > 1000) {
+				$value /= 1000;
+				$sign = '_L__KM___';
+				$dec = 1;
+			}
+
+
+?>
+							<tr>
+								<td align="right"><?= ucfirst($feature->getType()->getName())?> : &nbsp;</td>
+								<td id="mainFeatures">
+									<span id="type_<?= $featureId; ?>" data="<?= $feature->getValue()?>">
+										<?= number_format($value, $dec, '.', "'") ?> <?= $sign ?>
+									</span>
+								</td>
+							</tr>
+<?php
+		}
+	}
+?>
+							</table>
+						</div>
+
+						<!-- distance group -->
+
+						<div class="clearfix"></div>
+
 						<a href="<?= PATH_WEB."$area/pdf/".$subject->getId()?>" target="_blank" class="btn btn-black input-block-level mt20">Download Property Booklet</a>
 						
-						<!-- distance group -->
 					</div>
 
 				</div>
