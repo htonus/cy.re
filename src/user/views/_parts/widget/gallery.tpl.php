@@ -122,7 +122,7 @@ function showPreview(preview)
 {
 	var image = jq('.bigimage IMG');
 
-	var src = image.attr('src').replace(/[^\/]+$/, jq(preview).attr('src').match(/[^\/]+$/));
+	var src = '<?= preg_replace('/[^\/]+$/', '', PictureSize::list1()->getUrl($preview)) ?>' + jq(preview).attr('src').match(/[^\/]+$/);
 
 	if (src != image.attr('src')) {
 		image.animate({opacity: 0});
