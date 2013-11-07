@@ -43,6 +43,7 @@ function openMap()
 			,	right		: 0
 			,	bottom		: 0
 			,	border		: '1px solid #444'
+			,	opacity		: 0
 		});
 	}
 	
@@ -53,6 +54,8 @@ function openMap()
 	};
 
 	var map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
+
+	jq('.bigimage > IMG').animate({opacity: 0}, function(){jq('#googleMap').animate({opacity: 1})});
 }
 </script>
 
