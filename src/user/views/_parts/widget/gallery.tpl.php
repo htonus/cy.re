@@ -121,7 +121,7 @@ function showPreviewItem(next)
 function showPreview(preview)
 {
 	if (jq('#googleMap').size())
-		jq('#googleMap').remove();
+		jq('#googleMap').fadeOut(function(){jq(this).remove()});
 
 	var image = jq('.bigimage > IMG');
 
