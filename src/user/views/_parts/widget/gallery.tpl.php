@@ -120,7 +120,10 @@ function showPreviewItem(next)
 
 function showPreview(preview)
 {
-	var image = jq('.bigimage IMG');
+	if (jq('#googleMap').size())
+		jq('#googleMap').remove();
+
+	var image = jq('.bigimage > IMG');
 
 	var src = '<?= preg_replace('/[^\/]+$/', '', PictureSize::list1()->getUrl($preview)) ?>' + jq(preview).attr('src').match(/[^\/]+$/);
 

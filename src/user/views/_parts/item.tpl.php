@@ -159,18 +159,13 @@ jq(document).ready(function(){
 		($longitude = $subject->getLongitude())
 		&& ($latitude = $subject->getLatitude())
 	) {
-		$delta = 20;
-		$zoom = 14;
-		
-		if (!$user->isAdmin()) {
-			$longitude += rand(-$delta, $delta) / $delta / 1000;
-			$latitude += rand(-$delta, $delta) / $delta / 1000;
-		}
 ?>
 						<tr>
 							<td align="right">_S__LOCATION___ : &nbsp;</td>
 							<td id="mainFeatures">
-								<button type="button" class="btn btn-small btn-black" onclick="jq('.bigimage IMG').attr('src', 'http://maps.googleapis.com/maps/api/staticmap?zoom=<?= $zoom ?>&size=650x450&sensor=false&center=<?= $longitude ?>, <?= $latitude ?>')">_S__SEE ON MAP___</button>
+<?php
+		$partViewer->view('_parts/widget/map');
+?>
 							</td>
 						</tr>
 <?php
@@ -274,3 +269,4 @@ jq(document).ready(function(){
 		</div>
 
 	</div>
+
