@@ -4,6 +4,7 @@
  */
 
 	$zoom = 15;
+	$spot = true;
 	
 	if (
 		!($longitude = $subject->getLongitude())
@@ -12,6 +13,7 @@
 		$longitude = $subject->getCity()->getLongitude();
 		$latitude = $subject->getCity()->getLatitude();
 		$zoom = 12;
+		$spot = false;
 	}
 	
 	if (!$longitude && !$latitude)
@@ -54,6 +56,29 @@ function openMap()
 	};
 
 	var map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
+
+<?php
+	if ($spot && $user->isAdmin()) {
+		$title = '';
+
+		if ($value = $subject->getAddress())
+			$title .= "Address: $value";
+		
+		if ($owner = $subject->getOwner()) {
+			$title .= (mb_strlen($title) ? '\n' : '').'Owner: '.$owner->getName();
+
+			if ($value = $owner->getPhone())
+				$title .= (mb_strlen($title) ? '\n' : '').'Phone: '.$value;
+		}
+?>
+	var marker = new google.maps.Marker({
+		position	: new google.maps.LatLng(<?= $latitude ?>, <?= $longitude ?>)
+	,	map			: map
+	,	title		: '<?= $title ?>'
+	});
+<?php
+	}
+?>
 
 	jq('.bigimage > IMG').animate({opacity: 0}, function(){jq('#googleMap').animate({opacity: 1})});
 }
