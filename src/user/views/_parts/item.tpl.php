@@ -156,8 +156,14 @@ jq(document).ready(function(){
 	}
 
 	if (
-		($longitude = $subject->getLongitude())
-		&& ($latitude = $subject->getLatitude())
+		(
+			$subject->getLongitude()
+			&& $subject->getLatitude()
+		)
+		|| (
+			$subject->getCity()->getLongitude()
+			&& $subject->getCity()->getLatitude()
+		)
 	) {
 ?>
 						<tr>

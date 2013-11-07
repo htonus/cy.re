@@ -3,18 +3,26 @@
  * $Id$
  */
 
+	$zoom = 15;
+	
 	if (
 		!($longitude = $subject->getLongitude())
 		|| !($latitude = $subject->getLatitude())
-	)
+	) {
+		$longitude = $subject->getCity()->getLongitude();
+		$latitude = $subject->getCity()->getLatitude();
+		$zoom = 12;
+	}
+	
+	if (!$longitude && !$latitude)
 		return;
-
+	
 	$delta = 20;
-	$zoom = 15;
+	$accuracy = 300;
 
 	if (!$user->isAdmin()) {
-		$longitude += rand(-$delta, $delta) / $delta / 500;
-		$latitude += rand(-$delta, $delta) / $delta / 500;
+		$longitude += rand(-$delta, $delta) / $delta / $accuracy;
+		$latitude += rand(-$delta, $delta) / $delta / $accuracy;
 	}
 ?>
 
