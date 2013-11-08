@@ -106,6 +106,7 @@
 
 			<property name="latitude" type="Numeric" size="10,6" required="false" />
 			<property name="longitude" type="Numeric" size="10,6" required="false" />
+			<property name="polygon" type="String" size="255" required="false" />
 
 			<property name="realtyType" type="RealtyType" relation="OneToOne" required="true" fetch="lazy" column="type_id" />
 			

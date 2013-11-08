@@ -84,6 +84,7 @@ CREATE TABLE "realty" (
 
     "latitude" numeric(10,6) NULL,
     "longitude" numeric(10,6) NULL,
+    "polygon" CHARACTER VARYING(255) NULL,
 
     "type_id" INTEGER NOT NULL REFERENCES "realty_type"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "city_id" INTEGER NOT NULL REFERENCES "city"("id") ON UPDATE CASCADE ON DELETE RESTRICT,
