@@ -273,14 +273,15 @@ jq(document).ready(function(){
 
 			var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-			if (marker)
+			if (marker) {
 				marker.setMap(map);
 			
-			google.maps.event.addListener(marker, 'dragend', function(e) {
-				map.panTo(e.latLng);
-				jq('#input_latitude').val(e.latLng.lat());
-				jq('#input_longitude').val(e.latLng.lng());
-			});
+				google.maps.event.addListener(marker, 'dragend', function(e) {
+					map.panTo(e.latLng);
+					jq('#input_latitude').val(e.latLng.lat());
+					jq('#input_longitude').val(e.latLng.lng());
+				});
+			}
 
 			var drawingManager = new google.maps.drawing.DrawingManager({
 				drawingMode: null //google.maps.drawing.OverlayType.MARKER,
