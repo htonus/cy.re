@@ -31,7 +31,7 @@
 <!-- button type="button" class="btn btn-small btn-black" onclick="jq('.bigimage IMG').attr('src', 'http://maps.googleapis.com/maps/api/staticmap?zoom=< ?= $zoom ? >&size=650x450&sensor=false&center=< ?= $longitude ? >, < ?= $latitude ? >')">_S__SEE ON MAP___</button -->
 
 
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDqJzotMc4rSGxKv6JHxDK6wQYLhdJiR_Y&sensor=false"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_API_KEY ?>&sensor=false"></script>
 
 <script type="text/javascript">
 function openMap()
