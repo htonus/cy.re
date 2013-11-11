@@ -29,9 +29,9 @@
 
 
 		<div class="control-group">
-			<label class="control-label" for="input_longitude">Plot on map</label>
+			<label class="control-label" for="input_polygon">Plot on map</label>
 			<div class="controls">
-				<input type="checkbox" name="polygon" value="<?= $form->getValue('polygon') ?>" <?= $form->getValue('polygon') ? 'checked="checked"' : null?> />
+				<input type="checkbox" id="input_polygon" name="polygon" value="<?= str_replace('"', "'", $form->getValue('polygon')) ?>" <?= $form->getValue('polygon') ? 'checked="checked"' : null?> />
 				<input type="button" id="setLocation" value="Choose on Map" class="btn btn-warning btn-small" />
 			</div>
 		</div>
@@ -248,6 +248,28 @@ var city = <?= $form->getValue('city') ? 'new google.maps.LatLng('.$form->getVal
 var marker = null;
 var polygon = null;
 
+var markerOpts = {
+		draggable:true
+	,	animation: google.maps.Animation.DROP
+	,	zIndex: 1000
+};
+var polygonOpts = {
+		editable: true
+	,	fillColor: '#0C0'
+	,	fillOpacity: 0.2
+	,	strokeColor: '#090'
+	,	strokeOpacity: 0.5
+	,	strokeWeight: 2
+	};
+var circleOpts = {
+		fillColor: '#ffff00'
+	,	fillOpacity: 1
+	,	strokeWeight: 5
+	,	clickable: false
+	,	editable: true
+	,	zIndex: 1
+}
+
 jq(document).ready(function(){
 	jq('#setLocation').click(function(){
 		var center = cyprus;
@@ -255,12 +277,13 @@ jq(document).ready(function(){
 		if (jq('#input_latitude').val() && jq('#input_longitude').val()) {
 			center = new google.maps.LatLng(jq('#input_latitude').val(), jq('#input_longitude').val());
 			mapZoom = 15;
-			marker = new google.maps.Marker({position: center, draggable: true, animation: google.maps.Animation.DROP, zIndex: 1000});
+			marker = new google.maps.Marker(markerOpts);
+			marker.setPosition(center);
 		} else if (city) {
 			center = city;
 			mapZoom = 12;
 		}
-
+		
 		var mapOptions = {
 			center: center,
 			zoom: mapZoom,
@@ -269,6 +292,9 @@ jq(document).ready(function(){
 
 		jq('#locationModal')
 			.modal('show')
+			.on('hidden', function(){
+				jq('#googleMap').html('');
+			})
 			.on('shown', function(){
 
 			var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
@@ -281,6 +307,35 @@ jq(document).ready(function(){
 					jq('#input_latitude').val(e.latLng.lat());
 					jq('#input_longitude').val(e.latLng.lng());
 				});
+			}
+
+			if (jq('#input_polygon').val().length > 0) {
+				var shape = JSON.parse(jq('#input_polygon').val().replace(/\'/g, '"'));
+				var points = [];
+
+				switch(shape.type) {
+					case google.maps.drawing.OverlayType.POLYGON:
+						polygon = new google.maps.Polygon(polygonOpts);
+
+						for (var i in shape.points)
+							points.push(
+								new google.maps.LatLng(
+									shape.points[i][0], shape.points[i][1]
+								)
+							);
+
+						polygon.setPath(points);
+						google.maps.event.addListener(polygon.getPath(), 'insert_at', function(){polygoncomplete(polygon);});
+						google.maps.event.addListener(polygon.getPath(), 'remove_at',  function(){polygoncomplete(polygon);});
+						google.maps.event.addListener(polygon.getPath(), 'set_at',  function(){polygoncomplete(polygon);});
+
+						break;
+
+					case google.maps.drawing.OverlayType.CIRCLE:
+						break;
+				}
+
+				polygon.setMap(map);
 			}
 
 			var drawingManager = new google.maps.drawing.DrawingManager({
@@ -296,32 +351,14 @@ jq(document).ready(function(){
 //					,	google.maps.drawing.OverlayType.RECTANGLE
 					]
 				}
-			,	polygonOptions: {
-					editable: true
-				,	fillColor: '#0C0'
-				,	fillOpacity: 0.2
-				,	strokeColor: '#090'
-				,	strokeOpacity: 0.5
-				,	strokeWeight: 2
-				}
-			,	markerOptions: {
-					draggable:true
-				,	animation: google.maps.Animation.DROP
-				,	zIndex: 1000
-				}
-			,	circleOptions: {
-					fillColor: '#ffff00'
-				,	fillOpacity: 1
-				,	strokeWeight: 5
-				,	clickable: false
-				,	editable: true
-				,	zIndex: 1
-				}
+			,	polygonOptions: polygonOpts
+			,	markerOptions: markerOpts
+			,	circleOptions: circleOpts
 			});
 			
 			drawingManager.setMap(map);
-			
-			google.maps.event.addListener(drawingManager, 'markercomplete', function(newMarker){
+
+			var markercomplete = function(newMarker){
 				if (marker) {
 					marker.setMap(null);
 				}
@@ -336,17 +373,42 @@ jq(document).ready(function(){
 					jq('#input_latitude').val(e.latLng.lat());
 					jq('#input_longitude').val(e.latLng.lng());
 				});
-			});
+			};
+			var polygoncomplete = function(newPolygon) {
+				drawingManager.setDrawingMode(null);
+				
+				if (newPolygon.getPath().length < 3) {
+					jq('#input_polygon').val('').removeAttr('checked');
+					polygon = null;
+					return;
+				}
+				
+				polygon = newPolygon;
+				var points = polygon.getPath().getArray()
+				var value = {
+					type	: google.maps.drawing.OverlayType.POLYGON
+				,	points	: []
+				};
 
-			google.maps.event.addListener(drawingManager, 'polygoncomplete', function(newPolygon) {
-				if (polygon) {
-					polygon.setMap(null);
+				for (i in points) {
+					value.points.push([points[i].lat(), points[i].lng()]);
 				}
 
-				polygon = newPolygon;
-				drawingManager.setDrawingMode(null);
-//				jq('#input_polygon').val(polygon.getPosition().lng());
-			});
+				jq('#input_polygon')
+					.val(JSON.stringify(value).replace(/\"/g, "'"))
+					.attr('checked', 'checked');
+
+				// Marker drawing finished
+				google.maps.event.addListener(polygon.getPath(), 'insert_at', function(){polygoncomplete(polygon);});
+				google.maps.event.addListener(polygon.getPath(), 'remove_at',  function(){polygoncomplete(polygon);});
+				google.maps.event.addListener(polygon.getPath(), 'set_at',  function(){polygoncomplete(polygon);});
+			}
+
+			// Marker drawing finished
+			google.maps.event.addListener(drawingManager, 'markercomplete', markercomplete);
+
+			// Polygon drawing finished
+			google.maps.event.addListener(drawingManager, 'polygoncomplete', polygoncomplete);
 		});
 	});
 });
@@ -375,6 +437,6 @@ function clearMap()
 	</div>
 	<div class="modal-footer">
 		<a href="#" onclick="clearMap()" class="btn btn-danger">Clear map</a>
-		<a href="#" data-dismiss="modal" class="btn">Close</a>
+		<a href="#" data-dismiss="modal" data-dismiss="modal" class="btn">Close</a>
 	</div>
 </div>
