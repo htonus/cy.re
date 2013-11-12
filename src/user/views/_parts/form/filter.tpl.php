@@ -5,6 +5,11 @@
 ?>
 					<h4 class="visible-desktop">Search filter:</h4>
 					
+<?php
+	if ($user->isAdmin())
+		$partViewer->view('_parts/widget/editMap');
+?>
+					
 					<div class="row-fluid">
 						<div class="span6">
 							<div class="control-group">
@@ -34,7 +39,7 @@
 							<div class="control-group">
 								<label class="control-label" for="input_city">Area, City</label>
 								<div class="controls">
-									<select type="text" class="input-block-level" name="city">
+									<select type="text" class="input-block-level" name="city" id="input_city">
 										<option value="">___ANY___</option>
 <?php
 	$default = empty($city)
@@ -45,8 +50,9 @@
 		$selected = $item->getId() == $default
 			? ' selected="selected"'
 			: null;
+		$center = $item->getLatitude().':'.$item->getLongitude();
 ?>
-										<option value="<?= $item->getId()?>"<?= $selected?>><?= ucwords($item->getName())?></option>
+										<option data="<?= strlen($center) > 1 ? $center : null ?>" value="<?= $item->getId()?>"<?= $selected?>><?= ucwords($item->getName())?></option>
 <?php
 	}
 ?>
@@ -173,6 +179,7 @@
 								</div>
 							</div>
 						</div>
+						
 						<div class="span4">
 							<div class="control-group">
 								<label class="control-label" for="input_city">&nbsp;</label>
@@ -181,7 +188,9 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
+					
 <script type="text/javascript">
 var areaLists = [];
 <?php
