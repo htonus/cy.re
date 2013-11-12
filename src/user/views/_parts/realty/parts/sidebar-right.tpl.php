@@ -9,7 +9,7 @@
 	<form>
 
 <?php
-	$partViewer->view('_parts/attention');
+//	$partViewer->view('_parts/attention');
 	$partViewer->view('_parts/side-news');
 ?>
 	</form>
