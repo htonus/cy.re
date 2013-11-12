@@ -42,7 +42,7 @@
 
 <?php
 
-	$partViewer->view('_parts/pager', $pager->set('url', $urlHelper->getFilterUrl()));
+	$partViewer->view('_parts/pager', $pager->set('url', $url));
 	
 ?>
 	
