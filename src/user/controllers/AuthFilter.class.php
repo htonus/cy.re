@@ -78,7 +78,7 @@ final class AuthFilter extends RequestFilter
 	{
 		if ($request->hasGetVar('signout')) {
 			Session::destroy();
-			setcookie(Person::COOKIE_NAME, 1, strtotime('-1 year'));
+			setcookie(Person::COOKIE_NAME, 1, strtotime('-1 year'), '/', COOKIE_DOMAIN);
 			return true;
 		}
 
