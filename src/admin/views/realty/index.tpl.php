@@ -71,7 +71,11 @@
 ?>
 			</td>
 			<td><?=$item->getRealtyType()->getName()?></td>
-			<td><?=empty($featureList[FeatureType::PRICE]) ? '---' : number_format($featureList[FeatureType::PRICE]->getValue()) ?></td>
+			<td>
+				<?=empty($featureList[FeatureType::PRICE]) ? '---' : number_format($featureList[FeatureType::PRICE]->getValue()) ?><br/>
+				<?=empty($featureList[FeatureType::PRICE_MONTHLY]) ? '---' : number_format($featureList[FeatureType::PRICE_MONTHLY]->getValue()) ?><br/>
+				<?=empty($featureList[FeatureType::PRICE_DAYLY]) ? '---' : number_format($featureList[FeatureType::PRICE_DAYLY]->getValue()) ?>
+			</td>
 			<td><?=$item->getCreated()->toString()?></td>
 			<td><?=$item->getPublished() ? $item->getPublished()->toString() : '---'?></td>
 			<td>
