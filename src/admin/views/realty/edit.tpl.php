@@ -118,7 +118,7 @@ jq(document).keyup(function(e){
 		}
 		
 		if (
-			jq(this).attr('type') != 'text'
+			jq(e.target).attr('type') != 'text'
 			&& (
 				(e.keyCode > 64 && e.keyCode < 91)
 				|| (e.keyCode > 95 && e.keyCode < 123)
