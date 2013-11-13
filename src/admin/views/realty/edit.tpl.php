@@ -104,9 +104,21 @@
 
 <script type="text/javascript">
 var filtered = false;
+var allowed = true;
+
+jq('INPUT')
+	.focus(function(){allowed = false;});
+	.blur(function(){allowed = true;});
 
 jq(document).keyup(function(e){
 	if (jq('#tab_features .tab-content .active').size() > 0) {
+		if (e.keyCode == 27) {
+			jq(document).focus();
+			allowed = true;
+		}
+		
+		if (!allowed)
+			return;
 		
 		if (filtered) {
 			jq('#tab_features .tab-content .active .span4').show();
