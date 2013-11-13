@@ -23,10 +23,10 @@
 <br/>
 
 <form name="editForm" action="/index.php" method="post" class="form-horizontal">
-<input type="hidden" name="area" value="<?=$area?>" />
-<input type="hidden" name="action" value="<?=$id ? 'save' : 'add'?>" />
-<input type="hidden" name="id" value="<?=$id?>" />
-<input type="hidden" name="city" value="<?=$form->getValue('city')->getId()?>" />
+<input type="hidden" name="area" value="<?= $area ?>" />
+<input type="hidden" name="action" value="<?= $id ? 'save' : 'add' ?>" />
+<input type="hidden" name="id" value="<?= $id ?>" />
+<input type="hidden" name="city" value="<?= $form->getValue('city') ? $form->getValue('city')->getId() : null ?>" />
 
 
 <?php
