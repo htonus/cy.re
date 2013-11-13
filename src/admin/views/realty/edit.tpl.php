@@ -118,10 +118,11 @@ jq(document).keyup(function(e){
 		}
 		
 		if (
-			!e.target.tagName.match(/input/i)
-			|| jq(this).attr('type') != 'text'
-			|| (e.keyCode > 64 && e.keyCode < 91)
-			|| (e.keyCode > 95 && e.keyCode < 123)
+			jq(this).attr('type') != 'text'
+			&& (
+				(e.keyCode > 64 && e.keyCode < 91)
+				|| (e.keyCode > 95 && e.keyCode < 123)
+			)
 		) {
 			var char = String.fromCharCode(e.which || e.keyCode).toLowerCase();
 			
