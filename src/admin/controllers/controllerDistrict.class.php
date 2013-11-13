@@ -67,7 +67,7 @@ final class controllerDistrict extends i18nEditor
 			if ($model->has('form'))
 				$model->get('form')->setValue('country', $country);
 			
-			$cityList = Criteria::create(Region::dao())->
+			$cityList = Criteria::create(City::dao())->
 				add(
 					Expression::eqId('country', $country)
 				)->
