@@ -44,7 +44,7 @@ final class controllerDistrict extends i18nEditor
 		
 		if (
 			$city
-			&& $city->getCountryId() == $city->getId()
+			&& $city->getCountryId() == $country->getId()
 		)
 			$request->setAttachedVar('city', $city);
 		
