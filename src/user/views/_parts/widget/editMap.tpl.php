@@ -17,34 +17,37 @@ var cyprus = new google.maps.LatLng(35.106428, 33.305054);
 var rectangle= null;
 var circle = null;
 
-var rectangleOpts = {
-		editable: true
-	,	fillColor: '#0C0'
-	,	fillOpacity: 0.2
-	,	strokeColor: '#090'
-	,	strokeOpacity: 0.5
-	,	strokeWeight: 2
-	};
-var circleOpts = {
-		fillColor: '#0C0'
-	,	fillOpacity: 0.2
-	,	strokeWeight: 2
-	,	clickable: false
-	,	editable: true
-	,	zIndex: 10
-}
-var mapOptions = {
-		mapTypeId	: google.maps.MapTypeId.ROADMAP
-};
-
 jq(document).ready(function(){
 	jq('#setLocation').click(function(){
+		var rectangleOpts = {
+				editable		: true
+			,	clickable		: true
+			,	draggable		: true
+			,	fillColor		: '#0C0'
+			,	fillOpacity		: 0.2
+			,	strokeColor		: '#090'
+			,	strokeOpacity	: 0.5
+			,	strokeWeight	: 2
+			};
+		var circleOpts = {
+				clickable		: true
+			,	editable		: true
+			,	draggable		: true
+			,	fillColor		: '#0C0'
+			,	fillOpacity		: 0.2
+			,	strokeOpacity	: 0.5
+			,	strokeWeight	: 2
+		}
+		var mapOptions = {
+				mapTypeId	: google.maps.MapTypeId.ROADMAP
+		};
 		var center = cyprus;
 
 		jq('#locationModal')
 			.modal('show')
 			.on('hidden', function(){
 				jq('#googleMap').html('');
+				circle = rectangle = null;
 			})
 			.on('shown', function(){
 
@@ -54,6 +57,8 @@ jq(document).ready(function(){
 
 			var drawingManager = new google.maps.drawing.DrawingManager({
 				drawingMode: null //google.maps.drawing.OverlayType.MARKER,
+			,	circleOptions: circleOpts
+			,	rectangleOptions: rectangleOpts
 			,	drawingControl: true
 			,	drawingControlOptions: {
 					position: google.maps.ControlPosition.TOP_CENTER,
@@ -62,11 +67,84 @@ jq(document).ready(function(){
 					,	google.maps.drawing.OverlayType.RECTANGLE
 					]
 				}
-			,	circleOptions: circleOpts
-			,	rectangleOptions: rectangleOpts
 			});
 
 			drawingManager.setMap(map);
+			
+			var setCircleEvents = function()
+			{
+				google.maps.event.addListener(circle, 'center_changed', function(){
+					storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
+				});
+				google.maps.event.addListener(circle, 'radius_changed', function(){
+					storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
+				});
+				google.maps.event.addListener(circle, 'dragstart', function(){
+					google.maps.event.clearListeners(circle, 'center_changed');
+				});
+				google.maps.event.addListener(circle, 'dragend', function(){
+					storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
+					google.maps.event.addListener(circle, 'center_changed', function(){
+						storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
+					});
+				});
+			}
+			var setRectangleEvents = function()
+			{
+				google.maps.event.addListener(rectangle, 'bounds_changed', function(){
+					storeLocation(map, google.maps.drawing.OverlayType.RECTANGLE);
+				});
+				google.maps.event.addListener(rectangle, 'dragstart', function(){
+					google.maps.event.clearListeners(rectangle, 'bounds_changed');
+				});
+				google.maps.event.addListener(rectangle, 'dragend', function(){
+					storeLocation(map, google.maps.drawing.OverlayType.RECTANGLE);
+					google.maps.event.addListener(rectangle, 'bounds_changed', function(){
+						storeLocation(map, google.maps.drawing.OverlayType.RECTANGLE);
+					});
+				});
+			}
+			
+			var circlecomplete = function(newCircle){
+				drawingManager.setDrawingMode(null);
+
+				if (rectangle) {
+					rectangle.setMap(null);
+					delete rectangle;
+				}
+
+				if (circle) {
+					circle.setMap(null);
+				}
+
+				circle = newCircle;
+				setCircleEvents();
+				storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
+
+				map.panTo(circle.getCenter());
+				map.setZoom(getZoomByBounds(map, circle.getBounds()));
+				jq('#setLocation SPAN').removeClass('icon-stop').addClass('icon-play-circle');
+			};
+
+			var rectanglecomplete = function(newRectangle) {
+				drawingManager.setDrawingMode(null);
+
+				if (circle) {
+					circle.setMap(null);
+					delete circle;
+				}
+
+				if (rectangle)
+					rectangle.setMap(null);
+
+				rectangle = newRectangle;
+				setRectangleEvents();
+				storeLocation(map, google.maps.drawing.OverlayType.RECTANGLE);
+
+				map.panTo(rectangle.getBounds().getCenter());
+				map.setZoom(getZoomByBounds(map, rectangle.getBounds()));
+				jq('#setLocation SPAN').removeClass('icon-play-circle').addClass('icon-stop');
+			}
 
 			if (jq('#input_location').val().length > 0) {
 				var shape = JSON.parse(jq('#input_location').val().replace(/\'/g, '"'));
@@ -79,6 +157,7 @@ jq(document).ready(function(){
 						circle.setRadius(shape.radius);
 						circle.setMap(map);
 						map.panTo(center);
+						map.setZoom(getZoomByBounds(map, circle.getBounds()));
 						break;
 					case google.maps.drawing.OverlayType.RECTANGLE:
 						var bounds = new google.maps.LatLngBounds(
@@ -89,71 +168,83 @@ jq(document).ready(function(){
 						rectangle.setBounds(bounds);
 						rectangle.setMap(map);
 						map.panTo(bounds.getCenter());
+						map.setZoom(getZoomByBounds(map, bounds));
+						setRectangleEvents();
 						break;
 				}
 			}
-
-
-			var circlecomplete = function(newCircle){
-				drawingManager.setDrawingMode(null);
-
-				if (circle) {
-					circle.setMap(null);
-				}
-
-				circle = newCircle;
-				map.panTo(circle.getCenter());
-				jq('#input_location').val(JSON.stringify({
-					type	: google.maps.drawing.OverlayType.CIRCLE
-				,	center	: [circle.getCenter().lat(), circle.getCenter().lng()]
-				,	radius	: circle.getRadius()
-				}).replace(/\"/g, "'"));
-				
-				google.maps.event.addListener(circle, 'click', function(e) {
-					alert(1);
-					circle.setMap(null);
-					circle = null;
-				});
-				
-				jq('#setLocation SPAN').removeClass('icon-stop').addClass('icon-play-circle');
-			};
-			var rectanglecomplete = function(newRectangle) {
-				drawingManager.setDrawingMode(null);
-
-				if (rectangle) {
-					rectangle.setMap(null);
-				}
-
-				rectangle = newRectangle;
-				var bounds = rectangle.getBounds();
-				map.panTo(bounds.getCenter());
-				jq('#input_location').val(JSON.stringify({
-					type	: google.maps.drawing.OverlayType.RECTANGLE
-				,	left	: [bounds.getSouthWest().lat(), bounds.getSouthWest().lng()]
-				,	right	: [bounds.getNorthEast().lat(), bounds.getNorthEast().lng()]
-				}).replace(/\"/g, "'"));
-
-				jq('#setLocation SPAN').removeClass('icon-play-circle').addClass('icon-stop');
-			}
-
+			
 			// Marker drawing finished
 			google.maps.event.addListener(drawingManager, 'circlecomplete', circlecomplete);
 
 			// Polygon drawing finished
 			google.maps.event.addListener(drawingManager, 'rectanglecomplete', rectanglecomplete);
+
 		});
 	});
 });
 
-function clearMap()
-{
+var clearMap = function () {
+	jq('#input_location').val('');
+	jq('#setLocation SPAN').removeClass('icon-stop').removeClass('icon-play-circle');
+	
 	if (circle)
 		circle.setMap(null);
 	if (rectangle)
 		rectangle.setMap(null);
+	
+	delete circle;
+	delete rectangle;
+}
+function getZoomByBounds (map, bounds) {
+	var
+		MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21,
+		MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0,
+		ne = map.getProjection().fromLatLngToPoint(bounds.getNorthEast()),
+		sw = map.getProjection().fromLatLngToPoint(bounds.getSouthWest()),
+		worldCoordWidth = Math.abs(ne.x - sw.x),
+		worldCoordHeight = Math.abs(ne.y - sw.y),
+		mapWidth = jq(map.getDiv()).width(),
+		mapHeight = jq(map.getDiv()).height();
+		FIT_PAD = 40;	//Fit padding in pixels
 
-	jq('#setLocation SPAN').removeClass('icon-stop').removeClass('icon-play-circle');
-	jq('#input_location').val('');
+	for (var zoom = MAX_ZOOM; zoom >= MIN_ZOOM; --zoom) {
+		if (
+			worldCoordWidth * (1 << zoom) + 2 * FIT_PAD < mapWidth
+			&& worldCoordHeight * (1 << zoom) + 2 * FIT_PAD < mapHeight
+		)
+			return zoom;
+	}
+	return 0;
+}
+function storeLocation(map, type)
+{
+	var object = rectangle || circle;
+
+	switch(type) {
+		case google.maps.drawing.OverlayType.RECTANGLE:
+			var bounds = rectangle.getBounds();
+
+			jq('#input_location').val(JSON.stringify({
+				type	: google.maps.drawing.OverlayType.RECTANGLE
+			,	left	: [bounds.getSouthWest().lat(), bounds.getSouthWest().lng()]
+			,	right	: [bounds.getNorthEast().lat(), bounds.getNorthEast().lng()]
+			}).replace(/\"/g, "'"));
+			break;
+		case google.maps.drawing.OverlayType.CIRCLE:
+			jq('#input_location').val(JSON.stringify({
+				type	: google.maps.drawing.OverlayType.CIRCLE
+			,	center	: [circle.getCenter().lat(), circle.getCenter().lng()]
+			,	radius	: circle.getRadius()
+			}).replace(/\"/g, "'"));
+			break;
+		default:
+			jq('#input_location').val('');
+			break;
+	}
+
+	map.panTo(object.getBounds().getCenter());
+	map.setZoom(getZoomByBounds(map, object.getBounds()));
 }
 </script>
 
