@@ -106,19 +106,11 @@
 var filtered = false;
 var allowed = true;
 
-jq('INPUT')
-	.focus(function(){allowed = false;});
-	.blur(function(){allowed = true;});
-
 jq(document).keyup(function(e){
 	if (jq('#tab_features .tab-content .active').size() > 0) {
 		if (e.keyCode == 27) {
 			jq(document).focus();
-			allowed = true;
 		}
-		
-		if (!allowed)
-			return;
 		
 		if (filtered) {
 			jq('#tab_features .tab-content .active .span4').show();
@@ -126,7 +118,9 @@ jq(document).keyup(function(e){
 		}
 		
 		if (
-			(e.keyCode > 64 && e.keyCode < 91)
+			!e.target.tagName.match(/input/i)
+			|| jq(this).attr('type') != 'text'
+			|| (e.keyCode > 64 && e.keyCode < 91)
 			|| (e.keyCode > 95 && e.keyCode < 123)
 		) {
 			var char = String.fromCharCode(e.which || e.keyCode).toLowerCase();
