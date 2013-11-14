@@ -7,7 +7,7 @@
 	$features = FeatureType::dao()->getByGroup($group);
 ?>
 	<div class="mt20" id="indoor_features">
-		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?></a></h5>
+		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?> <i class="icon-chevron-down"></i></a></h5>
 <?php
 	$features = FeatureType::dao()->getByGroup($group);
 
@@ -33,7 +33,7 @@
 	$features = FeatureType::dao()->getByGroup($group);
 ?>
 	<div class="mt20" id="outdoor_features">
-		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?></a></h5>
+		<h5><a href="javascript:void(null)" class="collapsed"><?=$group->getName()?> <i class="icon-chevron-down"></i></a></h5>
 <?php
 	$features = FeatureType::dao()->getByGroup($group);
 
@@ -79,12 +79,14 @@ function toggleFeaturesList(toggle)
 	if (toggle.hasClass('collapsed')) {
 		container.find('LABEL').fadeIn();
 		toggle.removeClass('collapsed');
+		jq('I', toggle).removeClass('icon-chevron-down').addClass('icon-chevron-up');
 	} else {
 		container.find('LABEL').hide();
 		container.find(':checked').each(function(){
 			jq(this).parent().fadeIn();
 		});
 		toggle.addClass('collapsed');
+		jq('I', toggle).removeClass('icon-chevron-up').addClass('icon-chevron-down');
 	}
 }
 </script>
