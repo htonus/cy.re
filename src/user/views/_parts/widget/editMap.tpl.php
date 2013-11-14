@@ -243,8 +243,8 @@ function storeLocation(map, type)
 			break;
 	}
 
-	map.panTo(object.getBounds().getCenter());
 	map.setZoom(getZoomByBounds(map, object.getBounds()));
+	map.panTo(object.getBounds().getCenter());
 }
 </script>
 
