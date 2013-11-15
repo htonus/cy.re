@@ -20,7 +20,7 @@
 	}
 	
 	$submenuList[Section::RENT] = array(
-		'rent'		=> '<H5>___RENT___</H5>',
+		'rent'		=> '<H5>___MONTHLY-RENT___</H5>',
 		'dailyrent'	=> '<H5>___DAILY-RENT___</H5>',
 	);
 ?>
