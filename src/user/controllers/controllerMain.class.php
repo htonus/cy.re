@@ -13,7 +13,7 @@
 class controllerMain extends AclController
 {
 	const COOKIE_EXPIRE		= '1 year';
-	const HISTORY_SIZE		= 10;
+	const HISTORY_SIZE		= 5;
 	
 	/**
 	 * @var Section
