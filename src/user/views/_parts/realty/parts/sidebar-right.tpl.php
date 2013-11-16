@@ -5,6 +5,7 @@
 ?>
 
 <div class="span3 mt20">
+	<div class="well well-large">
 	
 	<h4>_S__HISTORY___</h4>
 
@@ -19,10 +20,10 @@
 ?>
 	<div id="history_<?= $id ?>" class="mb20">
 		<a href="<?= PATH_WEB_USER ?><?= $section->getSlug() ?>/item/<?= $id ?>">
-			<image src="<?= $pictureSize->getUrl($item->getPreview()) ?>" width="<?= $pictureSize->getWidth() ?>" height="<?= $pictureSize->getHeight() ?>" />
+			<image src="<?= $pictureSize->getUrl($item->getPreview()) ?>" width="100%" />
 			<p>
-				<?= $item->getCity()->getName() ?>, <?= $item->getRealtyType()->getName() ?>
-				<span class="pull-right">&euro;&nbsp;<?= $item->getFeatureValue($priceType) ?></span>
+				<?= $item->getCity()->getName() ?>, <?= $item->getRealtyType()->getName() ?><br />
+				<span>&euro;&nbsp;<?= $item->getFeatureValue($priceType) ?></span>
 			</p>
 		</a>
 	</div>
@@ -32,4 +33,5 @@
 	}
 ?>
 
+	</div>
 </div>
