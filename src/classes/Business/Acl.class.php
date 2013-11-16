@@ -93,18 +93,15 @@
 					break;
 				
 				case PersonStatus::GUEST:
-				case PersonStatus::ADMIN:
-					if (
-						isset($this->accessList[$resourceId])
+					$hasAccess = isset($this->accessList[$resourceId])
 						&& (
 							$accessId == Access::READ
 							|| $accessId == Access::LISTS
-						)
-					)
-						$hasAccess = PersonStatus::ADMIN == $this->status;
+						);
 					
 					break;
 					
+				case PersonStatus::ADMIN:
 				case PersonStatus::NORMAL:
 					$hasAccess = isset($this->accessList[$resourceId])
 						&& $this->accessList[$resourceId] & $accessId;
