@@ -12,13 +12,13 @@
  */
 class controllerAbout extends controllerArticle
 {
-        public function __construct()
-        {
-                $this->type = ArticleType::about();
-                $this->section = Section::about();
-                
-                parent::__construct();
-        }
+	public function __construct()
+	{
+		$this->type = ArticleType::about();
+		$this->section = Section::about();
+		
+		parent::__construct();
+	}
 	
 	public function handleRequest(HttpRequest $request)
 	{

@@ -18,7 +18,7 @@ class controllerList extends controllerMain
 	const LIST4	= 4;
 	const LIST5	= 5;
 
-	protected $listVariant = self::LIST2;
+	protected $listVariant = self::LIST1;
 
 	protected $limits = array(
 		self::LIST1	=> 5,
@@ -50,6 +50,8 @@ class controllerList extends controllerMain
 				'pdf'		=> 'actionPdf',
 			)
 		);
+		
+		$this->historyName = 'history.realty.'.$this->priceType;
 	}
 
 	public function handleRequest(HttpRequest $request)

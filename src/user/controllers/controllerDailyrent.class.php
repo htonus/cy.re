@@ -14,9 +14,9 @@ class controllerDailyrent extends controllerList
 {
 	public function __construct()
 	{
-		parent::__construct();
-
 		$this->priceType = FeatureType::PRICE_DAYLY;
 		$this->section = Section::rent();
+		
+		parent::__construct();
 	}
 }

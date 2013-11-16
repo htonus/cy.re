@@ -13,10 +13,15 @@
 class controllerMain extends AclController
 {
 	const COOKIE_EXPIRE		= '1 year';
-
+	const HISTORY_SIZE		= 10;
+	
+	/**
+	 * @var Section
+	 */
 	protected $section		= null;
 	protected $priceType	= null;
-
+	protected $historyName	= null;
+	
 	public function __construct()
 	{
 		$this->
@@ -69,13 +74,35 @@ class controllerMain extends AclController
 
 	protected function getObject(HttpRequest $request, $class)
 	{
-		return Form::create()->
+		$object = Form::create()->
 			add(
 				Primitive::identifier('id')->
 				of($class)
 			)->
 			import($request->getGet())->
 			getValue('id');
+		
+		if (
+			$object
+			&& !empty($this->historyName)
+		) {
+			// If anonymous, store history to the Session only
+			if (!$request->getAttachedVar('user')->isFake()) {
+				// Store to DB
+			}
+			
+			if (!($history = Session::get($this->historyName)))
+				$history = array();
+
+			$history[$object->getId()] = $object;
+			
+			while (count($history) > self::HISTORY_SIZE)
+				array_shift($history);
+			
+			Session::assign($this->historyName, $history);
+		}
+		
+		return $object;
 	}
 
 	private function getStaticContent()
@@ -224,6 +251,13 @@ class controllerMain extends AclController
 			set(
 				'section', $this->section
 			);
+		
+		if (
+			$mav->getModel()->get('action') == 'list'
+			&& !empty($this->historyName)
+		) {
+			$mav->getModel()->set('history', Session::get($this->historyName));
+		}
 		
 		return $this;
 	}

@@ -14,9 +14,9 @@ class controllerRent extends controllerList
 {
 	public function __construct()
 	{
-		parent::__construct();
-
 		$this->priceType = FeatureType::PRICE_MONTHLY;
 		$this->section = Section::rent();
+		
+		parent::__construct();
 	}
 }

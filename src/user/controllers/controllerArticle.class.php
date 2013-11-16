@@ -33,6 +33,8 @@ class controllerArticle extends controllerMain
 				'item'		=> Access::READ,
 			)
 		);
+		
+		$this->historyName = 'history.article.'.$this->type->getId();
 	}
 	
 	public function actionIndex(HttpRequest $request)
