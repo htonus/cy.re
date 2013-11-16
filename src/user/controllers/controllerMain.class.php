@@ -93,13 +93,19 @@ class controllerMain extends AclController
 			
 			if (!($history = Session::get($this->historyName)))
 				$history = array();
-
-			$history[$object->getId()] = $object;
 			
-			while (count($history) > self::HISTORY_SIZE)
-				array_shift($history);
+			$newList = array($object->getId() => $object);
 			
-			Session::assign($this->historyName, $history);
+			foreach ($history as $id => $item) {
+				if ($id == $object->getId())
+					continue;
+				$newList[$id] = $item;
+				
+				if (count($newList) == self::HISTORY_SIZE)
+					break;
+			}
+			
+			Session::assign($this->historyName, $newList);
 		}
 		
 		return $object;
