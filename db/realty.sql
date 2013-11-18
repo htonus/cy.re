@@ -96,6 +96,8 @@ CREATE TABLE "realty" (
 );
 CREATE INDEX realty_type_id_idx ON realty(type_id);
 CREATE INDEX realty_city_id_idx ON realty(city_id);
+CREATE INDEX realty_latitude_longitude_gidx ON realty USING gist(ll_to_earth(latitude, longitude));
+
 
 CREATE SEQUENCE "realty_i18n_id";
 CREATE TABLE "realty_i18n" (

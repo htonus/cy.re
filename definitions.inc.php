@@ -41,9 +41,6 @@
 	define('DEFAULT_ENCODING', 'UTF-8');
 	define('DEFAULT_LANG_CODE', 'en');
 
-	define('GOOGLE_API_KEY', 'AIzaSyDqJzotMc4rSGxKv6JHxDK6wQYLhdJiR_Y');
-
-
 	try {
 		Assert::classExists('AutoloaderPool');
 
@@ -81,3 +78,6 @@
 			.PATH_CLASSES.'Auto'.DS.'DAOs'
 		);
 	}
+
+	define('GOOGLE_API_KEY', 'AIzaSyDqJzotMc4rSGxKv6JHxDK6wQYLhdJiR_Y');
+//	define('RELEVANT_SEARCH', 1);

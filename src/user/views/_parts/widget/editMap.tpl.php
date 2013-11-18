@@ -1,9 +1,20 @@
+<?php
+	$icon = $value = null;
+	
+	if (!empty($location)) {
+		$icon = $location['type'] == 'circle'
+			? 'icon-play-circle'
+			: 'icon-stop';
+
+		$value = empty($location) ? null : str_replace('"', "'", json_encode($location));
+	}
+?>
 					<div class="row-fluid">
 						<div class="span12">
 							<div class="control-group">
 								<div class="controls">
-									<input type="hidden" id="input_location" name="location" value="<?= empty($location) ? null : $location ?>" />
-									<button type="button" id="setLocation" class="btn input-block-level"><span class=""></span> Choose area on map</button>
+									<input type="hidden" id="input_location" name="location" value="<?= $value ?>" />
+									<button type="button" id="setLocation" class="btn input-block-level"><span class="<?= $icon ?>"></span> Choose area on map</button>
 								</div>
 							</div>
 						</div>
@@ -122,7 +133,6 @@ jq(document).ready(function(){
 				storeLocation(map, google.maps.drawing.OverlayType.CIRCLE);
 
 				map.panTo(circle.getCenter());
-				map.setZoom(getZoomByBounds(map, circle.getBounds()));
 				jq('#setLocation SPAN').removeClass('icon-stop').addClass('icon-play-circle');
 			};
 
@@ -142,7 +152,6 @@ jq(document).ready(function(){
 				storeLocation(map, google.maps.drawing.OverlayType.RECTANGLE);
 
 				map.panTo(rectangle.getBounds().getCenter());
-				map.setZoom(getZoomByBounds(map, rectangle.getBounds()));
 				jq('#setLocation SPAN').removeClass('icon-play-circle').addClass('icon-stop');
 			}
 
@@ -157,7 +166,6 @@ jq(document).ready(function(){
 						circle.setRadius(shape.radius);
 						circle.setMap(map);
 						map.panTo(center);
-						map.setZoom(getZoomByBounds(map, circle.getBounds()));
 						break;
 					case google.maps.drawing.OverlayType.RECTANGLE:
 						var bounds = new google.maps.LatLngBounds(
@@ -168,7 +176,6 @@ jq(document).ready(function(){
 						rectangle.setBounds(bounds);
 						rectangle.setMap(map);
 						map.panTo(bounds.getCenter());
-						map.setZoom(getZoomByBounds(map, bounds));
 						setRectangleEvents();
 						break;
 				}
@@ -179,6 +186,12 @@ jq(document).ready(function(){
 
 			// Polygon drawing finished
 			google.maps.event.addListener(drawingManager, 'rectanglecomplete', rectanglecomplete);
+
+			// Polygon drawing finished
+			google.maps.event.addListener(map, 'idle', function(){
+				var object = circle || rectangle;
+				map.setZoom(getZoomByBounds(map, object.getBounds()));
+			});
 
 		});
 	});
@@ -198,8 +211,8 @@ var clearMap = function () {
 }
 function getZoomByBounds (map, bounds) {
 	var
-		MAX_ZOOM = map.mapTypes.get( map.getMapTypeId() ).maxZoom || 21,
-		MIN_ZOOM = map.mapTypes.get( map.getMapTypeId() ).minZoom || 0,
+		MAX_ZOOM = map.mapTypes.get(map.getMapTypeId()).maxZoom || 21,
+		MIN_ZOOM = map.mapTypes.get(map.getMapTypeId()).minZoom || 0,
 		ne = map.getProjection().fromLatLngToPoint(bounds.getNorthEast()),
 		sw = map.getProjection().fromLatLngToPoint(bounds.getSouthWest()),
 		worldCoordWidth = Math.abs(ne.x - sw.x),
@@ -243,7 +256,6 @@ function storeLocation(map, type)
 			break;
 	}
 
-	map.setZoom(getZoomByBounds(map, object.getBounds()));
 	map.panTo(object.getBounds().getCenter());
 }
 </script>

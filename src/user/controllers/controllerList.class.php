@@ -109,6 +109,15 @@ class controllerList extends controllerMain
 				setDefault(1)
 			)->
 			add(
+				Primitive::set('location')->
+				addImportFilter(
+					Filter::chain()->
+						add(Filter::trim())->
+						add(Filter::replaceSymbols("'", '"'))->
+						add(JsonDecoderFilter::me()->setAssoc(true))
+				)
+			)->
+			add(
 				Primitive::integer('list')->
 				setMin(self::LIST1)->
 				setMax(self::LIST5)->
@@ -132,7 +141,8 @@ class controllerList extends controllerMain
 		$filters = $form->getValue('f');
 		$orLogic = Expression::orBlock();
 		$filterNumber = 0;
-		
+
+		// Attach active fetaures to filter query
 		foreach(FeatureType::dao()->getPlainList() as $type) {
 			$typeId = $type->getId();
 			
@@ -174,7 +184,8 @@ class controllerList extends controllerMain
 			expAnd(
 				Expression::notNull('published')
 			);
-		
+
+		// Add priceType condition to separate offers (buy/rent/shortRent)
 		if (empty($filters[$this->priceType]))
 			$logic->expAnd(
 				Expression::andBlock (
@@ -182,19 +193,15 @@ class controllerList extends controllerMain
 					Expression::notNull('features.value')
 				)
 			);
-		
-		if ($type = $form->getValue('city')) {
-			$model->set('city', $type);
-			$logic->expAnd(
-				Expression::eqId('city', $type)
-			);
-		}
 
-		if ($type = $form->getValue('realtyType')) {
-			$model->set('realtyType', $type);
-			$logic->expAnd(
-				Expression::eqId('realtyType', $type)
-			);
+		// city and realtyType now
+		foreach ($fields as $field) {
+			if ($value = $form->getValue($field)) {
+				$model->set('city', $value);
+				$logic->expAnd(
+					Expression::eqId($field, $value)
+				);
+			}
 		}
 		
 		$projection = Projection::chain()->
@@ -210,14 +217,17 @@ class controllerList extends controllerMain
 
 		if ($orLogic->getSize()) {
 			$logic->expAnd($orLogic);
-			$projection->add(	// Remove me in case of neighbores search
-				Projection::having(
-					Expression::eq(
-						SQLFunction::create('count', 'features.id'),
-						$filterNumber
+
+			if (!defined('RELEVANT_SEARCH')) {
+				$projection->add(
+					Projection::having(
+						Expression::eq(
+							SQLFunction::create('count', 'features.id'),
+							$filterNumber
+						)
 					)
-				)
-			);
+				);
+			}
 		}
 		
 		$page = $form->getActualValue('page');
@@ -232,12 +242,72 @@ class controllerList extends controllerMain
 			setProjection($projection)->
 			add($logic)->
 			setLimit($this->limits[$this->listVariant])->
-			addOrder(
-				OrderBy::create(DBField::create('relevance'))->desc()
-			)->
 			setOffset(
 				($page - 1) * $this->limits[$this->listVariant]
 			);
+
+		// If client choosed search by location
+		if ($location = $form->getValue('location')) {
+			$model->set('location', $location);
+
+			switch ($location['type']) {
+				case 'circle':
+					$criteria->add(
+						Expression::isTrue(
+							SQLFunction::create(
+								'is_in_earth_circle',
+								DBField::create('latitude')->castTo('float'),
+								DBField::create('longitude')->castTo('float'),
+								DBValue::create($location['center'][0])->castTo('float'),
+								DBValue::create($location['center'][1])->castTo('float'),
+								DBValue::create($location['radius'])->castTo('float')
+							)
+						)
+					);
+					$center = array($location['center'][0], $location['center'][1]);
+					break;
+				case 'rectangle':
+					$criteria->add(
+						Expression::andBlock(
+							Expression::between(
+								DBField::create('latitude')->castTo('float'),
+								DBValue::create($location['left'][0])->castTo('float'),
+								DBValue::create($location['right'][0])->castTo('float')
+							),
+							Expression::between(
+								DBField::create('longitude')->castTo('float'),
+								DBValue::create($location['left'][1])->castTo('float'),
+								DBValue::create($location['right'][1])->castTo('float')
+							)
+						)
+					);
+					$center = array(
+						abs($location['left'][0] + $location['right'][0]) / 2,
+						abs($location['left'][1] + $location['right'][1]) / 2,
+					);
+					break;
+			}
+		}
+		
+		if (defined('RELEVANT_SEARCH')) {
+			$criteria->addOrder(
+				OrderBy::create(DBField::create('relevance'))->desc()
+			);
+		} elseif (!empty($center)) {
+			$criteria->addOrder(
+				OrderBy::create(
+					SQLFunction::create(
+						'get_earth_distance',
+						DBField::create('latitude')->castTo('float'),
+						DBField::create('longitude')->castTo('float'),
+						DBValue::create($center[0])->castTo('float'),
+						DBValue::create($center[1])->castTo('float')
+					)
+				)->
+				asc()
+			);
+		}
+
 //		echo '<br/><br/><br/>'.$criteria->toString();
 //		exit;
 		
@@ -267,6 +337,7 @@ class controllerList extends controllerMain
 				'url',
 				PATH_WEB.$this->section->getSlug().'/list?'
 				.(empty($filters) ? '' : http_build_query($query))
+				.(empty($location) ? '' : '&location='.$form->getRawValue('location'))
 				.'&list='.$this->listVariant
 			)->
 			set('pages', ceil($total / $this->limits[$this->listVariant]))->

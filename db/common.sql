@@ -61,6 +61,8 @@ CREATE TABLE "city" (
 	"prefix" CHARACTER VARYING(2) NULL,
     PRIMARY KEY("id")
 );
+CREATE INDEX city_latitude_longitude_gidx ON city USING gist(ll_to_earth(latitude, longitude));
+
 CREATE SEQUENCE "city_i18n_id";
 CREATE TABLE "city_i18n" (
     "id" BIGINT NOT NULL default nextval('city_i18n_id'),
