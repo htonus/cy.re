@@ -231,13 +231,16 @@ class controllerList extends controllerMain
 		}
 		
 		$page = $form->getActualValue('page');
+
+		// Total rows (for pager
 		$total = Criteria::create(Realty::dao())->
 			setProjection(
 				Projection::count('id', 'count')
 			)->
 			add($logic)->
 			getCustom('count');
-		
+
+		// Cuurent page ids
 		$criteria = Criteria::create(Realty::dao())->
 			setProjection($projection)->
 			add($logic)->
@@ -306,17 +309,22 @@ class controllerList extends controllerMain
 				)->
 				asc()
 			);
+		} else {
+			// if there is some other order (by price, e.t.c.)
 		}
 
 //		echo '<br/><br/><br/>'.$criteria->toString();
 //		exit;
-		
+
+		// Proper order for the list
 		$relevance = ArrayHelper::toKeyValueArray(
 			$criteria->getCustomList(), 'id', 'relevance'
 		);
 
 		$list = array();
 
+
+		// Take real realty sites for the current page by Ids
 		if (!empty($relevance)) {
 			// to iterate through this list and show details from realtyList by id
 			arsort($relevance);
