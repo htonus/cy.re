@@ -306,15 +306,16 @@ H3 SPAN {
 	text-align: center;
 	padding-bottom: 10px;
 }
+.list-item .specs {
+	text-align: left;
+	padding: 0px 10px;
+}
 .offers H5 {
 	margin: 5px auto;
 }
 .offers A {
-	color: #AEC71E;
+	color: #444;
 	padding-top: 5px;
-}
-.offers A:hover {
-	color: #050505;
 }
 
 .bloquote {
@@ -515,4 +516,40 @@ DD {
 }
 .home_3 { /* bedrooms */
 	background-position: -25px 0px;
+}
+
+.feature-icon {
+	display: inline-block;
+	text-align: center;
+	padding: 0px;
+	border: 1px solid #444;
+	border-radius: 15px;
+	height: 30px;
+	min-width: 30px;
+}
+.feature-icon [class*="ico-"] {
+	background: url(/img/icon-features.png) center 0px transparent no-repeat;
+	height: 13px;
+	margin: 2px 0px;
+}
+.feature-icon .ico-bed {
+	background-position: center 0px;
+}
+.feature-icon .ico-bath {
+	background-position: center -20px;
+}
+.feature-icon .ico-car {
+	background-position: center -40px;
+}
+.feature-icon .ico-area {
+	background-position: center -60px;
+}
+.feature-icon .ico-wc {
+	background-position: center -80px;
+}
+
+.feature-icon  .value {
+	font: bold 12px sans-serif;
+	line-height: 13px;
+	margin: 0px 10px;
 }
