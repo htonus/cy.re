@@ -102,7 +102,7 @@ HTML * {
 /*	color: #333;*/
 }
 BODY {
-	background: url(/img/d-noise.png) repeat #e2e2e2;
+/*	background: url(/img/d-noise.png) repeat #e2e2e2;*/
 	margin: 0px;
 	padding: 0px;
 }
@@ -110,11 +110,12 @@ BODY {
 	background-color: #fff;
 	margin: 0px auto;
 	max-width: 1240px;
-	box-shadow: rgb(180, 180, 180) 0px 0px 5px;
+	/*box-shadow: rgb(180, 180, 180) 0px 0px 5px;*/
 }
 .sub-page {
-	background-color: #FDFDFD;
+	/*background-color: #FDFDFD;*/
 	padding-top: 60px;
+	padding-bottom: 30px;
 }
 .mb10 {
 	margin-bottom: 10px

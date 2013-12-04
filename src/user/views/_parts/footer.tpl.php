@@ -2,6 +2,9 @@
 /*
  * $Id$
  */
+
+	$partViewer->view('_parts/site_footer');
+
 ?>
 </div>
 

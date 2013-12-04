@@ -10,7 +10,7 @@ P.O.Box 54100,<br />
 ADDRESS;
 
 ?>
-	<footer class="mt20">
+	<footer>
 
 		<!-- div class="twitter hidden-phone">
 			<div class="container">

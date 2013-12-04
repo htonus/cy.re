@@ -11,8 +11,6 @@
 
 <?php
         $partViewer->view("$area/$action");
-
-        $partViewer->view('_parts/site_footer');
 ?>
 
 </div>
