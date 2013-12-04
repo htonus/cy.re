@@ -56,7 +56,7 @@
 						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 					</a>
 					<div class="specs">
-						<a href="<?= $url ?>"><?= $title?> <b class="pull-right">&euro; <?= $item->getFeatureValue($priceType)?></b></a>
+						<a href="<?= $url ?>"><?= $title?> <b class="pull-right">&euro; <?= number_format($item->getFeatureValue($priceType), 0, '', "'") ?></b></a>
 						<br />
 						<small>
 <?php
