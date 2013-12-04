@@ -7,9 +7,10 @@
 		$title = '___TTL-RECENT___';
 
 	$features2show = array(
-		FeatureType::AREA,
-		FeatureType::BEDROOMS,
-		FeatureType::TOILETS,
+		FeatureType::BEDROOMS		=> 'ico-bed',
+		FeatureType::TOILETS		=> 'ico-bath',
+		FeatureType::PARKING_LOTS	=> 'ico-car',
+		FeatureType::AREA			=> 'ico-area',
 	);
 ?>
 		<div class="container offers">
@@ -36,7 +37,7 @@
 <?php
 	foreach ($blocks[CustomType::RECENT] as $item) {
 		$title = $item->getCity()
-			? ucfirst($item->getRealtyType()->getName()).' in  '.$item->getCity()->getName()
+			? ucfirst($item->getRealtyType()->getName()).',  '.$item->getCity()->getName()
 			: $item->getName();
 		
 		$url = PATH_WEB.$area.'/item/'.$item->getId();
@@ -54,16 +55,23 @@
 					<a href="<?= $url ?>" title="Permalink to Another Work">
 						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 					</a>
-					<div align="left">
-						<a href=""><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
+					<div class="specs">
+						<a href="<?= $url ?>"><?= $title?> <b class="pull-right">&euro; <?= $item->getFeatureValue($priceType)?></b></a>
 						<br />
 						<small>
 <?php
-		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
-			if (!in_array($typeId, $features2show))
+		$features = $item->getFeaturesByGroup(FeatureTypeGroup::general());
+		
+		foreach ($features2show as $typeId => $icon) {
+			if (!isset($features[$typeId]))
 				continue;
-			
-			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+?>
+							<span class="feature-icon">
+								<div class="<?= $icon ?>" title="<?= ucfirst($features[$typeId]->getType()->getName()) ?>"></div>
+								<div class="value"><?= $features[$typeId]->getValue() ?></div>
+							</span>
+							&nbsp;
+<?php
 		}
 ?>
 						</small>
