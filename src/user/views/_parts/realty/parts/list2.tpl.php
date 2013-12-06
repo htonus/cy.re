@@ -3,9 +3,10 @@
  *
  */
 	$features2show = array(
-		FeatureType::AREA,
-		FeatureType::BEDROOMS,
-		FeatureType::TOILETS,
+		FeatureType::BEDROOMS		=> 'ico-bed',
+		FeatureType::TOILETS		=> 'ico-bath',
+		FeatureType::PARKING_LOTS	=> 'ico-car',
+		FeatureType::AREA			=> 'ico-area',
 	);
 ?>
 
@@ -31,26 +32,31 @@
 		}
 		
 		$title = $item->getCity()
-			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			? ucfirst($item->getRealtyType()->getName()).', '.$item->getCity()->getName()
 			: $item->getName();
 ?>
 		<div class="span3 list-item">
 			<a href="<?= $itemUrl.$item->getId()?>" title="Permalink to Cool Ring">
 				<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
 			</a>
-			<div align="left">
-				<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
+			<div class="list2">
+				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro; <?= number_format($item->getFeatureValue($priceType), 0, '' , "'") ?></b></a>
 				<br />
-				<small>
 <?php
-		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
-			if (!in_array($typeId, $features2show))
+		$features = $item->getFeaturesByGroup(FeatureTypeGroup::general());
+
+		foreach ($features2show as $typeId => $icon) {
+			if (!isset($features[$typeId]))
 				continue;
-			
-			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+?>
+					<div class="feature-icon">
+						<div class="<?= $icon ?>" title="<?= ucfirst($features[$typeId]->getType()->getName()) ?>"></div>
+						<span class="value"><?= $features[$typeId]->getValue() ?></span>
+					</div>
+					&nbsp;
+<?php
 		}
 ?>
-				</small>
 			</div>
 		</div>
 <?php

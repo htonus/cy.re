@@ -127,6 +127,7 @@ h1,h2,h3,h4,h5,h6  { font-family:"Open Sans"; font-weight:400; color:#555; text-
 A:hover { text-decoration: none; }
 .h_2 { height: 2px; }
 .mr10 { margin-right: 10px; }
+.mt10 { margin-top: 10px; }
 .mt50 { margin-top: 50px; }
 .mt20, .mh20 { margin-top: 20px; }
 .mb20, .mh20 { margin-bottom: 20px; }
@@ -298,6 +299,9 @@ H3 SPAN {
 	background: #f1f1f1;
 	padding: 15px;
 }
+.big {
+	font: bold 24px sans-serif;
+}
 
 .offers IMG {
 	max-width: 100%;
@@ -305,7 +309,7 @@ H3 SPAN {
 .list-item {
 	background-color: #F9F9F9;
 	text-align: center;
-	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 .list-item .specs {
 	text-align: left;
@@ -314,10 +318,60 @@ H3 SPAN {
 .offers H5 {
 	margin: 5px auto;
 }
-.offers A {
+.list-item A {
 	color: #444;
 	padding-top: 5px;
 }
+.list2, .list3 {
+	text-align: left;
+	padding: 3px 10px 0px 10px;
+	font: normal 12px sans-serif;
+}
+.list2 .feature-icon {
+	border-radius: 6px;
+	height: 18px;
+	line-height: 18px;
+	margin-top: 5px;
+}
+.list2 .feature-icon DIV {
+	margin-left: 5px;
+	float: left;
+	width: 20px;
+}
+.list2 .feature-icon .value {
+	margin: 0px 5px;
+}
+.list2 B {
+	float: right;
+}
+
+.list3 {
+	padding: 5px;
+	text-align: left;
+	font: normal 12px sans-serif
+}
+.list3 .feature-icon {
+	border: 0;
+	border-radius: 0;
+	height: 18px;
+	line-height: 18px;
+	margin: 5px 5px 0px 0px;
+	border-top: 1px solid #444;
+}
+.list3 .feature-icon DIV {
+	margin-right: 5px;
+	float: right;
+	width: 20px;
+}
+.list3 .feature-icon .value {
+	margin: 5px 2px 0px 0px;
+	float: left;
+}
+.list5 {
+	text-align: left;
+	font: normal 12px sans-serif
+}
+
 
 .bloquote {
 	margin-top: 50px;

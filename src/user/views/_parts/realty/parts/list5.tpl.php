@@ -4,9 +4,10 @@
  */
 
 	$features2show = array(
-		FeatureType::AREA,
-		FeatureType::BEDROOMS,
-		FeatureType::TOILETS,
+		FeatureType::BEDROOMS		=> 'ico-bed',
+		FeatureType::TOILETS		=> 'ico-bath',
+		FeatureType::PARKING_LOTS	=> 'ico-car',
+		FeatureType::AREA			=> 'ico-area',
 	);
 ?>
 
@@ -20,7 +21,7 @@
 		$item = $objectList[$id];
 
 		$title = $item->getCity()
-			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			? ucfirst($item->getRealtyType()->getName()).', '.$item->getCity()->getName()
 			: $item->getName();
 ?>
 
@@ -28,28 +29,42 @@
 		<div class="span6 hr mt20"></div>
 	</div>
 	<div class="row">
+		<div class="list-item">
 		<div class="span1">
 			<a href="<?= $itemUrl.$id; ?>" title="<?= $title; ?>">
 				<img src="<?= PictureSize::list5()->getUrl($item->getPreview())?>">
 			</a>
 		</div>
 		<div class="span4">
-				<a href="<?= $itemUrl.$id; ?>"><?= $title?> <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
+			<div class="list2">
+				<a href="<?= $itemUrl.$id; ?>">
+					<b>&euro; <?= number_format($item->getFeatureValue($priceType), 0, '', "'"); ?></b>
+					<?= $title?>
+				</a>
 				<br />
 				<small>
 <?php
-		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
-			if (!in_array($typeId, $features2show))
+		$features = $item->getFeaturesByGroup(FeatureTypeGroup::general());
+
+		foreach ($features2show as $typeId => $icon) {
+			if (!isset($features[$typeId]))
 				continue;
-			
-			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+?>
+					<div class="feature-icon">
+						<div class="<?= $icon ?>" title="<?= ucfirst($features[$typeId]->getType()->getName()) ?>"></div>
+						<span class="value"><?= $features[$typeId]->getValue() ?></span>
+					</div>
+					&nbsp;
+<?php
 		}
 ?>
 				</small>
+			</div>
 		</div>
 		<div class="span1">
-			<a href="<?= $itemUrl.$id; ?>" class="btn btn-small btn-black pull-right">Details</a>
+			<button onclick="document.location.href='<?= $itemUrl.$id; ?>';" class="btn btn-small btn-black pull-right">Details</button>
 		</div>
+	</div>
 	</div>
 <?php
 	}

@@ -4,9 +4,10 @@
  */
 
 	$features2show = array(
-		FeatureType::AREA,
-		FeatureType::BEDROOMS,
-		FeatureType::TOILETS,
+		FeatureType::BEDROOMS		=> 'ico-bed',
+		FeatureType::TOILETS		=> 'ico-bath',
+		FeatureType::PARKING_LOTS	=> 'ico-car',
+		FeatureType::AREA			=> 'ico-area',
 	);
 ?>
 
@@ -24,25 +25,37 @@
 		$item = $objectList[$id];
 
 		$title = $item->getCity()
-			? ucfirst($item->getRealtyType()->getName()).' in '.$item->getCity()->getName()
+			? ucfirst($item->getRealtyType()->getName()).', '.$item->getCity()->getName()
 			: $item->getName();
 ?>
 
-	<div class="row">
-		<div class="span6 list-item">
+	<div class="row mb20">
+		<div class="span6 list-item list1">
 			<img src="<?= PictureSize::list1()->getUrl($item->getPreview())?>">
-			<a href="<?= $itemUrl.$id; ?>"><?= $title?> for <b>&euro;</b> <?= $item->getFeatureValue($priceType)?></a>
-			<br />
-			<small>
+			<div class="specs">
+				<span class="pull-right mt10">
 <?php
-		foreach ($item->getFeaturesByGroup(FeatureTypeGroup::general()) as $typeId => $feature) {
-			if (!in_array($typeId, $features2show))
+		$features = $item->getFeaturesByGroup(FeatureTypeGroup::general());
+
+		foreach ($features2show as $typeId => $icon) {
+			if (!isset($features[$typeId]))
 				continue;
-			
-			echo ucfirst($feature->getType()->getName()).': '.$feature->getValue().' '.$feature->getType()->getSign().' ';
+
+?>
+							<span class="feature-icon">
+								<div class="<?= $icon ?>" title="<?= ucfirst($features[$typeId]->getType()->getName()) ?>"></div>
+								<div class="value"><?= $features[$typeId]->getValue() ?></div>
+							</span>
+							&nbsp;
+<?php
 		}
 ?>
-			</small>
+				</span>
+				<a href="<?= $itemUrl.$id; ?>">
+					<b><?= $title?></b><br/>
+					<b class="big">&euro; <?= number_format($item->getFeatureValue($priceType), 0, '', "'") ?></b>
+				</a>
+			</div>
 		</div>
 	</div>
 
