@@ -37,7 +37,7 @@
 <?php
 	foreach ($blocks[CustomType::RECENT] as $item) {
 		$title = $item->getCity()
-			? ucfirst($item->getRealtyType()->getName()).',  '.$item->getCity()->getName()
+			? ucfirst($item->getRealtyType()->getName()).'<span class="visible-desktop">, '.$item->getCity()->getName().'</span>'
 			: $item->getName();
 		
 		$url = PATH_WEB.$area.'/item/'.$item->getId();
@@ -53,9 +53,9 @@
 	);
 ?>
 					<a href="<?= $url ?>" title="Permalink to Another Work">
-						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>">
+						<img src="<?= PictureSize::list2()->getUrl($item->getPreview())?>" width='100%'>
 					</a>
-					<div class="specs">
+					<div class="list3">
 						<a href="<?= $url ?>"><?= $title?> <b class="pull-right">&euro; <?= number_format($item->getFeatureValue($priceType), 0, '', "'") ?></b></a>
 						<br />
 						<small>
