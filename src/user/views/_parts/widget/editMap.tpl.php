@@ -190,7 +190,9 @@ jq(document).ready(function(){
 			// Polygon drawing finished
 			google.maps.event.addListener(map, 'idle', function(){
 				var object = circle || rectangle;
-				map.setZoom(getZoomByBounds(map, object.getBounds()));
+				
+				if (object != null)
+					map.setZoom(getZoomByBounds(map, object.getBounds()));
 			});
 
 		});

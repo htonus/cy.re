@@ -6,8 +6,7 @@
 					<h4 class="visible-desktop">Search filter:</h4>
 					
 <?php
-	if ($user->isAdmin())
-		$partViewer->view('_parts/widget/editMap');
+	$partViewer->view('_parts/widget/editMap');
 ?>
 					
 					<div class="row-fluid">
