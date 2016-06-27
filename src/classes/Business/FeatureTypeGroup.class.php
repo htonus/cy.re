@@ -8,13 +8,13 @@
 	class FeatureTypeGroup extends Enumeration
 	{
 		const GENERAL	= 1;
-		const INDOOR		= 2;
+		const INDOOR	= 2;
 		const OUTDOOR	= 3;
 		const DISTANCE	= 4;
 
 		protected $names = array(
 			self::GENERAL	=> '_S__GENERAL___',
-			self::INDOOR		=> '_S__INDOOR___',
+			self::INDOOR	=> '_S__INDOOR___',
 			self::OUTDOOR	=> '_S__OUTDOOR___',
 			self::DISTANCE	=> '_S__DISTANCE___',
 		);
