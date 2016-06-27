@@ -7,7 +7,7 @@
 
 	abstract class i18n extends Autoi18n implements Prototyped
 	{
-		private $i18nMapping = null;	// getter => $value
+		private $i18nMapping = array();	// getter => $value
 
 		private $bypass = array(
 			'id'		=> 1,
@@ -32,17 +32,17 @@
 
 				$i18nDefault = null;
 				$i18nLanguage = null;
-
+				
 				foreach ($this->getI18n()->getList() as $item) {
 					$code = $item->getLanguage()->getCode();
-
+					
 					if ($code == DEFAULT_LANG_CODE)
 						$i18nDefault = $item;
 
 					if ($code == $lang->getCode())
 						$i18nLanguage = $item;
 				}
-
+								
 				foreach ($i18nLanguage->proto()->getPropertyList() as $name => $property) {
 					if (isset($this->bypass[$name]))
 						continue;

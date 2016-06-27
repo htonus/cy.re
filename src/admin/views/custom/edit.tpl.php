@@ -146,7 +146,7 @@
 				<button type="button" class="btn btn-warning" onclick="jq(this).parents('TR').remove()">Remove</button>
 			</td>
 		</tr>
-<?
+<?php
 		}
 	} else {
 ?>

@@ -113,14 +113,14 @@ final class Application
 			$view = RedirectView::create(PATH_WEB_ADMIN.'error/404');
 		}
 		
-		echo i18nHelper::detokenize($view->toString($model));
-//		$view->render($model);
+//		echo i18nHelper::detokenize($view->toString($model));
+		$view->render($model);
 	}
 	
 	private function attachResolver()
 	{
 		$resolver = MultiPrefixPhpViewResolver::create()->
-			setViewClassName('SimplePhpView')->
+			setViewClassName('I18nSimplePhpView')->
 			setPostfix(EXT_TMPL)->
 			addPrefix(PATH_TEMPLATES);
 		
